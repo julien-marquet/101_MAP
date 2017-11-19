@@ -1,0 +1,20 @@
+{
+  "name": "101_map_client",
+  "authors": [
+    "PCJULIEN\\Julien_Marquet <julienmarquet9@gmail.com>"
+  ],
+  "description": "",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}

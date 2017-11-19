@@ -1,0 +1,19 @@
+{
+  "name": "101_map",
+  "version": "0.1.1",
+  "description": "map of online 101 students",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "client-oauth2": "^4.1.0",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "request": "^2.83.0"
+  }
+}
