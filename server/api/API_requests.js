@@ -1,5 +1,5 @@
 const request = require('request'),
-    Oauth2_authenticator = require('./Oauth2_authenticator');
+    Oauth2_authenticator = require('./OAuth2_authenticator');
 var globalState = require('./globalState');
 
 var API_request = {
