@@ -1,4 +1,6 @@
 const   request = require('request');
+
+const {apiEndpoint} = require('./config/globalConfig');
 var     globalState = require('./globalState');
 
 var Oauth2_authenticator = {
@@ -6,7 +8,7 @@ var Oauth2_authenticator = {
         if (globalState.access_token === null || (globalState.access_token.created_at + globalState.access_token.expires_in) * 1000 < Date.now()) {
             console.log("generating fresh token");
             request.post({
-                url: process.env.API + "/oauth/token",
+                url: `${apiEndpoint}/oauth/token`,
                 form: {
                     grant_type: 'client_credentials',
                     client_id: process.env.CLIENT_ID,
