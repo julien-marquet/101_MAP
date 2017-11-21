@@ -9,16 +9,10 @@ router.get('/', function (req, res) {
     res.sendFile(path.normalize(path.join(`${__dirname}/../../${clientPath}/index.html`)));
 });
 
-(function readDir(dir = __dirname) {
-    fs.readdirSync(dir).map(file => {
-        if (fs.lstatSync(`${dir}/${file}`).isDirectory())
-            readDir(`${dir}/${file}`);
-        else {
-            if (file.includes('.route.js')) {
-                require(`${dir}/${file}`)(router);
-            }
-        }
-    });
-})();
+fs.readdirSync(__dirname).map(file => {
+    if (file.includes('.route.js')) {
+        require(`./${file}`)(router);
+    }
+});
 
 module.exports = router;
