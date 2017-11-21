@@ -1,11 +1,12 @@
 const request = require('request'),
-    Oauth2_authenticator = require('./OAuth2_authenticator');
-var globalState = require('./globalState');
+    Oauth2_authenticator = require('../OAuth2_authenticator'),
+    {apiEndpoint, refreshRate} = require('../config/globalConfig');
+var globalState = require('../globalState');
 
 var API_request = {
     test: function (token, callback) {
         request.get({
-            url: process.env.API + "/v2/me",
+            url: `${apiEndpoint}/v2/me`,
             headers: {
                 'Authorization': 'Bearer ' + token.access_token
             }
@@ -20,7 +21,7 @@ var API_request = {
     },
     get101: function (token, callback) {
         request.get({
-            url: process.env.API + " /v2/campus/9",
+            url: `${apiEndpoint}/v2/campus/9`,
             headers: {
                 'Authorization': 'Bearer ' + token.access_token
             }
@@ -34,7 +35,7 @@ var API_request = {
         });
     },
     getConnectedUsers: function (campus, callback) {
-        if (globalState.connected_users.last_request && globalState.connected_users.last_request + process.env.REFRESH_RATE * 1000 > Date.now()) {
+        if (globalState.connected_users.last_request && globalState.connected_users.last_request + refreshRate * 1000 > Date.now()) {
             console.log("result taken from cache");
             callback(globalState.connected_users.array);
         } else {
@@ -70,7 +71,7 @@ var API_request = {
 
 function getPageOfConnectedUsers(token, campus, pagination, callback) {
     request.get({
-        url: process.env.API + "/v2/campus/" + campus + "/locations?page=" + pagination + "&sort=-end_at,host&page=" + pagination,
+        url: `${apiEndpoint}/v2/campus/${campus}/locations?page=${pagination}&sort=-end_at,host&page=${pagination}`,
         headers: {
             'Authorization': 'Bearer ' + token.access_token
         }

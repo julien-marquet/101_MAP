@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var API_requests = require('./API_requests');
-var globalState = require('./globalState');
+var API_requests = require('../api/API_requests');
+var globalState = require('../globalState');
+const {clientPath} = require('../config/globalConfig');
 var path = require('path');
 
 router.get('/', function (req, res) {
-    res.sendFile(path.normalize(path.join(__dirname + process.env.CLIENT_PATH + '/index.html')));
+    res.sendFile(path.normalize(path.join(`${__dirname}/../../${clientPath}/index.html`)));
 });
 router.get('/getConnectedUsers', getUsers);
 
