@@ -12,7 +12,7 @@ var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + clientPath));
-app.use('/', [require('./routes/routes')]);
+app.use('/', [require('./routes/index')]);
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
