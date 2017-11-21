@@ -10,7 +10,7 @@ router.get('/', function (req, res) {
 });
 
 fs.readdirSync(__dirname).map(file => {
-    if (file !== "index.js") {
+    if (file.includes('.route.js')) {
         require(`./${file}`)(router);
     }
 });

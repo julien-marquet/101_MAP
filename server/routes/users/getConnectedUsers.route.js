@@ -1,7 +1,7 @@
-const globalState = require('../globalState');
-const API_requests = require('../api/API_requests');
+const globalState = require('../../globalState');
+const API_requests = require('../../api/API_requests');
 
-const users = router => {
+const getConnectedUsers = router => {
   router.get('/getConnectedUsers', (req, res) => {
     API_requests.getConnectedUsers(9, success => {
       if (success)
@@ -12,4 +12,4 @@ const users = router => {
   });
 };
 
-module.exports = users;
+module.exports = getConnectedUsers;
