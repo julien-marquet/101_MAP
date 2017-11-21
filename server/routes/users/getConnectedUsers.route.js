@@ -1,5 +1,5 @@
-const globalState = require('../../globalState'),
-API_requests = require('../../api/API_requests');
+const globalState = require('../../globalState');
+const API_requests = require('../../api/API_requests');
 
 const getConnectedUsers = router => {
   router.get('/getConnectedUsers', (req, res) => {

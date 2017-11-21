@@ -1,7 +1,7 @@
 const   request = require('request');
 
-const {apiEndpoint, client_id, client_secret} = require('./config/globalConfig'),
-globalState = require('./globalState');
+const {apiEndpoint} = require('./config/globalConfig');
+var     globalState = require('./globalState');
 
 var Oauth2_authenticator = {
     getToken: function (callback) {
@@ -10,9 +10,9 @@ var Oauth2_authenticator = {
             request.post({
                 url: `${apiEndpoint}/oauth/token`,
                 form: {
-                    client_id,
-                    client_secret,
-                    grant_type: 'client_credentials'
+                    grant_type: 'client_credentials',
+                    client_id: process.env.CLIENT_ID,
+                    client_secret: process.env.CLIENT_SECRET
                 }
             }, function (err, res, body) {
                 if (!err)

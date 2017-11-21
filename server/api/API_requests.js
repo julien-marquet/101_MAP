@@ -1,7 +1,7 @@
 const request = require('request'),
-fs = require('fs');
-
-const {apiEndpoint, refreshRate} = require('../config/globalConfig');
+    Oauth2_authenticator = require('../OAuth2_authenticator'),
+    {apiEndpoint, refreshRate} = require('../config/globalConfig');
+var globalState = require('../globalState');
 
 var API_request = {
     test: function (token, callback) {
@@ -33,23 +33,65 @@ var API_request = {
                 callback(null);
             }
         });
+    },
+    getConnectedUsers: function (campus, callback) {
+        if (globalState.connected_users.last_request && globalState.connected_users.last_request + refreshRate * 1000 > Date.now()) {
+            console.log("result taken from cache");
+            callback(globalState.connected_users.array);
+        } else {
+            console.log("generating fresh result");
+            var i = 1;
+            var usersArray = [];
+
+            (function loop() {
+                if (i !== -1) {
+                    Oauth2_authenticator.getToken(function (token) {
+                        getPageOfConnectedUsers(token, campus, i, function (pageArray) {
+                            if (!pageArray || pageArray.length < 30) {
+                                if (pageArray && pageArray.length > 0)
+                                    usersArray = usersArray.concat(pageArray);
+                                i = -1;
+                            }
+                            else {
+                                usersArray = usersArray.concat(pageArray);
+                                i++;
+                            }
+                            loop();
+                        });
+                    });
+                } else {
+                    globalState.connected_users.array = usersArray;
+                    globalState.connected_users.last_request = Date.now();
+                    callback(usersArray.length > 0);
+                }
+            }());
+        }
     }
 };
 
-(function readDir(dir = __dirname) {
-    fs.readdirSync(dir).map(file => {
-        if (fs.lstatSync(`${dir}/${file}`).isDirectory())
-            readDir(`${dir}/${file}`);
-        else {
-            if (file.includes('.api.js')) {
-                API_request = {
-                    ...API_request,
-                    ...require(`${dir}/${file}`)
-                };
+function getPageOfConnectedUsers(token, campus, pagination, callback) {
+    request.get({
+        url: `${apiEndpoint}/v2/campus/${campus}/locations?page=${pagination}&sort=-end_at,host&page=${pagination}`,
+        headers: {
+            'Authorization': 'Bearer ' + token.access_token
+        }
+    }, function (err, res, body) {
+        if (!err) {
+            body = JSON.parse(body);
+
+            if (body.length > 0) {
+                body = selectNull(body);
+                callback(body);
             }
+            else
+                callback(null);
+        }
+        else {
+            console.log("error getting campus data : " + err);
+            callback(null);
         }
     });
-})();
+}
 
 function selectNull(array) {
     var dest = [];
