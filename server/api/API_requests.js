@@ -1,6 +1,7 @@
 const request = require('request'),
-    {apiEndpoint, refreshRate} = require('../config/globalConfig'),
-    Users = require('./Users');
+fs = require('fs');
+
+const {apiEndpoint, refreshRate} = require('../config/globalConfig');
 
 var API_request = {
     test: function (token, callback) {
@@ -32,9 +33,23 @@ var API_request = {
                 callback(null);
             }
         });
-    },
-    ...Users
+    }
 };
+
+(function readDir(dir = __dirname) {
+    fs.readdirSync(dir).map(file => {
+        if (fs.lstatSync(`${dir}/${file}`).isDirectory())
+            readDir(`${dir}/${file}`);
+        else {
+            if (file.includes('.api.js')) {
+                API_request = {
+                    ...API_request,
+                    ...require(`${dir}/${file}`)
+                };
+            }
+        }
+    });
+})();
 
 function selectNull(array) {
     var dest = [];
