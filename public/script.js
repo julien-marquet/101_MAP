@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
     });
 
     function getConnectedUsers() {
-        $.get("http://localhost:3000/getConnectedUsers", function (data, status) {
+        $.get("http://localhost:8080/getConnectedUsers", function (data, status) {
             data = JSON.parse(data).array;
             mapData(data);
             console.log(mainObj);
