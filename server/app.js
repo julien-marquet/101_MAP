@@ -1,7 +1,9 @@
 const dotenv = require('dotenv').config(),
     express = require('express'),
     bodyParser = require('body-parser'),
-    Oauth2_authenticator = require('./OAuth2_authenticator'),
+    cors = require('cors');
+
+const Oauth2_authenticator = require('./OAuth2_authenticator'),
     API_requests = require('./api/API_requests'),
     globalState = require('./globalState'),
     {clientPath, serverPort} = require('./config/globalConfig');
@@ -9,7 +11,7 @@ const dotenv = require('dotenv').config(),
 
 var app = express();
 
-
+app.use(cors());
 app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
