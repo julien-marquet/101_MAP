@@ -12,7 +12,7 @@ const Oauth2_authenticator = require('./OAuth2_authenticator'),
 var app = express();
 
 app.use(cors());
-app.use(morgan('tiny'));
+app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + clientPath));
