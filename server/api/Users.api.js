@@ -4,6 +4,15 @@ const Oauth2_authenticator = require('../OAuth2_authenticator'),
 {apiEndpoint, refreshRate} = require('../config/globalConfig'),
 globalState = require('../globalState');
 
+function selectNull(array) {
+    var dest = [];
+    for (var i = 0; i < array.length; i++) {
+        if (array[i].end_at === null)
+            dest.push(array[i]);
+    }
+    return (dest);
+}
+
 const Users =  {
     getPageOfConnectedUsers: (token, campus, pagination, callback) => {
         request.get({

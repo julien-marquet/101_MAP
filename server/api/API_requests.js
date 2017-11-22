@@ -51,13 +51,4 @@ var API_request = {
     });
 })();
 
-function selectNull(array) {
-    var dest = [];
-    for (var i = 0; i < array.length; i++) {
-        if (array[i].end_at === null)
-            dest.push(array[i]);
-    }
-    return (dest);
-}
-
 module.exports = API_request;
