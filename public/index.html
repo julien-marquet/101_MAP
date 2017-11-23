@@ -45,6 +45,14 @@
         </div>
     </div>
 </div>
+<script src="bower_components/socket.io-client/dist/socket.io.js"></script>
+<script>
+    var socket = io.connect('localhost:8080', {reconnect: true});
+    socket.on('news', function (data) {
+      console.log(data);
+      socket.emit('my other event', { my: 'data' });
+    });
+  </script>
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="script.js"></script>
 </body>
