@@ -10,7 +10,12 @@ jQuery(document).ready(function ($) {
     $('#refresh').on('click', function () {
         getConnectedUsers();
     });
-
+    socket.on('connectedUsers', function (data) {
+        data = JSON.parse(data).array;
+        mapData(data);
+        console.log(mainObj);
+        printDataToInterface();
+      });
     function getConnectedUsers() {
         $.get("http://localhost:8080/getConnectedUsers", function (data, status) {
             data = JSON.parse(data).array;

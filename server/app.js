@@ -12,7 +12,7 @@ const express = require('express'),
     
 
 const {clientPath, serverPort} = require('./config/globalConfig');
-    
+
 app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
