@@ -3,10 +3,10 @@ const {apiEndpoint} = require('../config/globalConfig');
 
 const users_func = {
     selectNull :(array) => {
-        var dest = [];
-        for (var i = 0; i < array.length; i++) {
+        const dest = [];
+        for (let i = 0; i < array.length; i++) {
             if (array[i].end_at === null)
-            dest.push(array[i]);
+                dest.push(array[i]);
         }
         return (dest);
     },
@@ -25,7 +25,7 @@ const users_func = {
                     callback(body);
                 }
                 else
-                callback(null);
+                    callback(null);
             }
             else {
                 console.log("error getting campus data : " + err);

@@ -9,7 +9,6 @@ const express = require('express'),
     cors = require('cors'),
     morgan = require('morgan'),    
     router = express.Router();
-    
 
 const {clientPath, serverPort} = require('./config/globalConfig');
 
@@ -24,9 +23,6 @@ app.use(function (req, res, next) {
     err.status = 404;
     next(err);
 });
-
-
-
 
 server.listen(serverPort, function () {
     console.log(`Server listening on port ${serverPort}`);

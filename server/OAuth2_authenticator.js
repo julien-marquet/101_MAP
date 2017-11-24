@@ -1,5 +1,4 @@
 const   request = require('request');
-
 const {apiEndpoint, client_id, client_secret} = require('./config/globalConfig');
 
 class Oauth2_authenticator {
@@ -18,18 +17,15 @@ class Oauth2_authenticator {
                     grant_type: 'client_credentials'
                 }
             }, (err, res, body) => {
-                if (!err )
-                {
+                if (!err ) {
                     body = JSON.parse(body);
-                    if (body.error)
-                    {
+                    if (body.error) {
                         console.log("error getting API access token : " + (body.error));
                         callback(null);
                     }
-                    else
-                    {
-                    this.globalStorage.access_token = body;
-                    callback(body);
+                    else {
+                        this.globalStorage.access_token = body;
+                        callback(body);
                     }
                 }
                 else {
@@ -38,8 +34,7 @@ class Oauth2_authenticator {
                 }
             });
         }
-        else
-        {
+        else {
             console.log("retrieving token from cache");
             callback(this.globalStorage.access_token);
         }
