@@ -11,8 +11,10 @@ const globalRouter = (router, globalStorage) => {
         fs.readdirSync(dir).map(file => {
             if (fs.lstatSync(`${dir}/${file}`).isDirectory())
                readDir(`${dir}/${file}`);
-            else if (file.includes('.route.js')) 
-                require(`${dir}/${file}`)(router, globalStorage);
+            else {
+                if (file.includes('.route.js')) 
+                    require(`${dir}/${file}`)(router, globalStorage);
+            }
         });
     })();
     return (router);

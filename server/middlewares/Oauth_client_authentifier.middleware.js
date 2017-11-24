@@ -1,5 +1,5 @@
-const Oauth2_authenticator = require('../OAuth2_authenticator');   
-const i_Oauth2_authenticator = new Oauth2_authenticator(globalStorage);    
+const   Oauth2_authenticator = require('../OAuth2_authenticator'),
+        i_Oauth2_authenticator = new Oauth2_authenticator(globalStorage);    
 
 function is_valid(code, callback)  {
     if (code)
