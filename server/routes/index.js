@@ -5,7 +5,7 @@ const {clientPath} = require('../config/globalConfig');
 
 const globalRouter = (router, globalStorage) => {
     router.get('/', function (req, res) {
-        res.sendFile(path.normalize(path.join(`${__dirname}/../../${clientPath}/index.html`)));
+        res.sendFile(path.normalize(path.join(`${__dirname}/../${clientPath}/entry.html`)));
     });
     
     (function readDir(dir = __dirname) {

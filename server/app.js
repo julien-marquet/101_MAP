@@ -17,6 +17,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + clientPath));
+app.all('/', [require('./middlewares/Oauth_client_authentifier.middleware')]);
 app.use('/', [require('./routes/index')(router, globalStorage)]);
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

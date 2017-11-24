@@ -9,16 +9,7 @@ class Users {
         this.Oauth2_authenticator = Oauth2_authenticator;
     }
     getConnectedUsers(campus, callback)  {
-        if (this.globalStorage.connected_users_last_request && this.globalStorage.connected_users_last_request + refreshRate * 1000 > Date.now()) {
-            console.log("result taken from cache");
-            callback({
-                success:true,
-                content:{
-                    last_request: this.globalStorage.connected_users_last_request, 
-                    array: this.globalStorage.connected_users_array
-                }});
-        }
-        else {
+
             console.log("generating fresh result");
             let i = 1;
             let usersArray = [];
@@ -59,7 +50,6 @@ class Users {
                     }        
                 }
             }());
-        }
     }
 };
     
