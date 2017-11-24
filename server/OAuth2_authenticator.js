@@ -1,40 +1,28 @@
-const   request = require('request');
-const {apiEndpoint, client_id, client_secret} = require('./config/globalConfig');
+const   request = require('request'), 
+        {apiEndpoint, client_id, client_secret, redirect_uri} = require('./config/globalConfig');
 
 class Oauth2_authenticator {
     constructor(globalStorage) {
         this.globalStorage = globalStorage;
     }
-    getUserToken(code, callback)
-    {
-        console.log({
-            client_id: process.env.CLIENT_ID,
-            client_secret: process.env.CLIENT_SECRET,
-            code: code,
-            redirect_uri: 'http%3A%2F%2Flocalhost%3A8080%2F',
-            grant_type: 'authorization_code'
-        })
+    getUserToken(code, callback) {
         request.post({
             url: `${apiEndpoint}/oauth/token`,
             form: {
                 client_id: process.env.CLIENT_ID,
                 client_secret: process.env.CLIENT_SECRET,
                 code: code,
-                redirect_uri: 'http://localhost:8080/',
+                redirect_uri: redirect_uri,
                 grant_type: 'authorization_code'
             }
         }, (err, res, body) => {
             if (!err ) {
                 body = JSON.parse(body);
-                if (body.error) {
-                    console.log("error getting USER access token : " + (body.error));
+                if (body.error) 
                     callback(null);
-                }
-                else {
+                else 
                     callback(body);
-                }
-            }
-            else {
+            } else {
                 console.log("error getting USER access token : " + (err));
                 callback(null);
             }

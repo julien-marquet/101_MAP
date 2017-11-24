@@ -1,7 +1,7 @@
-const request = require('request');
-const users_func = require('./Users.func');
-const {refreshRate} = require('../config/globalConfig');
+const   request = require('request');
 
+const   users_func = require('./Users.func'),
+        {refreshRate} = require('../config/globalConfig');
 
 class Users {
     constructor(globalStorage, Oauth2_authenticator) {
@@ -9,7 +9,6 @@ class Users {
         this.Oauth2_authenticator = Oauth2_authenticator;
     }
     getConnectedUsers(campus, callback)  {
-
             console.log("generating fresh result");
             let i = 1;
             let usersArray = [];
@@ -52,6 +51,6 @@ class Users {
             }());
     }
 };
-    
-    module.exports = Users;
+
+module.exports = Users;
     

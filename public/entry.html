@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Sample Site</title>
-
+    
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <style>
         body {
@@ -15,44 +15,37 @@
     </style>
 </head>
 <body>
-
-<div class="container">
-    <div class="row">
-        <div id="block-z1" class="thumbnail col-xs-12" style="background-color: rgba(255,0,0,0.2)">
-            <h1>z1</h1>
-            <ul class="list-connected">
-
-            </ul>
-        </div>
-        <div id="block-z2" class="thumbnail col-xs-12"  style="background-color: rgba(0,0,250,0.2)">
-            <h1>z2</h1>
-            <ul class="list-connected">
-
-            </ul>
-        </div>
-        <div id="block-z3" class="thumbnail col-md-12"  style="background-color: rgba(0,150,0,0.2)">
-            <h1>z3</h1>
-            <ul class="list-connected">
-
-            </ul>
-        </div>
-        <div id="block-z4" class="thumbnail col-md-12"  style="background-color: rgba(0,150,250,0.2)">
-            <h1>z4</h1>
-            <ul class="list-connected">
-
-            </ul>
+    
+    <div class="container">
+        <div class="row">
+            <div id="block-z1" class="thumbnail col-xs-12" style="background-color: rgba(255,0,0,0.2)">
+                <h1>z1</h1>
+                <ul class="list-connected">
+                    
+                </ul>
+            </div>
+            <div id="block-z2" class="thumbnail col-xs-12"  style="background-color: rgba(0,0,250,0.2)">
+                <h1>z2</h1>
+                <ul class="list-connected">
+                    
+                </ul>
+            </div>
+            <div id="block-z3" class="thumbnail col-md-12"  style="background-color: rgba(0,150,0,0.2)">
+                <h1>z3</h1>
+                <ul class="list-connected">
+                    
+                </ul>
+            </div>
+            <div id="block-z4" class="thumbnail col-md-12"  style="background-color: rgba(0,150,250,0.2)">
+                <h1>z4</h1>
+                <ul class="list-connected">
+                    
+                </ul>
+            </div>
         </div>
     </div>
-</div>
-<script src="bower_components/socket.io-client/dist/socket.io.js"></script>
-<script>
-    var socket = io.connect('localhost:8080', {reconnect: true});
-    socket.on('news', function (data) {
-      console.log(data);
-      socket.emit('my other event', { my: 'data' });
-    });
-  </script>
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="script.js"></script>
+    <script src="bower_components/socket.io-client/dist/socket.io.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

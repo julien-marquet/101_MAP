@@ -1,5 +1,6 @@
 const   request = require('request');
-const {apiEndpoint} = require('../config/globalConfig');
+
+const   {apiEndpoint} = require('../config/globalConfig');
 
 const users_func = {
     selectNull :(array) => {
