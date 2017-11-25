@@ -13,6 +13,7 @@ const websocketHandler = (server, globalStorage) => {
 	globalStorage.connectedUsers = 0;
 	io.use(require('./middlewares/Oauth_client_authentifier.middleware'));
 	io.on('connection', (socket) => {
+		console.log('A socket just connected');
 		globalStorage.connectedUsers++;
 		if (!globalStorage.connected_users_array)
 		{

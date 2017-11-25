@@ -17,7 +17,7 @@ function is_valid(code, callback)  {
 }
 
 const Oauth_authentifier = (socket, next) => {
-    is_valid(socket.request.headers.code, valid => {
+    is_valid(socket.handshake.query.code, valid => {
         if (!valid)
             next(new Error('Authentication error'));
         else
