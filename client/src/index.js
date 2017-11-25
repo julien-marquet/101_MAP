@@ -18,7 +18,7 @@ const socketClient = new SocketClient();
 socketClient.connect(params.get('code'))
 .then(() => {
     render(
-        (<Provider store={store}>
+        (<Provider store={store} className={'wrapper'} >
             <App socket={socketClient} />
         </Provider>),
         document.getElementById('root')
