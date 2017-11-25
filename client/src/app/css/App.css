@@ -2,4 +2,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.logo {
+  width: 20%;
+}
+
+.loginButton {
+  width: 25%;
+  height: 50px;
+  border: 10px solid black;
+  border-radius: 20px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  cursor: pointer;
 }
