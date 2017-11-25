@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import Warzone from '../containers/warzone';
 import config from '../../config/globalConfig';
@@ -47,5 +48,9 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  socket: PropTypes.object.isRequired
+};
 
 export default App;
