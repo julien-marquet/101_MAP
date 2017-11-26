@@ -29,7 +29,7 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.connected)
+    if (!this.state.connected)
       return (<Warzone />)
     return (
       <div className="wrapper">
