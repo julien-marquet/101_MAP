@@ -48,7 +48,7 @@ class HostInfo extends Component {
       <div className={'data'}>
         <div className={'userInfo'}>
           <div className={'userPortrait'}>
-            <img src={'https://cdn.intra.42.fr/users/medium_'+ this.state.user.login + '.JPG'} />
+            <img alt={'portrait_' + this.state.user.login} src={'https://cdn.intra.42.fr/users/medium_'+ this.state.user.login + '.JPG'} />
           </div>
           <div className={'userName'}>
             {this.state.user.login}
@@ -75,10 +75,9 @@ class HostInfo extends Component {
 }
 
 function msToTime(duration) {
-  var milliseconds = parseInt((duration%1000)/100)
-      , seconds = parseInt((duration/1000)%60)
-      , minutes = parseInt((duration/(1000*60))%60)
-      , hours = parseInt((duration/(1000*60*60))%24);
+  var seconds = parseInt((duration/1000)%60, 10)
+      , minutes = parseInt((duration/(1000*60))%60, 10)
+      , hours = parseInt((duration/(1000*60*60))%24, 10);
 
   hours = (hours < 10) ? "0" + hours : hours;
   minutes = (minutes < 10) ? "0" + minutes : minutes;
