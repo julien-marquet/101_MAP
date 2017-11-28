@@ -4,6 +4,23 @@ import PropTypes from 'prop-types';
 import Seat from './Seat';
 
 class Seatrow extends Component {
+  constructor(props) {
+    super(props);
+
+    this.seatRowStyle = {};
+    this.rowWrapperStyle = {};
+  }
+
+  componentWillMount() {
+    if (this.props.zone == 'z3') {
+      this.seatRowStyle.flexDirection = 'column';
+      this.rowWrapperStyle.flexDirection = 'row';
+    }
+    else if (this.props.zone === 'z4') {
+      this.seatRowStyle.justifyContent = 'flex-end';
+    }
+  }
+
   renderRow() {
     const seats = [...this.props.seats];
     seats.reverse();
@@ -11,7 +28,7 @@ class Seatrow extends Component {
       return (
         <div
           className={'seatRow'}
-          style={this.props.vertical ? {flexDirection: 'column'} : {}}
+          style={this.seatRowStyle}
           key={`row${rowIndex}`}
         >
           {seatsRow.map((seat, seatIndex) => <Seat key={`seat${seatIndex}`} />)}
@@ -24,7 +41,7 @@ class Seatrow extends Component {
     return (
       <div
         className={'rowWrapper'}
-        style={this.props.vertical ? {flexDirection: 'row'} : {}}
+        style={this.rowWrapperStyle}
       >
         {this.renderRow()}
       </div>
@@ -33,7 +50,8 @@ class Seatrow extends Component {
 }
 
 Seatrow.proptypes = {
-  seats: PropTypes.array.isRequired
+  seats: PropTypes.array.isRequired,
+  zone: PropTypes.string.isRequired
 };
 
 export default Seatrow;

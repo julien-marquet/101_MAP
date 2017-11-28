@@ -23,7 +23,7 @@ class Warzone extends Component {
         >
           <SeatRow
             seats={this.zones[key]}
-            vertical={key === 'z3'}
+            zone={key}
           />
         </div>
       );
