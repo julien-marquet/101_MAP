@@ -4,8 +4,7 @@ class LogTime extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			time: new Date(),
-			start: new Date(this.props.begin_at)
+			time: (new Date() - new Date(this.props.begin_at))
 		}
 	}
 	
@@ -21,14 +20,14 @@ class LogTime extends Component {
 	
 	tick() {
 		this.setState({
-			time: new Date()
+			time: (this.state.time + 1000)
 		});
 	}
 	render()
 	{
 		return (
 			<div className={'logTime'}>
-				LogTime : {msToTime(this.state.time - this.state.start)}
+				LogTime : {msToTime(this.state.time)}
 			</div>
 		);
 	}
