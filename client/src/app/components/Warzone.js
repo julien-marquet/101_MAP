@@ -13,8 +13,24 @@ class Warzone extends Component {
       z3: [['r1p1', 'r1p2', 'r1p3', 'r1p4'], ['r2p1', 'r2p2', 'r2p3', 'r2p4'], ['r3p1', 'r3p2', 'r3p3', 'r3p4'], ['r4p1', 'r4p2', 'r4p3'], ['r5p1', 'r5p2', 'r5p3'], ['r6p1', 'r6p2', 'r6p3', 'r6p4'], ['r7p1', 'r7p2', 'r7p3', 'r7p4'], ['r8p1', 'r8p2', 'r8p3', 'r8p4'], ['r9p1', 'r9p2', 'r9p3', 'r9p4'], ['r10p1', 'r10p2', 'r10p3', 'r10p4']],
       z4: [['r1p1', 'r1p2', 'r1p3', 'r1p4', 'r1p5', 'r1p6'], ['r2p1', 'r2p2', 'r2p3', 'r2p4', 'r2p5', 'r2p6'], ['r3p1', 'r3p2', 'r3p3', 'r3p4', 'r3p5'], ['r4p1', 'r4p2', 'r4p3', 'r4p4', 'r4p5', 'r4p6'], ['r5p1', 'r5p2', 'r5p3', 'r5p4', 'r5p5', 'r5p6'], ['r6p1', 'r6p2', 'r6p3', 'r6p4', 'r6p5'], ['r7p1', 'r7p2', 'r7p3', 'r7p4', 'r7p5', 'r7p6'], ['r8p1', 'r8p2', 'r8p3', 'r8p4', 'r8p5', 'r8p6']]
     };
+    this.testHostInfo = {
+      begin_at:"2017-11-19T09:47:52.000Z",
+      campus_id:9,
+      end_at:null,
+      floor:null,
+      host:"z3r3p4",
+      id:5942728,
+      post:null,
+      primary:true,
+      row:null,
+      user: {
+        id:30890,
+        login:"ybarraul",
+        url:"https://api.intra.42.fr/v2/users/ybarraul",
+      }
+    }
   }
-
+  
   renderZones() {
     return Object.keys(this.zones).map(key => {
       return (
@@ -22,23 +38,25 @@ class Warzone extends Component {
           className={`zone ${key}`}
           key={key}
         >
-          <SeatRow
-            seats={this.zones[key]}
-            zone={key}
-          />
+        <SeatRow
+          seats={this.zones[key]}
+          zone={key}
+        />
         </div>
       );
     });
   }
-
-  renderInfo() {
-
+  
+  renderInfo(props) {
+    return (
+      <HostInfo props={this.testHostInfo}/>
+    );
   }
-
+  
   render() {
     return (
       <div className={'wrapper'}>
-          <HostInfo />
+        {this.renderInfo(this.testHostInfo)}
         <div className={'zonesWrapper'}>
           {this.renderZones()}
         </div>
