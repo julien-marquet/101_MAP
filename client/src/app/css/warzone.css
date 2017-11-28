@@ -56,9 +56,45 @@
 .hostInfoWrapper {
     display: inline-block;
     width: 400px;
-    height: 300px;
     position: absolute;
     top: 20px;
     background-color: white;
     padding: 10px;
+}
+
+.splitter {
+    display: flex;
+}
+.splitter .rightCol {
+    width: 50%;
+}
+.splitter .leftCol {
+    width: 50%;
+}
+
+.leftCol .hostName{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: auto;
+    display: inline-block;
+    width: 50px;
+}
+
+.leftCol .userPortrait {
+    width : 100%;
+    overflow: hidden;
+}
+.leftCol .userPortrait img {
+    width : 150%;
+    position: relative;
+    left: -25%;
+}
+
+.rightCol {
+    padding: 0 10px;
+}
+
+.hostInfoWrapper .linkUserAccount {
+    float: right;
 }
