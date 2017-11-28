@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import SeatRow from './map/Seatrow';
+import HostInfo from './map/HostInfo';
 import config from '../../config/globalConfig';
 import '../css/warzone.css';
 
@@ -30,9 +31,14 @@ class Warzone extends Component {
     });
   }
 
+  renderInfo() {
+
+  }
+
   render() {
     return (
       <div className={'wrapper'}>
+          <HostInfo />
         <div className={'zonesWrapper'}>
           {this.renderZones()}
         </div>

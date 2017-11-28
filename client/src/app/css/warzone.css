@@ -52,3 +52,13 @@
     display: flex;
     flex-direction: column;
 }
+
+.hostInfoWrapper {
+    display: inline-block;
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    top: 20px;
+    background-color: white;
+    padding: 10px;
+}
