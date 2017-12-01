@@ -47,16 +47,16 @@ class Warzone extends Component {
     });
   }
   
-  renderInfo(props) {
+  renderInfo() {
     return (
-      <HostInfo props={this.testHostInfo}/>
+      <HostInfo user={this.testHostInfo.user} begin_at={this.testHostInfo.begin_at} host={this.testHostInfo.host}/>
     );
   }
   
   render() {
     return (
       <div className={'wrapper'}>
-        {this.renderInfo(this.testHostInfo)}
+        {this.renderInfo()}
         <div className={'zonesWrapper'}>
           {this.renderZones()}
         </div>
