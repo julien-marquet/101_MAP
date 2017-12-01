@@ -13,13 +13,15 @@ class App extends Component {
     this.state = {
       connected: false
     };
-    
+
     this.askCode = this.askCode.bind(this);
   }
 
-  componentDidMount()
-  {
+  componentDidMount() {
     this.checkConnection();
+    this.props.socket.on("connectedUsers", (data) => {
+      console.log(data);
+    });
   }
 
   checkConnection() {

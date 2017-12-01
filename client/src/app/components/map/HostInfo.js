@@ -4,7 +4,6 @@ import LogTime from './Logtime'
 class HostInfo extends Component {
 	
 	render() {
-		console.log(this.props);
 		return (
 			<div className={'hostInfoWrapper'}>
 				<div className={'data'}>

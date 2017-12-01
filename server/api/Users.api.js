@@ -34,7 +34,14 @@ class Users {
                         callback({success: false, message: "can't get server token"});
                     });
                 } else {
-                    self.globalStorage.connected_users_array = usersArray;
+                    self.globalStorage.connected_users_array =  Object.assign(
+                        {}, 
+                        ...usersArray.map((all) => ({ [all.host]: {
+                            begin_at: all.begin_at,
+                            user: all.user,
+                            id: all.id}
+                        }))
+                      );
                     self.globalStorage.connected_users_last_request = Date.now();
                     if (usersArray.length > 0) {
                         callback({
