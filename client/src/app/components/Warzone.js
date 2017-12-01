@@ -38,10 +38,10 @@ class Warzone extends Component {
           className={`zone ${key}`}
           key={key}
         >
-        <SeatRow
-          seats={this.zones[key]}
-          zone={key}
-        />
+          <SeatRow
+            seats={this.zones[key]}
+            zone={key}
+          />
         </div>
       );
     });
