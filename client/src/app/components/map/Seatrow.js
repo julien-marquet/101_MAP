@@ -31,7 +31,7 @@ class Seatrow extends Component {
           style={this.seatRowStyle}
           key={`row${rowIndex + 1}`}
         >
-          {seatsRow.map((seat, seatIndex) => <Seat key={`seat${seatIndex + 1}`} hostName={`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`} />)}
+          {seatsRow.map((seat, seatIndex) => <Seat key={`seat${seatIndex + 1}`} hostName={`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`} user={null}/>)}
         </div>
       );
     });
