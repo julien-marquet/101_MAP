@@ -13,23 +13,31 @@ class App extends Component {
     this.state = {
       connected: false
     };
-
-    this.connect = this.connect.bind(this);
+    
+    this.askCode = this.askCode.bind(this);
   }
 
-  connect() {
+  componentDidMount()
+  {
+    this.checkConnection();
+  }
+
+  checkConnection() {
     const params = new URLSearchParams(window.location.search);
-    this.props.socket.connect(params.get('code'))
-    .then(() => {
-      this.setState({connected: true});
-    })
-    .catch(() => {
-      window.location.replace(`https://api.intra.42.fr/oauth/authorize?client_id=${config.clientId}&redirect_uri=${config.redirectUri}&response_type=code`);
-    });
+    if (params.get('code'))
+    {
+      this.props.socket.connect(params.get('code'))
+      .then(() => {
+        this.setState({connected: true});
+      })    
+    }
+  }
+  askCode() {
+        window.location.replace(`https://api.intra.42.fr/oauth/authorize?client_id=${config.clientId}&redirect_uri=${config.redirectUri}&response_type=code`);
   }
 
   render() {
-    if (!this.state.connected)
+    if (this.state.connected)
       return (<Warzone />)
     return (
       <div className="wrapper">
@@ -40,7 +48,7 @@ class App extends Component {
         />
         <div
           className={'loginButton'}
-          onClick={this.connect}
+          onClick={this.askCode}
         >
           <p>{'Login'}</p>
         </div>
