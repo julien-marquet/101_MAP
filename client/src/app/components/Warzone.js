@@ -47,6 +47,7 @@ class Warzone extends Component {
   }
   
   render() {
+    console.log("Users", this.props.users);
     return (
       <div className={'wrapper'}>
         {this.renderInfo()}

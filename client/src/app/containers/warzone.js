@@ -3,7 +3,7 @@ import Warzone from '../components/Warzone'
 
 const mapStateToProps = state => {
   return {
-    ...state
+    users: state.users
   }
 }
 
