@@ -1,0 +1,103 @@
+.wrapperw {
+    background-color: purple;
+}
+
+.zone {
+    display: inline-block;
+    background-color: #edeff2;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.z1, .z2, .z4 {
+    width: 28%;
+    height: 48%;
+}
+
+.z1 {
+    display: block;
+}
+
+.z3 {
+    height: 25%;
+    width: 40%;
+}
+
+.zonesWrapper {
+    background-color: white;
+    max-width: 100%;
+    min-width: 1500px;
+    height: 100%;
+}
+
+.seatRow {
+    background-color: white;
+    margin: 5px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.seat {
+    background-color: #799fd8;
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+}
+
+.rowWrapper {
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.hostInfoWrapper {
+    display: inline-block;
+    width: 400px;
+    position: absolute;
+    top: 20px;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 5px;
+    box-shadow: 5px 5px gray;
+    padding: 10px;
+}
+
+.splitter {
+    display: flex;
+}
+.splitter .rightCol {
+    width: 50%;
+}
+.splitter .leftCol {
+    width: 50%;
+}
+
+.leftCol .hostName{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: auto;
+    display: inline-block;
+    width: 50px;
+}
+
+.leftCol .userPortrait {
+    width : 100%;
+    overflow: hidden;
+}
+.leftCol .userPortrait img {
+    width : 150%;
+    position: relative;
+    left: -25%;
+}
+
+.rightCol {
+    padding: 0 10px;
+}
+
+.hostInfoWrapper .linkUserAccount {
+    float: right;
+}
