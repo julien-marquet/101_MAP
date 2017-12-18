@@ -3,15 +3,14 @@ import LogTime from './Logtime'
 
 class HostInfo extends Component {
 	render() {
-		let divStyle = {
-			backgroundImage: 'url(' + 'https://cdn.intra.42.fr/users/medium_'+ this.props.user.login + '.JPG' + ')'
+		const divStyle = {
+			backgroundImage: `url('https://cdn.intra.42.fr/users/medium_${this.props.user.login}.JPG')`
 		};
 		return (
 				<div className={'hostInfoWrapper'}>
 					<div className={'splitter'}>
 						<div className={'leftCol'}>
-							<div className={'userPortrait'} style={divStyle}>
-							</div>
+							<div className={'userPortrait'} style={divStyle} />
 						</div>
 						<div className={'rightCol'}>
 							<div className={'skewed'}>
