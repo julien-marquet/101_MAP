@@ -15,7 +15,7 @@ class Sockets extends Component {
 
   componentWillMount() {
     this.props.socket.on("connectedUsers", data => {
-        this.props.storeUsers(data);
+      this.props.storeUsers(JSON.parse(data));
     });
   }
 

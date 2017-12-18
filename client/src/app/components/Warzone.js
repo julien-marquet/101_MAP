@@ -34,6 +34,7 @@ class Warzone extends Component {
           <SeatRow
             seats={this.zones[key]}
             zone={key}
+            users={this.props.users}
           />
         </div>
       );
@@ -47,7 +48,6 @@ class Warzone extends Component {
   }
   
   render() {
-    console.log("Users", this.props.users);
     return (
       <div className={'wrapper'}>
         {this.renderInfo()}

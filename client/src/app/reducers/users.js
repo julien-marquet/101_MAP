@@ -1,16 +1,16 @@
 import {USERS_GETTED} from '../actions/users';
 
 const initialState = {
-    users: []
+    array: [],
+    last_request: 0
 };
 
 const users = (state = initialState, {type, payload}) => {
-    console.log("HelloWorld", type);    
     switch (type) {
         case USERS_GETTED:
             return {
                 ...state,
-                users: payload
+                ...payload
             }
         default:
             return state;
