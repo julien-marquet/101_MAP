@@ -2,6 +2,15 @@ import React, {Component} from 'react';
 import LogTime from './Logtime'
 
 class HostInfo extends Component {
+	constructor(props) {
+        super(props);
+
+        this.addDefaultSrc = this.addDefaultSrc.bind(this);
+    }
+    addDefaultSrc(ev) {
+        if(this.props.user !== undefined && ev.target.src != `https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.jpg`)
+		    ev.target.src = `https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.jpg`
+	}	
 	render() {
 		const divStyle = {
 			backgroundImage: `url('https://cdn.intra.42.fr/users/medium_${this.props.user.login}.JPG')`
@@ -10,7 +19,7 @@ class HostInfo extends Component {
 				<div className={'hostInfoWrapper'}>
 					<div className={'splitter'}>
 						<div className={'leftCol'}>
-							<div className={'userPortrait'} style={divStyle} />
+							<div className={'userPortrait'} style={divStyle} onError={this.addDefaultSrc}/>
 						</div>
 						<div className={'rightCol'}>
 							<div className={'skewed'}>
