@@ -34,15 +34,14 @@ class Users {
                         callback({success: false, message: "can't get server token"});
                     });
                 } else {
-                    self.globalStorage.connected_users_array = {
-                        ...usersArray.map(({begin_at, user, id, host}) => ({
-                            [host]: {
-                                begin_at,
-                                user,
-                                id
-                            }
-                        }))
-                    };
+                    self.globalStorage.connected_users_array = {};
+                    usersArray.map(({begin_at, user, id, host}) => {
+                        self.globalStorage.connected_users_array[host] = {
+                            begin_at,
+                            user,
+                            id
+                        };
+                    });
                     self.globalStorage.connected_users_last_request = Date.now();
                     if (usersArray.length > 0) {
                         callback({
