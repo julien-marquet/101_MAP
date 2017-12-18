@@ -2,7 +2,7 @@ import {USERS_GETTED} from '../actions/users';
 
 const initialState = {
     array: [],
-    last_request: 0
+    last_request: null
 };
 
 const users = (state = initialState, {type, payload}) => {

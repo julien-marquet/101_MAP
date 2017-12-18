@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 class Seat extends Component {
     render() {
-        // console.log('User: ', this.props.user);
         if (this.props.user === undefined) {
             return (
                 <div className={'seat'}>
