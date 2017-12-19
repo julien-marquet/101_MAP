@@ -1,16 +1,17 @@
 import {USERS_GETTED, ACTIVE_USER_SWAP} from '../actions/users';
+import Moment from 'moment';
 
 const initialState = {
     array: [],
     last_request: null,
     activeUser: {
-        hostname: "z3r3p4",
-        begin_at: new Date().toISOString(),
-        id:5942728,
+        hostname: null,
+        begin_at: null,
+        id: 0,
         user: {
-            id:30890,
-            login:"jfeve",
-            url:"https://api.intra.42.fr/v2/users/ybarraul",
+            id: 0,
+            login: null,
+            url: null,
         }
     }
 };
@@ -24,7 +25,6 @@ const users = (state = initialState, {type, payload}) => {
             }
         break ;
         case ACTIVE_USER_SWAP:
-        console.log("swap", payload);
             return {
                 ...state,
                 activeUser: {

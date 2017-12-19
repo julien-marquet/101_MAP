@@ -20,7 +20,7 @@ class Seat extends Component {
         }
         else {
             return (
-                <div className={'seat'} onClick={()=> {
+                <div className={'seat'} onClick={() => {
                     this.props.storeActiveUsers({
                         ...this.props.user,
                         hostname: this.props.hostname

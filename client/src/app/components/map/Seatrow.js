@@ -32,9 +32,6 @@ class Seatrow extends Component {
   }
 
   renderSeat(seatsRow, rowIndex) {
-    if (this.props.zone === 'z2' && rowIndex === 1) {
-      console.log('Seatrow: ', seatsRow);
-    }
     return (
       <div
         className={'seatRow'}
@@ -57,7 +54,6 @@ class Seatrow extends Component {
 
   renderRow() {
     const seats = [...this.props.seats];
-    // seats.reverse();
     if (this.props.zone === 'z1') {
       return (
         <Fragment>
