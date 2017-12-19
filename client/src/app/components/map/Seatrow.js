@@ -16,9 +16,6 @@ class Seatrow extends Component {
       this.seatRowStyle.flexDirection = 'column';
       this.rowWrapperStyle.flexDirection = 'row-reverse';
     }
-    else if (this.props.zone === 'z4') {
-      this.seatRowStyle.justifyContent = 'flex-end';
-    }
   }
 
   renderFromTo(from, to = null) {
@@ -52,8 +49,6 @@ class Seatrow extends Component {
   }
 
   renderRow() {
-    const seats = [...this.props.seats];
-    seats.reverse();
     if (this.props.zone === 'z1') {
       return (
         <Fragment>
@@ -62,7 +57,7 @@ class Seatrow extends Component {
         </Fragment>
       );
     }
-    return seats.map((seatsRow, rowIndex) => {
+    return this.props.seats.map((seatsRow, rowIndex) => {
       return (
         this.renderSeat(seatsRow, rowIndex)
       );
