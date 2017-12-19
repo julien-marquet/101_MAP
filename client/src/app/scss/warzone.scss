@@ -1,21 +1,24 @@
-.zonesWrapper {
-}
+$seatSize: 55px;
+$seatSidesMargin: 5px;
+$hallSize: $seatSize + ($seatSidesMargin * 2);
+$seatRowMargin: 6px;
+$zoneMargin: 5px;
 
 .zone {
     display: inline-block;
     background-color: green;
-    margin: 5px;
+    margin: $zoneMargin;
     vertical-align: top;
 }
 
 .seat {
-    margin: 5px;
-    width: 55px;
+    margin: $seatSidesMargin;
+    width: $seatSize;
     overflow: hidden;
 }
 
 .seat, .seat img {
-    height: 55px;
+    height: $seatSize;
     background-color: purple;
 }
 
@@ -25,7 +28,7 @@
 
 .seatRow {
     display: flex;
-    margin: 7.5px 0px 7.5px 0px;
+    margin: $seatRowMargin 0px $seatRowMargin 0px;
 }
 
 .rowWrapper {
@@ -35,7 +38,7 @@
 
 /* Z1 */
 .z1 {
-    padding-bottom: 50px;
+    padding-bottom: $hallSize;
 }
 
 .z1 .rowWrapper {
@@ -51,12 +54,12 @@
 
 .z1Container:first-child {
     flex-direction: column-reverse;
-    margin-left: 32.5px;
+    margin-left: $hallSize / 2;
 }
 
 .z1Container:last-child {
     flex-direction: column;
-    margin-right: 32.5px;
+    margin-right: $hallSize / 2;
 }
 
 .z1Container:first-child .seatRow {
@@ -71,13 +74,13 @@
 }
 
 .z2 {
-    padding-right: 65px;
+    padding-right: $hallSize;
 }
 /* Z2 */
 
 /* Z3 */
 .z3 .seatRow {
-    margin: 0px 7.5px 0px 7.5px;
+    margin: 0px $seatRowMargin 0px $seatRowMargin;
     vertical-align: bottom;
     justify-content: flex-end;
 }
@@ -88,15 +91,14 @@
 
 .z3 {
     vertical-align: bottom;
-    padding-bottom: 65px;
+    padding-bottom: $hallSize;
 }
 /* Z3 */
 
 /* Z4 */
 .z4 {
-    margin-top: -75px;
-    padding-left: 65px;
-
+    margin-top: -($seatSize + $seatRowMargin * 2 + $zoneMargin);
+    padding-left: $hallSize;
 }
 
 .z4 .rowWrapper {
@@ -119,12 +121,8 @@
     display: inline-block;
 }
 
-.zoneContainer:last-child {
-}
-
 .hostInfoWrapper {
     background-color: orange;
     display: inline-block;
     vertical-align: top;
-    margin: 5px;
 }
