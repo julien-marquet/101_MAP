@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 
-import Seat from './Seat';
+import Seat from '../../containers/seat';
 
 class Seatrow extends Component {
   constructor(props) {
@@ -32,6 +32,9 @@ class Seatrow extends Component {
   }
 
   renderSeat(seatsRow, rowIndex) {
+    if (this.props.zone === 'z2' && rowIndex === 1) {
+      console.log('Seatrow: ', seatsRow);
+    }
     return (
       <div
         className={'seatRow'}
@@ -39,6 +42,7 @@ class Seatrow extends Component {
         key={`row${rowIndex + 1}`}
       >
         {seatsRow.map((seat, seatIndex) => {
+          
           return (
             <Seat
               key={`seat${seatIndex + 1}`}
@@ -53,7 +57,7 @@ class Seatrow extends Component {
 
   renderRow() {
     const seats = [...this.props.seats];
-    seats.reverse();
+    // seats.reverse();
     if (this.props.zone === 'z1') {
       return (
         <Fragment>
