@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import config from '../../config/globalConfig';
-import '../css/App.css';
 
 class Sockets extends Component {
   constructor(props) {

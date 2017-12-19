@@ -3,7 +3,7 @@ import React, {Component, Fragment} from 'react';
 import SeatRow from './map/Seatrow';
 import HostInfo from './map/HostInfo';
 import config from '../../config/globalConfig';
-import '../css/warzone.css';
+import '../scss/warzone.css';
 
 class Warzone extends Component {
   componentWillMount() {
