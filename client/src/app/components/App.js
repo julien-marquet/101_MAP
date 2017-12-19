@@ -5,7 +5,7 @@ import Sockets from '../containers/sockets';
 import Warzone from '../containers/warzone';
 import config from '../../config/globalConfig';
 import logo from '../../img/101_logo.svg';
-import '../css/App.css';
+import '../scss/App.css';
 
 class App extends Component {
   constructor(props) {
