@@ -1,3 +1,46 @@
+/* Reset Css */
+html, body, div, span, iframe,
+h1, h2, h3, h4, h5, h6, p, a, img,
+strong, b, u, i, ul, li, form, canvas,
+audio, video
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+ol, ul
+{
+    list-style: none;
+}
+
+table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+a
+{
+    text-decoration: none;
+    color: black;
+}
+
+html, body
+{
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+    font-family: Arial;
+    position: relative;
+}
+/* Reset Css */
+
 .wrapper {
   display: flex;
   justify-content: center;
