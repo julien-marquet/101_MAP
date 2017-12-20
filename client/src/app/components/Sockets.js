@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {storeCookie} from '../helpers/cookies.helper'
 import PropTypes from 'prop-types';
 
 import config from '../../config/globalConfig';
@@ -15,6 +16,11 @@ class Sockets extends Component {
   componentWillMount() {
     this.props.socket.on("connectedUsers", data => {
       this.props.storeUsers(JSON.parse(data));
+    });
+    this.props.socket.on("authSuccess", data => {
+      window.history.pushState('Home', 'Home', '/');
+      if (data && data.type == "code")
+        storeCookie("userToken", data.token)
     });
   }
 

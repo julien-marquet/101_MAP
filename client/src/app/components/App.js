@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {retrieveCookie, removeCookie} from '../helpers/cookies.helper'
 
 import Sockets from '../containers/sockets';
 import Warzone from '../containers/warzone';
@@ -21,15 +22,17 @@ class App extends Component {
   componentDidMount() {
     this.checkConnection();
   }
-
   checkConnection() {
     const params = new URLSearchParams(window.location.search);
-    if (params.get('code'))
-    {
-      this.props.socket.connect(params.get('code'))
+    const userToken = retrieveCookie("userToken");
+    if (userToken || params.get('code')) {
+      this.props.socket.connect(params.get('code'), userToken)
       .then(() => {
         this.setState({connected: true});
-      })    
+      })
+      .catch((reasons)=> {
+        removeCookie("userToken")
+      })
     }
   }
   askCode() {
