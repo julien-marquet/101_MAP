@@ -43,10 +43,7 @@ class Warzone extends Component {
   render() {
     return (
       <div className={'wrapper'}>
-<<<<<<< HEAD
-=======
         <HostInfo />
->>>>>>> handleClickSeat
         <div className={'zonesWrapper'}>
           {this.renderZones()}
         </div>

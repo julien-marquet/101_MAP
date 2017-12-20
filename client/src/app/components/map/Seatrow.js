@@ -50,10 +50,7 @@ class Seatrow extends Component {
   }
 
   renderRow() {
-<<<<<<< HEAD
-=======
     const seats = [...this.props.seats];
->>>>>>> handleClickSeat
     if (this.props.zone === 'z1') {
       return (
         <Fragment>
