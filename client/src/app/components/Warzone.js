@@ -31,7 +31,6 @@ class Warzone extends Component {
         </div>
       );
     });
-    zones[0].push(this.renderInfo());
     return (
       <Fragment>
         <div className={'zoneContainer'}>{zones[0]}</div>
