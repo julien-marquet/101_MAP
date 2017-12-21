@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {msToTime} from '../../helpers/date.helper'
 import moment from 'moment'
 
 class UpTime extends Component {
