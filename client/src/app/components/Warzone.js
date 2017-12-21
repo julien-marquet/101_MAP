@@ -33,7 +33,10 @@ class Warzone extends Component {
     });
     return (
       <Fragment>
-        <div className={'zoneContainer'}>{zones[0]}</div>
+        <div className={'zoneContainer'}>
+          {zones[0]}
+          <HostInfo />
+        </div>
         <div className={'zoneContainer'}>{zones[1]}</div>
       </Fragment>
     );
@@ -42,7 +45,6 @@ class Warzone extends Component {
   render() {
     return (
       <div className={'wrapper'}>
-        <HostInfo />
         <div className={'zonesWrapper'}>
           {this.renderZones()}
         </div>
