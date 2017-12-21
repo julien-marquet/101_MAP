@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
-import {retrieveCookie, removeCookie} from '../helpers/cookies.helper'
 
+import {retrieveCookie, removeCookie} from '../helpers/cookies.helper'
 import Sockets from '../containers/sockets';
 import Warzone from '../containers/warzone';
 import config from '../../config/globalConfig';
 import logo from '../../img/101_logo.svg';
+import Loader from '../components/Loader';
 import '../scss/App.css';
 
 class App extends Component {
@@ -13,7 +14,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      connected: false
+      connected: false, 
+      loading: true
     };
 
     this.askCode = this.askCode.bind(this);
@@ -22,24 +24,30 @@ class App extends Component {
   componentDidMount() {
     this.checkConnection();
   }
+
   checkConnection() {
     const params = new URLSearchParams(window.location.search);
     const userToken = retrieveCookie("userToken");
     if (userToken || params.get('code')) {
       this.props.socket.connect(params.get('code'), userToken)
       .then(() => {
-        this.setState({connected: true});
+          this.setState({connected: true, loading: false});
       })
       .catch((reasons)=> {
         removeCookie("userToken")
+        this.setState({loading: false})
       })
     }
+    else {
+      this.setState({loading:false})
+    }
   }
+
   askCode() {
         window.location.replace(`https://api.intra.42.fr/oauth/authorize?client_id=${config.clientId}&redirect_uri=${config.redirectUri}&response_type=code`);
   }
 
-  render() {
+  renderApp() {
     if (this.state.connected) {
       return [
         <Sockets key={'Component0'} socket={this.props.socket} />,
@@ -50,19 +58,25 @@ class App extends Component {
       return (
         <div key={'Component0'} className="wrapper">
           <h1>WarZone</h1>
-          <img
-            className={'logo'}
-            src={logo}
-          />
-          <div
-            className={'loginButton'}
-            onClick={this.askCode}
-          >
-            <p>{'Login'}</p>
+            <img
+              className={'logo'}
+              src={logo}
+            />
+            <div
+              className={'loginButton'}
+              onClick={this.askCode}
+            >
+              <p>{'Login'}</p>
+            </div>
           </div>
-        </div>
-      );
+     );
     }
+  }
+  render() {
+    return [
+      <Loader key="ComponentLoader" in={this.state.loading}/>,
+      this.renderApp()
+    ]
   }
 }
 

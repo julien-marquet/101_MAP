@@ -1,0 +1,27 @@
+.loader {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    transition: height 0s linear 0.3s, opacity 0.3s ease-out 0s;
+    opacity: 0;
+    display: block;
+    background-color: white;
+    background-image: url('../../img/loader.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+
+    &.entering {
+        opacity: 0;
+    }
+    &.entered {
+        opacity: 1;
+    }
+    &.exiting {
+        height: 100%;
+        opacity: 1;
+    }
+    &.exited {
+        height: 0%;        
+        opacity: 0;
+    }
+}
