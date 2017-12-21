@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {msToTime} from '../../helpers/date.helper'
-import Moment from 'moment'
+import moment from 'moment'
 
-class LogTime extends Component {
+class UpTime extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			time: Moment().diff(this.props.begin_at)
+			time: null
 		}
 		this.timeout = null;
 	}
@@ -18,9 +18,9 @@ class LogTime extends Component {
 	}
 	componentWillReceiveProps(nextProps) {
 		clearTimeout(this.timeout);
-		console.log(nextProps.begin_at);
+		const date = moment.utc(nextProps.begin_at).subtract(1, 'hours');
 		this.setState({
-			time : Moment().diff(nextProps.begin_at)
+			time : moment.utc().diff(date)
 		})
 	}
 	tick() {
@@ -35,12 +35,13 @@ class LogTime extends Component {
 	}
 	render()
 	{
+		const d = moment.duration(this.state.time);
 		return (
-			<div className={'logTime'}>
-				<p>LogTime : {Moment(this.state.time).format("hh:mm:ss")}</p>
+			<div className={'UpTime'}>
+				<p>UpTime : {Math.floor(d.asHours()) + moment.utc(this.state.time).format(":mm:ss")}</p>
 			</div>
 		);
 	}
 }
 
-export default LogTime;
+export default UpTime;
