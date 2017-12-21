@@ -29,7 +29,7 @@ class HostInfo extends Component {
 								<h2>{this.props.activeUser.user.login}</h2>
 							</div>
 							<UpTime begin_at={this.props.activeUser.begin_at} />
-							<a className={'linkUserAccount'} href={"https://profile.intra.42.fr/users/" + this.props.activeUser.login}>
+							<a className={'linkUserAccount'} href={"https://profile.intra.42.fr/users/" + this.props.activeUser.user.login}>
 								<span>Profil</span>
 							</a>
 							</div>
