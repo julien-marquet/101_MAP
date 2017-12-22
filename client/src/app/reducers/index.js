@@ -1,9 +1,9 @@
-import {combineReducers} from 'redux';
+import {combineReducers} from "redux";
 
-import app from './app';
-import users from './users';
+import app from "./app";
+import users from "./users";
 
 export default combineReducers({
-  app,
-  users
+    app,
+    users
 });

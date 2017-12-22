@@ -1,16 +1,16 @@
-import {connect} from 'react-redux'
-import Seat from '../components/map/Seat'
-import {ACTIVE_USER_SWAP} from '../actions/users'
+import {connect} from "react-redux";
 
-const mapStateToProps = state => {
-  return {
-  }
-}
+import Seat from "../components/map/Seat";
+import {ACTIVE_USER_SWAP} from "../actions/users";
+
+const mapStateToProps = () => {
+    return {};
+};
 
 const mapDispatchToProps = dispatch => {
-  return {
-	storeActiveUsers: payload => dispatch({type: ACTIVE_USER_SWAP, payload})
-  }
-}
+    return {
+        storeActiveUsers: payload => dispatch({type: ACTIVE_USER_SWAP, payload})
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Seat);

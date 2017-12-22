@@ -1,15 +1,15 @@
-import {connect} from 'react-redux'
-import Warzone from '../components/Warzone'
+import {connect} from "react-redux";
+
+import Warzone from "../components/Warzone";
 
 const mapStateToProps = state => {
-  return {
-    users: state.users
-  }
-}
+    return {
+        users: state.users
+    };
+};
 
-const mapDispatchToProps = dispatch => {
-  return {
-  }
-}
+const mapDispatchToProps = () => {
+    return {};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Warzone);

@@ -1,5 +1,4 @@
-import {USERS_GETTED, ACTIVE_USER_SWAP} from '../actions/users';
-import Moment from 'moment';
+import {USERS_GETTED, ACTIVE_USER_SWAP} from "../actions/users";
 
 const initialState = {
     array: [],
@@ -18,24 +17,21 @@ const initialState = {
 
 const users = (state = initialState, {type, payload}) => {
     switch (type) {
-        case USERS_GETTED:
-            return {
-                ...state,
+    case USERS_GETTED:
+        return {
+            ...state,
+            ...payload
+        };
+    case ACTIVE_USER_SWAP:
+        return {
+            ...state,
+            activeUser: {
                 ...payload
             }
-        break ;
-        case ACTIVE_USER_SWAP:
-            return {
-                ...state,
-                activeUser: {
-                    ...payload
-                }
-            }
-        break ;
-        default:
-            return state;
-        break ;
+        };
+    default:
+        return state;
     }
-}
+};
 
 export default users;
