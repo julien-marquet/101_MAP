@@ -7,8 +7,8 @@ class SocketClient {
         this.socket = null;
     }
 
-    connect(code) {
-        this.socket = io.connect(config.serverEndpoint, {query: {code}});
+    connect(code, token) {
+        this.socket = io.connect(config.serverEndpoint, {query: {code, token}});
         return new Promise((resolve, reject) => {
             this.socket.on('connect', () => resolve());
             this.socket.on('connect_error', error => reject(error));

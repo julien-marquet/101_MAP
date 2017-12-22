@@ -23,16 +23,38 @@ class Oauth2_authenticator {
                 else 
                     callback(body);
             } else {
-                console.log("error getting USER access token : " + (err));
+                console.log(`error getting USER access token : ${err}`);
                 callback(null);
             }
         });
+    }
+    testTokenValidity(token, callback) {
+        request.get({
+            url: `${apiEndpoint}/oauth/token/info`,
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        }, (err, res, body) => {
+            if (!err ) {
+                body = JSON.parse(body);
+                if (body.error) {
+                    console.log(`error validating CLIENT access token : ${body.error}`);
+                    callback(false);
+                }
+                else 
+                    callback(true);
+            }
+            else {
+                console.log(`error validating CLIENT access token : ${err}`);
+                callback(false);
+            }
+        })
     }
     getToken(callback) {
         if (!this.globalStorage.access_token || (this.globalStorage.access_token.modified_at + this.globalStorage.access_token.expires_in * 1000 < Date.now() - 2000)) {
             console.log("generating fresh token");
             request.post({
-                url: `${apiEndpoint}/oauth/token`,
+                url: `${apiEndpoint}oauth/token`,
                 form: {
                     client_id: process.env.CLIENT_ID,
                     client_secret: process.env.CLIENT_SECRET,
@@ -42,7 +64,7 @@ class Oauth2_authenticator {
                 if (!err ) {
                     body = JSON.parse(body);
                     if (body.error) {
-                        console.log("error getting API access token : " + (body.error));
+                        console.log(`error getting API access token : ${body.error}`);
                         callback(null);
                     }
                     else {
@@ -52,13 +74,12 @@ class Oauth2_authenticator {
                     }
                 }
                 else {
-                    console.log("error getting API access token : " + (err));
+                    console.log(`error getting API access token : ${err}`);
                     callback(null);
                 }
             });
         }
         else {
-            console.log("retrieving token from cache");
             callback(this.globalStorage.access_token);
         }
     }

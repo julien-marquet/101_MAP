@@ -34,7 +34,10 @@ class Warzone extends Component {
     zones[0].push(<HostInfo />);
     return (
       <Fragment>
-        <div className={'zoneContainer'}>{zones[0]}</div>
+        <div className={'zoneContainer'}>
+          {zones[0]}
+          <HostInfo />
+        </div>
         <div className={'zoneContainer'}>{zones[1]}</div>
       </Fragment>
     );
