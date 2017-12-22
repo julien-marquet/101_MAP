@@ -4,12 +4,12 @@ $largeScreen: screen and (min-height: 1080px);
 
 $main: #292D39;
 $mainDark: #1e212a;
-$mainLight: #E6E6E6;
+$mainLight: #1e212a;
 $mainLighter: #ffffff;
 $darkShadow: #0a0b0e;
 $mediumShadow:rgba(0, 0, 0, 0.4);
 $lightShadow: #e5e5e5;
-$textPrimary: #00babc;
+$textPrimary: #328989;
 $textSecondary: #ffffff;
 $textTertiary: #3C4254;
 
@@ -44,7 +44,7 @@ $textTertiary: #3C4254;
         width: $seatSize;
         position: relative;
         height: $seatSize;
-        background-color: #249798;
+        background-color: $textPrimary;
         border-radius: $seatBorderRadius;
     }
 
