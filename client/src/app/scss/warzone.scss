@@ -67,7 +67,7 @@ $textTertiary: #3C4254;
         height: $seatSize;
         top: 0;
         left: 0;
-        transition: all 0.2s;
+        transition: all 0.2s, transform 0.05s;
         z-index: 0;
     }
     
@@ -79,6 +79,10 @@ $textTertiary: #3C4254;
         box-shadow: 4px 4px 10px $darkShadow;
         z-index: 1;
     }
+    .seatHover:active {
+        transform: scale(0.9);
+      }
+
     /* Seat hover */
     
     /* Z1 */
