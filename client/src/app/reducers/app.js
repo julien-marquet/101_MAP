@@ -1,10 +1,10 @@
 const initialState = {};
 
-const app = (state = initialState, {type, payload}) => {
+const app = (state = initialState, {type}) => {
     switch (type) {
-        default:
-            return state;
+    default:
+        return state;
     }
-}
+};
 
 export default app;
