@@ -7,6 +7,7 @@ $mainDark: #1e212a;
 $mainLight: #E6E6E6;
 $mainLighter: #ffffff;
 $darkShadow: #0a0b0e;
+$mediumShadow:rgba(0, 0, 0, 0.4);
 $lightShadow: #e5e5e5;
 $textPrimary: #00babc;
 $textSecondary: #ffffff;
@@ -21,22 +22,29 @@ $textTertiary: #3C4254;
     $seatBorderRadius: 2px;
     $hallSize: $seatSize + ($seatSidesMargin * 2);
 
+    #root {
+        background-color: $mainDark;
+    }
+
     .zone {
         display: inline-block;
-        background-color: green;
-        margin: $zoneMargin;
+        background-color: $main;
         vertical-align: top;
+        margin: $zoneMargin;
+        box-shadow: 2px 2px 8px $mediumShadow;
+        border-radius: 3px;
+    }
+
+    .rowWrapper {
+        margin: $zoneMargin;
     }
     
     .seat {
         margin: $seatSidesMargin;
         width: $seatSize;
         position: relative;
-    }
-    
-    .seat {
         height: $seatSize;
-        background-color: purple;
+        background-color: #249798;
         border-radius: $seatBorderRadius;
     }
 
@@ -49,6 +57,8 @@ $textTertiary: #3C4254;
     .seatRow {
         display: flex;
         margin: $seatRowMargin 0px $seatRowMargin 0px;
+        background-color: $mainLight;
+        border-radius: 2px;
     }
     
     .rowWrapper {
@@ -91,13 +101,11 @@ $textTertiary: #3C4254;
     }
     
     .z1 .rowWrapper {
-        background-color: green;
         flex-direction: row-reverse;
     }
     
     .z1Container {
         display: flex;
-        background-color: orange;
         margin: 5px;
     }
     
@@ -171,11 +179,12 @@ $textTertiary: #3C4254;
     }
     
     .hostInfoWrapper {
+        margin: $zoneMargin;
         height: $seatSize * 8;
         width: $seatSize * 14;
         display: inline-block;
         border: 2px $darkShadow solid;
-        box-shadow: 4px 4px 4px $lightShadow;
+        box-shadow: 4px 4px 8px $mediumShadow;
         overflow: hidden;
         .splitter {
             display: flex;

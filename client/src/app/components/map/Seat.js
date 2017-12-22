@@ -15,9 +15,7 @@ class Seat extends Component {
     render() {
         if (this.props.user === undefined) {
             return (
-                <div className={"seat"}>
-                    <p>{this.props.hostname}</p>
-                </div>
+                <div className={"seat"} />
             );
         }
         else {
