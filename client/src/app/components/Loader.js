@@ -8,7 +8,7 @@ class Loader extends Component {
 		return (
 			<Transition in={this.props.in} timeout={0}>
 				{(status) => (
-				 	<div className={`loader ${status}`} />
+					<div className={`loader ${status}`} />
 				)}
 			</Transition>
 		);

@@ -33,7 +33,7 @@ class App extends Component {
       .then(() => {
           this.setState({connected: true, loading: false});
       })
-      .catch((reasons)=> {
+      .catch(()=> {
         removeCookie("userToken")
         this.setState({loading: false})
       })
@@ -44,7 +44,7 @@ class App extends Component {
   }
 
   askCode() {
-        window.location.replace(`https://api.intra.42.fr/oauth/authorize?client_id=${config.clientId}&redirect_uri=${config.redirectUri}&response_type=code`);
+        window.location.replace(`${config.apiEndPoint}/oauth/authorize?client_id=${config.clientId}&redirect_uri=${config.redirectUri}&response_type=code`);
   }
 
   renderApp() {

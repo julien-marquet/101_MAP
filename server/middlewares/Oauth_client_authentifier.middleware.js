@@ -10,9 +10,8 @@ function is_valid_code(code, callback)  {
                 callback(false);
         });
     }
-    else {
+    else 
         callback(false);
-    }
 }
 
 function is_valid_token(token, callback) {
@@ -24,9 +23,8 @@ function is_valid_token(token, callback) {
                 callback(false);
         });
     }
-    else {
+    else 
         callback(false);
-    }
 }
 
 const Oauth_authentifier = (socket, next) => {
@@ -35,10 +33,11 @@ const Oauth_authentifier = (socket, next) => {
             is_valid_code(socket.handshake.query.code, code_token => {
                 if (!code_token)
                     next(new Error('Authentication error'));
-                else
+                else {
                     socket.typeAuth = "code";
                     socket.userToken = code_token.access_token;
                     next();
+                }
             })
         }
         else {
