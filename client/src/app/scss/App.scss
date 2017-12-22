@@ -1,3 +1,24 @@
+@font-face {
+	font-family: "Montserrat";
+	src: url('../../fonts/Montserrat/Montserrat-Regular.ttf');
+}
+@font-face {
+    font-family: "Montserrat";
+    font-style: italic;
+	src: url('../../fonts/Montserrat/Montserrat-Italic.ttf');
+}
+@font-face {
+    font-family: "Montserrat";
+    font-weight: bold;
+	src: url('../../fonts/Montserrat/Montserrat-SemiBold.ttf');
+}
+
+@font-face {
+    font-family: "Montserrat";
+    font-style: italic;
+	src: url('../../fonts/Montserrat/Montserrat-BoldItalic.ttf');
+}
+
 /* Reset Css */
 html, body, div, span, iframe,
 h1, h2, h3, h4, h5, h6, p, a, img,
@@ -9,11 +30,17 @@ audio, video
     border: 0;
     font-size: 100%;
     font: inherit;
+    font-family: 'Montserrat', sans-serif;
     vertical-align: baseline;
+   
+}
+
+html {
+    font-size: 100%;
 }
 
 ol, ul
-{
+{     
     list-style: none;
 }
 
