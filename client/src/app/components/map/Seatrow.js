@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from "react";
 import PropTypes from "prop-types";
 
-import Seat from "./Seat";
+import Seat from "../../containers/seat";
 
 class Seatrow extends Component {
     constructor(props) {
