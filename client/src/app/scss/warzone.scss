@@ -1,188 +1,195 @@
-$seatSize: 55px;
-$seatSidesMargin: 5px;
-$hallSize: $seatSize + ($seatSidesMargin * 2);
-$seatRowMargin: 6px;
-$zoneMargin: 5px;
-
-
-// COLOR PALETTE
-$main: #292D39;
-$mainDark: #1e212a;
-$mainLight: #E6E6E6;
-$mainLighter: #ffffff;
-$darkShadow: #0a0b0e;
-$lightShadow: #e5e5e5;
-$textPrimary: #00babc;
-$textSecondary: #ffffff;
-
-.zone {
-    display: inline-block;
-    background-color: green;
-    margin: $zoneMargin;
-    vertical-align: top;
-}
-
-.seat {
-    margin: $seatSidesMargin;
-    width: $seatSize;
-    overflow: hidden;
-}
-
-.seat, .seat img {
-    height: $seatSize;
-    background-color: purple;
-}
-
-.seat img {
-    margin-left: -25%;
-}
-
-.seatRow {
-    display: flex;
-    margin: $seatRowMargin 0px $seatRowMargin 0px;
-}
-
-.rowWrapper {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Z1 */
-.z1 {
-    padding-bottom: $hallSize;
-}
-
-.z1 .rowWrapper {
-    background-color: green;
-    flex-direction: row-reverse;
-}
-
-.z1Container {
-    display: flex;
-    background-color: orange;
-    margin: 5px;
-}
-
-.z1Container:first-child {
-    flex-direction: column-reverse;
-    margin-left: $hallSize / 2;
-}
-
-.z1Container:last-child {
-    flex-direction: column;
-    margin-right: $hallSize / 2;
-}
-
-.z1Container:first-child .seatRow {
-    display: flex;
-    flex-direction: row-reverse;
-}
-/* Z1 */
-
-/* Z2 */
-.z2 .rowWrapper {
-    flex-direction: column-reverse;
-}
-
-.z2 {
-    padding-right: $hallSize;
-}
-/* Z2 */
-
-/* Z3 */
-.z3 .seatRow {
-    margin: 0px $seatRowMargin 0px $seatRowMargin;
-    vertical-align: bottom;
-    justify-content: flex-end;
-}
-
-.z3 .rowWrapper {
-    flex-direction: row;
-}
-
-.z3 {
-    vertical-align: bottom;
-    padding-bottom: $hallSize;
-}
-/* Z3 */
-
-/* Z4 */
-.z4 {
-    margin-top: -($seatSize + $seatRowMargin * 2 + $zoneMargin);
-    padding-left: $hallSize;
-}
-
-.z4 .rowWrapper {
-    flex-direction: column-reverse;
-}
-
-.z4 .rowWrapper .seatRow {
-    flex-direction: row-reverse;
-}
-/* Z4 */
-
-.zonesWrapper {
-    /* display: inline-flex; */
-    flex-wrap: wrap;
-    /* display: flex; */
-    flex-direction: row;
-}
-
-.zoneContainer:first-child .zone {
-    display: inline-block;
-}
-
-.hostInfoWrapper {
-    height: $seatSize * 8;
-    width: $seatSize * 14;
-    display: inline-block;
-    border: 1px black solid;
-    overflow: hidden;
-    .splitter {
+@mixin applyStyle($seatSize, $seatSidesMargin, $seatRowMargin, $zoneMargin) {
+    $hallSize: $seatSize + ($seatSidesMargin * 2);
+    .zone {
+        display: inline-block;
+        background-color: green;
+        margin: $zoneMargin;
+        vertical-align: top;
+    }
+    
+    .seat {
+        margin: $seatSidesMargin;
+        width: $seatSize;
+        overflow: hidden;
+    }
+    
+    .seat, .seat img {
+        height: $seatSize;
+        background-color: purple;
+    }
+    
+    .seat img {
+        margin-left: -25%;
+    }
+    
+    .seatRow {
         display: flex;
-        height: 100%;
-        .leftCol {
-            z-index: 1;
-            width: 45%;
-            .userPortrait {
-                position: relative;
-                height: 100%;
-                left: -50%;
-            }
-        }
-        .rightCol {
-            z-index: 2;
-            width: 55%;
-            background-color: $main;
-            position: relative;
-            .skewed {
-                transform: skewX(-5deg);
-                &.main {
-                    z-index: 1;
-                    position: absolute;
-                    background-color: $mainDark;
-                    width: 50%;
+        margin: $seatRowMargin 0px $seatRowMargin 0px;
+    }
+    
+    .rowWrapper {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /* Z1 */
+    .z1 {
+        padding-bottom: $hallSize;
+    }
+    
+    .z1 .rowWrapper {
+        background-color: green;
+        flex-direction: row-reverse;
+    }
+    
+    .z1Container {
+        display: flex;
+        background-color: orange;
+        margin: 5px;
+    }
+    
+    .z1Container:first-child {
+        flex-direction: column-reverse;
+        margin-left: $hallSize / 2;
+    }
+    
+    .z1Container:last-child {
+        flex-direction: column;
+        margin-right: $hallSize / 2;
+    }
+    
+    .z1Container:first-child .seatRow {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+    /* Z1 */
+    
+    /* Z2 */
+    .z2 .rowWrapper {
+        flex-direction: column-reverse;
+    }
+    
+    .z2 {
+        padding-right: $hallSize;
+    }
+    /* Z2 */
+    
+    /* Z3 */
+    .z3 .seatRow {
+        margin: 0px $seatRowMargin 0px $seatRowMargin;
+        vertical-align: bottom;
+        justify-content: flex-end;
+    }
+    
+    .z3 .rowWrapper {
+        flex-direction: row;
+    }
+    
+    .z3 {
+        vertical-align: bottom;
+        padding-bottom: $hallSize;
+    }
+    /* Z3 */
+    
+    /* Z4 */
+    .z4 {
+        margin-top: -($seatSize + $seatRowMargin * 2 + $zoneMargin);
+        padding-left: $hallSize;
+    }
+    
+    .z4 .rowWrapper {
+        flex-direction: column-reverse;
+    }
+    
+    .z4 .rowWrapper .seatRow {
+        flex-direction: row-reverse;
+    }
+    /* Z4 */
+    
+    .zonesWrapper {
+        /* display: inline-flex; */
+        flex-wrap: wrap;
+        /* display: flex; */
+        flex-direction: row;
+    }
+    
+    .zoneContainer:first-child .zone {
+        display: inline-block;
+    }
+    
+    $main: #292D39;
+    $mainDark: #1e212a;
+    $mainLight: #E6E6E6;
+    $mainLighter: #ffffff;
+    $darkShadow: #0a0b0e;
+    $lightShadow: #e5e5e5;
+    $textPrimary: #00babc;
+    $textSecondary: #ffffff;
+    
+    .hostInfoWrapper {
+        height: $seatSize * 8;
+        width: $seatSize * 14;
+        display: inline-block;
+        border: 1px black solid;
+        overflow: hidden;
+        .splitter {
+            display: flex;
+            height: 100%;
+            .leftCol {
+                z-index: 1;
+                width: 45%;
+                .userPortrait {
+                    position: relative;
                     height: 100%;
-                }
-                &.secondary {
-                    z-index: 1;
-                    position: absolute;
-                    bottom: -2px;
-                    left: -30%;
-                    background-color: $main;
-                    width: 100%;
-                    height: 20%;
+                    left: -50%;
                 }
             }
-            .hostContent {
+            .rightCol {
                 z-index: 2;
-                &.contentTop {
-                    height: 25%;
+                width: 55%;
+                background-color: $main;
+                position: relative;
+                .skewed {
+                    transform: skewX(-5deg);
+                    &.main {
+                        z-index: 1;
+                        position: absolute;
+                        background-color: $mainDark;
+                        width: 50%;
+                        height: 100%;
+                    }
+                    &.secondary {
+                        z-index: 1;
+                        position: absolute;
+                        bottom: -2px;
+                        left: -30%;
+                        background-color: $main;
+                        width: 100%;
+                        height: 20%;
+                    }
                 }
-                &.contentBottom {
-                    height: 75%;
+                .hostContent {
+                    z-index: 2;
+                    &.contentTop {
+                        height: 25%;
+                    }
+                    &.contentBottom {
+                        height: 75%;
+                    }
                 }
             }
         }
     }
+}
+
+@media screen and (min-height: 720px) {
+    @include applyStyle($seatSize: 35px, $seatSidesMargin: 2px, $seatRowMargin: 1px, $zoneMargin: 2px);
+}
+
+@media screen and (min-height: 950px) {
+    @include applyStyle($seatSize: 42px, $seatSidesMargin: 5px, $seatRowMargin: 2px, $zoneMargin: 5px);
+}
+
+@media screen and (min-height: 1080px) {
+    @include applyStyle($seatSize: 55px, $seatSidesMargin: 5px, $seatRowMargin: 6px, $zoneMargin: 5px);
 }
