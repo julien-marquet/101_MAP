@@ -1,5 +1,18 @@
 @mixin applyStyle($seatSize, $seatSidesMargin, $seatRowMargin, $zoneMargin) {
+    $zoom: 1.5;
+    $seatBorderRadius: 2px;
     $hallSize: $seatSize + ($seatSidesMargin * 2);
+    
+    /* Colors */
+    $main: #292D39;
+    $mainDark: #1e212a;
+    $mainLight: #E6E6E6;
+    $mainLighter: #ffffff;
+    $darkShadow: #0a0b0e;
+    $lightShadow: #e5e5e5;
+    $textPrimary: #00babc;
+    $textSecondary: #ffffff;
+    /* Colors */
     .zone {
         display: inline-block;
         background-color: green;
@@ -16,10 +29,16 @@
     .seat, .seat img {
         height: $seatSize;
         background-color: purple;
+        border-radius: $seatBorderRadius;
     }
     
     .seat img {
         margin-left: -25%;
+    }
+
+    .seatHover img {
+        height: $seatSize * $zoom;
+        cursor: pointer;
     }
     
     .seatRow {
@@ -30,6 +49,19 @@
     .rowWrapper {
         display: flex;
         flex-direction: column;
+    }
+
+    .seatHover {
+        width: $seatSize * $zoom;
+        height: $seatSize * $zoom;
+        position: absolute;
+        top: -(($zoom - 1) * 50%);
+        left: -(($zoom - 1) * 50%);
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        border-radius: $seatBorderRadius;
+        box-shadow: 4px 4px 10px $darkShadow;
     }
     
     /* Z1 */
@@ -116,15 +148,6 @@
     .zoneContainer:first-child .zone {
         display: inline-block;
     }
-    
-    $main: #292D39;
-    $mainDark: #1e212a;
-    $mainLight: #E6E6E6;
-    $mainLighter: #ffffff;
-    $darkShadow: #0a0b0e;
-    $lightShadow: #e5e5e5;
-    $textPrimary: #00babc;
-    $textSecondary: #ffffff;
     
     .hostInfoWrapper {
         height: $seatSize * 8;
