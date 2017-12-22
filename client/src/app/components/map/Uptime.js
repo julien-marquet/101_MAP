@@ -21,7 +21,7 @@ class UpTime extends Component {
         const date = moment.utc(nextProps.begin_at).subtract(1, "hours");
         this.setState({
             time : moment.utc().diff(date)
-        })
+        });
     }
     tick() {
         this.setState({
@@ -37,9 +37,16 @@ class UpTime extends Component {
     {
         const d = moment.duration(this.state.time);
         return (
-            <div className={"UpTime"}>
-                <p>UpTime : {Math.floor(d.asHours()) + moment.utc(this.state.time).format(":mm:ss")}</p>
-            </div>
+            <li className={"stat uptime"}>
+                <p>
+                    <span className={"statName"}>
+                        UpTime :
+                    </span>
+                    <span className={"statValue"}>
+                        {Math.floor(d.asHours()) + moment.utc(this.state.time).format(":mm:ss")}
+                    </span>    
+                </p>
+            </li>
         );
     }
 }
