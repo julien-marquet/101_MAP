@@ -1,4 +1,4 @@
-$smallScreen: screen and (min-height: 720px);
+$smallScreen: screen and (max-height: 950px);
 $mediumScreen: screen and (min-height: 950px);
 $largeScreen: screen and (min-height: 1080px);
 
@@ -338,11 +338,11 @@ $textTertiary: #3C4254;
 }
 
 @media #{$smallScreen} {
-    @include applyStyle($seatSize: 35px, $seatSidesMargin: 2px, $seatRowMargin: 1px, $zoneMargin: 2px, $coefficient:0.5);
+    @include applyStyle($seatSize: 35px, $seatSidesMargin: 2px, $seatRowMargin: 1px, $zoneMargin: 2px, $coefficient:1.5);
 }
 
 @media #{$mediumScreen} {
-    @include applyStyle($seatSize: 42px, $seatSidesMargin: 5px, $seatRowMargin: 2px, $zoneMargin: 5px, $coefficient:1);
+    @include applyStyle($seatSize: 42px, $seatSidesMargin: 5px, $seatRowMargin: 2px, $zoneMargin: 5px, $coefficient:1.9);
 }
 
 @media #{$largeScreen} {

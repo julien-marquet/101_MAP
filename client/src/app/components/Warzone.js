@@ -2,6 +2,7 @@ import React, {Component, Fragment} from "react";
 
 import SeatRow from "./map/Seatrow";
 import HostInfo from "../containers/hostinfo";
+import ThemeSwitch from "../containers/themeSwitch";
 import "../scss/warzone.css";
 
 class Warzone extends Component {
@@ -44,6 +45,7 @@ class Warzone extends Component {
     render() {
         return (
             <div className={"wrapper"}>
+                <ThemeSwitch />
                 <div className={"zonesWrapper"}>
                     {this.renderZones()}
                 </div>

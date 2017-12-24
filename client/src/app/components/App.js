@@ -15,12 +15,13 @@ class App extends Component {
 
         this.state = {
             connected: false, 
-            loading: true
+            loading: true,
+            theme: this.props.themes.value
         };
 
         this.askCode = this.askCode.bind(this);
     }
-
+    
     componentDidMount() {
         this.checkConnection();
     }
@@ -73,10 +74,12 @@ class App extends Component {
         }
     }
     render() {
-        return [
-            <Loader key="ComponentLoader" in={this.state.loading}/>,
-            this.renderApp()
-        ];
+        return (
+            <div className={`themeWrapper ${this.props.themes.array[this.props.themes.value]}`}>
+                <Loader key="ComponentLoader" in={this.state.loading}/>
+                {this.renderApp()}
+            </div>
+        );
     }
 }
 
