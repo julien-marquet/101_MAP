@@ -2,17 +2,6 @@ $smallScreen: screen and (max-height: 950px);
 $mediumScreen: screen and (min-height: 950px);
 $largeScreen: screen and (min-height: 1080px);
 
-$main: #292D39;
-$mainDark: #1e212a;
-$mainLight: #1e212a;
-$mainLighter: #ffffff;
-$darkShadow: #0a0b0e;
-$mediumShadow:rgba(0, 0, 0, 0.4);
-$lightShadow: #e5e5e5;
-$textPrimary: #328989;
-$textSecondary: #ffffff;
-$textTertiary: #3C4254;
-
 @function get_size($f_multiplier, $f_coefficient) {
     @return $f_multiplier * $f_coefficient
 }
@@ -22,16 +11,11 @@ $textTertiary: #3C4254;
     $seatBorderRadius: 2px;
     $hallSize: $seatSize + ($seatSidesMargin * 2);
 
-    #root {
-        background-color: $mainDark;
-    }
-
-    .zone {
+   .zone {
         display: inline-block;
-        background-color: $main;
         vertical-align: top;
         margin: $zoneMargin;
-        box-shadow: 2px 2px 8px $mediumShadow;
+        box-shadow: 2px 2px 8px #000000;
         border-radius: 3px;
     }
 
@@ -44,7 +28,6 @@ $textTertiary: #3C4254;
         width: $seatSize;
         position: relative;
         height: $seatSize;
-        background-color: $textPrimary;
         border-radius: $seatBorderRadius;
     }
 
@@ -57,7 +40,6 @@ $textTertiary: #3C4254;
     .seatRow {
         display: flex;
         margin: $seatRowMargin 0px $seatRowMargin 0px;
-        background-color: $mainLight;
         border-radius: 2px;
     }
     
@@ -66,7 +48,6 @@ $textTertiary: #3C4254;
         flex-direction: column;
     }
 
-    /* Seat hover */
     .seatHover {
         position: absolute;
         display: flex;
@@ -86,16 +67,13 @@ $textTertiary: #3C4254;
         height: $seatSize * $zoom;
         top: -(($zoom - 1) * 50%);
         left: -(($zoom - 1) * 50%);
-        box-shadow: 4px 4px 10px $darkShadow;
+        box-shadow: 4px 4px 10px #000000;
         z-index: 1;
     }
     .seatHover:active {
         transform: scale(0.9);
       }
 
-    /* Seat hover */
-    
-    /* Z1 */
     .z1 {
         padding-bottom: $hallSize;
     }
@@ -123,9 +101,7 @@ $textTertiary: #3C4254;
         display: flex;
         flex-direction: row-reverse;
     }
-    /* Z1 */
-    
-    /* Z2 */
+
     .z2 .rowWrapper {
         flex-direction: column-reverse;
     }
@@ -133,9 +109,7 @@ $textTertiary: #3C4254;
     .z2 {
         padding-right: $hallSize;
     }
-    /* Z2 */
-    
-    /* Z3 */
+
     .z3 .seatRow {
         margin: 0px $seatRowMargin 0px $seatRowMargin;
         vertical-align: bottom;
@@ -150,9 +124,7 @@ $textTertiary: #3C4254;
         vertical-align: bottom;
         padding-bottom: $hallSize;
     }
-    /* Z3 */
-    
-    /* Z4 */
+
     .z4 {
         margin-top: -($seatSize + $seatRowMargin * 2 + $zoneMargin);
         padding-left: $hallSize;
@@ -165,12 +137,9 @@ $textTertiary: #3C4254;
     .z4 .rowWrapper .seatRow {
         flex-direction: row-reverse;
     }
-    /* Z4 */
     
     .zonesWrapper {
-        /* display: inline-flex; */
         flex-wrap: wrap;
-        /* display: flex; */
         flex-direction: row;
     }
     
@@ -183,8 +152,9 @@ $textTertiary: #3C4254;
         height: $seatSize * 8;
         width: $seatSize * 14;
         display: inline-block;
-        border: 2px $darkShadow solid;
-        box-shadow: 4px 4px 8px $mediumShadow;
+        border-width: 2px;
+        border-style: solid;
+        box-shadow: 4px 4px 8px #000000;
         overflow: hidden;
         .splitter {
             display: flex;
@@ -196,13 +166,11 @@ $textTertiary: #3C4254;
                     position: relative;
                     height: 100%;
                     left: -60%;
-                    color: $textPrimary;
                 }
             }
             .rightCol {
                 z-index: 2;
                 width: 60%;
-                background-color: $main;
                 position: relative;
                 .skewed {
                     position: absolute;                    
@@ -210,7 +178,6 @@ $textTertiary: #3C4254;
                     &.main {
                         left: -7%;
                         z-index: 1;
-                        background-color: $mainDark;
                         width: 12%;
                         height: 100%;
                     }
@@ -218,13 +185,11 @@ $textTertiary: #3C4254;
                         z-index: 1;
                         bottom: -2px;
                         left: -30%;
-                        background-color: $main;
                         width: 31%;
                         height: 15%;
                         .hostName {
                             padding-top: 8%;
                             padding-left: 15%;
-                            color: $textSecondary;
                             font-weight: bold;
                             font-size: get_size(0.8em, $coefficient);
                         }
@@ -236,18 +201,14 @@ $textTertiary: #3C4254;
                     padding-left: 12%;
                     &.contentTop {
                         height: 25%;
-                        background-color: $mainDark;
                         .userName {
                             padding-top: 5%;
-                            color: $textSecondary;
                             font-weight: bold;
                             font-size: get_size(1em, $coefficient);
                             text-transform: capitalize;
                         }
                         .tags {
-                            color: $textPrimary;                            
                             &.inactive {
-                                color: $textTertiary;
                                 padding-left: 30%;
                                 font-weight: bold;
                                 font-size: get_size(0.7em, $coefficient);
@@ -256,19 +217,16 @@ $textTertiary: #3C4254;
                     }
                     &.contentBottom {
                         height: 75%;
-                        background-color: $main;
                         .stats {
                             line-height: get_size(2em, $coefficient);
                             font-size: get_size(0.7em, $coefficient);
                             padding-left: 5%;
                             .statName {
-                                color: $textPrimary;
                                 margin-right: 5%;
                                 font-weight: bold;                                
                             }
                             .statValue {
                                 padding-left: 5px;
-                                color: $textSecondary;
                                 font-weight: normal;                                
                             }
                         }
@@ -293,17 +251,14 @@ $textTertiary: #3C4254;
                                 position: relative;
                                 height: 100%;
                                 width: 100%;
-                                background-color: $mainDark;                            
                                 border-width:  1px 1px 1px 0px;
-                                border-color: $darkShadow;
                                 border-style: solid;   
                                 text-transform: uppercase;
                                 z-index: 2;
-                                box-shadow: 2px 2px 2px $darkShadow;
+                                box-shadow: 2px 2px 2px #000000;
                                 .linkUserAccount {
                                     text-align: center;
                                     height: 100%;
-                                    color: $textSecondary;
                                     font-weight: bold;
                                     font-size: get_size(0.5em, $coefficient);
                                     span {
@@ -318,14 +273,11 @@ $textTertiary: #3C4254;
                                 transition: all ease-in 0.05s ;
                                 position: absolute;                                
                                 z-index: 1;
-                                box-shadow: 2px 2px 2px $darkShadow;
-                                background-color: $mainDark;                                
+                                box-shadow: 2px 2px 2px #000000;
                                 border-width:  1px 0 1px 1px;
-                                border-color: $darkShadow;
                                 border-style: solid;                            
                                 height: 100%;
                                 width: 8%;
-                                background-color: $mainDark;
                                 left: -5%;
                                 transform: skewX(-7deg);                                
                             }
@@ -336,6 +288,9 @@ $textTertiary: #3C4254;
         }
     }
 }
+
+@import 'themes/dark.scss';
+@import 'themes/light.scss';
 
 @media #{$smallScreen} {
     @include applyStyle($seatSize: 35px, $seatSidesMargin: 2px, $seatRowMargin: 1px, $zoneMargin: 2px, $coefficient:1.5);
