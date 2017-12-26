@@ -5,16 +5,10 @@ const themeArray = [
     "dark",
     "light"
 ];
-function getTheme() {
-    const param = localStorage.getItem("param_theme");
-    if (param)
-        return (param);
-    else
-        return themeArray.indexOf(globalConfig.defaultTheme);
-}
+
 const initialState = {
     array: themeArray,
-    value: getTheme()
+    value: localStorage.getItem("param_theme") || themeArray.indexOf(globalConfig.defaultTheme)
 };
 
 const themes = (state = initialState, {type, payload}) => {
