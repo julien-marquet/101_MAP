@@ -1,0 +1,76 @@
+@import '../colorPallet/light.scss';
+
+.light { 
+    .wrapper {
+        background-color: $light-backColor;
+    }
+    .zone {
+        background-color: $light-zoneColor;
+    }
+    .seat {
+        background-color: $light-seatColor;
+    }
+    .seatRow {
+        background-color: $light-rowColor;
+    }
+    .hostInfoWrapper {
+        border-color: $light-darkShadow;
+        box-shadow: 4px 4px 8px $light-mediumShadow;
+        .splitter {
+            .rightCol {
+                .skewed {
+                    &.main {
+                        background-color: $light-mainDark;
+                    }
+                    &.secondary {
+                        background-color: $light-main;
+                        .hostName {
+                            color: $light-textSecondary;
+                        }
+                    }
+                }
+                .hostContent {
+                    &.contentTop {
+                        background-color: $light-mainDark;
+                        .userName {
+                            color: $light-textSecondary;
+                        }
+                        .tags {
+                            color: $light-textPrimary;                            
+                            &.inactive {
+                                color: $light-textTertiary;
+                            }
+                        }
+                    }
+                    &.contentBottom {
+                        background-color: $light-main;
+                        .stats {
+                            .statName {
+                                color: $light-textPrimary;                              
+                            }
+                            .statValue {
+                                color: $light-textSecondary;
+                            }
+                        }
+                        .profileButton {
+                            .buttonContent {
+                                background-color: $light-mainDark;                            
+                                border-color: $light-darkShadow;
+                                box-shadow: 2px 2px 2px $light-darkShadow;
+                                .linkUserAccount {
+                                    color: $light-textSecondary;
+                                }
+                            }
+                            .buttonSkewed {
+                                box-shadow: 2px 2px 2px $light-darkShadow;
+                                background-color: $light-mainDark;                                
+                                border-color: $light-darkShadow;
+                                background-color: $light-mainDark;                               
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
