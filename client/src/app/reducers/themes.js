@@ -8,7 +8,7 @@ const themeArray = [
 function getTheme() {
     const param = localStorage.getItem("param_theme");
     if (param)
-        return (localStorage.getItem("param_theme"));
+        return (param);
     else
         return themeArray.indexOf(globalConfig.defaultTheme);
 }
