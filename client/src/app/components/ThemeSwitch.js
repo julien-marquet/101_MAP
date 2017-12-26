@@ -8,6 +8,9 @@ class ThemeSwitch extends Component {
             selectedValue: this.props.themes.value
         };
     }
+    componentWillReceiveProps(nextProps) {
+        localStorage.setItem("param_theme", nextProps.themes.value);
+    }
     selectKey(event) {
         this.props.storeActiveTheme({
             value: parseInt(event.target.value)
@@ -17,7 +20,7 @@ class ThemeSwitch extends Component {
         });
     }
     renderOptions() {
-        let options = [];
+        const options = [];
         this.props.themes.array.map((theme, index) => {
             options.push(
                 <option key={index} value={index}>{theme}</option>

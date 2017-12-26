@@ -15,8 +15,7 @@ class App extends Component {
 
         this.state = {
             connected: false, 
-            loading: true,
-            theme: this.props.themes.value
+            loading: true
         };
 
         this.askCode = this.askCode.bind(this);

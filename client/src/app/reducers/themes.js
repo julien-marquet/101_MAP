@@ -5,15 +5,21 @@ const themeArray = [
     "dark",
     "light"
 ];
+function getTheme() {
+    const param = localStorage.getItem("param_theme");
+    if (param)
+        return (localStorage.getItem("param_theme"));
+    else
+        return themeArray.indexOf(globalConfig.defaultTheme);
+}
 const initialState = {
     array: themeArray,
-    value: themeArray.indexOf(globalConfig.defaultTheme)
+    value: getTheme()
 };
 
 const themes = (state = initialState, {type, payload}) => {
     switch (type) {
     case ACTIVE_THEME_SWAP:
-    console.log("swap");
         return {
             ...state,
             ...payload
