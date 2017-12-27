@@ -1,7 +1,3 @@
-$smallScreen: screen and (max-height: 950px);
-$mediumScreen: screen and (min-height: 950px);
-$largeScreen: screen and (min-height: 1080px);
-
 @function get_size($f_multiplier, $f_coefficient) {
     @return $f_multiplier * $f_coefficient
 }
@@ -292,14 +288,4 @@ $largeScreen: screen and (min-height: 1080px);
 @import 'themes/dark.scss';
 @import 'themes/light.scss';
 
-@media #{$smallScreen} {
-    @include applyStyle($seatSize: 35px, $seatSidesMargin: 2px, $seatRowMargin: 1px, $zoneMargin: 2px, $coefficient:1.5);
-}
-
-@media #{$mediumScreen} {
-    @include applyStyle($seatSize: 42px, $seatSidesMargin: 5px, $seatRowMargin: 2px, $zoneMargin: 5px, $coefficient:1.9);
-}
-
-@media #{$largeScreen} {
-    @include applyStyle($seatSize: 55px, $seatSidesMargin: 5px, $seatRowMargin: 6px, $zoneMargin: 5px, $coefficient:2);
-}
+@include applyStyle($seatSize: 3.8vh, $seatSidesMargin: 0.5vh, $seatRowMargin: 0.2vh, $zoneMargin: 0.5vh, $coefficient:1.5);
