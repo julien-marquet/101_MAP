@@ -1,7 +1,16 @@
 @import '../colorPallet/dark.scss';
 
-.dark { 
+.dark {
+    .loginWrapper {
+        .loginButton {
+            border-color: #fff;
+        }
+    }
+    .loader {
+        background-color: $dark-backColor;        
+    }
     .wrapper {
+        color: #fff;
         background-color: $dark-backColor;
     }
     .zone {

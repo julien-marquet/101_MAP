@@ -1,7 +1,16 @@
 @import '../colorPallet/light.scss';
 
-.light { 
+.light {
+    .loginWrapper {
+        .loginButton {
+            border-color:#000;
+        }
+    }
+    .loader {
+        background-color: $light-backColor;        
+    }
     .wrapper {
+        color: #000;
         background-color: $light-backColor;
     }
     .zone {

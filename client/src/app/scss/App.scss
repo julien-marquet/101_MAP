@@ -75,15 +75,27 @@ html, body
   flex-direction: column;
 }
 
+.loginWrapper {
+    border-radius: 2px;    
+    display: inline-block;
+    width:50%;
+    h1 {
+        text-align: center;
+    }
+    padding: 10px;
+}
 .logo {
-  width: 20%;
+    position: relative;
+    left: 50%;
+    max-width: 40%;
+    transform: translateX(-50%);
 }
 
 .loginButton {
-  width: 25%;
   height: 50px;
-  border: 10px solid black;
-  border-radius: 20px;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 2px;
   margin-top: 10px;
   display: flex;
   justify-content: center;

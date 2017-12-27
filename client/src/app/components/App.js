@@ -58,16 +58,18 @@ class App extends Component {
         else {
             return (
                 <div key={"Component0"} className="wrapper">
-                    <h1>WarZone</h1>
-                    <img
-                        className={"logo"}
-                        src={this.props.themes.value == 0 ? logo_dark : logo_light}
-                    />
-                    <div
-                        className={"loginButton"}
-                        onClick={this.askCode}
-                    >
-                        <p>{"Login"}</p>
+                    <div className={"loginWrapper"}>
+                        <h1>WarZone</h1>
+                        <img
+                            className={"logo"}
+                            src={this.props.themes.value == 0 ? logo_dark : logo_light}
+                        />
+                        <div
+                            className={"loginButton"}
+                            onClick={this.askCode}
+                        >
+                            <p>{"Login"}</p>
+                        </div>
                     </div>
                 </div>
             );
