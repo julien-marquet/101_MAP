@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import UpTime from "./Uptime";
+import placeholder from "../../../img/placeholder_profil.svg";
 
 class HostInfo extends Component {
     constructor(props) {
@@ -8,8 +9,11 @@ class HostInfo extends Component {
         this.addDefaultSrc = this.addDefaultSrc.bind(this);
     }
     addDefaultSrc(ev) {
-        if(this.props.activeUser !== undefined && ev.target.src.slice(-3) !== "jpg")
+        const ext = ev.target.src.slice(-3);
+        if(this.props.activeUser !== undefined && ext !== "jpg" && ext !== "svg")
             ev.target.src = `https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.jpg`;
+        else if (this.props.activeUser !== undefined && ext === "jpg")
+            ev.target.src = placeholder;
     }	
     render() {
         return (

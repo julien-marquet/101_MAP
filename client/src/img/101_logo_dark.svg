@@ -3,6 +3,9 @@
         Vectorisation_logo101
     </title>
     <style>
+        .cls-1 {
+            stroke: #c2c2d3;
+        }
         polygon, path {
             fill: #c2c2d3;
         }       
