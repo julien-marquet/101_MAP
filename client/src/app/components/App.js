@@ -5,7 +5,8 @@ import {retrieveCookie, removeCookie} from "../helpers/cookies.helper";
 import Sockets from "../containers/sockets";
 import Warzone from "../containers/warzone";
 import config from "../../config/globalConfig";
-import logo from "../../img/101_logo.svg";
+import logo_light from "../../img/101_logo_light.svg";
+import logo_dark from "../../img/101_logo_dark.svg";
 import Loader from "../components/Loader";
 import "../scss/App.css";
 
@@ -57,16 +58,18 @@ class App extends Component {
         else {
             return (
                 <div key={"Component0"} className="wrapper">
-                    <h1>WarZone</h1>
-                    <img
-                        className={"logo"}
-                        src={logo}
-                    />
-                    <div
-                        className={"loginButton"}
-                        onClick={this.askCode}
-                    >
-                        <p>{"Login"}</p>
+                    <div className={"loginWrapper"}>
+                        <h1>WarZone</h1>
+                        <img
+                            className={"logo"}
+                            src={this.props.themes.value == 0 ? logo_dark : logo_light}
+                        />
+                        <div
+                            className={"loginButton"}
+                            onClick={this.askCode}
+                        >
+                            <p>{"Login"}</p>
+                        </div>
                     </div>
                 </div>
             );
