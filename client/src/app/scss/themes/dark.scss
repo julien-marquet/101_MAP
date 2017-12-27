@@ -3,78 +3,82 @@
 .dark {
     .loginWrapper {
         .loginButton {
-            border-color: #fff;
+            border-color: $loginColor;
+        }
+        .loginButton:hover {
+            background-color: $loginColor;
+            color: $backColor;
         }
     }
     .loader {
-        background-color: $dark-backColor;        
+        background-color: $backColor;        
     }
     .wrapper {
-        color: #fff;
-        background-color: $dark-backColor;
+        color: $loginColor;
+        background-color: $backColor;
     }
     .zone {
-        background-color: $dark-zoneColor;
+        background-color: $zoneColor;
     }
     .seat {
-        background-color: $dark-seatColor;
+        background-color: $seatColor;
     }
     .seatRow {
-        background-color: $dark-rowColor;
+        background-color: $rowColor;
     }
     .hostInfoWrapper {
-        border-color: $dark-darkShadow;
-        box-shadow: 4px 4px 8px $dark-mediumShadow;
+        border-color: $darkShadow;
+        box-shadow: 4px 4px 8px $mediumShadow;
         .splitter {
             .rightCol {
                 .skewed {
                     &.main {
-                        background-color: $dark-mainDark;
+                        background-color: $mainDark;
                     }
                     &.secondary {
-                        background-color: $dark-main;
+                        background-color: $main;
                         .hostName {
-                            color: $dark-textSecondary;
+                            color: $textSecondary;
                         }
                     }
                 }
                 .hostContent {
                     &.contentTop {
-                        background-color: $dark-mainDark;
+                        background-color: $mainDark;
                         .userName {
-                            color: $dark-textSecondary;
+                            color: $textSecondary;
                         }
                         .tags {
-                            color: $dark-textPrimary;                            
+                            color: $textPrimary;                            
                             &.inactive {
-                                color: $dark-textTertiary;
+                                color: $textTertiary;
                             }
                         }
                     }
                     &.contentBottom {
-                        background-color: $dark-main;
+                        background-color: $main;
                         .stats {
                             .statName {
-                                color: $dark-textPrimary;                              
+                                color: $textPrimary;                              
                             }
                             .statValue {
-                                color: $dark-textSecondary;
+                                color: $textSecondary;
                             }
                         }
                         .profileButton {
                             .buttonContent {
-                                background-color: $dark-mainDark;                            
-                                border-color: $dark-darkShadow;
-                                box-shadow: 2px 2px 2px $dark-darkShadow;
+                                background-color: $mainDark;                            
+                                border-color: $darkShadow;
+                                box-shadow: 2px 2px 2px $darkShadow;
                                 .linkUserAccount {
-                                    color: $dark-textSecondary;
+                                    color: $textSecondary;
                                 }
                             }
                             .buttonSkewed {
-                                box-shadow: 2px 2px 2px $dark-darkShadow;
-                                background-color: $dark-mainDark;                                
-                                border-color: $dark-darkShadow;
-                                background-color: $dark-mainDark;                               
+                                box-shadow: 2px 2px 2px $darkShadow;
+                                background-color: $mainDark;                                
+                                border-color: $darkShadow;
+                                background-color: $mainDark;                               
                             }
                         }
                     }
