@@ -3,6 +3,7 @@ import React, {Component, Fragment} from "react";
 import SeatRow from "./map/Seatrow";
 import HostInfo from "../containers/hostinfo";
 import ThemeSwitch from "../containers/themeSwitch";
+import DisconnectSwitch from "../containers/disconnectSwitch";
 import "../scss/warzone.css";
 
 class Warzone extends Component {
@@ -46,6 +47,7 @@ class Warzone extends Component {
         return (
             <div className={"wrapper"}>
                 <ThemeSwitch />
+                <DisconnectSwitch />
                 <div className={"zonesWrapper"}>
                     {this.renderZones()}
                 </div>

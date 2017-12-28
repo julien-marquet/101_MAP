@@ -15,7 +15,6 @@ class App extends Component {
         super(props);
 
         this.state = {
-            connected: false, 
             loading: true
         };
 
@@ -26,13 +25,19 @@ class App extends Component {
         this.checkConnection();
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.globalState.connected != nextProps.globalState.connected && nextProps.globalState.connected) {
+            this.setState({loading: false});
+        }
+    }
+
     checkConnection() {
         const params = new URLSearchParams(window.location.search);
         const userToken = retrieveCookie("userToken");
         if (userToken || params.get("code")) {
             this.props.socket.connect(params.get("code"), userToken)
                 .then(() => {
-                    this.setState({connected: true, loading: false});
+                    this.props.connectApp();
                 })
                 .catch(()=> {
                     removeCookie("userToken");
@@ -49,7 +54,7 @@ class App extends Component {
     }
 
     renderApp() {
-        if (this.state.connected) {
+        if (this.props.globalState.connected) {
             return [
                 <Sockets key={"Component0"} socket={this.props.socket} />,
                 <Warzone key={"Component1"} />
@@ -75,6 +80,7 @@ class App extends Component {
             );
         }
     }
+
     render() {
         return (
             <div className={`themeWrapper ${this.props.themes.array[this.props.themes.value]}`}>
