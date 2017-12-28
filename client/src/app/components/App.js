@@ -24,6 +24,13 @@ class App extends Component {
     componentDidMount() {
         this.checkConnection();
     }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.globalState.connected != nextProps.globalState.connected && nextProps.globalState.connected) {
+            this.setState({loading: false});
+        }
+    }
+
     checkConnection() {
         const params = new URLSearchParams(window.location.search);
         const userToken = retrieveCookie("userToken");
@@ -31,7 +38,6 @@ class App extends Component {
             this.props.socket.connect(params.get("code"), userToken)
                 .then(() => {
                     this.props.connectApp();
-                    this.setState({loading: false});
                 })
                 .catch(()=> {
                     removeCookie("userToken");
@@ -74,6 +80,7 @@ class App extends Component {
             );
         }
     }
+
     render() {
         return (
             <div className={`themeWrapper ${this.props.themes.array[this.props.themes.value]}`}>

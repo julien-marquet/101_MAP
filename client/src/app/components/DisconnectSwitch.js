@@ -1,20 +1,24 @@
 import React, {Component} from "react";
-import {removeCookie} from "../helpers/cookies.helper";
+// import {removeCookie} from "../helpers/cookies.helper";
 
 class DisconnectSwitch extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+
         this.disconnect = this.disconnect.bind(this);
     }
+
     disconnect() {
         //removeCookie("userToken");
         this.props.disconnectApp({connected: false});
-        console.log("disconnect");
     }
-    render()
-    {
+
+    render() {
         return (
-            <button onClick={() => { this.disconnect();}} className={"disconnectSwitch"}>
+            <button
+                onClick={this.disconnect}
+                className={"disconnectSwitch"}
+            >
                 Disconnect
             </button>
         );
