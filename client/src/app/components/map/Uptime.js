@@ -8,31 +8,42 @@ class UpTime extends Component {
         this.state = {
             time: null
         };
+
         this.timeout = null;
     }
-    componentDidMount() {
-        this.setTimer();
-    }
-    componentDidUpdate() {
-        this.setTimer();
-    }
+
     componentWillReceiveProps(nextProps) {
-        clearTimeout(this.timeout);
-        const date = moment.utc(nextProps.begin_at).subtract(1, "hours");
-        this.setState({
-            time : moment.utc().diff(date)
-        });
+        if (this.timeout !== null) {
+            clearTimeout(this.timeout);
+        }
+        if (this.props.begin_at !== nextProps.begin_at) {
+            const date = moment.utc(nextProps.begin_at).subtract(1, "hours");
+            this.setState({
+                time : moment.utc().diff(date)
+            });
+            this.setTimer();
+        }
     }
+
+    componentWillUnmount() {
+        if (this.timeout !== null) {
+            clearTimeout(this.timeout);
+        }
+    }
+
     tick() {
         this.setState({
             time: (this.state.time + 1000)
         });
+        this.setTimer();
     }
+
     setTimer() {
         this.timeout = setTimeout(() => {
             this.tick();
         }, 1000);
     }
+
     render()
     {
         const d = moment.duration(this.state.time);
@@ -43,7 +54,7 @@ class UpTime extends Component {
                         UpTime :
                     </span>
                     <span className={"statValue"}>
-                        {Math.floor(d.asHours()) + moment.utc(this.state.time).format(":mm:ss")}
+                        {this.state.time === null ? "00:00:00" : Math.floor(d.asHours()) + moment.utc(this.state.time).format(":mm:ss")}
                     </span>    
                 </p>
             </li>

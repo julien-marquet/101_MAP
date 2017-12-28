@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-// import {removeCookie} from "../helpers/cookies.helper";
+import {removeCookie} from "../helpers/cookies.helper";
 
 class DisconnectSwitch extends Component {
     constructor(props) {
@@ -9,7 +9,7 @@ class DisconnectSwitch extends Component {
     }
 
     disconnect() {
-        //removeCookie("userToken");
+        removeCookie("userToken");
         this.props.disconnectApp();
     }
 
