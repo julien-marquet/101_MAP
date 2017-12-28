@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        disconnectApp: payload => dispatch({type: DISCONNECT_APP, payload})
+        disconnectApp: () => dispatch({type: DISCONNECT_APP})
     };
 };
 

@@ -10,7 +10,7 @@ class DisconnectSwitch extends Component {
 
     disconnect() {
         //removeCookie("userToken");
-        this.props.disconnectApp({connected: false});
+        this.props.disconnectApp();
     }
 
     render() {
