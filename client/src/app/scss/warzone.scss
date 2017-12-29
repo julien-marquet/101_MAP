@@ -142,6 +142,11 @@
     .zoneContainer:first-child .zone {
         display: inline-block;
     }
+
+    .zoneContainer:first-child {
+        justify-content: space-between;
+        display: flex;
+    }
     
     .hostInfoWrapper {
         margin: $zoneMargin;
