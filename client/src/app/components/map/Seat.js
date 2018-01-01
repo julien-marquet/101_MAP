@@ -1,15 +1,19 @@
 import React, {Component} from "react";
+import placeholder from "../../../img/placeholder_profil.svg";
+import PropTypes from "prop-types";
 
 class Seat extends Component {
     constructor(props) {
         super(props);
-
         this.addDefaultSrc = this.addDefaultSrc.bind(this);
     }
 
     addDefaultSrc(ev) {
-        if(this.props.user !== undefined && ev.target.src.slice(-3) != "jpg")
-            ev.target.src = `https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.jpg`;
+        const ext = ev.target.src.slice(-3);
+        if(this.props.user !== undefined && ext !== "jpg" && ext !== "svg")
+            ev.target.src = `https://cdn.intra.42.fr/users/large_${this.props.user.user.login}.jpg`;
+        else if (this.props.user !== undefined && ext === "jpg")
+            ev.target.src = placeholder;
     }
 
     render() {
@@ -41,5 +45,13 @@ class Seat extends Component {
         }
     }
 }
+
+Seat.PropTypes = {
+    storeActiveUsers: PropTypes.func.isRequired,
+    hostname: PropTypes.string,
+    user: {
+        login: PropTypes.string
+    }
+};
 
 export default Seat;

@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {removeCookie} from "../helpers/cookies.helper";
+import PropTypes from "prop-types";
 
 class DisconnectSwitch extends Component {
     constructor(props) {
@@ -24,5 +25,10 @@ class DisconnectSwitch extends Component {
         );
     }
 }
+
+DisconnectSwitch.proptypes = {
+    disconnectApp: PropTypes.func.isRequired
+};
+
 
 export default DisconnectSwitch;

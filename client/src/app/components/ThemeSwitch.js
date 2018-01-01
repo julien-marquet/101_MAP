@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import PropTypes from "prop-types";
 
 class ThemeSwitch extends Component {
     constructor(props)
@@ -39,5 +40,13 @@ class ThemeSwitch extends Component {
         );
     }
 }
+
+ThemeSwitch.proptypes = {
+    storeActiveTheme: PropTypes.func.isRequired,
+    themes: {
+        array: PropTypes.array.isRequired,
+        value: PropTypes.number.isRequired
+    }
+};
 
 export default ThemeSwitch;

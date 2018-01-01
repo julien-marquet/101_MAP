@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import moment from "moment";
+import PropTypes from "prop-types";
 
 class UpTime extends Component {
     constructor(props) {
@@ -61,5 +62,9 @@ class UpTime extends Component {
         );
     }
 }
+
+UpTime.proptypes = {
+    begin_at: PropTypes.string.isRequired
+};
 
 export default UpTime;

@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import PropTypes from "prop-types";
 import UpTime from "./Uptime";
 import placeholder from "../../../img/placeholder_profil.svg";
 
@@ -56,5 +57,15 @@ class HostInfo extends Component {
         );
     }
 }
+
+HostInfo.proptypes = {
+    activeUser: {
+        hostname: PropTypes.string,
+        begin_at: PropTypes.string,
+        user: {
+            login:PropTypes.string,
+        }
+    }
+};
 
 export default HostInfo;

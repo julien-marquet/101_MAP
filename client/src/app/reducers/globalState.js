@@ -2,16 +2,11 @@ import {DISCONNECT_APP, CONNECT_APP, ACTIVE_THEME_SWAP} from "../actions/globalS
 
 import globalConfig from "../../config/globalConfig";
 
-const themeArray = [
-    "dark",
-    "light"
-];
-
 const initialState = {
     connected: false,
     themes: {
-        array: themeArray,
-        value: localStorage.getItem("param_theme") || themeArray.indexOf(globalConfig.defaultTheme)
+        array: globalConfig.themeArray,
+        value: localStorage.getItem("param_theme") || globalConfig.themeArray.indexOf(globalConfig.defaultTheme)
     }
 };
 
