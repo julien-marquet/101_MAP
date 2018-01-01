@@ -1,1 +1,0 @@
-export const ACTIVE_THEME_SWAP = "active_theme.swap";

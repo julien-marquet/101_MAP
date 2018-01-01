@@ -1,11 +1,30 @@
-import {DISCONNECT_APP, CONNECT_APP} from "../actions/globalState";
+import {DISCONNECT_APP, CONNECT_APP, ACTIVE_THEME_SWAP} from "../actions/globalState";
+
+import globalConfig from "../../config/globalConfig";
+
+const themeArray = [
+    "dark",
+    "light"
+];
 
 const initialState = {
-    connected: false
+    connected: false,
+    themes: {
+        array: themeArray,
+        value: localStorage.getItem("param_theme") || themeArray.indexOf(globalConfig.defaultTheme)
+    }
 };
 
-const globalState = (state = initialState, {type}) => {
+const globalState = (state = initialState, {type, payload}) => {
     switch (type) {
+    case ACTIVE_THEME_SWAP:
+        return {
+            ...state,
+            themes: {
+                ...state.themes,
+                ...payload
+            }
+        };
     case DISCONNECT_APP:
         return {
             ...state,
