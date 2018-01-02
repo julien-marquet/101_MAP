@@ -3,6 +3,7 @@ $themeNb: 2;
 $tileSize: 40px;
 $dropdownSeparation: 1px;
 $dropdownInnerSeparation: 1px;
+$iconSpacing: 10px;
 
 .sidebar {
 	overflow: hidden;
@@ -12,6 +13,7 @@ $dropdownInnerSeparation: 1px;
 	padding: 0px;
 	.main-tile {
 		transition: background-color 0.15s ease-in-out;
+		font-size: 200%;
 	}
 	.tile {
 		display: table;
@@ -20,7 +22,10 @@ $dropdownInnerSeparation: 1px;
 		width: 100%;
 		span {
 			display:table-cell;
- 			vertical-align:middle;
+			 vertical-align:middle;
+			 i {
+				margin: $iconSpacing;
+			 }
 		}
 	}
 	.btn {
@@ -32,9 +37,8 @@ $dropdownInnerSeparation: 1px;
 		}
 	}
 	.multi-dropdown {
-		width: 100%;
 		&.opened .dropdown-content {
-			max-height: $tileSize * $themeNb + (2 * $dropdownSeparation) + ($themeNb * ($dropdownInnerSeparation * 2));
+			max-height: $tileSize * $themeNb + (2 * $dropdownSeparation) + ($themeNb * ($dropdownInnerSeparation * 2) + (2 * $iconSpacing));
 		}
 		&.closed .dropdown-content {
 			transform-origin: top;
@@ -52,7 +56,7 @@ $dropdownInnerSeparation: 1px;
 				border-style: solid;
 				border-width: $dropdownInnerSeparation 0;
 				&:hover {
-					transform: translateX(5px);
+					transform: translateX(1px);
 				}
 			}
 			max-height: 0px;

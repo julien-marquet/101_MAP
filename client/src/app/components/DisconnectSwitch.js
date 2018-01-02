@@ -16,12 +16,12 @@ class DisconnectSwitch extends Component {
 
     render() {
         return (
-            <button
+            <div
                 onClick={this.disconnect}
                 className={"disconnectSwitch btn tile main-tile"}
             >
-                Disconnect
-            </button>
+                <span><i class="fas fa-power-off"></i></span>
+            </div>
         );
     }
 }

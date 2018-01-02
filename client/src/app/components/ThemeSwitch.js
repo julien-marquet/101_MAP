@@ -5,6 +5,10 @@ class ThemeSwitch extends Component {
     constructor(props)
     {
         super(props);
+        this.iconArray = [
+            <i class="far fa-circle"></i>,
+            <i class="fas fa-circle"></i>
+        ];
         this.selectKey = this.selectKey.bind(this);
         this.toggleDropDown = this.toggleDropDown.bind(this);
         this.state = {
@@ -38,7 +42,7 @@ class ThemeSwitch extends Component {
                         this.selectKey(index);
                     }}>
                     <span>
-                        {theme}
+                        {this.iconArray[index]}
                     </span>
                 </div>
             );
@@ -53,7 +57,8 @@ class ThemeSwitch extends Component {
                     onClick={() => {
                         this.toggleDropDown();
                     }}>
-                    <span>{this.props.themes.array[this.state.selectedValue]}</span>
+                   
+                    <span> <i class="fas fa-adjust"></i></span>
                 </div>
                 <div className={"dropdown-content"}>
                     {this.renderOptions()}
