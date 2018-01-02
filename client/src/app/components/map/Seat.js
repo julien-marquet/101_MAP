@@ -46,12 +46,12 @@ class Seat extends Component {
     }
 }
 
-Seat.PropTypes = {
+Seat.propTypes = {
     storeActiveUsers: PropTypes.func.isRequired,
     hostname: PropTypes.string,
-    user: {
+    user: PropTypes.shape({
         login: PropTypes.string
-    }
+    })
 };
 
 export default Seat;

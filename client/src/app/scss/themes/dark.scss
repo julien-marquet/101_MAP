@@ -1,6 +1,37 @@
 @import '../colorPallet/dark.scss';
 
 .dark {
+    .sidebar {
+        background-color: $sidebarColor;
+        .main-tile {
+            &:nth-child(2n+1) {
+                background-color: lighten($color: $sidebarColor, $amount: 4);
+            }
+            &:hover {
+                background-color: lighten($color: $sidebarColor, $amount: 8);
+            }
+        }
+        .btn {
+            color: $textSideBar;
+        }
+        .multi-dropdown {
+            color: $textSideBar;
+            .dropdown-header {
+                border-bottom-color: $sidebarBorderColor;
+            }
+            .dropdown-content {
+                background-color: $sidebarBorderColor;
+                border-bottom-color: $sidebarBorderColor;
+                .dropdown-option {
+                    background-color: darken($color: $sidebarColor, $amount: 2);
+                    border-color: $sidebarBorderColor;
+                    &:hover {
+                        background-color: lighten($color: $sidebarColor, $amount: 2);
+                    }		
+                }
+            }
+        }
+    }
     .loginWrapper {
         .loginButton {
             border-color: $loginColor;

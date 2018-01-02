@@ -18,7 +18,7 @@ class DisconnectSwitch extends Component {
         return (
             <button
                 onClick={this.disconnect}
-                className={"disconnectSwitch"}
+                className={"disconnectSwitch btn tile main-tile"}
             >
                 Disconnect
             </button>

@@ -62,9 +62,9 @@ HostInfo.proptypes = {
     activeUser: {
         hostname: PropTypes.string,
         begin_at: PropTypes.string,
-        user: {
+        user: PropTypes.shape({
             login:PropTypes.string,
-        }
+        })
     }
 };
 
