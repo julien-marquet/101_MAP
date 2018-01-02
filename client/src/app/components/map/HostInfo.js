@@ -17,6 +17,28 @@ class HostInfo extends Component {
             ev.target.src = placeholder;
     }	
     render() {
+        if (!this.props.activeUser.hostname)
+        {
+            return (
+                <div className={"hostInfoWrapper"}>
+                    <div className={"splitter"}>
+                        <div className={"leftCol"}>
+                        </div>
+                        <div className={"rightCol"}>
+                            <div className={"main skewed"} />
+                            <div className={"secondary skewed"} >
+                                <div className={"hostName"}>
+                                </div>
+                            </div>
+                            <div className={"contentTop hostContent"} >
+                            </div>
+                            <div className={"contentBottom hostContent"} >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
         return (
             <div className={"hostInfoWrapper"}>
                 <div className={"splitter"}>
