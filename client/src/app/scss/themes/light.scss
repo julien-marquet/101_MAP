@@ -12,7 +12,8 @@
         }
     }
     .loader {
-        background-color: $backColor;        
+        background-color: $backColor;
+        background-image: url('../../img/svg-loaders/oval-light.svg'); 
     }
     .wrapper {
         color: $loginColor;
