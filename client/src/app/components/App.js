@@ -54,9 +54,7 @@ class App extends Component {
 
     renderApp() {
         if (this.props.globalState.connected) {
-            return [
-                <Warzone key={"Component1"} />
-            ];
+            return (<Warzone key={"Component1"} />);
         }
         else {
             return (

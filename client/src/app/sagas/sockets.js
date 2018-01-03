@@ -6,7 +6,7 @@ import {storeCookie} from "../helpers/cookies.helper";
 
 function setupListeners(socketClient, dispatch) {
     socketClient.on("connectedUsers", data => {
-        dispatch({type: USERS_GETTED, payload: data});
+        dispatch({type: USERS_GETTED, payload: JSON.parse(data)});
     });
     
     socketClient.on("authSuccess", data => {
