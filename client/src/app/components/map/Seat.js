@@ -38,6 +38,7 @@ class Seat extends Component {
                             onError={this.addDefaultSrc}
                             src={`https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`}
                             className={"userImg"}
+                            alt={"User"}
                         />
                     </div>
                 </div>                    

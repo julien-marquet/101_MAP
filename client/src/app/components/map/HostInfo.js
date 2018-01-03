@@ -9,13 +9,22 @@ class HostInfo extends Component {
 
         this.addDefaultSrc = this.addDefaultSrc.bind(this);
     }
+
     addDefaultSrc(ev) {
-        const ext = ev.target.src.slice(-3);
-        if(this.props.activeUser !== undefined && ext !== "jpg" && ext !== "svg")
-            ev.target.src = `https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.jpg`;
-        else if (this.props.activeUser !== undefined && ext === "jpg")
+        if (this.props.activeUser.user.login === null) {
             ev.target.src = placeholder;
-    }	
+        }
+        else {
+            if (ev.target.src.slice(-3) === "jpg") {
+                ev.target.src = placeholder;
+            }
+            else {
+                ev.target.src = `https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.jpg`;
+                ev.target.className = "userPortrait42";
+            }
+        }
+    }
+
     render() {
         if (!this.props.activeUser.hostname)
         {
@@ -43,7 +52,12 @@ class HostInfo extends Component {
             <div className={"hostInfoWrapper"}>
                 <div className={"splitter"}>
                     <div className={"leftCol"}>
-                        <img className={"userPortrait"} onError={this.addDefaultSrc} src={`https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}/>
+                        <img
+                            className={"userPortrait"}
+                            onError={this.addDefaultSrc}
+                            src={`https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
+                            alt={"User portrait"}
+                        />
                     </div>
                     <div className={"rightCol"}>
                         <div className={"main skewed"} />

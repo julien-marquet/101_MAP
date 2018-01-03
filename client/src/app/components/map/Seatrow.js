@@ -12,20 +12,19 @@ class Seatrow extends Component {
     }
 
     componentWillMount() {
-        if (this.props.zone == "z3") {
+        if (this.props.zone === "z3") {
             this.seatRowStyle.flexDirection = "column";
             this.rowWrapperStyle.flexDirection = "row-reverse";
         }
     }
 
     renderFromTo(from, to = null) {
-        const result = [];
-        this.props.seats.map((seatsRow, rowIndex) => {
+        return this.props.seats.map((seatsRow, rowIndex) => {
             if (rowIndex >= from && (to === null || rowIndex < to)) {
-                result.push(this.renderSeat(seatsRow, rowIndex));
+                return this.renderSeat(seatsRow, rowIndex);
             }
+            return null;
         });
-        return (result);
     }
 
     renderSeat(seatsRow, rowIndex) {
