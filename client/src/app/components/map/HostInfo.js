@@ -33,6 +33,7 @@ class HostInfo extends Component {
                             className={"userPortrait"}
                             onError={this.addDefaultSrc}
                             src={`https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
+                            alt={"User portrait"}
                         />
                     </div>
                     <div className={"rightCol"}>

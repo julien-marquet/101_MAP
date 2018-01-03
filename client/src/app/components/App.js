@@ -25,7 +25,7 @@ class App extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.globalState.connected != nextProps.globalState.connected && nextProps.globalState.connected) {
+        if (this.props.globalState.connected !== nextProps.globalState.connected && nextProps.globalState.connected) {
             this.setState({loading: false});
         }
     }
@@ -63,7 +63,8 @@ class App extends Component {
                         <h1>WarZone</h1>
                         <img
                             className={"logo"}
-                            src={this.props.themes.value == 0 ? logo_dark : logo_light}
+                            src={this.props.themes.value === 0 ? logo_dark : logo_light}
+                            alt={"Logo"}
                         />
                         <div
                             className={"loginButton"}

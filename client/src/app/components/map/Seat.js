@@ -8,7 +8,7 @@ class Seat extends Component {
     }
 
     addDefaultSrc(ev) {
-        if(this.props.user !== undefined && ev.target.src.slice(-3) != "jpg") {
+        if (this.props.user !== undefined && ev.target.src.slice(-3) !== "jpg") {
             ev.target.src = `https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.jpg`;
             ev.target.className = "userImg42";
         }
@@ -36,6 +36,7 @@ class Seat extends Component {
                             onError={this.addDefaultSrc}
                             src={`https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`}
                             className={"userImg"}
+                            alt={"User"}
                         />
                     </div>
                 </div>                    

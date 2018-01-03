@@ -31,6 +31,7 @@ class Warzone extends Component {
                     />
                 </div>
             );
+            return null;
         });
         return (
             <Fragment>
