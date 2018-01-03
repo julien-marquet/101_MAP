@@ -8,15 +8,22 @@ class HostInfo extends Component {
 
         this.addDefaultSrc = this.addDefaultSrc.bind(this);
     }
+
     addDefaultSrc(ev) {
-        const ext = ev.target.src.slice(-3);
-        if(this.props.activeUser !== undefined && ext !== "jpg" && ext !== "svg") {
-            ev.target.src = `https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.jpg`;
-            ev.target.className = "userPortrait42";
-        }
-        else if (this.props.activeUser !== undefined && ext === "jpg")
+        if (this.props.activeUser.user.login === null) {
             ev.target.src = placeholder;
-    }	
+        }
+        else {
+            if (ev.target.src.slice(-3) === "jpg") {
+                ev.target.src = placeholder;
+            }
+            else {
+                ev.target.src = `https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.jpg`;
+                ev.target.className = "userPortrait42";
+            }
+        }
+    }
+
     render() {
         return (
             <div className={"hostInfoWrapper"}>
