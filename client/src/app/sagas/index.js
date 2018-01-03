@@ -1,9 +1,9 @@
-import {all, fork} from 'redux-saga/effects'
+import {all, fork} from "redux-saga/effects";
 
-import app from './app';
+import sockets from "./sockets";
 
-export default function* root() {
-  yield all([
-    fork(app)
-  ]);
+export default function* root(socketClient, dispatch) {
+    yield all([
+        fork(sockets, socketClient, dispatch)
+    ]);
 }
