@@ -27,9 +27,14 @@
         border-radius: $seatBorderRadius;
     }
 
-    .seat img {
+    .userImg {
         height: 100%;
         margin-left: -25%;
+        cursor: pointer;
+    }
+
+    .userImg42 {
+        height: 100%;
         cursor: pointer;
     }
     
@@ -47,7 +52,7 @@
     .seatHover {
         position: absolute;
         display: flex;
-        align-items: center;
+        justify-content: center;
         overflow: hidden;
         border-radius: $seatBorderRadius;
         width: $seatSize;
@@ -167,6 +172,11 @@
                     position: relative;
                     height: 100%;
                     left: -60%;
+                }
+                .userPortrait42 {
+                    position: relative;
+                    height: 100%;
+                    left: -7%;
                 }
             }
             .rightCol {
