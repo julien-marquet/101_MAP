@@ -1,0 +1,67 @@
+// Number of themes
+$themeNb: 2;
+$tileSize: 40px;
+$dropdownSeparation: 1px;
+$dropdownInnerSeparation: 1px;
+$iconSpacing: 10px;
+
+.sidebar {
+	overflow: hidden;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	padding: 0px;
+	.main-tile {
+		transition: background-color 0.15s ease-in-out;
+		font-size: 200%;
+	}
+	.tile {
+		display: table;
+		height: $tileSize;
+		text-align: center;
+		width: 100%;
+		span {
+			display:table-cell;
+			 vertical-align:middle;
+			 i {
+				margin: $iconSpacing;
+			 }
+		}
+	}
+	.btn {
+		background-color: transparent;
+		border: none;
+		&:hover {
+			border: none;
+			outline: none;
+		}
+	}
+	.multi-dropdown {
+		&.opened .dropdown-content {
+			max-height: $tileSize * $themeNb + (2 * $dropdownSeparation) + ($themeNb * ($dropdownInnerSeparation * 2) + (2 * $iconSpacing));
+		}
+		&.closed .dropdown-content {
+			transform-origin: top;
+			transition: max-height 0.25s ease-in-out;
+		}
+		.dropdown-header {
+			border-style: solid;
+			border-width: 0 0 $dropdownSeparation 0;
+		}
+		.dropdown-content {
+			border-style: solid;
+			border-width: 0 0 $dropdownSeparation 0;
+			.dropdown-option {
+				transition: all 0.15s ease-in-out;
+				border-style: solid;
+				border-width: $dropdownInnerSeparation 0;
+				&:hover {
+					transform: translateX(1px);
+				}
+			}
+			max-height: 0px;
+			transition: max-height 0.25s ease-in-out;
+			overflow: hidden;
+		}
+	}
+}

@@ -63,8 +63,7 @@ class App extends Component {
                         <h1>WarZone</h1>
                         <img
                             className={"logo"}
-                            src={this.props.themes.value === 0 ? logo_dark : logo_light}
-                            alt={"Logo"}
+                            src={this.props.globalState.themes.value == 0 ? logo_dark : logo_light}
                         />
                         <div
                             className={"loginButton"}
@@ -80,7 +79,7 @@ class App extends Component {
 
     render() {
         return (
-            <div className={`themeWrapper ${this.props.themes.array[this.props.themes.value]}`}>
+            <div className={`themeWrapper ${this.props.globalState.themes.array[this.props.globalState.themes.value]}`}>
                 <Loader key="ComponentLoader" in={this.state.loading}/>
                 {this.renderApp()}
             </div>

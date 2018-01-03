@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import PropTypes from "prop-types";
 import UpTime from "./Uptime";
 import placeholder from "../../../img/placeholder_profil.svg";
 
@@ -25,6 +26,28 @@ class HostInfo extends Component {
     }
 
     render() {
+        if (!this.props.activeUser.hostname)
+        {
+            return (
+                <div className={"hostInfoWrapper"}>
+                    <div className={"splitter"}>
+                        <div className={"leftCol"}>
+                        </div>
+                        <div className={"rightCol"}>
+                            <div className={"main skewed"} />
+                            <div className={"secondary skewed"} >
+                                <div className={"hostName"}>
+                                </div>
+                            </div>
+                            <div className={"contentTop hostContent"} >
+                            </div>
+                            <div className={"contentBottom hostContent"} >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
         return (
             <div className={"hostInfoWrapper"}>
                 <div className={"splitter"}>
@@ -70,5 +93,15 @@ class HostInfo extends Component {
         );
     }
 }
+
+HostInfo.proptypes = {
+    activeUser: {
+        hostname: PropTypes.string,
+        begin_at: PropTypes.string,
+        user: PropTypes.shape({
+            login:PropTypes.string,
+        })
+    }
+};
 
 export default HostInfo;

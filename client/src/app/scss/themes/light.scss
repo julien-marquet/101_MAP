@@ -1,6 +1,37 @@
 @import '../colorPallet/light.scss';
 
 .light {
+    .sidebar {
+        background-color: $sidebarColor;
+        .main-tile {
+            &:nth-child(2n+1) {
+                background-color: lighten($color: $sidebarColor, $amount: 4);
+            }
+            &:hover {
+                background-color: lighten($color: $sidebarColor, $amount: 8);
+            }
+        }
+        .btn {
+            color: $textSideBar
+        }
+        .multi-dropdown {
+            color: $textSideBar;
+            .dropdown-header {
+                border-bottom-color: $sidebarBorderColor;
+            }
+            .dropdown-content {
+                background-color: $sidebarBorderColor;
+                border-bottom-color: $sidebarBorderColor;
+                .dropdown-option {
+                    background-color: darken($color: $sidebarColor, $amount: 2);
+                    border-color: $sidebarBorderColor;
+                    &:hover {
+                        background-color: lighten($color: $sidebarColor, $amount: 2);
+                    }		
+                }
+            }
+        }
+    }
     .loginWrapper {
         color: $loginColor;
         .loginButton {
@@ -12,7 +43,8 @@
         }
     }
     .loader {
-        background-color: $backColor;        
+        background-color: $backColor;
+        background-image: url('../../img/svg-loaders/oval-light.svg'); 
     }
     .wrapper {
         color: $loginColor;
@@ -84,6 +116,9 @@
                         }
                     }
                 }
+            }
+            .leftCol {
+                background-color: $placeHolderColor;
             }
         }
     }

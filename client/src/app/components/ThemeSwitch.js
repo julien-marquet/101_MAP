@@ -1,46 +1,79 @@
 import React, {Component} from "react";
+import PropTypes from "prop-types";
 
 class ThemeSwitch extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            opened: false,
             selectedValue: this.props.themes.value
         };
 
-        this.selectKey = this.selectKey.bind(this);
+        this.iconArray = [
+            <i class="far fa-circle"></i>,
+            <i class="fas fa-circle"></i>
+        ];
+        this.toggleDropDown = this.toggleDropDown.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
         localStorage.setItem("param_theme", nextProps.themes.value);
     }
 
-    selectKey(event) {
-        this.props.storeActiveTheme({
-            value: parseInt(event.target.value, 10)
-        });
+    selectKey(value) {
+        this.props.storeActiveTheme({value});
         this.setState({
-            selectedValue: event.target.value
+            selectedValue: value,
+            opened: false
+        });
+    }
+
+    toggleDropDown() {
+        this.setState({
+            opened: !this.state.opened
         });
     }
 
     renderOptions() {
         return this.props.themes.array.map((theme, index) => {
-            return <option key={index} value={index}>{theme}</option>;
+            return (
+                <div
+                    key={`Theme${index}`}
+                    className={"dropdown-option tile"}
+                    onClick={() => {
+                        this.selectKey(index);
+                    }}>
+                    <span>
+                        {this.iconArray[index]}
+                    </span>
+                </div>
+            );
         });
     }
-    render()
-    {
+
+    render() {
         return (
-            <div className={"ThemeSwitch"}>
-                <select
-                    defaultValue={this.state.selectedValue}
-                    onChange={this.selectKey}
+            <div className={`ThemeSwitch multi-dropdown  main-tile ${this.state.opened ? "opened" : "closed"}`}>
+                <div 
+                    className={"dropdown-header tile"}
+                    onClick={this.toggleDropDown}
                 >
+                    <span> <i class="fas fa-adjust"></i></span>
+                </div>
+                <div className={"dropdown-content"}>
                     {this.renderOptions()}
-                </select>
+                </div>
             </div>
         );
     }
 }
+
+ThemeSwitch.proptypes = {
+    storeActiveTheme: PropTypes.func.isRequired,
+    themes:  PropTypes.shape({
+        array: PropTypes.array.isRequired,
+        value: PropTypes.number.isRequired
+    })
+};
 
 export default ThemeSwitch;

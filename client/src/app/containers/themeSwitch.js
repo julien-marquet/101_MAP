@@ -1,11 +1,11 @@
 import {connect} from "react-redux";
 
 import ThemeSwitch from "../components/ThemeSwitch";
-import {ACTIVE_THEME_SWAP} from "../actions/themes";
+import {ACTIVE_THEME_SWAP} from "../actions/globalState";
 
 const mapStateToProps = (state) => {
     return {
-        themes: state.themes
+        themes: state.globalState.themes
     };
 };
 

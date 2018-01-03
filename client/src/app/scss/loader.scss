@@ -7,9 +7,9 @@
     z-index: 100;
     display: block;
     background-color: white;
-    background-image: url('../../img/loader.svg');
     background-position: center;
     background-repeat: no-repeat;
+    background-size: 30%;
 
     &.entering {
         opacity: 0;
