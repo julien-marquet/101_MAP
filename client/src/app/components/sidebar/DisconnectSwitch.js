@@ -1,6 +1,7 @@
 import React, {Component} from "react";
-import {removeCookie} from "../helpers/cookies.helper";
 import PropTypes from "prop-types";
+
+import {removeCookie} from "../../helpers/cookies.helper";
 
 class DisconnectSwitch extends Component {
     constructor(props) {

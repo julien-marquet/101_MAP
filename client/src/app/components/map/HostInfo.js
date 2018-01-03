@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
+
 import UpTime from "./Uptime";
 import placeholder from "../../../img/placeholder_profil.svg";
 

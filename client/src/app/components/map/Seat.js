@@ -1,6 +1,7 @@
 import React, {Component} from "react";
-import placeholder from "../../../img/placeholder_profil.svg";
 import PropTypes from "prop-types";
+
+import placeholder from "../../../img/placeholder_profil.svg";
 
 class Seat extends Component {
     constructor(props) {

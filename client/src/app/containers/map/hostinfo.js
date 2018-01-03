@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 
-import HostInfo from "../components/map/HostInfo";
+import HostInfo from "../../components/map/HostInfo";
 
 const mapStateToProps = state => {
     return {

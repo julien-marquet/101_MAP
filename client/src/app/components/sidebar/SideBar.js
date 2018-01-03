@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 
-import ThemeSwitch from "../containers/themeSwitch";
-import DisconnectSwitch from "../containers/disconnectSwitch";
+import ThemeSwitch from "../../containers/sidebar/themeSwitch";
+import DisconnectSwitch from "../../containers/sidebar/disconnectSwitch";
 
-import "../scss/sidebar.css";
+import "../../scss/sidebar.css";
 
 class SideBar extends Component {
     render()

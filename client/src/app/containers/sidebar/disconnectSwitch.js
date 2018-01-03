@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 
-import DisconnectSwitch from "../components/DisconnectSwitch";
-import {DISCONNECT_APP} from "../actions/globalState";
+import DisconnectSwitch from "../../components/sidebar/DisconnectSwitch";
+import {DISCONNECT_APP} from "../../actions/globalState";
 
 const mapStateToProps = (state) => {
     return {
