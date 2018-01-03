@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 
 import {retrieveCookie, removeCookie} from "../helpers/cookies.helper";
-import Sockets from "../containers/sockets";
 import Warzone from "../containers/warzone";
 import config from "../../config/globalConfig";
 import logo_light from "../../img/101_logo_light.svg";
@@ -56,7 +55,6 @@ class App extends Component {
     renderApp() {
         if (this.props.globalState.connected) {
             return [
-                <Sockets key={"Component0"} socket={this.props.socket} />,
                 <Warzone key={"Component1"} />
             ];
         }
