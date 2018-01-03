@@ -2,42 +2,44 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 
 class ThemeSwitch extends Component {
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
-        this.iconArray = [
-            <i class="far fa-circle"></i>,
-            <i class="fas fa-circle"></i>
-        ];
-        this.selectKey = this.selectKey.bind(this);
-        this.toggleDropDown = this.toggleDropDown.bind(this);
         this.state = {
             opened: false,
             selectedValue: this.props.themes.value
         };
+
+        this.iconArray = [
+            <i class="far fa-circle"></i>,
+            <i class="fas fa-circle"></i>
+        ];
+        this.toggleDropDown = this.toggleDropDown.bind(this);
     }
+
     componentWillReceiveProps(nextProps) {
         localStorage.setItem("param_theme", nextProps.themes.value);
     }
+
     selectKey(value) {
-        this.props.storeActiveTheme({
-            value: value
-        });
+        this.props.storeActiveTheme({value});
         this.setState({
             selectedValue: value,
             opened: false
         });
     }
+
     toggleDropDown() {
         this.setState({
             opened: !this.state.opened
         });
     }
+
     renderOptions() {
-        const options = [];
-        this.props.themes.array.map((theme, index) => {
-            options.push(
-                <div key={index} className={"dropdown-option tile"}
+        return this.props.themes.array.map((theme, index) => {
+            return (
+                <div
+                    key={`Theme${index}`}
+                    className={"dropdown-option tile"}
                     onClick={() => {
                         this.selectKey(index);
                     }}>
@@ -47,17 +49,15 @@ class ThemeSwitch extends Component {
                 </div>
             );
         });
-        return options;
     }
-    render()
-    {
+
+    render() {
         return (
             <div className={`ThemeSwitch multi-dropdown  main-tile ${this.state.opened ? "opened" : "closed"}`}>
-                <div className={"dropdown-header tile"}
-                    onClick={() => {
-                        this.toggleDropDown();
-                    }}>
-                   
+                <div 
+                    className={"dropdown-header tile"}
+                    onClick={this.toggleDropDown}
+                >
                     <span> <i class="fas fa-adjust"></i></span>
                 </div>
                 <div className={"dropdown-content"}>
