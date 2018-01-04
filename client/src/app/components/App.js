@@ -17,6 +17,8 @@ class App extends Component {
             loading: true
         };
 
+        this.logoTheme = [logo_dark, logo_light];
+
         this.askCode = this.askCode.bind(this);
     }
     
@@ -63,7 +65,8 @@ class App extends Component {
                         <h1>WarZone</h1>
                         <img
                             className={"logo"}
-                            src={this.props.globalState.themes.value == 0 ? logo_dark : logo_light}
+                            src={this.logoTheme[this.props.globalState.themes.value]}
+                            alt={"Logo"}
                         />
                         <div
                             className={"loginButton"}
