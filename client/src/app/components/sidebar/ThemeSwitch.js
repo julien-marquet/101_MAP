@@ -10,8 +10,8 @@ class ThemeSwitch extends Component {
         };
 
         this.iconArray = [
-            <i class="far fa-circle"></i>,
-            <i class="fas fa-circle"></i>
+            <i className={"far fa-circle"}></i>,
+            <i className={"fas fa-circle"}></i>
         ];
         this.toggleDropDown = this.toggleDropDown.bind(this);
     }
@@ -58,7 +58,7 @@ class ThemeSwitch extends Component {
                     className={"dropdown-header tile"}
                     onClick={this.toggleDropDown}
                 >
-                    <span> <i class="fas fa-adjust"></i></span>
+                    <span> <i className={"fas fa-adjust"}></i></span>
                 </div>
                 <div className={"dropdown-content"}>
                     {this.renderOptions()}

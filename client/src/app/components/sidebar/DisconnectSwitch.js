@@ -21,7 +21,7 @@ class DisconnectSwitch extends Component {
                 onClick={this.disconnect}
                 className={"disconnectSwitch btn tile main-tile"}
             >
-                <span><i class="fas fa-power-off"></i></span>
+                <span><i className={"fas fa-power-off"}></i></span>
             </div>
         );
     }
