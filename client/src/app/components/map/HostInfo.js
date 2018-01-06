@@ -36,7 +36,7 @@ class HostInfo extends Component {
     renderMetadata() {
         if (this.props.user_metadata.success) {
             return [
-                <li key="s-corr" className={"stat"}>
+                <li key="s-corr" className={"stat stat-2"}>
                     <p>
                         <span className={"statName"}>
                         Correction points :
@@ -46,7 +46,7 @@ class HostInfo extends Component {
                         </span>    
                     </p>
                 </li>,
-                <li key="s-wallet" className={"stat"}>
+                <li key="s-wallet" className={"stat stat-3"}>
                     <p>
                         <span className={"statName"}>
                         Wallet :
@@ -56,7 +56,7 @@ class HostInfo extends Component {
                         </span>    
                     </p>
                 </li>,
-                <li key="s-level" className={"stat"}>
+                <li key="s-level" className={"stat stat-4"}>
                     <p>
                         <span className={"statName"}>
                         Level :

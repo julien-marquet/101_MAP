@@ -50,7 +50,7 @@ class UpTime extends Component {
     {
         const d = moment.duration(this.state.time);
         return (
-            <li className={"stat uptime"}>
+            <li className={"stat stat-1 uptime"}>
                 <p>
                     <span className={"statName"}>
                         UpTime :
