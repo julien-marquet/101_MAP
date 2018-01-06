@@ -1,4 +1,4 @@
-import {USERS_GETTED, ACTIVE_USER_SWAP} from "../actions/users";
+import {USERS_GETTED, ACTIVE_USER_SWAP, GET_USER_METADATA, GET_USER_METADATA_SUCCEEDED, GET_USER_METADATA_FAILED} from "../actions/users";
 
 const initialState = {
     array: [],
@@ -12,6 +12,10 @@ const initialState = {
             login: null,
             url: null,
         }
+    },
+    user_metadata: {
+        status: null,
+        content: null
     }
 };
 
@@ -27,6 +31,33 @@ const users = (state = initialState, {type, payload}) => {
             ...state,
             activeUser: {
                 ...payload
+            }
+        };
+    case GET_USER_METADATA:
+    console.log("fired")
+        return {
+            ...state,
+            user_metadata: {
+                ...state.user_metadata,
+                success:null
+            }
+        };
+    case GET_USER_METADATA_SUCCEEDED:
+    console.log("success")
+        return {
+            ...state,
+            user_metadata: {
+                success: true,
+                content: payload
+            }
+        };
+    case GET_USER_METADATA_FAILED:
+    console.log("failed")
+        return {
+            ...state,
+            user_metadata: {
+                success: false,
+                content: payload
             }
         };
     default:
