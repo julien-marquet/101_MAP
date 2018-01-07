@@ -265,14 +265,14 @@
                             }   
                         }
                         .profileButton {
-                            transition: all ease-in 0.05s ;
+                            transition: box-shadow ease-in 0.05s, transform ease-in 0.05s;
                             position: absolute;
                             right: 5%;
                             bottom: 5%;
                             width: 30%;
                             height: 20%;
                             .buttonContent {
-                                transition: all ease-in 0.05s ;
+                                transition: box-shadow ease-in 0.05s, transform ease-in 0.05s;
                                 position: relative;
                                 height: 100%;
                                 width: 100%;
@@ -295,7 +295,7 @@
                                 }
                             }
                             .buttonSkewed {
-                                transition: all ease-in 0.05s ;
+                                transition: box-shadow ease-in 0.05s, transform ease-in 0.05s;
                                 position: absolute;                                
                                 z-index: 1;
                                 box-shadow: 2px 2px 2px #000000;
