@@ -13,7 +13,7 @@ class HostInfo extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.activeUser.user.login != nextProps.activeUser.user.login) {
+        if (this.props.activeUser.user.login !== nextProps.activeUser.user.login) {
             this.props.getUserMetadata(nextProps.activeUser.user.id);
         }
     }

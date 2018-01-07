@@ -15,16 +15,15 @@ class UpTime extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+
         if (this.timeout !== null) {
             clearTimeout(this.timeout);
         }
-        if (this.props.begin_at !== nextProps.begin_at) {
-            const date = moment.utc(nextProps.begin_at).subtract(1, "hours");
-            this.setState({
-                time : moment.utc().diff(date)
-            });
-            this.setTimer();
-        }
+        const date = moment.utc(nextProps.begin_at).subtract(1, "hours");
+        this.setState({
+            time : moment.utc().diff(date)
+        });
+        this.setTimer();
     }
 
     componentWillUnmount() {
