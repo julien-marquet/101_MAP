@@ -5,6 +5,13 @@ import PropTypes from "prop-types";
 import "../scss/loader.css";
 
 class Loader extends Component {
+
+    shouldComponentUpdate(nextProps) {
+        if (nextProps.in != this.props.in)
+            return true;
+        return false;
+    }
+
     render()
     {
         return (

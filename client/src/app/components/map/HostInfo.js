@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 
 import UpTime from "./Uptime";
+import Loader from "../Loader";
 import placeholder from "../../../img/placeholder_profil.svg";
 
 class HostInfo extends Component {
@@ -17,6 +18,12 @@ class HostInfo extends Component {
         if (this.props.activeUser.user.login !== nextProps.activeUser.user.login) {
             this.props.getUserMetadata(nextProps.activeUser.user.id);
         }
+    }
+    shouldComponentUpdate(nextProps) {
+        if (this.props.activeUser.user.login !== nextProps.activeUser.user.login ||
+        nextProps.user_metadata.success !== this.props.user_metadata.success)
+            return (true);
+        return (false);
     }
 
     addDefaultSrc(ev) {
@@ -122,6 +129,7 @@ class HostInfo extends Component {
                         />
                     </div>
                     <div className={"rightCol"}>
+                        <Loader key="hostInfoLoader" in={this.props.user_metadata.success === null}/>
                         <div className={"main skewed"} />
                         <div className={"secondary skewed"} >
                             <div className={"hostName"}>

@@ -13,9 +13,11 @@
 
     &.entering {
         opacity: 0;
+        transition: height 0s linear 0s, opacity 0s ease-out 0s;
     }
     &.entered {
         opacity: 1;
+        transition: height 0s linear 0s, opacity 0s ease-out 0s;
     }
     &.exiting {
         height: 100%;
