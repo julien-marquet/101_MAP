@@ -3,7 +3,12 @@
     @return $f_multiplier * $f_coefficient
 }
 
-
+@mixin transition($args...) {
+    -webkit-transition: $args;
+    -moz-transition: $args;
+    -o-transition: $args;
+    transition: $args;
+}
 
 @mixin applyStyle($seatSize, $seatSidesMargin, $seatRowMargin, $zoneMargin, $coefficient) {
     $zoom: 1.5;
@@ -17,7 +22,7 @@
         }
         $i: $i - 1;  
     }
-
+    
    .zone {
         display: inline-block;
         vertical-align: top;
@@ -64,7 +69,7 @@
         height: $seatSize;
         top: 0;
         left: 0;
-        transition: all 0.2s, transform 0.05s;
+        @include transition(all 0.2s, transform 0.05s);
         z-index: 0;
     }
     
@@ -265,14 +270,14 @@
                             }   
                         }
                         .profileButton {
-                            transition: box-shadow ease-in 0.05s, transform ease-in 0.05s;
+                            @include transition( box-shadow ease-in 0.05s, transform ease-in 0.05s);
                             position: absolute;
                             right: 5%;
                             bottom: 5%;
                             width: 30%;
                             height: 20%;
                             .buttonContent {
-                                transition: box-shadow ease-in 0.05s, transform ease-in 0.05s;
+                                @include transition( box-shadow ease-in 0.05s, transform ease-in 0.05s);
                                 position: relative;
                                 height: 100%;
                                 width: 100%;
@@ -295,8 +300,8 @@
                                 }
                             }
                             .buttonSkewed {
-                                transition: box-shadow ease-in 0.05s, transform ease-in 0.05s;
-                                position: absolute;                                
+                                @include transition(box-shadow ease-in 0.05s, transform ease-in 0.05s);
+                                position: absolute;           
                                 z-index: 1;
                                 box-shadow: 2px 2px 2px #000000;
                                 border-width:  1px 0 1px 1px;
