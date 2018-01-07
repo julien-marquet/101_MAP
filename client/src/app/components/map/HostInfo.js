@@ -60,7 +60,7 @@ class HostInfo extends Component {
     renderMetadata() {
         if (this.props.user_metadata.success) {
             return [
-                <UpTime begin_at={this.props.activeUser.begin_at} />,
+                <UpTime  key={"s-uptime"} begin_at={this.props.activeUser.begin_at} />,
                 <li key="s-corr" className={"stat stat-2"}>
                     <p>
                         <span className={"statName"}>
