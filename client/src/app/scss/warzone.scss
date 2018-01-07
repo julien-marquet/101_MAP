@@ -224,10 +224,10 @@
                             text-transform: capitalize;
                         }
                         .tags {
-                            &.inactive {
-                                padding-left: 30%;
-                                font-weight: bold;
-                                font-size: get_size(0.7em, $coefficient);
+                            padding-left: 30%;
+                            font-size: get_size(0.7em, $coefficient);
+                            &.inactive {       
+                                font-weight: bold;    
                             }
                         }
                     }

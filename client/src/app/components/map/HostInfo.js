@@ -10,6 +10,7 @@ class HostInfo extends Component {
 
         this.addDefaultSrc = this.addDefaultSrc.bind(this);
         this.renderMetadata = this.renderMetadata.bind(this);
+        this.renderTags = this.renderTags.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -32,7 +33,23 @@ class HostInfo extends Component {
             }
         }
     }
-
+    renderTags() {
+        if (!this.props.user_metadata.success || this.props.user_metadata.content.titles.length === 0) 
+        {
+            return (
+                <div className={"tags inactive"}>
+                    <p>{"No tags"}</p>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className={"tags active"}>
+                    <p>{this.props.user_metadata.content.titles.splice(0, 2).join(" ")}</p>
+                </div>
+            );
+        }
+    }
     renderMetadata() {
         if (this.props.user_metadata.success) {
             return [
@@ -115,9 +132,7 @@ class HostInfo extends Component {
                             <div className={"userName"}>
                                 <h2>{this.props.activeUser.user.login}</h2>
                             </div>
-                            <div className={"tags inactive"}>
-                                <p>{"No tags"}</p>
-                            </div>
+                            {this.renderTags()}
                         </div>
                         <div className={"contentBottom hostContent"} >
                             <ul className={"stats"}>
