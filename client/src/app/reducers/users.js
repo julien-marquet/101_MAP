@@ -14,7 +14,7 @@ const initialState = {
         }
     },
     user_metadata: {
-        status: null,
+        success: null,
         content: null
     }
 };
@@ -34,7 +34,6 @@ const users = (state = initialState, {type, payload}) => {
             }
         };
     case GET_USER_METADATA:
-    console.log("fired")
         return {
             ...state,
             user_metadata: {
@@ -43,7 +42,6 @@ const users = (state = initialState, {type, payload}) => {
             }
         };
     case GET_USER_METADATA_SUCCEEDED:
-    console.log("success")
         return {
             ...state,
             user_metadata: {
@@ -52,7 +50,6 @@ const users = (state = initialState, {type, payload}) => {
             }
         };
     case GET_USER_METADATA_FAILED:
-    console.log("failed")
         return {
             ...state,
             user_metadata: {
