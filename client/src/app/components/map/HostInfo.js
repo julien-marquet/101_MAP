@@ -170,7 +170,11 @@ HostInfo.proptypes = {
         user: PropTypes.shape({
             login:PropTypes.string,
         })
-    }
+    },
+    user_metadata: PropTypes.shape({
+        success: PropTypes.bool,
+        content: PropTypes.object
+    })
 };
 
 export default HostInfo;
