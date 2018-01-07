@@ -191,6 +191,9 @@
                 .loaderHostInfo {
                     z-index: 1;
                     height: 75%;
+                    &.exited {
+                        height: 0%;
+                    }
                 }
                 .skewed {
                     position: absolute;                    
