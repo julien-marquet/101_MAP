@@ -15,16 +15,15 @@ class UpTime extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+
         if (this.timeout !== null) {
             clearTimeout(this.timeout);
         }
-        if (this.props.begin_at !== nextProps.begin_at) {
-            const date = moment.utc(nextProps.begin_at).subtract(1, "hours");
-            this.setState({
-                time : moment.utc().diff(date)
-            });
-            this.setTimer();
-        }
+        const date = moment.utc(nextProps.begin_at).subtract(1, "hours");
+        this.setState({
+            time : moment.utc().diff(date)
+        });
+        this.setTimer();
     }
 
     componentWillUnmount() {
@@ -50,7 +49,7 @@ class UpTime extends Component {
     {
         const d = moment.duration(this.state.time);
         return (
-            <li className={"stat uptime"}>
+            <li className={"stat stat-1 uptime"}>
                 <p>
                     <span className={"statName"}>
                         UpTime :

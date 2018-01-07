@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 
 import UpTime from "./Uptime";
+import Loader from "../Loader";
 import placeholder from "../../../img/placeholder_profil.svg";
 
 class HostInfo extends Component {
@@ -9,6 +10,20 @@ class HostInfo extends Component {
         super(props);
 
         this.addDefaultSrc = this.addDefaultSrc.bind(this);
+        this.renderMetadata = this.renderMetadata.bind(this);
+        this.renderTags = this.renderTags.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.activeUser.user.login !== nextProps.activeUser.user.login) {
+            this.props.getUserMetadata(nextProps.activeUser.user.id);
+        }
+    }
+    shouldComponentUpdate(nextProps) {
+        if (this.props.activeUser.user.login !== nextProps.activeUser.user.login ||
+        nextProps.user_metadata.success !== this.props.user_metadata.success)
+            return (true);
+        return (false);
     }
 
     addDefaultSrc(ev) {
@@ -23,6 +38,63 @@ class HostInfo extends Component {
                 ev.target.src = `https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.jpg`;
                 ev.target.className = "userPortrait42";
             }
+        }
+    }
+    renderTags() {
+        if (!this.props.user_metadata.success || this.props.user_metadata.content.titles.length === 0) 
+        {
+            return (
+                <div className={"tags inactive"}>
+                    <p>{"No tags"}</p>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className={"tags active"}>
+                    <p>{this.props.user_metadata.content.titles.splice(0, 2).map(elem => {
+                        return elem.name.split(" ")[0];
+                    }).join(", ")}
+                    </p>
+                </div>
+            );
+        }
+    }
+    renderMetadata() {
+        if (this.props.user_metadata.success) {
+            return [
+                <UpTime  key={"s-uptime"} begin_at={this.props.activeUser.begin_at} />,
+                <li key="s-corr" className={"stat stat-2"}>
+                    <p>
+                        <span className={"statName"}>
+                        Correction points :
+                        </span>
+                        <span className={"statValue"}>
+                            {this.props.user_metadata.content.correction_point}
+                        </span>    
+                    </p>
+                </li>,
+                <li key="s-wallet" className={"stat stat-3"}>
+                    <p>
+                        <span className={"statName"}>
+                        Wallet :
+                        </span>
+                        <span className={"statValue"}>
+                            {this.props.user_metadata.content.wallet}
+                        </span>    
+                    </p>
+                </li>,
+                <li key="s-level" className={"stat stat-4"}>
+                    <p>
+                        <span className={"statName"}>
+                        Level :
+                        </span>
+                        <span className={"statValue"}>
+                            {this.props.user_metadata.content.cursus_users.find(obj => obj.cursus_id === 1).level}
+                        </span>    
+                    </p>
+                </li>
+            ];
         }
     }
 
@@ -71,13 +143,12 @@ class HostInfo extends Component {
                             <div className={"userName"}>
                                 <h2>{this.props.activeUser.user.login}</h2>
                             </div>
-                            <div className={"tags inactive"}>
-                                <p>{"No tags"}</p>
-                            </div>
+                            {this.renderTags()}
                         </div>
+                        <Loader key="hostInfoLoader" name={"HostInfo"} in={this.props.user_metadata.success === null}/>
                         <div className={"contentBottom hostContent"} >
                             <ul className={"stats"}>
-                                <UpTime begin_at={this.props.activeUser.begin_at} />
+                                {this.renderMetadata()}
                             </ul>
                             <a className={"profileButton"} href={"https://profile.intra.42.fr/users/" + this.props.activeUser.user.login}>
                                 <div className={"buttonSkewed"} />
@@ -102,7 +173,11 @@ HostInfo.proptypes = {
         user: PropTypes.shape({
             login:PropTypes.string,
         })
-    }
+    },
+    user_metadata: PropTypes.shape({
+        success: PropTypes.bool,
+        content: PropTypes.object
+    })
 };
 
 export default HostInfo;

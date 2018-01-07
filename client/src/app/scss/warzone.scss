@@ -1,12 +1,19 @@
-@function get_size($f_multiplier, $f_coefficient) {
-    @return $f_multiplier * $f_coefficient
-}
+@import "utilities/cross-browser.scss";
+@import "utilities/responsive.scss";
 
 @mixin applyStyle($seatSize, $seatSidesMargin, $seatRowMargin, $zoneMargin, $coefficient) {
     $zoom: 1.5;
     $seatBorderRadius: 2px;
     $hallSize: $seatSize + ($seatSidesMargin * 2);
 
+    $i: 4;
+    @while $i > 0 {
+        .stat-#{$i} {
+            margin-left: $i * - 3px;
+        }
+        $i: $i - 1;  
+    }
+    
    .zone {
         display: inline-block;
         vertical-align: top;
@@ -53,7 +60,7 @@
         height: $seatSize;
         top: 0;
         left: 0;
-        transition: all 0.2s, transform 0.05s;
+        @include transition(all 0.2s, transform 0.05s);
         z-index: 0;
     }
     
@@ -177,17 +184,24 @@
                 z-index: 2;
                 width: 60%;
                 position: relative;
+                .loaderHostInfo {
+                    z-index: 1;
+                    height: 75%;
+                    &.exited {
+                        height: 0%;
+                    }
+                }
                 .skewed {
                     position: absolute;                    
                     transform: skewX(-7deg);
                     &.main {
                         left: -7%;
-                        z-index: 1;
+                        z-index: 2;
                         width: 12%;
                         height: 100%;
                     }
                     &.secondary {
-                        z-index: 1;
+                        z-index: 2;
                         bottom: -2px;
                         left: -30%;
                         width: 31%;
@@ -213,26 +227,28 @@
                             text-transform: capitalize;
                         }
                         .tags {
-                            &.inactive {
-                                padding-left: 30%;
-                                font-weight: bold;
-                                font-size: get_size(0.7em, $coefficient);
+                            padding-left: 30%;
+                            font-size: get_size(0.7em, $coefficient);
+                            &.inactive {       
+                                font-weight: bold;    
                             }
                         }
                     }
                     &.contentBottom {
                         height: 75%;
                         .stats {
-                            line-height: get_size(2em, $coefficient);
                             font-size: get_size(0.7em, $coefficient);
                             padding-left: 5%;
-                            .statName {
-                                margin-right: 5%;
-                                font-weight: bold;                                
-                            }
-                            .statValue {
-                                padding-left: 5px;
-                                font-weight: normal;                                
+                            .stat {
+                                padding-top: get_size(0.5em, $coefficient);
+                                .statName {
+                                    margin-right: 5%;
+                                    font-weight: bold;                                
+                                }
+                                .statValue {
+                                    padding-left: 5px;
+                                    font-weight: normal;                                
+                                }
                             }
                         }
                         .profileButton:hover {
@@ -245,14 +261,14 @@
                             }   
                         }
                         .profileButton {
-                            transition: all ease-in 0.05s ;
+                            @include transition( box-shadow ease-in 0.05s, transform ease-in 0.05s);
                             position: absolute;
                             right: 5%;
                             bottom: 5%;
                             width: 30%;
                             height: 20%;
                             .buttonContent {
-                                transition: all ease-in 0.05s ;
+                                @include transition( box-shadow ease-in 0.05s, transform ease-in 0.05s);
                                 position: relative;
                                 height: 100%;
                                 width: 100%;
@@ -275,8 +291,8 @@
                                 }
                             }
                             .buttonSkewed {
-                                transition: all ease-in 0.05s ;
-                                position: absolute;                                
+                                @include transition(box-shadow ease-in 0.05s, transform ease-in 0.05s);
+                                position: absolute;           
                                 z-index: 1;
                                 box-shadow: 2px 2px 2px #000000;
                                 border-width:  1px 0 1px 1px;
