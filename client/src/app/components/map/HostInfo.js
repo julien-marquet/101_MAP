@@ -52,7 +52,10 @@ class HostInfo extends Component {
         else {
             return (
                 <div className={"tags active"}>
-                    <p>{this.props.user_metadata.content.titles.splice(0, 2).join(" ")}</p>
+                    <p>{this.props.user_metadata.content.titles.splice(0, 2).map(elem => {
+                        return elem.name.split(" ")[0];
+                    }).join(", ")}
+                    </p>
                 </div>
             );
         }
