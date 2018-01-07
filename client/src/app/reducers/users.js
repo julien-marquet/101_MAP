@@ -1,4 +1,4 @@
-import {USERS_GETTED, ACTIVE_USER_SWAP, GET_USER_METADATA, GET_USER_METADATA_SUCCEEDED, GET_USER_METADATA_FAILED} from "../actions/users";
+import {USERS_GETTED, ACTIVE_USER_SWAP, USER_GET_METADATA, USER_GET_METADATA_SUCCEEDED, USER_GET_METADATA_FAILED} from "../actions/users";
 
 const initialState = {
     array: [],
@@ -33,7 +33,7 @@ const users = (state = initialState, {type, payload}) => {
                 ...payload
             }
         };
-    case GET_USER_METADATA:
+    case USER_GET_METADATA:
         return {
             ...state,
             user_metadata: {
@@ -41,7 +41,7 @@ const users = (state = initialState, {type, payload}) => {
                 success:null
             }
         };
-    case GET_USER_METADATA_SUCCEEDED:
+    case USER_GET_METADATA_SUCCEEDED:
         return {
             ...state,
             user_metadata: {
@@ -49,7 +49,7 @@ const users = (state = initialState, {type, payload}) => {
                 content: payload
             }
         };
-    case GET_USER_METADATA_FAILED:
+    case USER_GET_METADATA_FAILED:
         return {
             ...state,
             user_metadata: {

@@ -1,6 +1,6 @@
 import { all, takeEvery } from "redux-saga/effects";
 
-import {GET_USER_METADATA, GET_USER_METADATA_SUCCEEDED, GET_USER_METADATA_FAILED} from "../actions/users";
+import {USER_GET_METADATA, USER_GET_METADATA_SUCCEEDED, USER_GET_METADATA_FAILED} from "../actions/users";
 import globalConfig from "../../config/globalConfig";
 import {retrieveCookie} from "../helpers/cookies.helper";
 
@@ -14,16 +14,16 @@ function getUserMetadata(dispatch, action) {
     })
         .then((response) => response.json())
         .then(response => {
-            dispatch({type: GET_USER_METADATA_SUCCEEDED, payload: response});
+            dispatch({type: USER_GET_METADATA_SUCCEEDED, payload: response});
         })
         .catch(error => {
-            dispatch({type: GET_USER_METADATA_FAILED, payload: error});
+            dispatch({type: USER_GET_METADATA_FAILED, payload: error});
         });
 }
 
 function* flow(dispatch) {
     yield all([
-        takeEvery(GET_USER_METADATA, getUserMetadata, dispatch)
+        takeEvery(USER_GET_METADATA, getUserMetadata, dispatch)
     ]);
 }
 

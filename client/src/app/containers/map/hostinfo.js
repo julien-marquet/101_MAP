@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 
 import HostInfo from "../../components/map/HostInfo";
-import {GET_USER_METADATA} from "../../actions/users";
+import {USER_GET_METADATA} from "../../actions/users";
 
 const mapStateToProps = state => {
     return {
@@ -12,7 +12,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getUserMetadata: payload => dispatch({type: GET_USER_METADATA, payload})
+        getUserMetadata: payload => dispatch({type: USER_GET_METADATA, payload})
     };
 };
 
