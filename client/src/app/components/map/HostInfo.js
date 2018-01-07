@@ -60,6 +60,7 @@ class HostInfo extends Component {
     renderMetadata() {
         if (this.props.user_metadata.success) {
             return [
+                <UpTime begin_at={this.props.activeUser.begin_at} />,
                 <li key="s-corr" className={"stat stat-2"}>
                     <p>
                         <span className={"statName"}>
@@ -144,7 +145,6 @@ class HostInfo extends Component {
                         <Loader key="hostInfoLoader" name={"HostInfo"} in={this.props.user_metadata.success === null}/>
                         <div className={"contentBottom hostContent"} >
                             <ul className={"stats"}>
-                                <UpTime begin_at={this.props.activeUser.begin_at} />
                                 {this.renderMetadata()}
                             </ul>
                             <a className={"profileButton"} href={"https://profile.intra.42.fr/users/" + this.props.activeUser.user.login}>
