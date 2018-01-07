@@ -7,7 +7,7 @@ import "../scss/loader.css";
 class Loader extends Component {
 
     shouldComponentUpdate(nextProps) {
-        if (nextProps.in != this.props.in)
+        if (nextProps.in !== this.props.in)
             return true;
         return false;
     }
