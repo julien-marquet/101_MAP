@@ -1,4 +1,10 @@
-import {USERS_GETTED, ACTIVE_USER_SWAP, USER_GET_METADATA, USER_GET_METADATA_SUCCEEDED, USER_GET_METADATA_FAILED} from "../actions/users";
+import {
+    USERS_GETTED,
+    ACTIVE_USER_SWAP,
+    USER_GET_METADATA,
+    USER_GET_METADATA_SUCCEEDED,
+    USER_GET_METADATA_FAILED
+} from "../actions/users";
 
 const initialState = {
     array: [],
