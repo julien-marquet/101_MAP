@@ -129,7 +129,6 @@ class HostInfo extends Component {
                         />
                     </div>
                     <div className={"rightCol"}>
-                        <Loader key="hostInfoLoader" in={this.props.user_metadata.success === null}/>
                         <div className={"main skewed"} />
                         <div className={"secondary skewed"} >
                             <div className={"hostName"}>
@@ -142,6 +141,7 @@ class HostInfo extends Component {
                             </div>
                             {this.renderTags()}
                         </div>
+                        <Loader key="hostInfoLoader" name={"HostInfo"} in={this.props.user_metadata.success === null}/>
                         <div className={"contentBottom hostContent"} >
                             <ul className={"stats"}>
                                 <UpTime begin_at={this.props.activeUser.begin_at} />

@@ -64,6 +64,9 @@
         box-shadow: 4px 4px 8px $mediumShadow;
         .splitter {
             .rightCol {
+                .loaderHostInfo {
+                    background-color: $main;
+                }
                 .skewed {
                     &.main {
                         background-color: $mainDark;
