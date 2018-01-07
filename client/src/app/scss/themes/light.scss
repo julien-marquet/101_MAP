@@ -85,7 +85,7 @@
                             color: $textSecondary;
                         }
                         .tags {
-                            color: $textPrimary;                            
+                            color: $textTertiary;                   
                             &.inactive {
                                 color: $textTertiary;
                             }
@@ -107,7 +107,7 @@
                                 border-color: $darkShadow;
                                 box-shadow: 2px 2px 2px $darkShadow;
                                 .linkUserAccount {
-                                    color: $textSecondary;
+                                    color: $textTertiary;
                                 }
                             }
                             .buttonSkewed {
