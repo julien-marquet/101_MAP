@@ -9,6 +9,8 @@ class HostInfo extends Component {
     constructor(props) {
         super(props);
 
+        this.portrait = null;
+
         this.addDefaultSrc = this.addDefaultSrc.bind(this);
         this.renderMetadata = this.renderMetadata.bind(this);
         this.renderTags = this.renderTags.bind(this);
@@ -17,6 +19,11 @@ class HostInfo extends Component {
     componentWillReceiveProps(nextProps) {
         if (this.props.activeUser.user.login !== nextProps.activeUser.user.login) {
             this.props.getUserMetadata(nextProps.activeUser.user.id);
+            if (this.portrait !== null) {
+                if (this.portrait.className !== "userPortrait") {
+                    this.portrait.className = "userPortrait";
+                }
+            }
         }
     }
     shouldComponentUpdate(nextProps) {
@@ -36,10 +43,13 @@ class HostInfo extends Component {
             }
             else {
                 ev.target.src = `https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.jpg`;
-                ev.target.className = "userPortrait42";
+                if (ev.target.className !== "userPortrait42") {
+                    ev.target.className = "userPortrait42";
+                }
             }
         }
     }
+
     renderTags() {
         if (!this.props.user_metadata.success || this.props.user_metadata.content.titles.length === 0) 
         {
@@ -128,6 +138,7 @@ class HostInfo extends Component {
                         <img
                             className={"userPortrait"}
                             onError={this.addDefaultSrc}
+                            ref={element => this.portrait = element}
                             src={`https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
                             alt={"User portrait"}
                         />
