@@ -40,6 +40,9 @@ class HostInfo extends Component {
         else {
             if (ev.target.src.slice(-3) === "jpg") {
                 ev.target.src = placeholder;
+                if (ev.target.className !== "userPortrait") {
+                    ev.target.className = "userPortrait";
+                }
             }
             else {
                 ev.target.src = `https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.jpg`;
