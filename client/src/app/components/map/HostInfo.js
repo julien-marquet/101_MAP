@@ -103,7 +103,7 @@ class HostInfo extends Component {
                         Level :
                         </span>
                         <span className={"statValue"}>
-                            {this.props.user_metadata.content.cursus_users.find(obj => obj.cursus_id === 1).level}
+                            {this.props.user_metadata.content.cursus_users.find(obj => obj.cursus_id === 1).level.toFixed(2)}
                         </span>    
                     </p>
                 </li>
