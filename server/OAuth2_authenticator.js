@@ -16,7 +16,7 @@ class Oauth2_authenticator {
                 grant_type: 'authorization_code'
             }
         }, (err, res, body) => {
-            if (!err ) {
+            if (!err && body) {
                 body = JSON.parse(body);
                 if (body.error) 
                     callback(null);
@@ -35,7 +35,7 @@ class Oauth2_authenticator {
                 'authorization': `Bearer ${token}`
             }
         }, (err, res, body) => {
-            if (!err ) {
+            if (!err && body) {
                 body = JSON.parse(body);
                 if (body.error) {
                     console.log(`error validating CLIENT access token : ${body.error}`);
@@ -61,7 +61,7 @@ class Oauth2_authenticator {
                     grant_type: 'client_credentials'
                 }
             }, (err, res, body) => {
-                if (!err ) {
+                if (!err && body) {
                     body = JSON.parse(body);
                     if (body.error) {
                         console.log(`error getting API access token : ${body.error}`);

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import UpTime from "./Uptime";
 import Loader from "../Loader";
 import placeholder from "../../../img/placeholder_profil.svg";
+import jfeve from "../../../img/jfeve.gif";
 
 class HostInfo extends Component {
     constructor(props) {
@@ -50,6 +51,20 @@ class HostInfo extends Component {
                     ev.target.className = "userPortrait42";
                 }
             }
+        }
+    }
+    renderJfeve(login) {
+        if (login == "jfeve") {
+            return (
+                <img
+                    className={"fireJfeve"}
+                    src={jfeve}
+                    alt={"jFeve"}
+                />
+            );
+        }
+        else {
+            return ;
         }
     }
 
@@ -145,6 +160,7 @@ class HostInfo extends Component {
                             src={`https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
                             alt={"User portrait"}
                         />
+                        {this.renderJfeve(this.props.activeUser.user.login)}
                     </div>
                     <div className={"rightCol"}>
                         <div className={"main skewed"} />

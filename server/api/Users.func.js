@@ -18,7 +18,7 @@ const users_func = {
                 'Authorization': 'Bearer ' + token.access_token
             }
         }, (err, res, body) => {
-            if (!err) {
+            if (!err && body) {
                 body = JSON.parse(body);
                 
                 if (body.length > 0) {
