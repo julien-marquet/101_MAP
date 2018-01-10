@@ -54,7 +54,7 @@ class HostInfo extends Component {
         }
     }
     renderJfeve(login) {
-        if (login == "jfeve") {
+        if (login === "jfeve") {
             return (
                 <img
                     className={"fireJfeve"}
@@ -68,8 +68,16 @@ class HostInfo extends Component {
         }
     }
 
-    renderTags() {
-        if (!this.props.user_metadata.success || this.props.user_metadata.content.titles.length === 0) 
+    renderTags() {        
+        if (this.props.activeUser.user.login === "jfeve") 
+        {
+            return (
+                <div className={"tags jfeve"}>
+                    <p>{"Le flamboyant"}</p>
+                </div>
+            );
+        }
+        else if (!this.props.user_metadata.success || this.props.user_metadata.content.titles.length === 0) 
         {
             return (
                 <div className={"tags inactive"}>
@@ -162,7 +170,7 @@ class HostInfo extends Component {
                         />
                         {this.renderJfeve(this.props.activeUser.user.login)}
                     </div>
-                    <div className={"rightCol"}>
+                    <div className={`rightCol ${this.props.activeUser.user.login === "jfeve" ? "jfeve" : ""}`}>
                         <div className={"main skewed"} />
                         <div className={"secondary skewed"} >
                             <div className={"hostName"}>
