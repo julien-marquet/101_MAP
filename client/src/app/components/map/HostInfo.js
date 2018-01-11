@@ -53,7 +53,8 @@ class HostInfo extends Component {
             }
         }
     }
-    renderJfeve(login) {
+
+    renderFilter(login) {
         if (login === "jfeve") {
             return (
                 <img
@@ -61,6 +62,13 @@ class HostInfo extends Component {
                     src={jfeve}
                     alt={"jFeve"}
                 />
+            );
+        }
+        else if (login === "legrivel" || login === "jmarquet") {
+            return (
+                <div className={"adminFilter"}>
+                    <h2>Admin</h2>
+                </div>
             );
         }
         else {
@@ -168,7 +176,7 @@ class HostInfo extends Component {
                             src={`https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
                             alt={"User portrait"}
                         />
-                        {this.renderJfeve(this.props.activeUser.user.login)}
+                        {this.renderFilter(this.props.activeUser.user.login)}
                     </div>
                     <div className={`rightCol ${this.props.activeUser.user.login === "jfeve" ? "jfeve" : ""}`}>
                         <div className={"main skewed"} />

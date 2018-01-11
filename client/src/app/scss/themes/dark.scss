@@ -61,6 +61,10 @@
     .hostInfoWrapper {
         border-color: $darkShadow;
         box-shadow: 4px 4px 8px $mediumShadow;
+        .adminFilter {
+            background-color: $rowColor;
+            color: $textPrimary;
+        }
         .splitter {
             .rightCol {
                 .loaderHostInfo {
