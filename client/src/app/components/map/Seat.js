@@ -15,8 +15,8 @@ class Seat extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.props.user === undefined && nextProps.user !== undefined ||
-            nextProps.user === undefined && this.props.user !== undefined) {
+        if ((this.props.user === undefined && nextProps.user !== undefined) ||
+            (nextProps.user === undefined && this.props.user !== undefined)) {
             return true;
         }
         if (this.props.user !== undefined &&
