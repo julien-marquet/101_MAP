@@ -3,10 +3,8 @@ import {connect} from "react-redux";
 import SearchBar from "../../components/map/SearchBar";
 import {SEARCH_UPDATE_CONTENT} from "../../actions/search";
 
-const mapStateToProps = state => {
-    return {
-        users: state.users
-    };
+const mapStateToProps = () => {
+    return {};
 };
 
 const mapDispatchToProps = dispatch => {
