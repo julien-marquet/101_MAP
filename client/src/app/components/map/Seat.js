@@ -6,7 +6,38 @@ import placeholder from "../../../img/placeholder_profil.svg";
 class Seat extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            isHighlighted: false
+        };
+
         this.addDefaultSrc = this.addDefaultSrc.bind(this);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.user === undefined && nextProps.user !== undefined ||
+            nextProps.user === undefined && this.props.user !== undefined) {
+            return true;
+        }
+        if (this.props.user !== undefined &&
+            nextProps.user !== undefined &&
+            (this.props.user.user.login !== nextProps.user.user.login ||
+            this.state.isHighlighted !== nextState.isHighlighted)) {
+            return true;
+        }
+        return false;
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.searchedUser === "" && this.state.isHighlighted) {
+            this.setState({isHighlighted: false});
+        }
+        else if (nextProps.user !== undefined &&
+            nextProps.searchedUser !== "" &&
+            ((nextProps.user.user.login.includes(nextProps.searchedUser) && !this.state.isHighlighted) ||
+            (!nextProps.user.user.login.includes(nextProps.searchedUser) && this.state.isHighlighted))) {
+            this.setState({isHighlighted: !this.state.isHighlighted});
+        }
     }
 
     addDefaultSrc(ev) {
@@ -27,7 +58,7 @@ class Seat extends Component {
             return (
                 <div className={"seat"}>
                     <div
-                        className={"seatHover"}
+                        className={this.state.isHighlighted ? "seatHover highlighted" : "seatHover"}
                         onClick={() => {
                             this.props.storeActiveUsers({
                                 ...this.props.user,

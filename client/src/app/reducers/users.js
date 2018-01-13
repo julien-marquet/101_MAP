@@ -5,6 +5,7 @@ import {
     USER_GET_METADATA_SUCCEEDED,
     USER_GET_METADATA_FAILED
 } from "../actions/users";
+import {SEARCH_UPDATE_CONTENT} from "../actions/search";
 
 const initialState = {
     array: [],
@@ -22,7 +23,8 @@ const initialState = {
     user_metadata: {
         success: null,
         content: null
-    }
+    },
+    searchedUser: ""
 };
 
 const users = (state = initialState, {type, payload}) => {
@@ -62,6 +64,11 @@ const users = (state = initialState, {type, payload}) => {
                 success: false,
                 content: payload
             }
+        };
+    case SEARCH_UPDATE_CONTENT:
+        return {
+            ...state,
+            searchedUser: payload.content
         };
     default:
         return state;

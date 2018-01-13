@@ -34,6 +34,34 @@
         border-radius: $seatBorderRadius;
     }
 
+    @keyframes pulse {
+        0% {
+            top: 0 !important;
+            left: 0!important;
+            z-index: 0;
+        }
+        100% {
+            top: -(($zoom - 1) * 50%) !important;
+            left: -(($zoom - 1) * 50%)!important;
+            transform: scale(1.5);
+            box-shadow: 4px 4px 10px #000000;
+            z-index: 1;
+        }
+    }
+    
+    .highlighted:not(:hover) {
+        animation: pulse 0.8s infinite;
+        animation-direction: alternate;
+    }
+
+    .searchbar {
+        height: 5vh;
+        width: 100%;
+        border-radius: 2px;
+        border: none;
+        font-size: 1.5em;
+    }
+
     .userImg {
         height: 100%;
         cursor: pointer;
@@ -145,11 +173,11 @@
         flex-direction: row;
     }
     
-    .zoneContainer:first-child .zone {
+    .zoneContainer:nth-child(2) .zone {
         display: inline-block;
     }
 
-    .zoneContainer:first-child {
+    .zoneContainer:nth-child(2) {
         justify-content: space-between;
         display: flex;
     }

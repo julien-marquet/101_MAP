@@ -1,6 +1,10 @@
 @import '../colorPallet/light.scss';
 
 .light {
+    .searchbar {
+        background-color: $zoneColor;
+        color: $textPrimary;
+    }
     .sidebar {
         background-color: $sidebarColor;
         .main-tile {

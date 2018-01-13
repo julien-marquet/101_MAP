@@ -1,6 +1,10 @@
 @import '../colorPallet/dark.scss';
 
 .dark {
+    .searchbar {
+        background-color: $sidebarColor;
+        color: $textPrimary;
+    }
     .sidebar {
         background-color: $sidebarColor;
         .main-tile {
