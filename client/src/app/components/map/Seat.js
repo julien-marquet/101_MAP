@@ -24,6 +24,8 @@ class Seat extends Component {
             this.state.isSearched !== nextState.isSearched)) {
             return true;
         }
+        if (this.props.activeUser.id !== nextProps.activeUser.id)
+            return true;
         return false;
     }
 
