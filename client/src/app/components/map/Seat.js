@@ -24,8 +24,9 @@ class Seat extends Component {
             this.state.isSearched !== nextState.isSearched)) {
             return true;
         }
-        if (this.props.activeUser.id !== nextProps.activeUser.id)
+        if (nextState.isSearched !== this.state.isSearched || nextState.isActive !== this.state.isActive) {
             return true;
+        }
         return false;
     }
 
@@ -45,7 +46,9 @@ class Seat extends Component {
         else if (nextProps.user !== undefined &&
             nextProps.activeUser.id !== 0 &&
             (nextProps.activeUser.id === nextProps.user.id)) {
-            this.setState({isActive: !this.state.isActive});
+            this.setState({isActive: true});
+        } else {
+            this.setState({isActive: false});
         }
     }
 
