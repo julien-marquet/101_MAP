@@ -35,7 +35,15 @@ class Seat extends Component {
             nextProps.searchedUser !== "" &&
             ((nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && !this.state.isSearched) ||
             (!nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && this.state.isSearched))) {
-            this.setState({isSearched: !this.state.isHighlighted});
+            this.setState({isSearched: !this.state.isSearched});
+        }
+        if (nextProps.activeUser.id === 0 && this.state.isActive) {
+            this.setState({isActive: false});
+        }
+        else if (nextProps.user !== undefined &&
+            nextProps.activeUser.id !== 0 &&
+            (nextProps.activeUser.id === nextProps.user.id)) {
+            this.setState({isActive: !this.state.isActive});
         }
     }
 
