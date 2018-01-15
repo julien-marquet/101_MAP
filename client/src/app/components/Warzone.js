@@ -37,7 +37,10 @@ class Warzone extends Component {
             <Fragment>
                 <div className={"zoneContainer"}>
                     {zones[0]}
-                    <HostInfo />
+                    <div className={"blockSearchHost"}>
+                        <SearchBar />
+                        <HostInfo />
+                    </div>
                 </div>
                 <div className={"zoneContainer"}>{zones[1]}</div>
             </Fragment>
@@ -49,7 +52,7 @@ class Warzone extends Component {
             <div className={"wrapper"}>
                 <SideBar />
                 <div className={"zonesWrapper"}>
-                    <SearchBar />
+                    
                     {this.renderZones()}
                 </div>
             </div>

@@ -8,9 +8,9 @@ class Seat extends Component {
         super(props);
 
         this.state = {
-            isHighlighted: false
+            isSearched: false,
+            isActive: false
         };
-
         this.addDefaultSrc = this.addDefaultSrc.bind(this);
     }
 
@@ -19,24 +19,23 @@ class Seat extends Component {
             (nextProps.user === undefined && this.props.user !== undefined)) {
             return true;
         }
-        if (this.props.user !== undefined &&
-            nextProps.user !== undefined &&
+        if (this.props.user !== undefined && nextProps.user !== undefined &&
             (this.props.user.user.login !== nextProps.user.user.login ||
-            this.state.isHighlighted !== nextState.isHighlighted)) {
+            this.state.isSearched !== nextState.isSearched)) {
             return true;
         }
         return false;
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.searchedUser === "" && this.state.isHighlighted) {
-            this.setState({isHighlighted: false});
+        if (nextProps.searchedUser === "" && this.state.isSearched) {
+            this.setState({isSearched: false});
         }
         else if (nextProps.user !== undefined &&
             nextProps.searchedUser !== "" &&
-            ((nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && !this.state.isHighlighted) ||
-            (!nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && this.state.isHighlighted))) {
-            this.setState({isHighlighted: !this.state.isHighlighted});
+            ((nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && !this.state.isSearched) ||
+            (!nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && this.state.isSearched))) {
+            this.setState({isSearched: !this.state.isHighlighted});
         }
     }
 
@@ -58,7 +57,7 @@ class Seat extends Component {
             return (
                 <div className={"seat"}>
                     <div
-                        className={this.state.isHighlighted ? "seatHover highlighted" : "seatHover"}
+                        className={this.state.isSearched || this.state.isActive ? "seatHover highlighted" : "seatHover"}
                         onClick={() => {
                             this.props.storeActiveUsers({
                                 ...this.props.user,

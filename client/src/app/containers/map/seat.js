@@ -5,7 +5,8 @@ import {ACTIVE_USER_SWAP} from "../../actions/users";
 
 const mapStateToProps = state => {
     return {
-        searchedUser: state.users.searchedUser
+        searchedUser: state.users.searchedUser,
+        activeUser: state.users.activeUser
     };
 };
 

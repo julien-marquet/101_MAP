@@ -174,15 +174,20 @@
         flex-direction: row;
     }
     
-    .zoneContainer:nth-child(2) .zone {
-        display: inline-block;
-    }
-
-    .zoneContainer:nth-child(2) {
+    .zoneContainer:nth-child(1) {
         justify-content: space-between;
         display: flex;
     }
     
+
+    .blockSearchHost {
+        display: inline-block;
+        .searchBar {
+            margin: $zoneMargin;
+            display: block;
+            width: $seatSize * 14;
+        }
+    }
     .hostInfoWrapper {
         margin: $zoneMargin;
         height: $seatSize * 8;

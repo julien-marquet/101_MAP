@@ -18,7 +18,7 @@ class HostInfo extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.activeUser.user.login !== nextProps.activeUser.user.login) {
+        if (this.props.activeUser.id !== nextProps.activeUser.id) {
             this.props.getUserMetadata(nextProps.activeUser.user.id);
             if (this.portrait !== null) {
                 if (this.portrait.className !== "userPortrait") {
@@ -27,6 +27,7 @@ class HostInfo extends Component {
             }
         }
     }
+
     shouldComponentUpdate(nextProps) {
         if (this.props.activeUser.user.login !== nextProps.activeUser.user.login ||
         nextProps.user_metadata.success !== this.props.user_metadata.success)
@@ -143,6 +144,7 @@ class HostInfo extends Component {
     }
 
     render() {
+
         if (!this.props.activeUser.hostname)
         {
             return (
