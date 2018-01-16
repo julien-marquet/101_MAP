@@ -8,7 +8,6 @@ class SearchBar extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSelection = this.handleSelection.bind(this);
         this.results = [];
-        this.focusOut = null;
     }
     handleChange(event, value) {
         this.props.updateSearch(value);
@@ -19,7 +18,6 @@ class SearchBar extends Component {
     handleSelection(value, item) {
         this.props.updateSearch(value);
         this.props.storeActiveUsers(item);
-        this.focusOut.focus();
     }
     getMatchingUsers() {
         this.results = [];         
@@ -35,18 +33,26 @@ class SearchBar extends Component {
     render() {
 
         return (
-            <div className={"searchBar"} ref={(item) => this.focusOut = item}>
+            <div className={"searchBar"}>
                 <Autocomplete
                     wrapperProps={{
                         className: "wrapperSearch",
                         style:{}
                     }}
-                    renderMenu={(items) => {
-                        return <div className="searchResults" children={items}/>;
-                    }}
+                    renderMenu={(items, value) => {
+                        if (items.length === 0 && value.length > 2) {
+                            return (
+                                <div className="searchResults">
+                                    <div className="item">No matches for {value}</div>
+                                </div>);
+                        } else {
+                            return <div className="searchResults" children={items}/>;
+                        }
+                    }} 
                     open={this.props.searchedUser.length > 2}
                     getItemValue={(item) => item.user.login}
                     items={this.getMatchingUsers()}
+                    renderInput={(props) => <input placeholder={"Search"} {...props} />}
                     renderItem={(item, isHighlighted) =>
                         <div key={`item${item.id}`} style={{ background: isHighlighted ? "lightgray" : "white" }}>
                             {item.user.login}

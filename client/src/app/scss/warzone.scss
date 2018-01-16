@@ -181,6 +181,12 @@
                 .wrapperSearch {
                     input {
                         width: 100%;
+                        height: $seatSize * 1.5;
+                        border-width: 0px; 
+                        border-style: solid;
+                        font-family: 'Montserrat', sans-serif;
+                        font-size: 1.5em;
+                        padding: 0px 2px;
                     }
                     .searchResults {
                         width: $seatSize * 14;

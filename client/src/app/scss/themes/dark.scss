@@ -1,8 +1,9 @@
 @import '../colorPallet/dark.scss';
 
 .dark {
-    .searchbar {
+    .wrapperSearch input{
         background-color: $sidebarColor;
+        border-color: $sidebarColor;
         color: $textSecondary;
     }
     .sidebar {
