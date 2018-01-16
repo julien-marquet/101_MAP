@@ -1,14 +1,16 @@
 import React, {Component} from "react";
+import PropTypes from "prop-types";
+
 import Autocomplete from "react-autocomplete";
 import globalConfig from "../../../config/globalConfig";
 
 class SearchBar extends Component {
     constructor(props) {
         super(props);
-        
+        this.results = [];
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSelection = this.handleSelection.bind(this);
-        this.results = [];
     }
     handleChange(event, value) {
         this.props.updateSearch(value);
@@ -67,5 +69,11 @@ class SearchBar extends Component {
         );
     }
 }
+
+SearchBar.propTypes = {
+    storeActiveUsers: PropTypes.func.isRequired,
+    updateSearch: PropTypes.func.isRequired,
+    searchedUser: PropTypes.string
+};
 
 export default SearchBar;

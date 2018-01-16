@@ -97,7 +97,8 @@ Seat.propTypes = {
     hostname: PropTypes.string,
     user: PropTypes.shape({
         login: PropTypes.string
-    })
+    }),
+    searchedUser: PropTypes.string
 };
 
 export default Seat;
