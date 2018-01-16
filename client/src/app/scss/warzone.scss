@@ -34,6 +34,27 @@
         border-radius: $seatBorderRadius;
     }
 
+    @keyframes pulse {
+        0% {
+            top: 0 !important;
+            left: 0!important;
+            z-index: 0;
+        }
+        100% {
+            top: -(($zoom - 1) * 50%) !important;
+            left: -(($zoom - 1) * 50%)!important;
+            transform: scale(1.5);
+            box-shadow: 4px 4px 10px #000000;
+            z-index: 1;
+        }
+    }
+    
+    .highlighted:not(:hover) {
+        animation: pulse 0.8s infinite;
+        animation-direction: alternate;
+    }
+
+    
     .userImg {
         height: 100%;
         cursor: pointer;
@@ -60,6 +81,7 @@
         height: $seatSize;
         top: 0;
         left: 0;
+        transform: translateZ(0);
         @include transition(all 0.2s, transform 0.05s);
         z-index: 0;
     }
@@ -145,15 +167,48 @@
         flex-direction: row;
     }
     
-    .zoneContainer:first-child .zone {
-        display: inline-block;
-    }
-
-    .zoneContainer:first-child {
+    .zoneContainer:nth-child(1) {
         justify-content: space-between;
         display: flex;
     }
     
+
+    .blockSearchHost {
+        display: inline-block;
+        .searchBar {
+            margin: $zoneMargin;
+            display: block;
+            width: $seatSize * 14;
+                .wrapperSearch {
+                    input {
+                        width: calc(100% - 10px);
+                        height: $seatSize * 1.5;
+                        border-width: 0px; 
+                        border-style: solid;
+                        font-family: 'Montserrat', sans-serif;
+                        font-size: 1.5em;
+                        padding: 0 0 0 14px;
+                    }
+                    .searchResults {
+                        padding: 0 2px;
+                        width: $seatSize * 14;
+                        font-weight: bold;
+                        border-width: 0;
+                        z-index: 10;
+                        font-size: 90%;
+                        position: fixed;
+                        overflow: auto;
+                        max-height: 50%; // TODO: don't cheat, let it flow to the bottom
+                        .searchOption {
+                            margin-left: -2px;
+                            padding: 5px 0 5px 14px;
+                            border-width: 0 0 1px 0;
+                            border-style: solid;
+                        }
+                    }
+                }
+            }
+    }
     .hostInfoWrapper {
         margin: $zoneMargin;
         height: $seatSize * 8;

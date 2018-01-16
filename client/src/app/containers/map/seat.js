@@ -3,8 +3,11 @@ import {connect} from "react-redux";
 import Seat from "../../components/map/Seat";
 import {ACTIVE_USER_SWAP} from "../../actions/users";
 
-const mapStateToProps = () => {
-    return {};
+const mapStateToProps = state => {
+    return {
+        searchedUser: state.users.searchedUser,
+        activeUser: state.users.activeUser
+    };
 };
 
 const mapDispatchToProps = dispatch => {

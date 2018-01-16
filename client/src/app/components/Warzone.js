@@ -2,6 +2,7 @@ import React, {Component, Fragment} from "react";
 
 import SeatRow from "./map/Seatrow";
 import HostInfo from "../containers/map/hostinfo";
+import SearchBar from "../containers/map/searchBar";
 import SideBar from "./sidebar/SideBar";
 import "../scss/warzone.css";
 
@@ -36,7 +37,10 @@ class Warzone extends Component {
             <Fragment>
                 <div className={"zoneContainer"}>
                     {zones[0]}
-                    <HostInfo />
+                    <div className={"blockSearchHost"}>
+                        <SearchBar />
+                        <HostInfo />
+                    </div>
                 </div>
                 <div className={"zoneContainer"}>{zones[1]}</div>
             </Fragment>
@@ -48,6 +52,7 @@ class Warzone extends Component {
             <div className={"wrapper"}>
                 <SideBar />
                 <div className={"zonesWrapper"}>
+                    
                     {this.renderZones()}
                 </div>
             </div>
