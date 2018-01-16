@@ -37,7 +37,7 @@ const users = (state = initialState, {type, payload}) => {
     case ACTIVE_USER_SWAP:
         return {
             ...state,
-            searchedUser: "",
+            searchedUser: initialState.searchedUser,
             activeUser: {
                 ...payload
             }
