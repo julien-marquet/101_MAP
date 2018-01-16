@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
-
 import Autocomplete from "react-autocomplete";
+
 import globalConfig from "../../../config/globalConfig";
 
 class SearchBar extends Component {
@@ -12,16 +12,19 @@ class SearchBar extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSelection = this.handleSelection.bind(this);
     }
+
     handleChange(event, value) {
         this.props.updateSearch(value);
         const perfectMatch = this.results.find(elem => elem.user.login === event.target.value);
         if (perfectMatch !== undefined)
             this.props.storeActiveUsers(perfectMatch);
     }
+
     handleSelection(value, item) {
         this.props.updateSearch(value);
         this.props.storeActiveUsers(item);
     }
+
     getMatchingUsers() {
         this.results = [];         
         Object.entries(this.props.users).forEach(value => {
@@ -33,8 +36,8 @@ class SearchBar extends Component {
         });
         return this.results;
     }
+
     render() {
-        //style:{} => remove inline style 
         return (
             <div className={"searchBar"}>
                 <Autocomplete

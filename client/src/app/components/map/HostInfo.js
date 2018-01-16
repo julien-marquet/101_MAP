@@ -144,7 +144,6 @@ class HostInfo extends Component {
     }
 
     render() {
-
         if (!this.props.activeUser.hostname)
         {
             return (

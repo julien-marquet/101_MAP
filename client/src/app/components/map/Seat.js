@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
-import globalConfig from "../../../config/globalConfig";
 
+import globalConfig from "../../../config/globalConfig";
 import placeholder from "../../../img/placeholder_profil.svg";
 
 class Seat extends Component {
