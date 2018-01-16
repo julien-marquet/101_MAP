@@ -4,6 +4,7 @@ export default {
     redirectUri: "http://localhost:3000/",
     apiEndPoint: "https://api.intra.42.fr",
     defaultTheme: "dark",
+    minimalSearchInput: 2,
     themeArray: [
         "dark",
         "light"

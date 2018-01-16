@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
+import globalConfig from "../../../config/globalConfig";
 
 import placeholder from "../../../img/placeholder_profil.svg";
 
@@ -31,11 +32,11 @@ class Seat extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.searchedUser.length <= 1 && this.state.isSearched) {
+        if (nextProps.searchedUser.length < globalConfig.minimalSearchInput && this.state.isSearched) {
             this.setState({isSearched: false});
         }
         else if (nextProps.user !== undefined &&
-            nextProps.searchedUser.length > 1 &&
+            nextProps.searchedUser.length >= globalConfig.minimalSearchInput &&
             ((nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && !this.state.isSearched) ||
             (!nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && this.state.isSearched))) {
             this.setState({isSearched: !this.state.isSearched});

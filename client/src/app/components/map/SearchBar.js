@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import Autocomplete from "react-autocomplete";
+import globalConfig from "../../../config/globalConfig";
 
 class SearchBar extends Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class SearchBar extends Component {
         return this.results;
     }
     render() {
-
+        //style:{} => remove inline style 
         return (
             <div className={"searchBar"}>
                 <Autocomplete
@@ -40,7 +41,7 @@ class SearchBar extends Component {
                         style:{}
                     }}
                     renderMenu={(items, value) => {
-                        if (items.length === 0 && value.length > 1) {
+                        if (items.length === 0 && value.length >= globalConfig.minimalSearchInput) {
                             return (
                                 <div className="searchResults">
                                     <div className="searchOption">No matches for {value}</div>
@@ -49,7 +50,7 @@ class SearchBar extends Component {
                             return <div className="searchResults" children={items}/>;
                         }
                     }} 
-                    open={this.props.searchedUser.length > 1 }
+                    open={this.props.searchedUser.length >= globalConfig.minimalSearchInput}
                     getItemValue={(item) => item.user.login}
                     items={this.getMatchingUsers()}
                     renderInput={(props) => <input placeholder={"Search"} {...props} />}
