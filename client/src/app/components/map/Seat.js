@@ -31,11 +31,11 @@ class Seat extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.searchedUser.length <= 2 && this.state.isSearched) {
+        if (nextProps.searchedUser.length <= 1 && this.state.isSearched) {
             this.setState({isSearched: false});
         }
         else if (nextProps.user !== undefined &&
-            nextProps.searchedUser.length > 2 &&
+            nextProps.searchedUser.length > 1 &&
             ((nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && !this.state.isSearched) ||
             (!nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && this.state.isSearched))) {
             this.setState({isSearched: !this.state.isSearched});

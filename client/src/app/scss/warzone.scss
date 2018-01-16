@@ -81,6 +81,7 @@
         height: $seatSize;
         top: 0;
         left: 0;
+        transform: translateZ(0);
         @include transition(all 0.2s, transform 0.05s);
         z-index: 0;
     }
@@ -180,25 +181,30 @@
             width: $seatSize * 14;
                 .wrapperSearch {
                     input {
-                        width: 100%;
+                        width: calc(100% - 10px);
                         height: $seatSize * 1.5;
                         border-width: 0px; 
                         border-style: solid;
                         font-family: 'Montserrat', sans-serif;
                         font-size: 1.5em;
-                        padding: 0px 2px;
+                        padding: 0 0 0 14px;
                     }
                     .searchResults {
+                        padding: 0 2px;
                         width: $seatSize * 14;
+                        font-weight: bold;
+                        border-width: 0;
                         z-index: 10;
-                        border-radius: 3px;
-                        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-                        background-color: rgba(255, 255, 255, 0.9);
-                        padding: 2px 0;
                         font-size: 90%;
-                        position: fixed !important;
+                        position: fixed;
                         overflow: auto;
                         max-height: 50%; // TODO: don't cheat, let it flow to the bottom
+                        .searchOption {
+                            margin-left: -2px;
+                            padding: 5px 3px;
+                            border-width: 0 0 1px 0;
+                            border-style: solid;
+                        }
                     }
                 }
             }

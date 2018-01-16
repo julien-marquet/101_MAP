@@ -1,11 +1,27 @@
 @import '../colorPallet/dark.scss';
 
 .dark {
-    .wrapperSearch input{
-        background-color: $sidebarColor;
-        border-color: $sidebarColor;
-        color: $textSecondary;
+    .wrapperSearch{
+        input{
+            background-color: $sidebarColor;
+            border-color: $sidebarColor;
+            color: $textSecondary;
+        }
+         .searchResults {
+            background-color: darken($textSideBar, 20%);
+            border-color: $sidebarColor;
+            .searchOption {
+                color: $sidebarColor;
+                background-color:  $textSideBar;
+                border-color: darken($textSideBar, 20%);
+                &.selected {
+                    background-color: darken($textSideBar, 20%);
+                    color: darken($sidebarColor, 20%);
+                }
+            }
+        }
     }
+
     .sidebar {
         background-color: $sidebarColor;
         .main-tile {

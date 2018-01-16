@@ -40,21 +40,21 @@ class SearchBar extends Component {
                         style:{}
                     }}
                     renderMenu={(items, value) => {
-                        if (items.length === 0 && value.length > 2) {
+                        if (items.length === 0 && value.length > 1) {
                             return (
                                 <div className="searchResults">
-                                    <div className="item">No matches for {value}</div>
+                                    <div className="searchOption">No matches for {value}</div>
                                 </div>);
                         } else {
                             return <div className="searchResults" children={items}/>;
                         }
                     }} 
-                    open={this.props.searchedUser.length > 2}
+                    open={this.props.searchedUser.length > 1 }
                     getItemValue={(item) => item.user.login}
                     items={this.getMatchingUsers()}
                     renderInput={(props) => <input placeholder={"Search"} {...props} />}
                     renderItem={(item, isHighlighted) =>
-                        <div key={`item${item.id}`} style={{ background: isHighlighted ? "lightgray" : "white" }}>
+                        <div key={`item${item.id}`} class={isHighlighted ? "searchOption selected" : "searchOption"}>
                             {item.user.login}
                         </div>
                     }
