@@ -17,7 +17,6 @@ const websocketHandler = (server, globalStorage) => {
 	
 	io.on('connection', (socket) => {
 		logger.add_log("General", "Socket Connection established");		
-		console.log(`A socket just connected providing ${socket.typeAuth}`);
 		socket.emit("authSuccess", {
 			type: socket.typeAuth,
 			token: socket.userToken

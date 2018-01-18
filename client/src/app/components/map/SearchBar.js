@@ -60,7 +60,7 @@ class SearchBar extends Component {
                     items={this.getMatchingUsers()}
                     renderInput={(props) => <input placeholder={"Search"} {...props} />}
                     renderItem={(item, isHighlighted) =>
-                        <div key={`item${item.id}`} class={isHighlighted ? "searchOption selected" : "searchOption"}>
+                        <div key={`item${item.id}`} className={isHighlighted ? "searchOption selected" : "searchOption"}>
                             {item.user.login}
                         </div>
                     }

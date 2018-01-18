@@ -4,12 +4,11 @@ const globalConfig = require("./config/globalConfig")
 exports.add_log = function(type = null, content = null, user = null) {
     if (globalConfig.streamLogToConsole)
     {
-        console.log(`${type} = ${content} | USER = ${user}`);
+        console.log(`${type} = ${content}`);
     }
     const log = new Log({
         type,
-        content,
-        user
+        content
     });
     log.save().then(() => {}, (err) => {
         throw err;

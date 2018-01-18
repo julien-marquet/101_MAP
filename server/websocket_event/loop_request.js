@@ -9,7 +9,7 @@ const loop_request = (io, globalStorage,i_Oauth2_authenticator, i_users_api) => 
             i_users_api.getConnectedUsers(9, (result) => {
                 if (result.success) {
                     io.sockets.emit("connectedUsers", JSON.stringify(result.content));
-                    logger.add_log("General", "Periodic request connectedUsers Successed");                                
+                    logger.add_log("General", "Periodic request connectedUsers Succeeded");                                
                 }
                 else
                 {
