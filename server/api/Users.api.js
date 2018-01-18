@@ -1,13 +1,24 @@
-const   request = require('request');
+const fetch = require('node-fetch');
 
-const   users_func = require('./Users.func'),
-        {refreshRate} = require('../config/globalConfig');
+const users_func = require('./Users.func'),
+        {refreshRate, apiEndpoint} = require('../config/globalConfig');
 
 class Users {
     constructor(globalStorage, Oauth2_authenticator) {
         this.globalStorage = globalStorage;
         this.Oauth2_authenticator = Oauth2_authenticator;
     }
+
+    getUserInfos(userId, userToken) {
+        return fetch(`${apiEndpoint}/v2/users/${userId}`, {
+            headers: {"authorization": `Bearer ${userToken}`}
+        })
+            .then(response => response.json())
+            .catch(error => {
+                return {error};
+            });
+    }
+
     getConnectedUsers(campus, callback)  {
             console.log("generating fresh result");
             let i = 1;

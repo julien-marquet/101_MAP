@@ -51,13 +51,18 @@ const users = (state = initialState, {type, payload}) => {
             }
         };
     case USER_GET_METADATA_SUCCEEDED:
-        return {
-            ...state,
-            user_metadata: {
-                success: true,
-                content: payload
-            }
-        };
+        if (state.activeUser.user.id === payload.id) {
+            return {
+                ...state,
+                user_metadata: {
+                    success: true,
+                    content: payload
+                }
+            };
+        }
+        else {
+            return state;
+        }
     case USER_GET_METADATA_FAILED:
         return {
             ...state,
