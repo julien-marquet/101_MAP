@@ -1,5 +1,4 @@
-const request = require('request');
-const fetch = require("node-fetch");
+const fetch = require('node-fetch');
 
 const users_func = require('./Users.func'),
         {refreshRate, apiEndpoint} = require('../config/globalConfig');
