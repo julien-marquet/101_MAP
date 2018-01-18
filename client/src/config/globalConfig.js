@@ -1,6 +1,6 @@
 export default {
     serverEndpoint: "http://localhost:8080",
-    clientId: "ec554f6910bc61665c6b05abe37b1a0a08b5589fad33614029d5453de6d3a481",
+    clientId: "7e72ed3b0dfd8a5499a8337e11fcd3e64467b975c0f4fabaf4bc334d358c627b",
     redirectUri: "http://localhost:3000/",
     apiEndPoint: "https://api.intra.42.fr",
     defaultTheme: "dark",

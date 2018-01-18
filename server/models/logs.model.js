@@ -1,20 +1,12 @@
-var mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
-    var LogSchema = new Schema({
-        content: String
+    
+    const LogSchema = new Schema({
+        date: {type: Date, default: Date.now},
+        type: {type: String, default: "General"},
+        content: {type: String, default: null},
+        user: {type: String, default: null}
     });
     
     // save the model
-    var Log = mongoose.model('Log', LogSchema);
-var test = new Log({ content: 'test' }); 
-test.save(function (err) { 
-    if (err) {
-        console.log(err);
-    }
-    console.log("saved");
-     // saved! 
-     Log.find({}, function (err, log) {
-          if (err) return handleError(err);
-        console.log(log)
-     });
-})
+  module.exports = mongoose.model('Log', LogSchema);
