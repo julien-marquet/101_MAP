@@ -1,25 +1,14 @@
-import {all, takeLatest, call, put} from "redux-saga/effects";
+import {all, takeLatest} from "redux-saga/effects";
 
-import {
-    USER_GET_METADATA,
-    USER_GET_METADATA_SUCCEEDED,
-    USER_GET_METADATA_FAILED
-} from "../actions/users";
-import {getUserInfos} from "../api/users";
+import {USER_GET_METADATA} from "../actions/users";
 
-function* getUserMetadata({payload}) {
-    const response = yield call(getUserInfos, payload);
-    if (response.error !== undefined) {
-        yield put({type: USER_GET_METADATA_FAILED, payload: response.error});
-    }
-    else {
-        yield put({type: USER_GET_METADATA_SUCCEEDED, payload: response});
-    }
+function getUserMetadata(socketClient, {payload}) {
+    socketClient.emit("user.get.infos", {userId: payload, userToken: socketClient.socket.query.token});
 }
 
-function* flow() {
+function* flow(socketClient) {
     yield all([
-        takeLatest(USER_GET_METADATA, getUserMetadata)
+        takeLatest(USER_GET_METADATA, getUserMetadata, socketClient)
     ]);
 }
 
