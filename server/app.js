@@ -1,5 +1,8 @@
-const express = require('express'),
-    app = express();
+const express = require('express'), 
+    databaseConfig = require("./config/databaseConfig"),
+    mongoose = require('mongoose'),
+    models = require('./models/index')();
+    app = express()
     server = require('http').Server(app),
     Storage = require('storage'),
     globalStorage = new Storage(),
@@ -23,7 +26,15 @@ app.use(function (req, res, next) {
     err.status = 404;
     next(err);
 });
-
-server.listen(serverPort, function () {
-    console.log(`Server listening on port ${serverPort}`);
+mongoose.connect(databaseConfig.db).then(() => {}, (error) => {
+    console.log(error)
+})
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    console.log("Connection to database succesfull");
+    server.listen(serverPort, function () {
+        console.log(`Server listening on port ${serverPort}`);
+    });
 });
+
