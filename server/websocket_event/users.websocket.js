@@ -9,13 +9,13 @@ const usersSocket = (socket, globalStorage) => {
         UsersModel.getUserInfos(userId, userToken)
             .then(response => {
                 if (response.error) 
-                    logger.add_log("Error", `Request UserInfos Failed. details : ${JSON.stringify(error)}`);                
+                    logger.add_log({type:"Error", description:`Request UserInfos Failed. details : ${error}`});                
                 else 
-                    logger.add_log("General", "Request UserInfos Succeeded");
+                    logger.add_log({type:"General", description:"Request UserInfos Succeeded"});
                 socket.emit("user.getted.infos", response)
             })
             .catch(error => {
-                logger.add_log("Error", `Request UserInfos Failed. details : ${JSON.stringify(error)}`);                
+                logger.add_log({type:"General", description:`Request UserInfos Failed. details : ${error}`});                
                 socket.emit("error.fetch", error)
         });
     });

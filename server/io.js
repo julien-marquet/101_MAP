@@ -13,10 +13,10 @@ const websocketHandler = (server, globalStorage) => {
 
 	globalStorage.connectedUsers = 0;
 
-	io.use(require('./middlewares/Oauth_client_authentifier.middleware'));
+	io.use(require('./middlewares/Oauth_client_authentifier.middleware')(globalStorage));
 	
 	io.on('connection', (socket) => {
-		logger.add_log("General", "Socket Connection established");		
+		logger.add_log({type:"General", description:"Socket Connection established"});		
 		socket.emit("authSuccess", {
 			type: socket.typeAuth,
 			token: socket.userToken
@@ -27,7 +27,7 @@ const websocketHandler = (server, globalStorage) => {
 			i_users_api.getConnectedUsers(9, (result) => {
 				if (result.success){
 					socket.emit("connectedUsers", JSON.stringify(result.content));
-					logger.add_log("General", "Emit connectedUsers from Request");
+					logger.add_log({type:"General", description:"Emit connectedUsers from Request"});
 				}
 				else
 				{
@@ -36,14 +36,14 @@ const websocketHandler = (server, globalStorage) => {
 				}	
 			});
 		} else {
-			logger.add_log("General", "Emit connectedUsers from Cache");			
+			logger.add_log({type:"General", description:"Emit connectedUsers from Cache"});			
 			socket.emit("connectedUsers", JSON.stringify({
 				last_request: globalStorage.connected_users_last_request, 
 				array: globalStorage.connected_users_array
 			}));
 		}
 		socket.on('disconnect', (data) => {
-			logger.add_log("General", "Socket Connection Lost");			
+			logger.add_log({type:"General", description:"Socket Connection Lost"});			
 			globalStorage.connectedUsers--;
 		})
 		const websocket_event_handlers = require('./websocket_event/index')(socket, globalStorage);

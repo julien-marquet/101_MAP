@@ -4,7 +4,8 @@ const mongoose = require('mongoose'),
     const LogSchema = new Schema({
         date: {type: Date, default: Date.now},
         type: {type: String, default: "General"},
-        content: {type: String, default: null},
+        description: {type: String, default: null},
+        additionnal_infos: {type: String, default: null},
         user: {type: String, default: null}
     });
     

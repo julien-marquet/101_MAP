@@ -1,5 +1,5 @@
-const   Oauth2_authenticator = require('../OAuth2_authenticator'),
-        i_Oauth2_authenticator = new Oauth2_authenticator(globalStorage);    
+const   Oauth2_authenticator = require('../OAuth2_authenticator');
+        
 
 function is_valid_code(code, callback)  {
     if (code) {
@@ -27,25 +27,29 @@ function is_valid_token(token, callback) {
         callback(false);
 }
 
-const Oauth_authentifier = (socket, next) => {
-    is_valid_token(socket.handshake.query.token, token => {
-        if (!token) {
-            is_valid_code(socket.handshake.query.code, code_token => {
-                if (!code_token)
-                    next(new Error('Authentication error'));
-                else {
-                    socket.typeAuth = "code";
-                    socket.userToken = code_token.access_token;
-                    next();
-                }
-            })
-        }
-        else {
-            socket.typeAuth = "token";
-            socket.userToken = socket.handshake.query.token; 
-            next();
-        }
-    })
+
+const Oauth_authentifier = (globalStorage) => {
+    i_Oauth2_authenticator = new Oauth2_authenticator(globalStorage);    
+    return ((socket, next, bla) => {
+        is_valid_token(socket.handshake.query.token, token => {
+            if (!token) {
+                is_valid_code(socket.handshake.query.code, code_token => {
+                    if (!code_token)
+                        next(new Error('Authentication error'));
+                    else {
+                        socket.typeAuth = "code";
+                        socket.userToken = code_token.access_token;
+                        next();
+                    }
+                })
+            }
+            else {
+                socket.typeAuth = "token";
+                socket.userToken = socket.handshake.query.token; 
+                next();
+            }
+        })
+    });
 };
 
 module.exports = Oauth_authentifier;
