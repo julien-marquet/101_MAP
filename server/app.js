@@ -27,17 +27,17 @@ app.use(function (req, res, next) {
     err.status = 404;
     next(err);
 });
-mongoose.connect(databaseConfig.db).then(() => {}, (error) => {
-    console.log(error)
+mongoose.connect(databaseConfig.db).then(() => {}, (err) => {
+    logger.add_log({type: "Error", description: `DB error : ${err}`});
 })
 const db = mongoose.connection;
 db.on('error', (err) => {
-
+    logger.add_log({type: "Error", description: `DB error : ${err}`});
 });
 db.once('open', () => {
-    console.log("Connection to database succesfull");
+    logger.add_log({type: "General", description: "Succesfully Connected to database"});
     server.listen(serverPort, function () {
-        console.log(`Server listening on port ${serverPort}`);
+        logger.add_log({type: "General", description: `Succesfully launched server on port ${serverPort}`});
     });
 });
 
