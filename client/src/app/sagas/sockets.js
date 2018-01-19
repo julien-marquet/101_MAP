@@ -17,8 +17,10 @@ function setupListeners(socketClient, dispatch) {
     
     socketClient.on("authSuccess", data => {
         window.history.pushState("Home", "Home", "/");
-        if (data && data.type === "code")
+        if (data && data.type === "code") {
             storeCookie("userToken", data.token);
+            socketClient.socket.query.token = data.token;
+        }
     });
 
     socketClient.on("user.getted.infos", response => {
