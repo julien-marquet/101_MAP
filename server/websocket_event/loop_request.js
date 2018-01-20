@@ -13,7 +13,7 @@ const loop_request = (io, globalStorage,i_Oauth2_authenticator, i_users_api) => 
                 else
                 {
                     io.sockets.emit("connectedUsers", JSON.stringify({"error": true, "message": result.message}));
-                    logger.add_log({type:"Error", description:"Periodic request connectedUsers Failed"});                                                  
+                    logger.add_log({type:"Error", description:"Periodic request connectedUsers Failed", additional_infos: result.message});                                                  
                 }
             });
         }
