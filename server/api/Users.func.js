@@ -1,6 +1,7 @@
-const   request = require('request');
+const   request = require("request");
 
-const   {apiEndpoint} = require('../config/globalConfig');
+const   {apiEndpoint} = require("../config/globalConfig"),
+    logger = require("../logger");
 
 const users_func = {
     selectNull :(array) => {
@@ -15,7 +16,7 @@ const users_func = {
         request.get({
             url: `${apiEndpoint}/v2/campus/${campus}/locations?page=${pagination}&sort=-end_at,host&page=${pagination}`,
             headers: {
-                'Authorization': 'Bearer ' + token.access_token
+                "Authorization": "Bearer " + token.access_token
             }
         }, (err, res, body) => {
             if (!err && body) {
@@ -29,7 +30,13 @@ const users_func = {
                     callback(null);
             }
             else {
-                console.log("error getting campus data : " + err);
+                logger.add_log({
+                    type: "Error", 
+                    description: "Couldn't get campus data", 
+                    additionnal_infos: {
+                        Error: err
+                    }
+                });
                 callback(null);
             }
         });

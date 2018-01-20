@@ -1,16 +1,16 @@
 const fs = require("fs");
 
-const eventHandler = (socket, globalStorage) => {
+const modelLoader = () => {
     (function readDir(dir = __dirname) {
         fs.readdirSync(dir).map(file => {
             if (fs.lstatSync(`${dir}/${file}`).isDirectory())
                 readDir(`${dir}/${file}`);
             else {
-                if (file.includes(".websocket.js"))
-                    require(`${dir}/${file}`)(socket, globalStorage);
+                if (file.includes(".model.js"))
+                    require(`${dir}/${file}`);
             }
         });
     })();
 };
 
-module.exports = eventHandler;
+module.exports = modelLoader;

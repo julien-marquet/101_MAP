@@ -9,9 +9,7 @@ import {CONNECT_APP} from "../actions/globalState";
 import {storeCookie} from "../helpers/cookies.helper";
 
 function setupListeners(socketClient, dispatch) {
-    console.log("SetupListeners");
     socketClient.on("connectedUsers", data => {
-        console.log("Received users");
         dispatch({type: USERS_GETTED, payload: JSON.parse(data)});
     });
     
@@ -23,13 +21,17 @@ function setupListeners(socketClient, dispatch) {
         }
     });
 
+    socketClient.on("error", err => {
+        console.error(`Socket Error : ${JSON.stringify(err)}`);
+    });
+
+    socketClient.on("error.fetch", err => {
+        console.error(`Socket Error : ${JSON.stringify(err)}`);
+        dispatch({type: USER_GET_METADATA_FAILED, payload: err});
+    });
+
     socketClient.on("user.getted.infos", response => {
-        if (response.error !== undefined) {
-            dispatch({type: USER_GET_METADATA_FAILED, payload: response.error});
-        }
-        else {
-            dispatch({type: USER_GET_METADATA_SUCCEEDED, payload: response});
-        }
+        dispatch({type: USER_GET_METADATA_SUCCEEDED, payload: response});
     });
 }
 
