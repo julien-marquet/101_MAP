@@ -6,21 +6,26 @@ const usersSocket = (socket, globalStorage) => {
     const auth = new authenticator(globalStorage);
     const UsersModel = new Users(globalStorage, auth);
     socket.on("user.get.infos", ({userId, userToken}) => {
-        UsersModel.getUserInfos(userId, userToken)
-            .then(response => {
-                if (response.error ) {
-                    logger.add_log({type:"Error", description:`Request UserInfos Failed. details : ${response.error}`});
-                    socket.emit("error.fetch", response.error);
-                }          
-                else {
-                    logger.add_log({type:"General", description:"Request UserInfos Succeeded"});
-                    socket.emit("user.getted.infos", response);
-                }
-            })
-            .catch(error => {
-                logger.add_log({type:"General", description:`Request UserInfos Failed. details : ${error}`});                
-                socket.emit("error.fetch", error)
-            });
+        if (!userToken ||userToken === undefined) {
+            logger.add_log({type:"General", description:"Request UserInfos Failed", additionnal_infos: "No token provided"});                
+            socket.emit("error.fetch", "No token provided");
+        } else {
+            UsersModel.getUserInfos(userId, userToken)
+                .then(response => {
+                    if (response.error ) {
+                        logger.add_log({type:"Error", description:"Request UserInfos Failed", additionnal_infos: response.error});               
+                        socket.emit("error.fetch", response.error);
+                    }          
+                    else {
+                        logger.add_log({type:"General", description:"Request UserInfos Succeeded"});
+                        socket.emit("user.getted.infos", response);
+                    }
+                })
+                .catch(error => {
+                    logger.add_log({type:"General", description:"Request UserInfos Failed", additionnal_infos: error});          
+                    socket.emit("error.fetch", error);
+                });
+        }
     });
 };
 
