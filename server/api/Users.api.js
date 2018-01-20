@@ -20,7 +20,6 @@ class Users {
     }
 
     getConnectedUsers(campus, callback)  {
-            console.log("generating fresh result");
             let i = 1;
             let usersArray = [];
             let self = this;
