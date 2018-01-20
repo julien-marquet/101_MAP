@@ -1,6 +1,7 @@
 const   request = require('request');
 
-const   {apiEndpoint} = require('../config/globalConfig');
+const   {apiEndpoint} = require('../config/globalConfig'),
+        logger = require("../logger");
 
 const users_func = {
     selectNull :(array) => {
@@ -29,7 +30,7 @@ const users_func = {
                     callback(null);
             }
             else {
-                console.log("error getting campus data : " + err);
+                logger.add_log({type: "Error", description: `Couldn't get campus data`, additionnal_infos: err});
                 callback(null);
             }
         });

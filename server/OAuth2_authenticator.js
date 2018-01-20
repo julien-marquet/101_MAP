@@ -1,5 +1,7 @@
-const   request = require('request'), 
-        {apiEndpoint, client_id, client_secret, redirect_uri} = require('./config/globalConfig');
+const   request = require('request');
+
+const   {apiEndpoint, client_id, client_secret, redirect_uri} = require('./config/globalConfig'),
+        logger = require("./logger")
 
 class Oauth2_authenticator {
     constructor(globalStorage) {
@@ -23,7 +25,7 @@ class Oauth2_authenticator {
                 else 
                     callback(body);
             } else {
-                console.log(`error getting USER access token : ${err}`);
+                logger.add_log({type: "Error", description: `Couldn't get user access token`, additionnal_infos: err});
                 callback(null);
             }
         });
@@ -38,21 +40,21 @@ class Oauth2_authenticator {
             if (!err && body) {
                 body = JSON.parse(body);
                 if (body.error) {
-                    console.log(`error validating CLIENT access token : ${body.error}`);
+                    logger.add_log({type: "Error", description: `Couldn't validate user access token`, additionnal_infos: body.error});
                     callback(false);
                 }
                 else 
                     callback(true);
             }
             else {
-                console.log(`error validating CLIENT access token : ${err}`);
+                logger.add_log({type: "Error", description: `Couldn't validate user access token`, additionnal_infos: err});
                 callback(false);
             }
         })
     }
     getToken(callback) {
         if (!this.globalStorage.access_token || (this.globalStorage.access_token.modified_at + this.globalStorage.access_token.expires_in * 1000 < Date.now() - 2000)) {
-            console.log("generating fresh token");
+            logger.add_log({type: "General", description: "A fresh API token has been generated"});
             request.post({
                 url: `${apiEndpoint}oauth/token`,
                 form: {
@@ -64,7 +66,7 @@ class Oauth2_authenticator {
                 if (!err && body) {
                     body = JSON.parse(body);
                     if (body.error) {
-                        console.log(`error getting API access token : ${body.error}`);
+                        logger.add_log({type: "Error", description: `Couldn't get API access token`, additionnal_infos: body.error});
                         callback(null);
                     }
                     else {
@@ -74,7 +76,7 @@ class Oauth2_authenticator {
                     }
                 }
                 else {
-                    console.log(`error getting API access token : ${err}`);
+                    logger.add_log({type: "Error", description: `Couldn't get API access token`, additionnal_infos: err});
                     callback(null);
                 }
             });
