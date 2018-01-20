@@ -1,7 +1,7 @@
-const   Oauth2_authenticator = require('../OAuth2_authenticator');
+const   Oauth2_authenticator = require("../OAuth2_authenticator");
         
 
-function is_valid_code(code, callback)  {
+function is_valid_code(i_Oauth2_authenticator, code, callback)  {
     if (code) {
         i_Oauth2_authenticator.getUserToken(code, token => {
             if (token)
@@ -14,7 +14,7 @@ function is_valid_code(code, callback)  {
         callback(false);
 }
 
-function is_valid_token(token, callback) {
+function is_valid_token(i_Oauth2_authenticator, token, callback) {
     if (token && token !== "undefined") {
         i_Oauth2_authenticator.testTokenValidity(token, res => {
             if (res)
@@ -29,26 +29,26 @@ function is_valid_token(token, callback) {
 
 
 const Oauth_authentifier = (globalStorage) => {
-    i_Oauth2_authenticator = new Oauth2_authenticator(globalStorage);    
-    return ((socket, next, bla) => {
-        is_valid_token(socket.handshake.query.token, token => {
+    const i_Oauth2_authenticator = new Oauth2_authenticator(globalStorage);    
+    return ((socket, next) => {
+        is_valid_token(i_Oauth2_authenticator, socket.handshake.query.token, token => {
             if (!token) {
-                is_valid_code(socket.handshake.query.code, code_token => {
+                is_valid_code(i_Oauth2_authenticator, socket.handshake.query.code, code_token => {
                     if (!code_token)
-                        next(new Error('Authentication error'));
+                        next(new Error("Authentication error"));
                     else {
                         socket.typeAuth = "code";
                         socket.userToken = code_token.access_token;
                         next();
                     }
-                })
+                });
             }
             else {
                 socket.typeAuth = "token";
                 socket.userToken = socket.handshake.query.token; 
                 next();
             }
-        })
+        });
     });
 };
 

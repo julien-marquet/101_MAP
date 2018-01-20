@@ -1,6 +1,4 @@
-const fs = require('fs');
-
-const {clientPath} = require('../config/globalConfig');
+const fs = require("fs");
 
 const eventHandler = (socket, globalStorage) => {
     (function readDir(dir = __dirname) {
@@ -8,7 +6,7 @@ const eventHandler = (socket, globalStorage) => {
             if (fs.lstatSync(`${dir}/${file}`).isDirectory())
                 readDir(`${dir}/${file}`);
             else {
-                if (file.includes('.websocket.js'))
+                if (file.includes(".websocket.js"))
                     require(`${dir}/${file}`)(socket, globalStorage);
             }
         });

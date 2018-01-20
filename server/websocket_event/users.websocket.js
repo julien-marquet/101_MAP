@@ -1,6 +1,6 @@
 const   Users = require("../api/Users.api"),
-        authenticator = require("../OAuth2_authenticator"),
-        logger = require("../logger");
+    authenticator = require("../OAuth2_authenticator"),
+    logger = require("../logger");
 
 const usersSocket = (socket, globalStorage) => {
     const auth = new authenticator(globalStorage);
@@ -20,7 +20,7 @@ const usersSocket = (socket, globalStorage) => {
             .catch(error => {
                 logger.add_log({type:"General", description:`Request UserInfos Failed. details : ${error}`});                
                 socket.emit("error.fetch", error)
-        });
+            });
     });
 };
 
