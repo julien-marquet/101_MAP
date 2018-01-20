@@ -36,11 +36,13 @@ const websocketHandler = (server, globalStorage) => {
 				}	
 			});
 		} else {
-			logger.add_log({type:"General", description:"Emit connectedUsers from Cache"});			
-			socket.emit("connectedUsers", JSON.stringify({
-				last_request: globalStorage.connected_users_last_request, 
-				array: globalStorage.connected_users_array
-			}));
+			logger.add_log({type:"General", description:"Emit connectedUsers from Cache"});
+			setTimeout(() => {
+				socket.emit("connectedUsers", JSON.stringify({
+					last_request: globalStorage.connected_users_last_request, 
+					array: globalStorage.connected_users_array
+				}));
+			}, 500);
 		}
 		socket.on('disconnect', (data) => {
 			logger.add_log({type:"General", description:"Socket Connection Lost"});			

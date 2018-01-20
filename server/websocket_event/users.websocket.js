@@ -8,11 +8,14 @@ const usersSocket = (socket, globalStorage) => {
     socket.on("user.get.infos", ({userId, userToken}) => {
         UsersModel.getUserInfos(userId, userToken)
             .then(response => {
-                if (response.error) 
-                    logger.add_log({type:"Error", description:`Request UserInfos Failed. details : ${error}`});                
-                else 
+                if (response.error ) {
+                    logger.add_log({type:"Error", description:`Request UserInfos Failed. details : ${response.error}`});
+                    socket.emit("error.fetch", response.error);
+                }          
+                else {
                     logger.add_log({type:"General", description:"Request UserInfos Succeeded"});
-                socket.emit("user.getted.infos", response)
+                    socket.emit("user.getted.infos", response);
+                }
             })
             .catch(error => {
                 logger.add_log({type:"General", description:`Request UserInfos Failed. details : ${error}`});                
