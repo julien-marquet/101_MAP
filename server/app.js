@@ -28,16 +28,36 @@ app.use(function (req, res, next) {
     next(err);
 });
 mongoose.connect(databaseConfig.db).then(() => {}, (err) => {
-    logger.add_log({type: "Error", description: `DB error : ${err}`});
+    logger.add_log({
+        type: "Error", 
+        description: "DB error", 
+        additionnal_infos: {
+            Error :err
+        }
+    });
 });
 const db = mongoose.connection;
 db.on("error", (err) => {
-    logger.add_log({type: "Error", description: `DB error : ${err}`});
+    logger.add_log({
+        type: "Error", 
+        description: "DB error", 
+        additionnal_infos: {
+            Error :err
+        }
+    });
 });
 db.once("open", () => {
-    logger.add_log({type: "General", description: "Succesfully Connected to database"});
+    logger.add_log({
+        type: "General", 
+        description: "Succesfully Connected to database"
+    });
     server.listen(serverPort, function () {
-        logger.add_log({type: "General", description: `Succesfully launched server on port ${serverPort}`});
+        logger.add_log({type: "General", 
+            description: "Succesfully launched server", 
+            additionnal_infos: {
+                Port: serverPort
+            }
+        });
     });
 });
 

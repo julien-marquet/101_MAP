@@ -30,7 +30,13 @@ const users_func = {
                     callback(null);
             }
             else {
-                logger.add_log({type: "Error", description: "Couldn't get campus data", additionnal_infos: err});
+                logger.add_log({
+                    type: "Error", 
+                    description: "Couldn't get campus data", 
+                    additionnal_infos: {
+                        Error: err
+                    }
+                });
                 callback(null);
             }
         });
