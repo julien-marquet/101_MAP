@@ -33,6 +33,7 @@ function setupListeners(socketClient, dispatch) {
     socketClient.on("user.getted.infos", response => {
         dispatch({type: USER_GET_METADATA_SUCCEEDED, payload: response});
     });
+    socketClient.emit("users.get.all");
 }
 
 function* flow(socketClient, dispatch) {
