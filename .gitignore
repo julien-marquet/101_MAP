@@ -60,3 +60,5 @@ typings/
 *.css
 .idea/
 client/src/app/scss/font-awesome/scss/*.css
+
+database
