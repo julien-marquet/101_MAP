@@ -34,7 +34,6 @@ function setupListeners(socketClient, dispatch) {
         dispatch({type: USER_GET_METADATA_SUCCEEDED, payload: response});
     });
     socketClient.emit("users.get.all");
-    console.log("Getting all users");
 }
 
 function* flow(socketClient, dispatch) {

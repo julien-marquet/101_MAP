@@ -6,7 +6,6 @@ const usersSocket = (socket, globalStorage) => {
     const auth = new authenticator(globalStorage);
     const i_users_api = new Users(globalStorage, auth);
     socket.on("users.get.all", () => {
-        console.log("Users get all");
         if (!globalStorage.connected_users_array) {
             i_users_api.getConnectedUsers(9, (result) => {
                 if (result.success){
