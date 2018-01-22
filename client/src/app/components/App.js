@@ -62,7 +62,7 @@ class App extends Component {
             return (
                 <div key={"Component0"} className="wrapper">
                     <div className={"loginWrapper"}>
-                        <h1>WarZone</h1>
+                        <h1>The Matrix</h1>
                         <img
                             className={"logo"}
                             src={this.logoTheme[this.props.globalState.themes.value]}
