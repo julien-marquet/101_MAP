@@ -3,7 +3,8 @@ const fetch = require("node-fetch");
 const loop_queue = i_queue => {
     setInterval(()=> {
         clear_queue(i_queue.get_head());
-    }, 2000);
+        clear_queue(i_queue.get_head());
+    }, 1000);
 };
 
 function clear_queue(request) {
