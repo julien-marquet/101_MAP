@@ -1,5 +1,3 @@
-const   Q = require("q");
-
 const users_func = require("./Users.func"),
     {apiEndpoint} = require("../config/globalConfig");
 
@@ -11,20 +9,13 @@ class Users {
     }
 
     getUserInfos(userId, userToken) {
-        const def = Q.defer();
-        this.i_queue.push_tail(
-            "getUserInfos",
-            {
+        return (this.i_queue.push_tail(
+            "getUserInfos", {
                 url: `${apiEndpoint}v2/users/${userId}`, 
                 headers: {"authorization": `Bearer ${userToken}`
                 }
             }
-        ).then((res) => {
-            def.resolve(res);
-        }, (err) => {
-            def.reject(err);
-        });
-        return def.promise;
+        ));
     }
 
     getConnectedUsers(campus, callback)  {
