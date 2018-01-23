@@ -1,7 +1,7 @@
 const	Users_api = require("./api/Users.api"),
-    Oauth2_authenticator = require("./OAuth2_authenticator"),
-    Queue = require("./Queue"),
-    logger = require("./logger");
+    Oauth2_authenticator = require("./custom_classes/OAuth2_authenticator"),
+    Queue = require("./custom_classes/Queue"),
+    logger = require("./custom_modules/logger");
 
 const websocketHandler = (server, globalStorage) => {
     const	io = require("socket.io")(server);

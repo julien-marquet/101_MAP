@@ -1,4 +1,4 @@
-const   Oauth2_authenticator = require("../OAuth2_authenticator");
+const   Oauth2_authenticator = require("../custom_classes/OAuth2_authenticator");
         
 
 function is_valid_code(i_Oauth2_authenticator, code, callback)  {

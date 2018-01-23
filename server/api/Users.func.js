@@ -1,7 +1,7 @@
 const   request = require("request");
 
 const   {apiEndpoint} = require("../config/globalConfig"),
-    logger = require("../logger");
+    logger = require("../custom_modules/logger");
 
 const users_func = {
     selectNull :(array) => {

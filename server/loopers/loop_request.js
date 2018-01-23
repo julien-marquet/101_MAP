@@ -1,4 +1,4 @@
-const logger = require("../logger");
+const logger = require("../custom_modules/logger");
 
 const loop_request = (io, globalStorage,i_Oauth2_authenticator, i_users_api) => {
     setInterval(()=> {

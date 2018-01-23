@@ -1,5 +1,5 @@
 const   Log = require("mongoose").model("Log"),
-    globalConfig = require("./config/globalConfig");
+    globalConfig = require("../config/globalConfig");
 
 function print_additionnal_infos(infos) {
     let res = "";

@@ -1,4 +1,4 @@
-const HTTP_requests = require("../HTTP_requests");
+const HTTP_requests = require("../custom_classes/HTTP_requests");
 const i_HTTP_requests = new HTTP_requests;
 
 const loop_queue = (i_queue) => {

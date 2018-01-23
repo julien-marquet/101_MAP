@@ -1,7 +1,7 @@
 const   request = require("request");
 
-const   {apiEndpoint, redirect_uri} = require("./config/globalConfig"),
-    logger = require("./logger");
+const   {apiEndpoint, redirect_uri} = require("../config/globalConfig"),
+    logger = require("../custom_modules/logger");
 
 class Oauth2_authenticator {
     constructor(globalStorage) {

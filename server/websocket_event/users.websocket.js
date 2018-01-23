@@ -1,6 +1,6 @@
 const   Users = require("../api/Users.api"),
-    authenticator = require("../OAuth2_authenticator"),
-    logger = require("../logger");
+    authenticator = require("../custom_classes/OAuth2_authenticator"),
+    logger = require("../custom_modules/logger");
 
 const usersSocket = (socket, globalStorage, i_queue) => {
     const auth = new authenticator(globalStorage);
