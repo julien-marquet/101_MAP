@@ -26,37 +26,7 @@ const websocketHandler = (server, globalStorage) => {
             token: socket.userToken
         });
         globalStorage.connectedUsers++;
-        if (!globalStorage.connected_users_array)
-        {
-            i_users_api.getConnectedUsers(9, (result) => {
-                if (result.success){
-                    socket.emit("connectedUsers", JSON.stringify(result.content));
-                    logger.add_log({
-                        type:"General", 
-                        description:"Emit connectedUsers from Request"
-                    });
-                }
-                else
-                {
-                    socket.emit("connectedUsers", JSON.stringify({"error": true, "message": result.message}));
-                    logger.add_log({
-                        type:"Error", 
-                        description:"couldn't Retrieve connectedUsers from Request"
-                    });					
-                }	
-            });
-        } else {
-            logger.add_log({
-                type:"General", 
-                description:"Emit connectedUsers from Cache"
-            });
-            setTimeout(() => {
-                socket.emit("connectedUsers", JSON.stringify({
-                    last_request: globalStorage.connected_users_last_request, 
-                    array: globalStorage.connected_users_array
-                }));
-            }, 500);
-        }
+
         socket.on("disconnect", () => {
             logger.add_log({
                 type:"General", 
