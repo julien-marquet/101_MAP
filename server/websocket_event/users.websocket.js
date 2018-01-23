@@ -2,9 +2,9 @@ const   Users = require("../api/Users.api"),
     authenticator = require("../OAuth2_authenticator"),
     logger = require("../logger");
 
-const usersSocket = (socket, globalStorage) => {
+const usersSocket = (socket, globalStorage, i_queue) => {
     const auth = new authenticator(globalStorage);
-    const i_users_api = new Users(globalStorage, auth);
+    const i_users_api = new Users(globalStorage, auth, i_queue);
     socket.on("users.get.all", () => {
         if (!globalStorage.connected_users_array) {
             i_users_api.getConnectedUsers(9, (result) => {

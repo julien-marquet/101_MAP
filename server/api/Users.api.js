@@ -1,22 +1,30 @@
-const fetch = require("node-fetch");
+const   Q = require("q");
 
 const users_func = require("./Users.func"),
     {apiEndpoint} = require("../config/globalConfig");
 
 class Users {
-    constructor(globalStorage, Oauth2_authenticator) {
+    constructor(globalStorage, Oauth2_authenticator, i_queue) {
         this.globalStorage = globalStorage;
+        this.i_queue = i_queue;
         this.Oauth2_authenticator = Oauth2_authenticator;
     }
 
     getUserInfos(userId, userToken) {
-        return fetch(`${apiEndpoint}/v2/users/${userId}`, {
-            headers: {"authorization": `Bearer ${userToken}`}
-        })
-            .then(response => response.json())
-            .catch(error => {
-                return {error};
-            });
+        const def = Q.defer();
+        this.i_queue.push_tail(
+            "getUserInfos",
+            {
+                url: `${apiEndpoint}v2/users/${userId}`, 
+                headers: {"authorization": `Bearer ${userToken}`
+                }
+            }
+        ).then((res) => {
+            def.resolve(res);
+        }, (err) => {
+            def.reject(err);
+        });
+        return def.promise;
     }
 
     getConnectedUsers(campus, callback)  {

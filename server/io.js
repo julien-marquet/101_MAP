@@ -1,13 +1,16 @@
-const	users_api = require("./api/Users.api"),
+const	Users_api = require("./api/Users.api"),
     Oauth2_authenticator = require("./OAuth2_authenticator"),
+    Queue = require("./Queue"),
     logger = require("./logger");
 
 const websocketHandler = (server, globalStorage) => {
     const	io = require("socket.io")(server);
+    const   i_queue = new Queue(globalStorage),
+        i_Oauth2_authenticator = new Oauth2_authenticator(globalStorage),
+        i_users_api = new Users_api(globalStorage, i_Oauth2_authenticator, i_queue);
 
-    const	i_Oauth2_authenticator = new Oauth2_authenticator(globalStorage),
-        i_users_api = new users_api(globalStorage, i_Oauth2_authenticator);
-    require("./websocket_event/loop_request")(io, globalStorage, i_Oauth2_authenticator, i_users_api);       
+    require("./loopers/loop_request")(io, globalStorage, i_Oauth2_authenticator, i_users_api);
+    require("./loopers/loop_queue")(i_queue);       
 
     globalStorage.connectedUsers = 0;
 
@@ -61,7 +64,7 @@ const websocketHandler = (server, globalStorage) => {
             });			
             globalStorage.connectedUsers--;
         });
-        require("./websocket_event/index")(socket, globalStorage);
+        require("./websocket_event/index")(socket, globalStorage, i_queue);
     });
 };
 module.exports = websocketHandler;
