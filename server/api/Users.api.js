@@ -26,7 +26,7 @@ class Users {
             if (i !== -1) {
                 self.Oauth2_authenticator.getToken(token => {
                     if (token) {
-                        users_func.getPageOfConnectedUsers(token, campus, i, pageArray => {
+                        users_func.getPageOfConnectedUsers(token, campus, i, self.i_queue.push_head.bind(self.i_queue), pageArray => {
                             if (!pageArray || pageArray.length < 30) {
                                 if (pageArray && pageArray.length > 0)
                                     usersArray = usersArray.concat(pageArray);

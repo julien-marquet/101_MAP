@@ -12,34 +12,31 @@ const users_func = {
         }
         return (dest);
     },
-    getPageOfConnectedUsers: (token, campus, pagination, callback) => {
-        request.get({
+    getPageOfConnectedUsers: (token, campus, pagination, push_head, callback) => {
+        push_head("getUsersList", {
             url: `${apiEndpoint}/v2/campus/${campus}/locations?page=${pagination}&sort=-end_at,host&page=${pagination}`,
             headers: {
                 "Authorization": "Bearer " + token.access_token
             }
-        }, (err, res, body) => {
-            if (!err && body) {
-                body = JSON.parse(body);
-                
-                if (body.length > 0) {
-                    body = users_func.selectNull(body);
-                    callback(body);
+        })
+            .then(response => {
+                if (response.length > 0) {
+                    response = users_func.selectNull(response);
+                    callback(response);
                 }
                 else
                     callback(null);
-            }
-            else {
+            })
+            .catch(error => {
                 logger.add_log({
                     type: "Error", 
                     description: "Couldn't get campus data", 
                     additionnal_infos: {
-                        Error: err
+                        Error: error
                     }
                 });
                 callback(null);
-            }
-        });
+            });
     }
 };
 module.exports = users_func;
