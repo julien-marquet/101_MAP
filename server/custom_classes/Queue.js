@@ -13,12 +13,9 @@ class Queue {
     }
 
     launchQueue() {
-        if (this.globalStorage.queue.status === 0) {
-            this.globalStorage.queue.status = 1;
+        this.globalStorage.queue.status += 1;
+        if (this.globalStorage.queue.status === 1) {
             launchRequests(this.get_head.bind(this), this.decreaseStatus.bind(this), this.getStatus.bind(this));
-        }
-        else {
-            this.globalStorage.queue.status += 1;
         }
     }
 

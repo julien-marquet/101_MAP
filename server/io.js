@@ -10,7 +10,6 @@ const websocketHandler = (server, globalStorage) => {
         i_users_api = new Users_api(globalStorage, i_Oauth2_authenticator, i_queue);
 
     require("./loopers/loop_request")(io, globalStorage, i_Oauth2_authenticator, i_users_api);
-    // require("./loopers/loop_queue")(i_queue);       
 
     globalStorage.connectedUsers = 0;
 
