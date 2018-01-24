@@ -4,18 +4,34 @@ const users_func = require("./Users.func"),
 class Users {
     constructor(globalStorage, Oauth2_authenticator, i_queue) {
         this.globalStorage = globalStorage;
+        this.globalStorage.usersInfos = {};
         this.i_queue = i_queue;
         this.Oauth2_authenticator = Oauth2_authenticator;
     }
 
     getUserInfos(userId, userToken) {
-        return (this.i_queue.push_tail(
-            "getUserInfos", {
-                url: `${apiEndpoint}v2/users/${userId}`, 
-                headers: {"authorization": `Bearer ${userToken}`
+        if (this.globalStorage.usersInfos[userId] === undefined) {
+            return (this.i_queue.push_tail(
+                "getUserInfos", {
+                    url: `${apiEndpoint}v2/users/${userId}`, 
+                    headers: {"authorization": `Bearer ${userToken}`
+                    }
                 }
+            )).then(response => {
+                response.last_request = Date.now();
+                this.globalStorage.usersInfos[response.id] = response;
+                return (response);
+            });
+        }
+        else {
+            if ((Date.now() - this.globalStorage.usersInfos[userId].last_request) / 1000 > 600) {
+                delete(this.globalStorage.usersInfos[userId]);
+                return (this.getUserInfos(userId, userToken));
             }
-        ));
+            else {
+                return (new Promise(resolve => resolve(this.globalStorage.usersInfos[userId])));
+            }
+        }
     }
 
     getConnectedUsers(campus, callback)  {
