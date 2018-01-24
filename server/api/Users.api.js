@@ -1,5 +1,5 @@
 const users_func = require("./Users.func"),
-    {apiEndpoint} = require("../config/globalConfig");
+    {apiEndpoint, connectedUsers_cacheExpiration} = require("../config/globalConfig");
 
 class Users {
     constructor(globalStorage, Oauth2_authenticator, i_queue) {
@@ -24,7 +24,7 @@ class Users {
             });
         }
         else {
-            if ((Date.now() - this.globalStorage.usersInfos[userId].last_request) / 1000 > 600) {
+            if ((Date.now() - this.globalStorage.usersInfos[userId].last_request) / 1000 > connectedUsers_cacheExpiration * 60) {
                 delete(this.globalStorage.usersInfos[userId]);
                 return (this.getUserInfos(userId, userToken));
             }

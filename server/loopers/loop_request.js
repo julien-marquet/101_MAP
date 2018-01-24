@@ -1,5 +1,5 @@
 const logger = require("../custom_modules/logger");
-const globalConfig = require("../config/globalConfig");
+const {connectedUsers_loopRate} = require("../config/globalConfig");
 
 const loop_request = (io, globalStorage,i_Oauth2_authenticator, i_users_api) => {
     setInterval(()=> {
@@ -29,7 +29,7 @@ const loop_request = (io, globalStorage,i_Oauth2_authenticator, i_users_api) => 
                 }
             });
         }
-    }, globalConfig.connectedUsers_loopRate * 1000);
+    }, connectedUsers_loopRate * 1000);
 };
 
 module.exports = loop_request;
