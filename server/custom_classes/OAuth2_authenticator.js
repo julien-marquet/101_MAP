@@ -32,7 +32,6 @@ class Oauth2_authenticator {
                 });
                 callback(null);
             }
-            callback(null);
         }, (err) => {
             logger.add_log({
                 type: "Error",
@@ -45,81 +44,73 @@ class Oauth2_authenticator {
         });
     }
     testTokenValidity(token, callback) {
-        request.get({
+        this.i_queue.push_head("testTokenValidity", {
             url: `${apiEndpoint}/oauth/token/info`,
             headers: {
                 "authorization": `Bearer ${token}`
             }
-        }, (err, res, body) => {
-            if (!err && body) {
-                body = JSON.parse(body);
-                if (body.error) {
-                    logger.add_log({
-                        type: "Error", 
-                        description: "Couldn't validate user access token", 
-                        additionnal_infos: {
-                            Error: body.error
-                        }
-                    });
-                    callback(false);
-                }
-                else 
-                    callback(true);
-            }
-            else {
+        }).then((res) => {
+            if (res && !res.error) {
+                callback(true);
+            } else {
                 logger.add_log({
-                    type: "Error", 
+                    type: "Error",
                     description: "Couldn't validate user access token", 
                     additionnal_infos: {
-                        Error:err
+                        Error: res.error || "empty result"
                     }
                 });
                 callback(false);
             }
+        }, (err) => {
+            logger.add_log({
+                type: "Error", 
+                description: "Couldn't validate user access token", 
+                additionnal_infos: {
+                    Error:err
+                }
+            });
+            callback(false);
         });
     }
     getToken(callback) {
         if (!this.globalStorage.access_token || (this.globalStorage.access_token.modified_at + this.globalStorage.access_token.expires_in * 1000 < Date.now() - 2000)) {
             logger.add_log({
                 type: "General", 
-                description: "A fresh API token has been generated"
+                description: "A fresh API token is being generated"
             });
-            request.post({
+            this.i_queue.push_head("getAPIToken", {
                 url: `${apiEndpoint}oauth/token`,
-                form: {
+                body: {
                     client_id: process.env.CLIENT_ID,
                     client_secret: process.env.CLIENT_SECRET,
                     grant_type: "client_credentials"
-                }
-            }, (err, res, body) => {
-                if (!err && body) {
-                    body = JSON.parse(body);
-                    if (body.error) {
-                        logger.add_log({
-                            type: "Error", 
-                            description: "Couldn't get API access token", 
-                            additionnal_infos: {
-                                Error: body.error
-                            }
-                        });
-                        callback(null);
-                    }
-                    else {
-                        this.globalStorage.access_token = body;
-                        this.globalStorage.access_token.modified_at = Date.now();
-                        callback(body);
-                    }
-                }
-                else {
+                },
+                method: "POST"
+            }).then((res) => {
+                if (res && !res.error) {
+                    this.globalStorage.access_token = res;
+                    this.globalStorage.access_token.modified_at = Date.now();
+                    callback(res);
+                } else {
                     logger.add_log({
                         type: "Error", 
                         description: "Couldn't get API access token", 
                         additionnal_infos: {
-                            Error: err
+                            Error: res.error
                         }
                     });
                     callback(null);
                 }
+            }, (err) => {
+                logger.add_log({
+                    type: "Error", 
+                    description: "Couldn't get API access token", 
+                    additionnal_infos: {
+                        Error: err
+                    }
+                });
+                callback(null);
             });
         }
         else {
