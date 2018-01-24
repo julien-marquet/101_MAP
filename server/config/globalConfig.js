@@ -3,8 +3,8 @@ module.exports = {
     serverPort: 8080,
     clientPath: "/../public/",
     connectedUsers_loopRate: 30, // seconds
-    queue_loopRate: 0.6, // seconds
-    connectedUsers_cacheExpiration: 20, // minutes
+    queue_loopRate: 1, // seconds
+    connectedUsers_cacheExpiration: 10, // minutes
     redirect_uri: "http://localhost:3000/",
     streamLogToConsole: true
 };
