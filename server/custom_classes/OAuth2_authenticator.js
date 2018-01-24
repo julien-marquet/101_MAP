@@ -1,5 +1,3 @@
-const   request = require("request");
-
 const   {apiEndpoint, redirect_uri} = require("../config/globalConfig"),
     logger = require("../custom_modules/logger");
 
