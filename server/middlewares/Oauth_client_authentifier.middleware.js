@@ -1,6 +1,3 @@
-const   Oauth2_authenticator = require("../OAuth2_authenticator");
-        
-
 function is_valid_code(i_Oauth2_authenticator, code, callback)  {
     if (code) {
         i_Oauth2_authenticator.getUserToken(code, token => {
@@ -28,8 +25,7 @@ function is_valid_token(i_Oauth2_authenticator, token, callback) {
 }
 
 
-const Oauth_authentifier = (globalStorage) => {
-    const i_Oauth2_authenticator = new Oauth2_authenticator(globalStorage);    
+const Oauth_authentifier = ( i_Oauth2_authenticator) => {
     return ((socket, next) => {
         is_valid_token(i_Oauth2_authenticator, socket.handshake.query.token, token => {
             if (!token) {

@@ -1,22 +1,37 @@
-const fetch = require("node-fetch");
-
 const users_func = require("./Users.func"),
-    {apiEndpoint} = require("../config/globalConfig");
+    {apiEndpoint, connectedUsers_cacheExpiration} = require("../config/globalConfig");
 
 class Users {
-    constructor(globalStorage, Oauth2_authenticator) {
+    constructor(globalStorage, Oauth2_authenticator, i_queue) {
         this.globalStorage = globalStorage;
+        this.globalStorage.usersInfos = {};
+        this.i_queue = i_queue;
         this.Oauth2_authenticator = Oauth2_authenticator;
     }
 
     getUserInfos(userId, userToken) {
-        return fetch(`${apiEndpoint}/v2/users/${userId}`, {
-            headers: {"authorization": `Bearer ${userToken}`}
-        })
-            .then(response => response.json())
-            .catch(error => {
-                return {error};
+        if (this.globalStorage.usersInfos[userId] === undefined) {
+            return (this.i_queue.push_tail(
+                "getUserInfos", {
+                    url: `${apiEndpoint}v2/users/${userId}`, 
+                    headers: {"authorization": `Bearer ${userToken}`
+                    }
+                }
+            )).then(response => {
+                response.last_request = Date.now();
+                this.globalStorage.usersInfos[response.id] = response;
+                return (response);
             });
+        }
+        else {
+            if ((Date.now() - this.globalStorage.usersInfos[userId].last_request) / 1000 > connectedUsers_cacheExpiration * 60) {
+                delete(this.globalStorage.usersInfos[userId]);
+                return (this.getUserInfos(userId, userToken));
+            }
+            else {
+                return (new Promise(resolve => resolve(this.globalStorage.usersInfos[userId])));
+            }
+        }
     }
 
     getConnectedUsers(campus, callback)  {
@@ -27,7 +42,7 @@ class Users {
             if (i !== -1) {
                 self.Oauth2_authenticator.getToken(token => {
                     if (token) {
-                        users_func.getPageOfConnectedUsers(token, campus, i, pageArray => {
+                        users_func.getPageOfConnectedUsers(token, campus, i, self.i_queue.push_head.bind(self.i_queue), pageArray => {
                             if (!pageArray || pageArray.length < 30) {
                                 if (pageArray && pageArray.length > 0)
                                     usersArray = usersArray.concat(pageArray);
