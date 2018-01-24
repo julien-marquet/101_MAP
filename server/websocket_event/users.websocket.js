@@ -67,6 +67,7 @@ const usersSocket = (socket, globalStorage, i_queue) => {
                     }
                 })
                 .catch(error => {
+                    console.log("Error: ", error);
                     logger.add_log({
                         type:"General", 
                         description:"Request UserInfos Failed", 
