@@ -24,11 +24,15 @@ const loop_queue = (get_head, decrease, getStatus) => {
 };
 
 function clear_queue(request) {
-    fetch(request.request_content.url,  {
+    const options = {
         headers: {
-            ...request.request_content.headers
-        }
-    })
+            ...request.request_content.headers,
+            "Content-Type": "application/json"
+        },
+        method: request.request_content.method || "GET",
+        body: JSON.stringify(request.request_content.body) || {}
+    };
+    fetch(request.request_content.url, options)
         .then(response => request.promise.resolve(response.json()))
         .catch(error => request.promise.reject(error));
 }

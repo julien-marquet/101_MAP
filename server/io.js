@@ -6,14 +6,14 @@ const	Users_api = require("./api/Users.api"),
 const websocketHandler = (server, globalStorage) => {
     const	io = require("socket.io")(server);
     const   i_queue = new Queue(globalStorage),
-        i_Oauth2_authenticator = new Oauth2_authenticator(globalStorage),
+        i_Oauth2_authenticator = new Oauth2_authenticator(globalStorage, i_queue),
         i_users_api = new Users_api(globalStorage, i_Oauth2_authenticator, i_queue);
 
     require("./loopers/loop_request")(io, globalStorage, i_Oauth2_authenticator, i_users_api);
 
     globalStorage.connectedUsers = 0;
 
-    io.use(require("./middlewares/Oauth_client_authentifier.middleware")(globalStorage));
+    io.use(require("./middlewares/Oauth_client_authentifier.middleware")(i_Oauth2_authenticator));
 	
     io.on("connection", (socket) => {
         logger.add_log({
@@ -33,7 +33,7 @@ const websocketHandler = (server, globalStorage) => {
             });			
             globalStorage.connectedUsers--;
         });
-        require("./websocket_event/index")(socket, globalStorage, i_queue);
+        require("./websocket_event/index")(socket, globalStorage, i_queue, i_Oauth2_authenticator);
     });
 };
 module.exports = websocketHandler;
