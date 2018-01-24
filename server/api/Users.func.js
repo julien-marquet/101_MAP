@@ -12,7 +12,7 @@ const users_func = {
     },
     getPageOfConnectedUsers: (token, campus, pagination, push_head, callback) => {
         push_head("getUsersList", {
-            url: `${apiEndpoint}/v2/campus/${campus}/locations?page=${pagination}&sort=-end_at,host&page=${pagination}`,
+            url: `${apiEndpoint}v2/campus/${campus}/locations?page=${pagination}&sort=-end_at,host&page=${pagination}`,
             headers: {
                 "Authorization": "Bearer " + token.access_token
             }

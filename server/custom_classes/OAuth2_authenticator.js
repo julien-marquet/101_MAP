@@ -43,7 +43,7 @@ class Oauth2_authenticator {
     }
     testTokenValidity(token, callback) {
         this.i_queue.push_head("testTokenValidity", {
-            url: `${apiEndpoint}/oauth/token/info`,
+            url: `${apiEndpoint}oauth/token/info`,
             headers: {
                 "authorization": `Bearer ${token}`
             }
