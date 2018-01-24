@@ -78,11 +78,17 @@ class HostInfo extends Component {
     }
 
     renderTags() {        
-        if (this.props.activeUser.user.login === "jfeve") 
-        {
+        if (this.props.activeUser.user.login === "jfeve") {
             return (
                 <div className={"tags jfeve"}>
                     <p>{"Le flamboyant"}</p>
+                </div>
+            );
+        }
+        if (this.props.activeUser.user.login === "hugrebou") {
+            return (
+                <div className={"tags hugrebou"}>
+                    <p>{"Seigneur Sith"}</p>
                 </div>
             );
         }

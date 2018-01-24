@@ -308,10 +308,14 @@
                             text-transform: capitalize;
                         }
                         .tags {
-                            padding-left: 30%;
+                            text-align: center;
+                            margin-left: -12%;
                             font-size: get_size(0.7em, $coefficient);
                             &.inactive {       
                                 font-weight: bold;    
+                            }
+                            &.hugrebou {
+                                font-weight: bold;
                             }
                             &.jfeve {
                                 @keyframes roux {
@@ -325,7 +329,7 @@
                                         color: rgb(255, 238, 0);
                                     }
                                   }
-                                    font-weight: bold;
+                                    font-weight: bold;    
                                     color: yellow !important;
                                     animation: roux 1s infinite;
                                     animation-direction: alternate; /* or: normal */                            
