@@ -1,17 +1,17 @@
 const fetch = require("node-fetch");
-const {queue_loopRate} = require("../config/globalConfig");
+const {requestsBySecond} = require("../config/globalConfig");
 
 const loop_queue = (get_head, decrease, getStatus) => {
+    let i = 0;
+    let request;
     let requestNbr = 0;
-    let request = get_head();
-    if (request !== null) {
-        clear_queue(request);
+    while (i < requestsBySecond) {
         request = get_head();
-        requestNbr += 1;
         if (request !== null) {
             clear_queue(request);
             requestNbr += 1;
         }
+        i += 1;
     }
     setTimeout(() => {
         while (requestNbr != 0) {
@@ -21,7 +21,7 @@ const loop_queue = (get_head, decrease, getStatus) => {
         if (getStatus() > 0) {
             loop_queue(get_head, decrease, getStatus);
         }
-    }, queue_loopRate * 1000);
+    }, 1000);
 };
 
 function clear_queue(request) {
