@@ -1,17 +1,17 @@
 import {connect} from "react-redux";
 
-import Toaster from "../../componentsToaster";
-import {TOAST_HIDE} from "../actions//toasts";
+import Toaster from "../components/Toaster";
+import {TOAST_HIDE} from "../actions/toasts";
 
 const mapStateToProps = state => {
     return {
-        toasts: state.toasts
+        toaster: state.toaster
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        hideToast: (toast) => dispatch(TOAST_HIDE(toast))
+        hideToast: payload => dispatch({type: TOAST_HIDE, payload})
     };
 };
 

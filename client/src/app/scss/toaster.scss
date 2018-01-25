@@ -1,0 +1,82 @@
+.toaster {
+    position: absolute;
+    bottom: 0 ;
+    right: 0;
+}
+.toast {
+    border-radius: 2px;
+    border-width: 5px;
+    border-style: solid;
+    margin: 15px;
+    position: relative;
+    padding: 10px;
+    width: 400px;
+    z-index: 10;
+    &.info {
+        background-color: #fff;
+        color:#4b69b4;        
+        border-color: darken(#4b69b4, 2);
+        box-shadow: 2px 2px 0px #121419;
+    }
+    &.success {
+        background-color: #58975b;
+        background-color: #fff;
+        border-color: darken(#58975b, 2);
+        box-shadow: 1px 1px 1px #121419;
+    }
+    &.warn {
+        color:#ffc72c;       
+        background-color: #fff;
+        border-color: darken(#ffc72c, 2);
+        box-shadow: 1px 1px 1px #121419;
+    }
+    &.error {
+        color:#ca5346;       
+        background-color: #fff;
+        border-color: darken(#ca5346, 2);
+        box-shadow: 1px 1px 1px #121419;
+    }
+    button:active, button:focus {
+        outline: none;
+    }
+    .content {
+        color: inherit;
+        display: flex;
+        align-items: stretch;
+        position: relative;
+        .toast-action-wrapper {
+            flex: 1 0 0;
+            .toast-action {
+                height: 50px;
+                width: 50px;
+                color: #fff;
+                font-size: 3vh;
+                max-width: 120px;
+                background-color: #1e212a;
+                border: 3px solid #1e212a;
+            }
+            .toast-action:hover {
+                color: #1e212a;            
+                background-color: transparent;
+            }
+        }
+        .message {
+            flex-shrink: 2;    
+            border: 3px solid transparent;
+            color: lighten(#1e212a, 10);
+            font-weight: bold;
+            flex: 5 0 0;
+            padding: 0 10px; 
+        }
+    }
+    .dismiss-toast {
+        padding: 5px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        border: none;
+        background-color: transparent;
+        font-weight: bolder;
+        cursor: pointer;
+    }
+}
