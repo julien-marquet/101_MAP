@@ -8,10 +8,7 @@ import {
     USER_GET_METADATA_FAILED
 } from "../actions/users";
 import {TOAST_SHOW} from "../actions/toasts";
-import {
-    CONNECT_APP,
-    DISCONNECT_APP
-} from "../actions/globalState";
+import {CONNECT_APP} from "../actions/globalState";
 import {storeCookie} from "../helpers/cookies.helper";
 
 function setupListeners(socketClient, dispatch) {
