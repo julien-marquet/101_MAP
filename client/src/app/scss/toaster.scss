@@ -1,11 +1,25 @@
+@import "utilities/cross-browser.scss";
+
 .toaster {
     position: absolute;
     bottom: 0 ;
     right: 0;
 }
 .toast {
+    &.off {
+        left: 30%;
+        opacity: 0;
+    }
+    &.on {
+        left: 0;
+       opacity: 0.8;
+    }
+    // activation AM;
+    @include transition(left 0.5s ease-in-out, opacity 0.5s ease-in-out);
+    transform: translateZ(0);
+    perspective: 1000; backface-visibility: hidden;
     border-radius: 2px;
-    border-width: 5px;
+    border-width: 1px;
     border-style: solid;
     margin: 15px;
     position: relative;
@@ -13,34 +27,34 @@
     width: 400px;
     z-index: 10;
     &.info {
-        background-color: #fff;
-        color:#4b69b4;        
-        border-color: darken(#4b69b4, 2);
+        background-color: #2f96b4;
+        color:#fff;        
+        border-color: darken(#2f96b4, 6);
         box-shadow: 2px 2px 0px #121419;
     }
     &.success {
-        background-color: #58975b;
-        background-color: #fff;
-        border-color: darken(#58975b, 2);
+        background-color: #51a351;
+        color: #fff;
+        border-color: darken(#51a351, 6);
         box-shadow: 1px 1px 1px #121419;
     }
     &.warn {
-        color:#ffc72c;       
-        background-color: #fff;
-        border-color: darken(#ffc72c, 2);
+        color:#fff;       
+        background-color: #f89406;
+        border-color: darken(#f89406, 6);
         box-shadow: 1px 1px 1px #121419;
     }
     &.error {
-        color:#ca5346;       
-        background-color: #fff;
-        border-color: darken(#ca5346, 2);
+        color:#fff;       
+        background-color: #bd362f;
+        border-color: darken(#bd362f, 6);
         box-shadow: 1px 1px 1px #121419;
     }
     button:active, button:focus {
         outline: none;
     }
     .content {
-        color: inherit;
+        color: #fff;
         display: flex;
         align-items: stretch;
         position: relative;
@@ -63,7 +77,7 @@
         .message {
             flex-shrink: 2;    
             border: 3px solid transparent;
-            color: lighten(#1e212a, 10);
+            color: #fff;
             font-weight: bold;
             flex: 5 0 0;
             padding: 0 10px; 

@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 
 import App from "../components/App";
 import {CONNECT_APP} from "../actions/globalState";
-import {TOAST_HIDE, TOAST_SHOW} from "../actions/toasts";
+import {TOAST_SHOW} from "../actions/toasts";
 
 const mapStateToProps = state => {
     return {

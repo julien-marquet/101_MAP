@@ -135,8 +135,13 @@ class App extends Component {
                         type: "warn",
                         timeout: null,
                         message: "Your token has expired, please get a new one !",
-                        action: () => {console.log("test");},
-                        action_label: "->"
+                        action: {
+                            "func": () => {
+                                console.log("e");
+                            },
+                            label: <i className="fas fa-sync"></i>,
+                            dismissAfter: true
+                        }
                     });
                 }}>
                     FUNCTION TEST
