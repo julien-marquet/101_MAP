@@ -6,7 +6,6 @@ class Toast extends Component {
         this.renderButton = this.renderButton.bind(this);
         this.dismissToast = this.dismissToast.bind(this);
         this.transitionDuration = 600;
-        
         this.state = {
             transition: "off"
         };
@@ -46,6 +45,25 @@ class Toast extends Component {
             );
         }
     }
+    chooseIcons() {
+        switch(this.props.toast.type) {
+        case "info":
+            return "fa-info";
+        case "success":
+            return "fa-check";
+        case "warn":
+            return "fa-exclamation-triangle";
+        case "error":
+            return "fa-exclamation-circle";
+        }
+    }
+    renderIcons() {
+        if (this.props.toast.action === null) {
+            return (
+                <i className={`icon-type fas ${this.chooseIcons()}`}></i>  
+            );
+        }
+    }
 
     render() {
         return (
@@ -53,13 +71,14 @@ class Toast extends Component {
                 <div className="content">
                     {this.renderButton()}
                     <div className="message">
+                        {this.renderIcons()}
                         <p>
                             {this.props.toast.message}
                         </p>
                     </div>
                 </div>
                 <button className="dismiss-toast" onClick={() => this.dismissToast()}>
-                    X
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
         );

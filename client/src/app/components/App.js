@@ -85,67 +85,6 @@ class App extends Component {
         return (
             <div className={`themeWrapper ${this.props.globalState.themes.array[this.props.globalState.themes.value]}`}>
                 <Loader key="ComponentLoader" in={this.state.loading}/>
-               
-                <button onClick={() => {
-                    this.props.openToast({
-                        type: "info",
-                        timeout: 3000,
-                        message: "Message de test",
-                        action: null,
-                        action_label: null
-                    });
-                }}>
-                    INFO
-                </button>
-                <button onClick={() => {
-                    this.props.openToast({
-                        type: "warn",
-                        timeout: 3000,
-                        message: "Message de test",
-                        action: null,
-                        action_label: null
-                    });
-                }}>
-                    WARN
-                </button>
-                <button onClick={() => {
-                    this.props.openToast({
-                        type: "success",
-                        timeout: 3000,
-                        message: "Message de test",
-                        action: null,
-                        action_label: null
-                    });
-                }}>
-                    SUCCESS
-                </button>
-                <button onClick={() => {
-                    this.props.openToast({
-                        type: "error",
-                        timeout: 3000,
-                        message: "Message de test",
-                        action: null,
-                        action_label: null
-                    });
-                }}>
-                    ERROR
-                </button>
-                <button onClick={() => {
-                    this.props.openToast({
-                        type: "warn",
-                        timeout: null,
-                        message: "Your token has expired, please get a new one !",
-                        action: {
-                            "func": () => {
-                                console.log("e");
-                            },
-                            label: <i className="fas fa-sync"></i>,
-                            dismissAfter: true
-                        }
-                    });
-                }}>
-                    FUNCTION TEST
-                </button>
                 {this.renderApp()}
                 <Toaster />
             </div>

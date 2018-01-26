@@ -61,29 +61,51 @@
         .toast-action-wrapper {
             flex: 1 0 0;
             .toast-action {
+                position: relative;
+                @include transition(all 0.1s ease-in-out);                
                 height: 50px;
                 width: 50px;
                 color: #fff;
-                font-size: 3vh;
+                font-size: 25px;
                 max-width: 120px;
-                background-color: #1e212a;
+                background-color: rgba(30, 33, 42, 1);
                 border: 3px solid #1e212a;
+                box-shadow: 3px 3px 0px #000;
             }
             .toast-action:hover {
+                transform: translate3d(3px, 3px, 0);
                 color: #1e212a;            
-                background-color: transparent;
+                background-color: rgba(30, 33, 42, 0.3);
+                box-shadow: 0px 0px 0px #000;
             }
         }
         .message {
+            .icon-type {
+                text-align: center;
+                width: 15px;
+                position: relative;
+                top: 50%;
+                display: inline-block;
+                transform: translateY(-50%);
+                float: left;
+                margin-right: 15px;
+            }
+            p {
+                position: relative;
+                top: 50%;
+                display: inline-block;
+                transform: translateY(-50%);
+            }
             flex-shrink: 2;    
             border: 3px solid transparent;
             color: #fff;
             font-weight: bold;
             flex: 5 0 0;
-            padding: 0 10px; 
+            padding: 0; 
         }
     }
     .dismiss-toast {
+        color: #fff;
         padding: 5px;
         position: absolute;
         top: 0;
@@ -91,6 +113,7 @@
         border: none;
         background-color: transparent;
         font-weight: bolder;
+        font-size: 15px;
         cursor: pointer;
     }
 }
