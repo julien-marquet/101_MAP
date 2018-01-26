@@ -38,14 +38,15 @@
         0% {
             top: 0 !important;
             left: 0!important;
-            z-index: 0;
+            transform: scale(1);
+            z-index: 1;
         }
         100% {
             top: -(($zoom - 1) * 50%) !important;
             left: -(($zoom - 1) * 50%)!important;
             transform: scale(1.5);
             box-shadow: 4px 4px 10px #000000;
-            z-index: 1;
+            z-index: 1;  
         }
     }
     
