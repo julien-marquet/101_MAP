@@ -34,8 +34,21 @@ function clear_queue(request) {
         body: JSON.stringify(request.request_content.body) || {}
     };
     fetch(request.request_content.url, options)
-        .then(response => request.promise.resolve(response.json()))
-        .catch(error => request.promise.reject(error));
+        .then(response => {
+            if (response.status === 200) {
+                request.promise.resolve(response.json());
+            }
+            else {
+                request.promise.reject({
+                    infos: {
+                        status: response.status,
+                        statusText: response.statusText
+                    },
+                    message: "An error occured"
+                });
+            }
+        })
+        .catch(error => request.promise.reject({infos: error, message: "An error occured"}));
 }
 
 module.exports = loop_queue;

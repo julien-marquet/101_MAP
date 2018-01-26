@@ -1,20 +1,13 @@
-import {takeEvery, all} from "redux-saga/effects";
 import React from "react";
+import {takeEvery, all} from "redux-saga/effects";
 
 import {
     USERS_GETTED,
     USER_GET_METADATA_SUCCEEDED,
     USER_GET_METADATA_FAILED
 } from "../actions/users";
-
-import {
-    TOAST_SHOW
-} from "../actions/toasts";
-
-import {
-    DISCONNECT_APP
-} from "../actions/globalState";
-
+import {TOAST_SHOW} from "../actions/toasts";
+import {DISCONNECT_APP} from "../actions/globalState";
 import {CONNECT_APP} from "../actions/globalState";
 import {storeCookie} from "../helpers/cookies.helper";
 
@@ -46,9 +39,7 @@ function setupListeners(socketClient, dispatch) {
                     timeout: null,		
                     message: "Your token has expired, please get a new one !",		
                     action: {
-                        func: () => {
-                            dispatch({type: DISCONNECT_APP});
-                        },
+                        func: () => dispatch({type: DISCONNECT_APP}),
                         label: <i className="fas fa-sync"></i>,
                         dismissAfter: true
                     },
