@@ -13,9 +13,6 @@ class Toast extends Component {
         this.dismissToast = this.dismissToast.bind(this);
     }
     componentDidMount() {
-        if (this.props.toast.type === "error") {
-            console.error(this.props.toast.message);
-        }
         setTimeout(() => {
             this.setState({
                 transition: "on"
