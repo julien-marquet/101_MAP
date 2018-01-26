@@ -78,7 +78,7 @@ class Toast extends Component {
                     </div>
                 </div>
                 <button className="dismiss-toast" onClick={() => this.dismissToast()}>
-                    <i class="fas fa-times"></i>
+                    <i className="fas fa-times"></i>
                 </button>
             </div>
         );

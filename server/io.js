@@ -22,7 +22,9 @@ const websocketHandler = (server, globalStorage) => {
         });		
         socket.emit("authSuccess", {
             type: socket.typeAuth,
-            token: socket.userToken
+            token: socket.userToken,
+            checked_at: socket.checked_at,
+            expires_in: socket.expires_in
         });
         globalStorage.connectedUsers++;
 

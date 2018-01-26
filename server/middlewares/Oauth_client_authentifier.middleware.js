@@ -14,8 +14,8 @@ function is_valid_code(i_Oauth2_authenticator, code, callback)  {
 function is_valid_token(i_Oauth2_authenticator, token, callback) {
     if (token && token !== "undefined") {
         i_Oauth2_authenticator.testTokenValidity(token, res => {
-            if (res)
-                callback(true);
+            if (res !== false)
+                callback(res);
             else
                 callback(false);
         });
@@ -28,20 +28,24 @@ function is_valid_token(i_Oauth2_authenticator, token, callback) {
 const Oauth_authentifier = ( i_Oauth2_authenticator) => {
     return ((socket, next) => {
         is_valid_token(i_Oauth2_authenticator, socket.handshake.query.token, token => {
-            if (!token) {
+            if (token === false) {
                 is_valid_code(i_Oauth2_authenticator, socket.handshake.query.code, code_token => {
                     if (!code_token)
                         next(new Error("Authentication error"));
                     else {
                         socket.typeAuth = "code";
                         socket.userToken = code_token.access_token;
+                        socket.checked_at = Math.floor(Date.now()/1000);
+                        socket.expires_in = code_token.expires_in; 
                         next();
                     }
                 });
             }
             else {
                 socket.typeAuth = "token";
-                socket.userToken = socket.handshake.query.token; 
+                socket.userToken = socket.handshake.query.token;
+                socket.checked_at = Math.floor(Date.now()/1000);
+                socket.expires_in = token.expires_in_seconds; 
                 next();
             }
         });
