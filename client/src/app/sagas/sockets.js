@@ -49,11 +49,27 @@ function setupListeners(socketClient, dispatch) {
     });
 
     socketClient.on("error", err => {
-        console.error(`Socket Error : ${JSON.stringify(err)}`);
+        dispatch({
+            type: TOAST_SHOW, 
+            payload: {		
+                type: "error",		
+                timeout: 3000,		
+                message: `Socket Error : ${err}`,		
+                action: null
+            }
+        });
     });
 
     socketClient.on("error.fetch", err => {
-        console.error(`Socket Error : ${JSON.stringify(err)}`);
+        dispatch({
+            type: TOAST_SHOW, 
+            payload: {		
+                type: "error",		
+                timeout: 3000,		
+                message: `Socket Error : ${err}`,		
+                action: null
+            }
+        });
         dispatch({type: USER_GET_METADATA_FAILED, payload: err});
     });
 
