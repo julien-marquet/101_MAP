@@ -7,6 +7,7 @@ import config from "../../config/globalConfig";
 import logo_light from "../../img/101_logo_light.svg";
 import logo_dark from "../../img/101_logo_dark.svg";
 import Loader from "../components/Loader";
+import Toaster from "../containers/toaster";
 import "../scss/App.css";
 
 class App extends Component {
@@ -27,6 +28,9 @@ class App extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (this.props.globalState.connected && !nextProps.globalState.connected) {
+            this.props.socket.disconnect();
+        }
         if (this.props.globalState.connected !== nextProps.globalState.connected && nextProps.globalState.connected) {
             this.setState({loading: false});
         }
@@ -85,6 +89,7 @@ class App extends Component {
             <div className={`themeWrapper ${this.props.globalState.themes.array[this.props.globalState.themes.value]}`}>
                 <Loader key="ComponentLoader" in={this.state.loading}/>
                 {this.renderApp()}
+                <Toaster />
             </div>
         );
     }

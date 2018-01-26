@@ -46,7 +46,7 @@ const usersSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator) => 
         } else {
             i_users_api.getUserInfos(userId, userToken)
                 .then(response => {
-                    if (response.error ) {
+                    if (response.error) {
                         logger.add_log({
                             type:"Error", 
                             description:"Request UserInfos Failed", 
@@ -69,10 +69,10 @@ const usersSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator) => 
                         type:"General", 
                         description:"Request UserInfos Failed", 
                         additionnal_infos: {
-                            Error: error
+                            Error: typeof error.infos === "object" ? JSON.stringify(error.infos) : error.infos
                         }
                     });          
-                    socket.emit("error.fetch", error);
+                    socket.emit("error.fetch", error.message);
                 });
         }
     });

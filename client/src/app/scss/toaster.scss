@@ -1,0 +1,119 @@
+@import "utilities/cross-browser.scss";
+
+.toaster {
+    position: absolute;
+    bottom: 0 ;
+    right: 0;
+}
+.toast {
+    &.off {
+        left: 30%;
+        opacity: 0;
+    }
+    &.on {
+        left: 0;
+       opacity: 0.8;
+    }
+    // activation AM;
+    @include transition(left 0.5s ease-in-out, opacity 0.5s ease-in-out);
+    transform: translateZ(0);
+    perspective: 1000; backface-visibility: hidden;
+    border-radius: 2px;
+    border-width: 1px;
+    border-style: solid;
+    margin: 15px;
+    position: relative;
+    padding: 10px;
+    width: 400px;
+    z-index: 10;
+    &.info {
+        background-color: #2f96b4;
+        color:#fff;        
+        border-color: darken(#2f96b4, 6);
+        box-shadow: 2px 2px 0px #121419;
+    }
+    &.success {
+        background-color: #51a351;
+        color: #fff;
+        border-color: darken(#51a351, 6);
+        box-shadow: 1px 1px 1px #121419;
+    }
+    &.warn {
+        color:#fff;       
+        background-color: #f89406;
+        border-color: darken(#f89406, 6);
+        box-shadow: 1px 1px 1px #121419;
+    }
+    &.error {
+        color:#fff;       
+        background-color: #bd362f;
+        border-color: darken(#bd362f, 6);
+        box-shadow: 1px 1px 1px #121419;
+    }
+    button:active, button:focus {
+        outline: none;
+    }
+    .content {
+        color: #fff;
+        display: flex;
+        align-items: stretch;
+        position: relative;
+        .toast-action-wrapper {
+            flex: 1 0 0;
+            .toast-action {
+                position: relative;
+                @include transition(all 0.1s ease-in-out);                
+                height: 50px;
+                width: 50px;
+                color: #fff;
+                font-size: 25px;
+                max-width: 120px;
+                background-color: rgba(30, 33, 42, 1);
+                border: 3px solid #1e212a;
+                box-shadow: 3px 3px 0px #000;
+            }
+            .toast-action:hover {
+                transform: translate3d(3px, 3px, 0);
+                color: #1e212a;            
+                background-color: rgba(30, 33, 42, 0.3);
+                box-shadow: 0px 0px 0px #000;
+            }
+        }
+        .message {
+            .icon-type {
+                text-align: center;
+                width: 15px;
+                position: relative;
+                top: 50%;
+                display: inline-block;
+                transform: translateY(-50%);
+                float: left;
+                margin-right: 15px;
+            }
+            p {
+                position: relative;
+                top: 50%;
+                display: inline-block;
+                transform: translateY(-50%);
+            }
+            flex-shrink: 2;    
+            border: 3px solid transparent;
+            color: #fff;
+            font-weight: bold;
+            flex: 5 0 0;
+            padding: 0; 
+        }
+    }
+    .dismiss-toast {
+        color: #fff;
+        padding: 5px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        border: none;
+        background-color: transparent;
+        font-weight: bolder;
+        font-size: 15px;
+        cursor: pointer;
+    }
+}

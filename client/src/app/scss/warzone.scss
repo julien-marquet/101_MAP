@@ -36,16 +36,15 @@
 
     @keyframes pulse {
         0% {
-            top: 0 !important;
-            left: 0!important;
-            z-index: 0;
+            transform: scale(1.1);
+            z-index: 1;
         }
         100% {
             top: -(($zoom - 1) * 50%) !important;
             left: -(($zoom - 1) * 50%)!important;
             transform: scale(1.5);
             box-shadow: 4px 4px 10px #000000;
-            z-index: 1;
+            z-index: 1;  
         }
     }
     
@@ -57,6 +56,7 @@
     
     .userImg {
         height: 100%;
+        min-height: 0;
         cursor: pointer;
     }
 
@@ -77,11 +77,11 @@
         justify-content: center;
         overflow: hidden;
         border-radius: $seatBorderRadius;
-        width: $seatSize;
-        height: $seatSize;
+        width: 100%;
+        height: 100%;
         top: 0;
+        transform: translate3d(0 0 0);
         left: 0;
-        transform: translateZ(0);
         @include transition(all 0.2s, transform 0.05s);
         z-index: 0;
     }

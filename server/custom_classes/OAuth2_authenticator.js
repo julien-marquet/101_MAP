@@ -49,7 +49,7 @@ class Oauth2_authenticator {
             }
         }).then((res) => {
             if (res && !res.error) {
-                callback(true);
+                callback(res);
             } else {
                 logger.add_log({
                     type: "Error",
