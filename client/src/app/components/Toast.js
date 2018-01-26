@@ -3,12 +3,14 @@ import React, {Component} from "react";
 class Toast extends Component {
     constructor() {
         super();
-        this.renderButton = this.renderButton.bind(this);
-        this.dismissToast = this.dismissToast.bind(this);
-        this.transitionDuration = 600;
+
         this.state = {
             transition: "off"
         };
+
+        this.transitionDuration = 600;
+        this.renderButton = this.renderButton.bind(this);
+        this.dismissToast = this.dismissToast.bind(this);
     }
     componentDidMount() {
         if (this.props.toast.type === "error") {
@@ -58,12 +60,15 @@ class Toast extends Component {
             return "fa-exclamation-triangle";
         case "error":
             return "fa-exclamation-circle";
+        default:
+            return "fa-info";
         }
+        
     }
     renderIcons() {
         if (this.props.toast.action === null) {
             return (
-                <i className={`icon-type fas ${this.chooseIcons()}`}></i>  
+                <i className={`icon-type fas ${this.chooseIcons()}`} />
             );
         }
     }
@@ -81,7 +86,7 @@ class Toast extends Component {
                     </div>
                 </div>
                 <button className="dismiss-toast" onClick={() => this.dismissToast()}>
-                    <i className="fas fa-times"></i>
+                    <i className="fas fa-times" />
                 </button>
             </div>
         );
