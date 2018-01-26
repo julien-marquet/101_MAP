@@ -28,6 +28,9 @@ class App extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (this.props.globalState.connected && !nextProps.globalState.connected) {
+            this.props.socket.disconnect();
+        }
         if (this.props.globalState.connected !== nextProps.globalState.connected && nextProps.globalState.connected) {
             this.setState({loading: false});
         }

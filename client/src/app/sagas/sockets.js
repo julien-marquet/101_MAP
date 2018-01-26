@@ -29,6 +29,15 @@ function setupListeners(socketClient, dispatch) {
             storeCookie("userToken", data.token);
             socketClient.socket.query.token = data.token;
         }
+        dispatch({
+            type: TOAST_SHOW, 
+            payload: {		
+                type: "success",		
+                timeout: 3000,		
+                message: "Socket connection established",		
+                action: null
+            }
+        });
         setTimeout(() => {
             dispatch({
                 type: TOAST_SHOW, 
@@ -55,6 +64,18 @@ function setupListeners(socketClient, dispatch) {
                 type: "error",		
                 timeout: 3000,		
                 message: `Socket Error : ${err}`,		
+                action: null
+            }
+        });
+    });
+
+    socketClient.on("disconnect", () => {
+        dispatch({
+            type: TOAST_SHOW, 
+            payload: {		
+                type: "error",		
+                timeout: 3000,		
+                message: "Socket Connection lost",		
                 action: null
             }
         });
