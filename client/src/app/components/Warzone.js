@@ -52,8 +52,9 @@ class Warzone extends Component {
             <div className={"wrapper"}>
                 <SideBar />
                 <div className={"zonesWrapper"}>
-                    
-                    {this.renderZones()}
+                    <div class="content">
+                        {this.renderZones()}
+                    </div>
                 </div>
             </div>
         );

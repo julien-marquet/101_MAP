@@ -1,7 +1,17 @@
 @import "utilities/cross-browser.scss";
 @import "utilities/responsive.scss";
 
-@mixin applyStyle($seatSize, $seatSidesMargin, $seatRowMargin, $zoneMargin, $coefficient) {
+@mixin applyStyle($seatSize, $seatSidesMargin, $seatRowMargin, $zoneMargin, $portrait) {
+    $coefficient: 0;
+    @if ($portrait) {
+        $coefficient:  (($ratio-size) / 100) * (($ratio-height / $ratio-width) * 1vw);
+    } @else {
+        $coefficient: -0.3vh + (($ratio-size) / 100) *  (($ratio-width / $ratio-height) *1vh);
+    }
+    $seatSize: get_size($seatSize, $coefficient); 
+    $seatSidesMargin:get_size($seatSidesMargin, $coefficient); 
+    $seatRowMargin:get_size($seatRowMargin, $coefficient); 
+    $zoneMargin:get_size($zoneMargin, $coefficient);
     $zoom: 1.5;
     $seatBorderRadius: 2px;
     $hallSize: $seatSize + ($seatSidesMargin * 2);
@@ -14,6 +24,73 @@
         $i: $i - 1;  
     }
     
+    $themeNb: 2;
+    $dropdownSeparation:  get_size(0.4, $coefficient);
+    $dropdownInnerSeparation:  get_size(0.4, $coefficient);
+    $iconSpacing: get_size(1, $coefficient);
+    $tileSize: get_size(5, $coefficient);
+    
+    .sidebar {
+        overflow: hidden;
+        height: 100%;
+        position: fixed;
+        left: 0;
+        padding: 0px;
+        .main-tile {
+            transition: background-color 0.15s ease-in-out;
+            font-size: get_size(5, $coefficient);
+            cursor: pointer;
+        }
+        .tile {
+            display: table;
+            text-align: center;
+            width: 100%;
+            span {
+                display:table-cell;
+                 vertical-align:middle;
+                 i {
+                    margin: $iconSpacing;
+                 }
+            }
+        }
+        .btn {
+            background-color: transparent;
+            border: none;
+            &:hover {
+                border: none;
+                outline: none;
+            }
+        }
+        .multi-dropdown {
+            &.opened .dropdown-content {
+                max-height: $tileSize * $themeNb + (2 * $dropdownSeparation) + ($themeNb * ($dropdownInnerSeparation * 2) + (2 * $iconSpacing));
+            }
+            &.closed .dropdown-content {
+                transform-origin: top;
+                transition: max-height 0.25s ease-in-out;
+            }
+            .dropdown-header {
+                border-style: solid;
+                border-width: 0 0 $dropdownSeparation 0;
+            }
+            .dropdown-content {
+                border-style: solid;
+                border-width: 0 0 $dropdownSeparation 0;
+                .dropdown-option {
+                    transition: all 0.15s ease-in-out;
+                    border-style: solid;
+                    border-width: $dropdownInnerSeparation 0;
+                    &:hover {
+                        transform: translateX(1px);
+                    }
+                }
+                max-height: 0px;
+                transition: max-height 0.25s ease-in-out;
+                overflow: hidden;
+            }
+        }
+    }
+
    .zone {
         display: inline-block;
         vertical-align: top;
@@ -163,6 +240,7 @@
     }
     
     .zonesWrapper {
+        @include aspect-ratio($ratio-width, $ratio-height, $ratio-size);
         flex-wrap: wrap;
         flex-direction: row;
     }
@@ -186,7 +264,7 @@
                         border-width: 0px; 
                         border-style: solid;
                         font-family: 'Montserrat', sans-serif;
-                        font-size: 1.5em;
+                        font-size: get_size(4, $coefficient);
                         padding: 0 0 0 14px;
                     }
                     .searchResults {
@@ -226,7 +304,7 @@
             bottom: -2px;
             left: 0px;
             font-weight: bold;
-            font-size: get_size(0.8em, $coefficient);
+            font-size: get_size(2.1, $coefficient);
             padding-left: 5px;
             text-align: center;
             color: $textPrimary;
@@ -291,7 +369,7 @@
                             padding-top: 8%;
                             padding-left: 15%;
                             font-weight: bold;
-                            font-size: get_size(0.8em, $coefficient);
+                            font-size: get_size(2.1, $coefficient);
                         }
                     }
                 }
@@ -304,13 +382,13 @@
                         .userName {
                             padding-top: 5%;
                             font-weight: bold;
-                            font-size: get_size(1em, $coefficient);
+                            font-size: get_size(2.7, $coefficient);
                             text-transform: capitalize;
                         }
                         .tags {
                             text-align: center;
                             margin-left: -12%;
-                            font-size: get_size(0.7em, $coefficient);
+                            font-size: get_size(1.9, $coefficient);
                             &.inactive {       
                                 font-weight: bold;    
                             }
@@ -339,10 +417,10 @@
                     &.contentBottom {
                         height: 75%;
                         .stats {
-                            font-size: get_size(0.7em, $coefficient);
+                            font-size: get_size(1.9, $coefficient);
                             padding-left: 5%;
                             .stat {
-                                padding-top: get_size(0.5em, $coefficient);
+                                padding-top: get_size(1.3, $coefficient);
                                 .statName {
                                     margin-right: 5%;
                                     font-weight: bold;                                
@@ -383,7 +461,7 @@
                                     text-align: center;
                                     height: 100%;
                                     font-weight: bold;
-                                    font-size: get_size(0.5em, $coefficient);
+                                    font-size: get_size(1.3, $coefficient);
                                     span {
                                         position: relative;
                                         top: 50%;
@@ -407,13 +485,19 @@
                         }
                     }
                 }
-
             }
         }
     }
 }
 
+
+
 @import 'themes/dark.scss';
 @import 'themes/light.scss';
 
-@include applyStyle($seatSize: 3.8vh, $seatSidesMargin: 0.5vh, $seatRowMargin: 0.2vh, $zoneMargin: 0.5vh, $coefficient:1.5);
+@media screen and (max-aspect-ratio: 4/3) {
+    @include applyStyle($seatSize: 3.8, $seatSidesMargin: 0.5, $seatRowMargin: 0.2, $zoneMargin: 0.5, $portrait: true);
+}
+@media screen and (min-aspect-ratio: 4/3) {
+    @include applyStyle($seatSize: 3.8, $seatSidesMargin: 0.5, $seatRowMargin: 0.2, $zoneMargin: 0.5,  $portrait: false);
+}

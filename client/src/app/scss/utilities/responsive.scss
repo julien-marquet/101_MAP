@@ -1,3 +1,32 @@
+$ratio-width: 4;
+$ratio-height: 3;
+$ratio-size: 93;
+
 @function get_size($f_multiplier, $f_coefficient) {
-    @return $f_multiplier * $f_coefficient
+    @return $f_multiplier * $f_coefficient;
+}
+
+@mixin aspect-ratio($width, $height, $size) {
+    position: absolute;
+    width: $size * 1vw;
+    height: $size * 1vh;
+    max-width: $size * 1vh * ($width / $height);
+    max-height: $size* 1vw * ($height / $width);
+    top: 50%;
+    left: 52%;
+    transform: translate(-50%, -50%);
+    &:before {
+      display: block;
+      content: "";
+      width: 100%;
+      padding-top: ($height / $width) * 100%;
+      
+    }
+    > .content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
 }
