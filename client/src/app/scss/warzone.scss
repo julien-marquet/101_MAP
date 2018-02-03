@@ -237,7 +237,7 @@
     }
     
     .zonesWrapper {
-        @include aspect-ratio($ratio-width, $ratio-height, $ratio-size, $ratio-vertical-shift, 6.5vh); // taille totale de la sidebar
+        @include aspect-ratio($ratio-width, $ratio-height, $ratio-size, $ratio-vertical-shift, $tileSize + 2 *$iconSpacing); // taille totale de la sidebar
         flex-wrap: wrap;
         flex-direction: row;
     }
