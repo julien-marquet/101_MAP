@@ -2,6 +2,7 @@
 @import "utilities/responsive.scss";
 
 @mixin applyStyle($seatSize, $seatSidesMargin, $seatRowMargin, $zoneMargin, $portrait) {
+
     $coefficient: get_coefficient($portrait);
     $seatSize: get_size($seatSize, $coefficient); 
     $seatSidesMargin:get_size($seatSidesMargin, $coefficient); 
@@ -131,10 +132,10 @@
         height: 100%;
         min-height: 0;
         cursor: pointer;
+        @include fix_animation();
     }
 
     .seatRow {
-        @include fix_animation();
         display: flex;
         margin: $seatRowMargin 0px $seatRowMargin 0px;
         border-radius: $radius;
@@ -182,7 +183,6 @@
     
     .z1Container {
         display: flex;
-        margin: 5px;
     }
     
     .z1Container:first-child {
@@ -270,7 +270,7 @@
                         font-weight: bold;
                         z-index: 10;
                         border-width: 0 0 get_size(0.2, $coefficient) 0;
-                        font-size: 75%;
+                        font-size: get_size(2, $coefficient);
                         position: fixed;
                         overflow: auto;
                         max-height: 50%;
@@ -378,6 +378,7 @@
                     &.contentTop {
                         height: 25%;
                         .userName {
+                            font-size: get_size(2, $coefficient);
                             padding-top: 5%;
                             font-weight: bold;
                             font-size: get_size(2.7, $coefficient);
@@ -484,6 +485,125 @@
                     }
                 }
             }
+        }
+    }
+    .toaster {
+        position: absolute;
+        bottom: 0 ;
+        right: 0;
+    }
+    .toast {
+        &.off {
+            left: get_size(10, $coefficient);
+            opacity: 0;
+        }
+        &.on {
+            left: 0;
+           opacity: 0.8;
+        }
+        // activation AM;
+        @include transition(left 0.5s ease-in-out, opacity 0.5s ease-in-out);
+        transform: translateZ(0);
+        perspective: 1000; backface-visibility: hidden;
+        border-radius: get_size(0.2, $coefficient);
+        border-width: get_size(0.1, $coefficient);
+        border-style: solid;
+        margin: get_size(1.5, $coefficient);
+        position: relative;
+        padding: get_size(2, $coefficient);
+        width: get_size(40, $coefficient);
+        z-index: 10;
+        &.info {
+            background-color: #2f96b4;
+            color:#fff;        
+            border-color: darken(#2f96b4, 6);
+            box-shadow: get_size(0.1, $coefficient) get_size(0.1, $coefficient) get_size(0.1, $coefficient) #121419;
+        }
+        &.success {
+            background-color: #51a351;
+            color: #fff;
+            border-color: darken(#51a351, 6);
+            box-shadow: get_size(0.1, $coefficient) get_size(0.1, $coefficient) get_size(0.1, $coefficient) #121419;
+        }
+        &.warn {
+            color:#fff;       
+            background-color: #f89406;
+            border-color: darken(#f89406, 6);
+            box-shadow: get_size(0.1, $coefficient) get_size(0.1, $coefficient) get_size(0.1, $coefficient) #121419;
+        }
+        &.error {
+            color:#fff;       
+            background-color: #bd362f;
+            border-color: darken(#bd362f, 6);
+            box-shadow: get_size(0.1, $coefficient) get_size(0.1, $coefficient) get_size(0.1, $coefficient) #121419;
+        }
+        button:active, button:focus {
+            outline: none;
+        }
+        .content {
+            color: #fff;
+            display: flex;
+            align-items: stretch;
+            position: relative;
+            font-size: get_size(2, $coefficient);
+            .toast-action-wrapper {
+                flex: 1 0 0;
+                .toast-action {
+                    position: relative;
+                    @include transition(all 0.1s ease-in-out);                
+                    height: get_size(5, $coefficient);
+                    width: get_size(5, $coefficient);
+                    color: #fff;
+                    font-size: get_size(2.5, $coefficient);
+                    max-width: get_size(12, $coefficient);
+                    background-color: rgba(30, 33, 42, 1);
+                    border: get_size(0.3, $coefficient) solid #1e212a;
+                    box-shadow:  get_size(0.3, $coefficient)  get_size(0.3, $coefficient) 0 #000;
+                }
+                .toast-action:hover {
+                    transform: translate3d(3px, 3px, 0);
+                    color: #1e212a;            
+                    background-color: rgba(30, 33, 42, 0.3);
+                    box-shadow: 0 0 0 #000;
+                }
+            }
+            .message {
+                .icon-type {
+                    text-align: center;
+                    width: get_size(2, $coefficient);
+                    font-size: get_size(2.5, $coefficient);
+                    position: relative;
+                    top: 50%;
+                    display: inline-block;
+                    transform: translateY(-50%);
+                    float: left;
+                    margin-right:get_size(2, $coefficient);
+                }
+                p {
+                    position: relative;
+                    top: 50%;
+                    display: inline-block;
+                    transform: translateY(-50%);
+                }
+                flex-shrink: 2;    
+                border: get_size(0.3, $coefficient);
+                color: #fff;
+                font-weight: bold;
+                flex: 5 0 0;
+                padding: 0; 
+            }
+        }
+        .dismiss-toast {
+            color: #fff;
+            padding: get_size(1, $coefficient);
+            position: absolute;
+            top: 0;
+            right: 0;
+            border: none;
+            background-color: transparent;
+            font-weight: bolder;
+            font-size: get_size(1.5, $coefficient);
+            cursor: pointer;
         }
     }
 }
