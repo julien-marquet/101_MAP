@@ -6,7 +6,7 @@
     @if ($portrait) {
         $coefficient:  (($ratio-size) / 100) * (($ratio-height / $ratio-width) * 1vw);
     } @else {
-        $coefficient: -0.3vh + (($ratio-size) / 100) *  (($ratio-width / $ratio-height) *1vh);
+        $coefficient: ($ratio-size / 100) * 1vh;
     }
     $seatSize: get_size($seatSize, $coefficient); 
     $seatSidesMargin:get_size($seatSidesMargin, $coefficient); 
@@ -25,10 +25,10 @@
     }
     
     $themeNb: 2;
-    $dropdownSeparation:  get_size(0.4, $coefficient);
-    $dropdownInnerSeparation:  get_size(0.4, $coefficient);
+    $dropdownSeparation:  get_size(0.1, $coefficient);
+    $dropdownInnerSeparation:  get_size(0.1, $coefficient);
     $iconSpacing: get_size(1, $coefficient);
-    $tileSize: get_size(5, $coefficient);
+    $tileSize: get_size(6, $coefficient);
     
     .sidebar {
         overflow: hidden;
@@ -240,7 +240,7 @@
     }
     
     .zonesWrapper {
-        @include aspect-ratio($ratio-width, $ratio-height, $ratio-size);
+        @include aspect-ratio($ratio-width, $ratio-height, $ratio-size, $ratio-shift);
         flex-wrap: wrap;
         flex-direction: row;
     }
@@ -495,9 +495,9 @@
 @import 'themes/dark.scss';
 @import 'themes/light.scss';
 
-@media screen and (max-aspect-ratio: 4/3) {
+@media screen and (max-aspect-ratio: "#{$ratio-width} / #{$ratio-height}") {
     @include applyStyle($seatSize: 3.8, $seatSidesMargin: 0.5, $seatRowMargin: 0.2, $zoneMargin: 0.5, $portrait: true);
 }
-@media screen and (min-aspect-ratio: 4/3) {
+@media screen and (min-aspect-ratio: "#{$ratio-width} / #{$ratio-height}") {
     @include applyStyle($seatSize: 3.8, $seatSidesMargin: 0.5, $seatRowMargin: 0.2, $zoneMargin: 0.5,  $portrait: false);
 }
