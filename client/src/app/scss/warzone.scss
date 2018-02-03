@@ -172,7 +172,7 @@
         z-index: 1;
     }
     .seatHover:active {
-        transform: scale(0.9);
+       transform: scale(0.9);
       }
 
     .z1 {
@@ -264,7 +264,7 @@
                         border-width: 0; 
                         border-style: solid;
                         font-family: 'Montserrat', sans-serif;
-                        font-size: get_size(3.8, $coefficient);
+                        font-size: get_size(3.2, $coefficient);
                         padding: 0 0 0 get_size(2, $coefficient);
                     }
                     .searchResults {
@@ -316,6 +316,7 @@
         .splitter {
             display: flex;
             height: 100%;
+            @include fix_animation();
             .leftCol {
                 z-index: 1;
                 width: 40%;
@@ -323,6 +324,7 @@
                     position: relative;
                     height: 100%;
                     left: -60%;
+                    @include fix_animation();
                 }
                 .fireJfeve {
                     position: relative;
