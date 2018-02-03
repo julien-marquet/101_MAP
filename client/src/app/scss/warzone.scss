@@ -13,13 +13,13 @@
     $seatRowMargin:get_size($seatRowMargin, $coefficient); 
     $zoneMargin:get_size($zoneMargin, $coefficient);
     $zoom: 1.5;
-    $seatBorderRadius: 2px;
+    $radius: get_size(0.3, $coefficient);
     $hallSize: $seatSize + ($seatSidesMargin * 2);
 
     $i: 4;
     @while $i > 0 {
         .stat-#{$i} {
-            margin-left: $i * - 3px;
+            margin-left: $i * - get_size(0.4, $coefficient);
         }
         $i: $i - 1;  
     }
@@ -35,7 +35,7 @@
         height: 100%;
         position: fixed;
         left: 0;
-        padding: 0px;
+        padding: 0;
         .main-tile {
             transition: background-color 0.15s ease-in-out;
             font-size: get_size(5, $coefficient);
@@ -84,7 +84,7 @@
                         transform: translateX(1px);
                     }
                 }
-                max-height: 0px;
+                max-height: 0;
                 transition: max-height 0.25s ease-in-out;
                 overflow: hidden;
             }
@@ -95,8 +95,8 @@
         display: inline-block;
         vertical-align: top;
         margin: $zoneMargin;
-        box-shadow: 2px 2px 8px #000000;
-        border-radius: 3px;
+        box-shadow: get_size(0.2, $coefficient) get_size(0.2, $coefficient)  get_size(0.8, $coefficient) rgba(0, 0, 0, 0.4);
+        border-radius: $radius;
     }
 
     .rowWrapper {
@@ -108,7 +108,7 @@
         width: $seatSize;
         position: relative;
         height: $seatSize;
-        border-radius: $seatBorderRadius;
+        border-radius: $radius;
     }
 
     @keyframes pulse {
@@ -120,7 +120,7 @@
             top: -(($zoom - 1) * 50%) !important;
             left: -(($zoom - 1) * 50%)!important;
             transform: scale(1.5);
-            box-shadow: 4px 4px 10px #000000;
+            box-shadow: get_size(0.2, $coefficient) get_size(0.2, $coefficient)  get_size(0.8, $coefficient) rgba(0, 0, 0, 0.4);
             z-index: 1;  
         }
     }
@@ -140,7 +140,7 @@
     .seatRow {
         display: flex;
         margin: $seatRowMargin 0px $seatRowMargin 0px;
-        border-radius: 2px;
+        border-radius: $radius;
     }
     
     .rowWrapper {
@@ -153,7 +153,7 @@
         display: flex;
         justify-content: center;
         overflow: hidden;
-        border-radius: $seatBorderRadius;
+        border-radius: $radius;
         width: 100%;
         height: 100%;
         top: 0;
@@ -168,7 +168,7 @@
         height: $seatSize * $zoom;
         top: -(($zoom - 1) * 50%);
         left: -(($zoom - 1) * 50%);
-        box-shadow: 4px 4px 10px #000000;
+        box-shadow: get_size(0.2, $coefficient) get_size(0.2, $coefficient)  get_size(0.8, $coefficient) rgba(0, 0, 0, 0.4);
         z-index: 1;
     }
     .seatHover:active {
@@ -259,29 +259,27 @@
             width: $seatSize * 14;
                 .wrapperSearch {
                     input {
-                        width: calc(100% - 10px);
+                        width: calc(100% - #{get_size(1.6, $coefficient)});
                         height: $seatSize * 1.5;
-                        border-width: 0px; 
+                        border-width: 0; 
                         border-style: solid;
                         font-family: 'Montserrat', sans-serif;
-                        font-size: get_size(4, $coefficient);
-                        padding: 0 0 0 14px;
+                        font-size: get_size(3.8, $coefficient);
+                        padding: 0 0 0 get_size(2, $coefficient);
                     }
                     .searchResults {
-                        padding: 0 2px;
+                        padding: 0 get_size(0.2, $coefficient);
                         width: $seatSize * 14;
                         font-weight: bold;
-                        border-width: 0;
                         z-index: 10;
-                        font-size: 90%;
+                        border-width: 0 0 get_size(0.2, $coefficient) 0;
+                        font-size: 75%;
                         position: fixed;
                         overflow: auto;
-                        max-height: 50%; // TODO: don't cheat, let it flow to the bottom
+                        max-height: 50%;
                         .searchOption {
-                            margin-left: -2px;
-                            padding: 5px 0 5px 14px;
-                            border-width: 0 0 1px 0;
-                            border-style: solid;
+                            margin-top: get_size(0.2, $coefficient);
+                            padding: get_size(1, $coefficient) 0 get_size(1, $coefficient) get_size(2, $coefficient);
                         }
                     }
                 }
@@ -292,20 +290,21 @@
         height: $seatSize * 8;
         width: $seatSize * 14;
         display: inline-block;
-        border-width: 2px;
+        border-width: get_size(0.2, $coefficient);
         border-style: solid;
-        box-shadow: 4px 4px 8px #000000;
+        border-radius: $radius;
+        box-shadow: get_size(0.2, $coefficient) get_size(0.2, $coefficient) get_size(0.8, $coefficient) rgba(0, 0, 0, 0.4);
         overflow: hidden;
         position: relative;
         .adminFilter {
             width: 22%;
             height: 15%;
             position: absolute;
-            bottom: -2px;
-            left: 0px;
+            bottom: get_size(-0.2, $coefficient);
+            left: 0;
             font-weight: bold;
             font-size: get_size(2.1, $coefficient);
-            padding-left: 5px;
+            padding-left:  get_size(0.4, $coefficient);
             text-align: center;
             color: $textPrimary;
             h2 {
@@ -361,7 +360,7 @@
                     }
                     &.secondary {
                         z-index: 2;
-                        bottom: -2px;
+                        bottom: get_size(-0.2, $coefficient);
                         left: -30%;
                         width: 31%;
                         height: 15%;
@@ -426,7 +425,7 @@
                                     font-weight: bold;                                
                                 }
                                 .statValue {
-                                    padding-left: 5px;
+                                    padding-left:  get_size(0.5, $coefficient);
                                     font-weight: normal;                                
                                 }
                             }
@@ -452,11 +451,11 @@
                                 position: relative;
                                 height: 100%;
                                 width: 100%;
-                                border-width:  1px 1px 1px 0px;
+                                border-width:  get_size(0.1, $coefficient) get_size(0.1, $coefficient)  get_size(0.1, $coefficient) 0;
                                 border-style: solid;   
                                 text-transform: uppercase;
                                 z-index: 2;
-                                box-shadow: 2px 2px 2px #000000;
+                                box-shadow: get_size(0.2, $coefficient) get_size(0.2, $coefficient)  get_size(0.2, $coefficient) rgba(0, 0, 0, 0.6);
                                 .linkUserAccount {
                                     text-align: center;
                                     height: 100%;
@@ -474,8 +473,8 @@
                                 @include transition(box-shadow ease-in 0.05s, transform ease-in 0.05s);
                                 position: absolute;           
                                 z-index: 1;
-                                box-shadow: 2px 2px 2px #000000;
-                                border-width:  1px 0 1px 1px;
+                                box-shadow: get_size(0.2, $coefficient) get_size(0.2, $coefficient)  get_size(0.2, $coefficient) rgba(0, 0, 0, 0.6);
+                                border-width:  get_size(0.1, $coefficient) 0 get_size(0.1, $coefficient)  get_size(0.1, $coefficient) ;
                                 border-style: solid;                            
                                 height: 100%;
                                 width: 8%;

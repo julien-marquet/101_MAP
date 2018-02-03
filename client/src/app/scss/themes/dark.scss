@@ -81,7 +81,6 @@
     }
     .hostInfoWrapper {
         border-color: $darkShadow;
-        box-shadow: 4px 4px 8px $mediumShadow;
         .adminFilter {
             background-color: $rowColor;
             color: $textPrimary;
@@ -129,13 +128,11 @@
                             .buttonContent {
                                 background-color: $mainDark;                            
                                 border-color: $darkShadow;
-                                box-shadow: 2px 2px 2px $darkShadow;
                                 .linkUserAccount {
                                     color: $textSecondary;
                                 }
                             }
                             .buttonSkewed {
-                                box-shadow: 2px 2px 2px $darkShadow;
                                 background-color: $mainDark;                                
                                 border-color: $darkShadow;
                                 background-color: $mainDark;                               
