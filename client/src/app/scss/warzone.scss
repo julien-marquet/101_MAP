@@ -104,6 +104,7 @@
     }
     
     .seat {
+        @include fix_animation();
         margin: $seatSidesMargin;
         width: $seatSize;
         position: relative;
@@ -138,6 +139,7 @@
     }
 
     .seatRow {
+        @include fix_animation();
         display: flex;
         margin: $seatRowMargin 0px $seatRowMargin 0px;
         border-radius: $radius;
@@ -290,7 +292,7 @@
         height: $seatSize * 8;
         width: $seatSize * 14;
         display: inline-block;
-        border-width: get_size(0.2, $coefficient);
+        border-width: get_size(0.15, $coefficient);
         border-style: solid;
         border-radius: $radius;
         box-shadow: get_size(0.2, $coefficient) get_size(0.2, $coefficient) get_size(0.8, $coefficient) rgba(0, 0, 0, 0.4);

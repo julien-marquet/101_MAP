@@ -75,6 +75,9 @@
     }
     .seat {
         background-color: $seatColor;
+        &.taken {
+            background-color: $rowColor;
+        }
     }
     .seatRow {
         background-color: $rowColor;
