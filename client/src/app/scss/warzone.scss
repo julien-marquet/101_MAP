@@ -2,12 +2,7 @@
 @import "utilities/responsive.scss";
 
 @mixin applyStyle($seatSize, $seatSidesMargin, $seatRowMargin, $zoneMargin, $portrait) {
-    $coefficient: 0;
-    @if ($portrait) {
-        $coefficient:  (($ratio-size) / 100) * (($ratio-height / $ratio-width) * 1vw);
-    } @else {
-        $coefficient: ($ratio-size / 100) * 1vh;
-    }
+    $coefficient: get_coefficient($portrait);
     $seatSize: get_size($seatSize, $coefficient); 
     $seatSidesMargin:get_size($seatSidesMargin, $coefficient); 
     $seatRowMargin:get_size($seatRowMargin, $coefficient); 
@@ -15,7 +10,11 @@
     $zoom: 1.5;
     $radius: get_size(0.3, $coefficient);
     $hallSize: $seatSize + ($seatSidesMargin * 2);
-
+    $themeNb: 2;
+    $dropdownSeparation: 0.1vw;
+    $dropdownInnerSeparation:  0.1vw;
+    $iconSpacing:  0.4vw;
+    $tileSize: 4vw;
     $i: 4;
     @while $i > 0 {
         .stat-#{$i} {
@@ -24,11 +23,7 @@
         $i: $i - 1;  
     }
     
-    $themeNb: 2;
-    $dropdownSeparation:  get_size(0.1, $coefficient);
-    $dropdownInnerSeparation:  get_size(0.1, $coefficient);
-    $iconSpacing: get_size(1, $coefficient);
-    $tileSize: get_size(6, $coefficient);
+
     
     .sidebar {
         overflow: hidden;
@@ -242,7 +237,7 @@
     }
     
     .zonesWrapper {
-        @include aspect-ratio($ratio-width, $ratio-height, $ratio-size, $ratio-shift);
+        @include aspect-ratio($ratio-width, $ratio-height, $ratio-size, $ratio-vertical-shift, 6.5vh); // taille totale de la sidebar
         flex-wrap: wrap;
         flex-direction: row;
     }

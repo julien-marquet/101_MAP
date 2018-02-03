@@ -1,20 +1,28 @@
 $ratio-width: 151;
 $ratio-height: 120;
-$ratio-size: 93;
-$ratio-shift: 3;
+$ratio-size: 95;
+$ratio-vertical-shift: 3;
 
 @function get_size($f_multiplier, $f_coefficient) {
     @return $f_multiplier * $f_coefficient;
 }
 
-@mixin aspect-ratio($width, $height, $size, $shift: 0) {
+@function get_coefficient($viewMode) {
+    @if ($viewMode) {
+        @return (($ratio-size) / 100) * (($ratio-height / $ratio-width) * 1vw);
+    } @else {
+        @return  ($ratio-size / 100) * 1vh;
+    }
+}
+
+@mixin aspect-ratio($width, $height, $size, $vertical-shift: 0, $horizontal-shift: 0vw) {
     position: absolute;
     width: $size * 1vw;
     height: $size * 1vh;
     max-width: $size * 1vh * ($width / $height);
     max-height: $size* 1vw * ($height / $width);
-    top: 50%;
-    left: (50 + $shift) * 1%;
+    top: 50vh;
+    left: calc(50vw + (#{$horizontal-shift} / 2));
     transform: translate(-50%, -50%);
     &:before {
       display: block;
@@ -25,7 +33,7 @@ $ratio-shift: 3;
     }
     > .content {
       position: absolute;
-      top: $shift * 1%;
+      top: $vertical-shift * 1%;
       left: 0;
       right: 0;
       bottom: 0;
