@@ -24,8 +24,6 @@
         $i: $i - 1;  
     }
     
-
-    
     .sidebar {
         z-index: 3;
         overflow: hidden;
@@ -247,7 +245,6 @@
         justify-content: space-between;
         display: flex;
     }
-    
 
     .blockSearchHost {
         display: inline-block;
@@ -266,6 +263,7 @@
                         padding: 0 0 0 get_size(2, $coefficient);
                     }
                     .searchResults {
+                        @include fix_animation();
                         padding: 0 get_size(0.2, $coefficient);
                         width: $seatSize * 14;
                         font-weight: bold;
@@ -284,6 +282,7 @@
             }
     }
     .hostInfoWrapper {
+        @include fix_animation();
         margin: $zoneMargin;
         height: $seatSize * 8;
         width: $seatSize * 14;
@@ -314,7 +313,6 @@
         .splitter {
             display: flex;
             height: 100%;
-            @include fix_animation();
             .leftCol {
                 z-index: 1;
                 width: 40%;
@@ -336,6 +334,7 @@
                     position: relative;
                     height: 100%;
                     left: -7%;
+                    @include fix_animation();
                 }
             }
             .rightCol {
@@ -474,13 +473,14 @@
                                 @include transition(box-shadow ease-in 0.05s, transform ease-in 0.05s);
                                 position: absolute;           
                                 z-index: 1;
-                                box-shadow: get_size(0.2, $coefficient) get_size(0.2, $coefficient)  get_size(0.2, $coefficient) rgba(0, 0, 0, 0.6);
+                                box-shadow: get_size(0, $coefficient) get_size(0.2, $coefficient)  get_size(0.2, $coefficient) rgba(0, 0, 0, 0.6);
                                 border-width:  get_size(0.1, $coefficient) 0 get_size(0.1, $coefficient)  get_size(0.1, $coefficient) ;
                                 border-style: solid;                            
                                 height: 100%;
                                 width: 8%;
                                 left: -5%;
-                                transform: skewX(-7deg);                                
+                                transform: skewX(-7deg);            
+                                @include fix_animation();                   
                             }
                         }
                     }
