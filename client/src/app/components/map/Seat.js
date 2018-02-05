@@ -69,7 +69,7 @@ class Seat extends Component {
         }
         else {
             return (
-                <div className={"seat"}>
+                <div className={"seat taken"}>
                     <div
                         className={this.state.isSearched || this.state.isActive ? "seatHover highlighted" : "seatHover"}
                         onClick={() => {

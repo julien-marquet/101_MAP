@@ -72,7 +72,7 @@ class Oauth2_authenticator {
         });
     }
     getToken(callback) {
-        if (!this.globalStorage.access_token || (this.globalStorage.access_token.modified_at + this.globalStorage.access_token.expires_in * 1000 < Date.now() - 2000)) {
+        if (!this.globalStorage.access_token || this.globalStorage.access_token.modified_at + this.globalStorage.access_token.expires_in <= Math.floor(Date.now() / 1000)) {
             logger.add_log({
                 type: "General", 
                 description: "A fresh API token is being generated"
@@ -88,7 +88,7 @@ class Oauth2_authenticator {
             }).then((res) => {
                 if (res && !res.error) {
                     this.globalStorage.access_token = res;
-                    this.globalStorage.access_token.modified_at = Date.now();
+                    this.globalStorage.access_token.modified_at = Math.floor(Date.now() / 1000);
                     callback(res);
                 } else {
                     logger.add_log({

@@ -1,8 +1,6 @@
 import React, {Component} from "react";
 import Toast from "./Toast";
 
-import "../scss/toaster.css";
-
 class Toaster extends Component {
     renderToasts() {
         return (

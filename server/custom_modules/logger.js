@@ -3,12 +3,15 @@ const   Log = require("mongoose").model("Log"),
 
 function print_additionnal_infos(infos) {
     let res = "";
+    let str = "";
     if (infos) {
         const info_array = Object.entries(infos);
         res = "\n           Details :";
         info_array.forEach(info => {
+            if (typeof info[1] === "object")
+                str = JSON.stringify(info[1]);
             res += "\n           | ";
-            res += `${info[0]} : ${info[1]}`;
+            res += `${info[0]} : ${str || info[1]}`;
         });
     }
     return res;
