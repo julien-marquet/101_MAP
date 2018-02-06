@@ -21,9 +21,8 @@ $ratio-vertical-shift: 3;
     height: $size * 1vh;
     max-width: $size * 1vh * ($width / $height);
     max-height: $size* 1vw * ($height / $width);
-    top: 50vh;
     left: calc(#{$horizontal-shift} + (50vw - (#{$horizontal-shift} / 2)));
-    transform: translate(-50%, -50%);
+    transform: translate(-50%);
     &:before {
       display: block;
       content: "";
