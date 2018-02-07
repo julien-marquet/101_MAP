@@ -1,10 +1,12 @@
 const   {apiEndpoint, redirect_uri} = require("../config/globalConfig"),
-    logger = require("../custom_modules/logger");
+    logger = require("../custom_modules/logger"),
+    SocketCache = require("../custom_classes/SocketCache");
 
 class Oauth2_authenticator {
     constructor(globalStorage, i_queue) {
         this.globalStorage = globalStorage;
         this.i_queue = i_queue;
+        this.i_socketCache = new SocketCache(globalStorage);
     }
     getUserToken(code, callback) {
         this.i_queue.push_head("getUserToken", {
@@ -19,6 +21,7 @@ class Oauth2_authenticator {
             method: "POST"
         }).then((res) => {
             if (res && !res.error) {
+                this.i_socketCache.addToken(res);
                 callback(res);
             } else {
                 logger.add_log({
@@ -42,6 +45,7 @@ class Oauth2_authenticator {
         });
     }
     testTokenValidity(token, callback) {
+        console.log(this.i_socketCache.searchToken(token));
         this.i_queue.push_head("testTokenValidity", {
             url: `${apiEndpoint}oauth/token/info`,
             headers: {
