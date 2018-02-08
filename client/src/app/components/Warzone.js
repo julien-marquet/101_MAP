@@ -51,8 +51,9 @@ class Warzone extends Component {
         return (
             <div className={"wrapper"}>
                 <SideBar />
+                <div className="global-infos"><i className="fas fa-users"></i><p>{this.props.users.nb_connected_users}</p></div>
                 <div className={"zonesWrapper"}>
-                    <div class="content">
+                    <div className="content">
                         {this.renderZones()}
                     </div>
                 </div>

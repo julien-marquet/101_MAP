@@ -25,7 +25,7 @@ class Oauth2_authenticator {
                 callback(res);
             } else {
                 logger.add_log({
-                    type: "Error",
+                    type: "Warning",
                     description: "Couldn't get user access token", 
                     additionnal_infos: {
                         Error: res.error || "empty result"
@@ -35,7 +35,7 @@ class Oauth2_authenticator {
             }
         }, (err) => {
             logger.add_log({
-                type: "Error",
+                type: "Warning",
                 description: "Couldn't get user access token", 
                 additionnal_infos: {
                     Error: err
