@@ -38,6 +38,7 @@ class Users {
         let i = 1;
         let usersArray = [];
         let self = this;
+        let nb_connected_users = 0;
         (function loop() {
             if (i !== -1) {
                 self.Oauth2_authenticator.getToken(token => {
@@ -45,12 +46,21 @@ class Users {
                         users_func.getPageOfConnectedUsers(token, campus, i, self.i_queue.push_head.bind(self.i_queue), pageArray => {
                             if (!pageArray || pageArray.length < 30) {
                                 if (pageArray && pageArray.length > 0)
+                                {
+                                    pageArray = users_func.selectValid(pageArray);
                                     usersArray = usersArray.concat(pageArray);
+                                    nb_connected_users += pageArray.length;
+                                }
                                 i = -1;
                             }
-                            else {
+                            else if (pageArray !== null){
+                                pageArray = users_func.selectValid(pageArray);
                                 usersArray = usersArray.concat(pageArray);
+                                nb_connected_users += pageArray.length;
                                 i++;
+                            }
+                            else {
+                                i = -1;
                             }
                             loop();
                         });
@@ -68,10 +78,12 @@ class Users {
                     };
                 });
                 self.globalStorage.connected_users_last_request = Date.now();
+                self.globalStorage.nb_connected_users = nb_connected_users;
                 if (usersArray.length > 0) {
                     callback({
                         success:true,
                         content:{
+                            nb_connected_users: self.globalStorage.nb_connected_users,
                             last_request: self.globalStorage.connected_users_last_request, 
                             array: self.globalStorage.connected_users_array
                         }});

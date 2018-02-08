@@ -1,10 +1,12 @@
 const   {apiEndpoint, redirect_uri} = require("../config/globalConfig"),
-    logger = require("../custom_modules/logger");
+    logger = require("../custom_modules/logger"),
+    SocketCache = require("../custom_classes/SocketCache");
 
 class Oauth2_authenticator {
     constructor(globalStorage, i_queue) {
         this.globalStorage = globalStorage;
         this.i_queue = i_queue;
+        this.i_socketCache = new SocketCache(globalStorage);
     }
     getUserToken(code, callback) {
         this.i_queue.push_head("getUserToken", {
@@ -19,10 +21,11 @@ class Oauth2_authenticator {
             method: "POST"
         }).then((res) => {
             if (res && !res.error) {
+                this.i_socketCache.addToken(res);
                 callback(res);
             } else {
                 logger.add_log({
-                    type: "Error",
+                    type: "Warning",
                     description: "Couldn't get user access token", 
                     additionnal_infos: {
                         Error: res.error || "empty result"
@@ -32,7 +35,7 @@ class Oauth2_authenticator {
             }
         }, (err) => {
             logger.add_log({
-                type: "Error",
+                type: "Warning",
                 description: "Couldn't get user access token", 
                 additionnal_infos: {
                     Error: err
@@ -42,34 +45,13 @@ class Oauth2_authenticator {
         });
     }
     testTokenValidity(token, callback) {
-        this.i_queue.push_head("testTokenValidity", {
-            url: `${apiEndpoint}oauth/token/info`,
-            headers: {
-                "authorization": `Bearer ${token}`
-            }
-        }).then((res) => {
-            if (res && !res.error) {
-                callback(res);
-            } else {
-                logger.add_log({
-                    type: "Error",
-                    description: "Couldn't validate user access token", 
-                    additionnal_infos: {
-                        Error: res.error || "empty result"
-                    }
-                });
-                callback(false);
-            }
-        }, (err) => {
-            logger.add_log({
-                type: "Error", 
-                description: "Couldn't validate user access token", 
-                additionnal_infos: {
-                    Error:err
-                }
-            });
+        const res = this.i_socketCache.searchToken(token);
+        if (res !== null)
+        {
+            callback(res);
+        }   else {
             callback(false);
-        });
+        }
     }
     getToken(callback) {
         if (!this.globalStorage.access_token || this.globalStorage.access_token.modified_at + this.globalStorage.access_token.expires_in <= Math.floor(Date.now() / 1000)) {

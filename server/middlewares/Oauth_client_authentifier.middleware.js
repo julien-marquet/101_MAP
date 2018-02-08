@@ -36,7 +36,7 @@ const Oauth_authentifier = ( i_Oauth2_authenticator) => {
                         socket.typeAuth = "code";
                         socket.userToken = code_token.access_token;
                         socket.checked_at = Math.floor(Date.now()/1000);
-                        socket.expires_in = code_token.expires_in; 
+                        socket.expires_in = code_token.expires_in;
                         next();
                     }
                 });

@@ -10,6 +10,14 @@ const users_func = {
         }
         return (dest);
     },
+    selectValid :(array) => {
+        const dest = [];        
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].host.match(/^z+\d+r\d+p+\d/) !== null)
+                dest.push(array[i]);
+        }
+        return (dest);
+    },
     getPageOfConnectedUsers: (token, campus, pagination, push_head, callback) => {
         push_head("getUsersList", {
             url: `${apiEndpoint}v2/campus/${campus}/locations?page=${pagination}&sort=-end_at,host&page=${pagination}`,

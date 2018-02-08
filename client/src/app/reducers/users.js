@@ -10,6 +10,7 @@ import {SEARCH_UPDATE_CONTENT} from "../actions/search";
 const initialState = {
     array: [],
     last_request: null,
+    nb_connected_users: 0,
     activeUser: {
         hostname: null,
         begin_at: null,

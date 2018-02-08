@@ -607,6 +607,21 @@
             cursor: pointer;
         }
     }
+    .global-infos {
+        font-size: get_size(2.5, $coefficient);
+        position: relative;
+        bottom: get_size(3.5, $coefficient);
+        left: get_size(60, $coefficient);
+        display: flex;
+        i {
+            padding-top: get_size(0.3, $coefficient);
+            display: inline-block;
+            margin-right: get_size(1, $coefficient);
+        }
+        p {
+            text-align: center;
+        }
+    }
 }
 
 
