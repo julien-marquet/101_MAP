@@ -53,11 +53,14 @@ class Users {
                                 }
                                 i = -1;
                             }
-                            else {
+                            else if (pageArray !== null){
                                 pageArray = users_func.selectValid(pageArray);
                                 usersArray = usersArray.concat(pageArray);
                                 nb_connected_users += pageArray.length;
                                 i++;
+                            }
+                            else {
+                                i = -1;
                             }
                             loop();
                         });

@@ -14,8 +14,7 @@ class SocketCache {
         };
     }
     searchToken(userToken) {
-        let tmp = null;
-        tmp = this.globalStorage.socketCache[userToken];
+        const tmp = this.globalStorage.socketCache[userToken];
         if (tmp != undefined) {
             if (tmp.checked_at + tmp.expires_in >= Math.floor(Date.now() / 1000))
             {
@@ -32,7 +31,7 @@ class SocketCache {
     flushToken() {
         const now = Math.floor(Date.now() / 1000);
         let cpt = 0;
-        Object.keys(this.globalStorage.socketCache, (key) => {
+        Object.keys(this.globalStorage.socketCache).map((key) => {
             if (this.globalStorage.socketCache[key].checked_at + this.globalStorage.socketCache[key].expires_in < now) {
                 delete this.globalStorage.socketCache[key];
                 cpt++;
