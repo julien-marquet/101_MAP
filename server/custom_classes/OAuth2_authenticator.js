@@ -45,35 +45,13 @@ class Oauth2_authenticator {
         });
     }
     testTokenValidity(token, callback) {
-        console.log(this.i_socketCache.searchToken(token));
-        this.i_queue.push_head("testTokenValidity", {
-            url: `${apiEndpoint}oauth/token/info`,
-            headers: {
-                "authorization": `Bearer ${token}`
-            }
-        }).then((res) => {
-            if (res && !res.error) {
-                callback(res);
-            } else {
-                logger.add_log({
-                    type: "Error",
-                    description: "Couldn't validate user access token", 
-                    additionnal_infos: {
-                        Error: res.error || "empty result"
-                    }
-                });
-                callback(false);
-            }
-        }, (err) => {
-            logger.add_log({
-                type: "Error", 
-                description: "Couldn't validate user access token", 
-                additionnal_infos: {
-                    Error:err
-                }
-            });
+        const res = this.i_socketCache.searchToken(token);
+        if (res !== null)
+        {
+            callback(res);
+        }   else {
             callback(false);
-        });
+        }
     }
     getToken(callback) {
         if (!this.globalStorage.access_token || this.globalStorage.access_token.modified_at + this.globalStorage.access_token.expires_in <= Math.floor(Date.now() / 1000)) {

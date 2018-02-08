@@ -1,3 +1,5 @@
+const logger = require("../custom_modules/logger");
+
 class SocketCache {
     constructor(globalStorage) {
         this.globalStorage = globalStorage;
@@ -29,9 +31,18 @@ class SocketCache {
     }
     flushToken() {
         const now = Math.floor(Date.now() / 1000);
+        let cpt = 0;
         Object.keys(this.globalStorage.socketCache, (key) => {
             if (this.globalStorage.socketCache[key].checked_at + this.globalStorage.socketCache[key].expires_in < now) {
                 delete this.globalStorage.socketCache[key];
+                cpt++;
+            }
+        });
+        logger.add_log({
+            type: "Info",
+            description: "Expired tokens have been fleushed out", 
+            additionnal_infos: {
+                flushed_tokens: cpt
             }
         });
     }
