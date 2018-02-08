@@ -47,14 +47,16 @@ class Users {
                             if (!pageArray || pageArray.length < 30) {
                                 if (pageArray && pageArray.length > 0)
                                 {
+                                    pageArray = users_func.selectValid(pageArray);
                                     usersArray = usersArray.concat(pageArray);
                                     nb_connected_users += pageArray.length;
                                 }
                                 i = -1;
                             }
                             else {
+                                pageArray = users_func.selectValid(pageArray);
                                 usersArray = usersArray.concat(pageArray);
-                                nb_connected_users += 30;
+                                nb_connected_users += pageArray.length;
                                 i++;
                             }
                             loop();

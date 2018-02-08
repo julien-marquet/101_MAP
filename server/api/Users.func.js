@@ -2,10 +2,18 @@ const   {apiEndpoint} = require("../config/globalConfig"),
     logger = require("../custom_modules/logger");
 
 const users_func = {
-    selectValid :(array) => {
+    selectNull :(array) => {
         const dest = [];
         for (let i = 0; i < array.length; i++) {
-            if (array[i].end_at === null && array[i].host.match(/^z+\d+r\d+p+\d/) !== null)
+            if (array[i].end_at === null)
+                dest.push(array[i]);
+        }
+        return (dest);
+    },
+    selectValid :(array) => {
+        const dest = [];        
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].host.match(/^z+\d+r\d+p+\d/) !== null)
                 dest.push(array[i]);
         }
         return (dest);
@@ -19,7 +27,7 @@ const users_func = {
         })
             .then(response => {
                 if (response.length > 0) {
-                    response = users_func.selectValid(response);
+                    response = users_func.selectNull(response);
                     callback(response);
                 }
                 else
