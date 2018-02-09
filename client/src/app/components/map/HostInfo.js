@@ -48,9 +48,6 @@ class HostInfo extends Component {
             }
             else {
                 ev.target.src = `https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.jpg`;
-                if (ev.target.className !== "userPortrait42") {
-                    ev.target.className = "userPortrait42";
-                }
             }
         }
     }
