@@ -12,10 +12,11 @@
     $radius: get_size(0.3, $coefficient);
     $hallSize: $seatSize + ($seatSidesMargin * 2);
     $themeNb: 2;
-    $dropdownSeparation: 0.1vw;
-    $dropdownInnerSeparation:  0.1vw;
-    $iconSpacing:  0.4vw;
-    $tileSize: 4vw;
+    $dropdownSeparation: 0.05vw;
+    $dropdownInnerSeparation:  0.05vw;
+    $iconSpacing:  0.4vmin;
+    $iconSize: 3vmin;
+    $tileSize: $iconSpacing + $iconSize;
     $i: 4;
     @while $i > 0 {
         .stat-#{$i} {
@@ -33,7 +34,7 @@
         padding: 0;
         .main-tile {
             transition: background-color 0.15s ease-in-out;
-            font-size: get_size(5, $coefficient);
+            font-size: $iconSize;
             cursor: pointer;
         }
         .tile {
@@ -58,7 +59,7 @@
         }
         .multi-dropdown {
             &.opened .dropdown-content {
-                max-height: $tileSize * $themeNb + (2 * $dropdownSeparation) + ($themeNb * ($dropdownInnerSeparation * 2) + (2 * $iconSpacing));
+                max-height: calc(#{$tileSize} * #{$themeNb} + (2 * #{$dropdownSeparation}) + (#{$themeNb} * (#{$dropdownInnerSeparation} * 2) + (2 * #{$iconSpacing}));
             }
             &.closed .dropdown-content {
                 transform-origin: top;
@@ -236,7 +237,7 @@
     }
     
     .zonesWrapper {
-        @include aspect-ratio($ratio-width, $ratio-height, $ratio-size, $ratio-vertical-shift, $tileSize + 2 *$iconSpacing); // taille totale de la sidebar
+        @include aspect-ratio($ratio-width, $ratio-height, $ratio-size, $ratio-vertical-shift, $tileSize); // taille totale de la sidebar
         flex-wrap: wrap;
         flex-direction: row;
     }
@@ -329,12 +330,6 @@
                     width: 140%;
                     top: -100%;
                     opacity: 0.7;
-                }
-                .userPortrait42 {
-                    position: relative;
-                    height: 100%;
-                    left: -7%;
-                    @include fix_animation();
                 }
             }
             .rightCol {
