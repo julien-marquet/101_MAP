@@ -45,13 +45,7 @@ class Oauth2_authenticator {
         });
     }
     testTokenValidity(token, callback) {
-        const res = this.i_socketCache.searchToken(token);
-        if (res !== null)
-        {
-            callback(res);
-        }   else {
-            callback(false);
-        }
+        callback(this.i_socketCache.searchToken(token));
     }
     getToken(callback) {
         if (!this.globalStorage.access_token || this.globalStorage.access_token.modified_at + this.globalStorage.access_token.expires_in <= Math.floor(Date.now() / 1000)) {
