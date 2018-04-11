@@ -2,7 +2,8 @@ import {
     DISCONNECT_APP,
     CONNECT_APP,
     ACTIVE_THEME_SWAP,
-    MODE_PASSIVE_SET
+    MODE_PASSIVE_SET,
+    MODE_PASSIVE_UNSET
 } from "../actions/globalState";
 import globalConfig from "../../config/globalConfig";
 
@@ -39,6 +40,11 @@ const globalState = (state = initialState, {type, payload}) => {
         return {
             ...state,
             mode: "passive"
+        };
+    case MODE_PASSIVE_UNSET:
+        return {
+            ...state,
+            mode: initialState.mode
         };
     default:
         return state;
