@@ -13,15 +13,17 @@ class Toast extends Component {
         this.dismissToast = this.dismissToast.bind(this);
     }
     componentDidMount() {
-        setTimeout(() => {
-            this.setState({
-                transition: "on"
-            });
-        }, 100);
-        if (typeof(this.props.toast.timeout) === "number")
+        if (this.props.toast !== null) {
             setTimeout(() => {
-                this.dismissToast();
-            }, this.props.toast.timeout);
+                this.setState({
+                    transition: "on"
+                });
+            }, 100);
+            if (typeof(this.props.toast.timeout) === "number")
+                setTimeout(() => {
+                    this.dismissToast();
+                }, this.props.toast.timeout);
+        }
     }
 
     dismissToast() {
@@ -34,7 +36,7 @@ class Toast extends Component {
     }
 
     renderButton(){
-        if (this.props.toast.action !== null) {
+        if (this.props.toast.action !== null && this.props.toast.action !== undefined) {
             return (
                 <div className="toast-action-wrapper">
                     <button className="toast-action" onClick={() => {
@@ -71,22 +73,25 @@ class Toast extends Component {
     }
 
     render() {
-        return (
-            <div className={`toast ${this.state.transition} ${this.props.toast.type}`}>
-                <div className="content">
-                    {this.renderButton()}
-                    <div className="message">
-                        {this.renderIcons()}
-                        <p>
-                            {this.props.toast.message}
-                        </p>
+        if (this.props.toast !== null) {
+            return (
+                <div className={`toast ${this.state.transition} ${this.props.toast.type}`}>
+                    <div className="content">
+                        {this.renderButton()}
+                        <div className="message">
+                            {this.renderIcons()}
+                            <p>
+                                {this.props.toast.message}
+                            </p>
+                        </div>
                     </div>
+                    <button className="dismiss-toast" onClick={() => this.dismissToast()}>
+                        <i className="fas fa-times" />
+                    </button>
                 </div>
-                <button className="dismiss-toast" onClick={() => this.dismissToast()}>
-                    <i className="fas fa-times" />
-                </button>
-            </div>
-        );
+            );
+        }
+        return null;
     }
 }
 

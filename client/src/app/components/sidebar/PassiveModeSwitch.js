@@ -10,6 +10,12 @@ class PassiveModeSwitch extends Component {
 
     setPassiveMode() {
         this.props.setPassiveMode();
+        localStorage.setItem("mode", "passive");
+        this.props.showToast({
+            type: "info",		
+            timeout: 2000,
+            message: "Press escape to quit passive mode"
+        });
     }
 
     render() {

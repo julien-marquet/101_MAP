@@ -15,6 +15,18 @@ class Warzone extends Component {
             z4: [["r1p1", "r1p2", "r1p3", "r1p4", "r1p5", "r1p6"], ["r2p1", "r2p2", "r2p3", "r2p4", "r2p5", "r2p6"], ["r3p1", "r3p2", "r3p3", "r3p4", "r3p5"], ["r4p1", "r4p2", "r4p3", "r4p4", "r4p5", "r4p6"], ["r5p1", "r5p2", "r5p3", "r5p4", "r5p5", "r5p6"], ["r6p1", "r6p2", "r6p3", "r6p4", "r6p5"], ["r7p1", "r7p2", "r7p3", "r7p4", "r7p5", "r7p6"], ["r8p1", "r8p2", "r8p3", "r8p4", "r8p5", "r8p6"]]
         };
     }
+
+    componentDidMount() {
+        if (this.props.mode === "passive") {
+            setTimeout(() => {
+                this.props.showToast({
+                    type: "info",		
+                    timeout: 2000,
+                    message: "Press escape to quit passive mode"
+                });
+            }, 500);
+        }
+    }
   
     renderZones() {
         const zones = [[], []];

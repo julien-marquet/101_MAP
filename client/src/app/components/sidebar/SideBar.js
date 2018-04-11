@@ -22,6 +22,7 @@ class SideBar extends Component {
     keyDown({keyCode}) {
         if (keyCode === 27 && this.props.mode === "passive") {
             this.props.quitPassiveMode();
+            localStorage.removeItem("mode");
         }
     }
 

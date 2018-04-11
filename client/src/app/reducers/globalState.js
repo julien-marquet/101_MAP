@@ -13,7 +13,7 @@ const initialState = {
         array: globalConfig.themeArray,
         value: localStorage.getItem("param_theme") || globalConfig.themeArray.indexOf(globalConfig.defaultTheme)
     },
-    mode: "default"
+    mode: localStorage.getItem("mode") || "default"
 };
 
 const globalState = (state = initialState, {type, payload}) => {
@@ -44,7 +44,7 @@ const globalState = (state = initialState, {type, payload}) => {
     case MODE_PASSIVE_UNSET:
         return {
             ...state,
-            mode: initialState.mode
+            mode: "default"
         };
     default:
         return state;
