@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-// import PropTypes from "prop-types";
 
 class PassiveModeSwitch extends Component {
     constructor(props) {
@@ -29,9 +28,5 @@ class PassiveModeSwitch extends Component {
         );
     }
 }
-
-PassiveModeSwitch.proptypes = {
-};
-
 
 export default PassiveModeSwitch;
