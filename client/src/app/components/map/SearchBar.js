@@ -39,7 +39,7 @@ class SearchBar extends Component {
 
     render() {
         return (
-            <div className={"searchBar"}>
+            <div className={this.props.mode === "passive" ? "searchBar searchBarHided" : "searchBar"}>
                 <Autocomplete
                     wrapperProps={{
                         className: "wrapperSearch",

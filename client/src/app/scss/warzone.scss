@@ -24,7 +24,7 @@
         }
         $i: $i - 1;  
     }
-    
+
     .sidebar {
         z-index: 3;
         overflow: hidden;
@@ -32,6 +32,7 @@
         position: fixed;
         left: 0;
         padding: 0;
+        transition: opacity 0.5s ease-in-out;
         .main-tile {
             transition: background-color 0.15s ease-in-out;
             font-size: $iconSize;
@@ -85,6 +86,10 @@
                 overflow: hidden;
             }
         }
+    }
+
+    .sidebarHided {
+        opacity: 0;
     }
 
    .zone {
@@ -253,6 +258,7 @@
             margin: $zoneMargin;
             display: block;
             width: $seatSize * 14;
+            transition: all 0.5s ease-in-out;
                 .wrapperSearch {
                     input {
                         width: calc(100% - #{get_size(1.6, $coefficient)});
@@ -281,6 +287,10 @@
                     }
                 }
             }
+        .searchBarHided {
+            opacity: 0;
+            transform: translateY(-($seatSize * 1.5));
+        }
     }
     .hostInfoWrapper {
         @include fix_animation();
@@ -294,6 +304,7 @@
         box-shadow: get_size(0.2, $coefficient) get_size(0.2, $coefficient) get_size(0.8, $coefficient) rgba(0, 0, 0, 0.4);
         overflow: hidden;
         position: relative;
+        transition: transform 0.5s ease-in-out;
         .adminFilter {
             width: 22%;
             height: 15%;
@@ -482,6 +493,9 @@
                 }
             }
         }
+    }
+    .hostInfoAnimated {
+        transform: translateY(-($seatSize * 1.5 + $zoneMargin * 2));
     }
     .toaster {
         position: absolute;

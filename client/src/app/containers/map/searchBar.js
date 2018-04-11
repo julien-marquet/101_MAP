@@ -5,10 +5,11 @@ import {SEARCH_UPDATE_CONTENT} from "../../actions/search";
 import {ACTIVE_USER_SWAP} from "../../actions/users";
 
 
-const mapStateToProps = state => {
+const mapStateToProps = ({users, globalState}) => {
     return {
-        users: state.users.array,
-        searchedUser: state.users.searchedUser
+        users: users.array,
+        searchedUser: users.searchedUser,
+        mode: globalState.mode
     };
 };
 

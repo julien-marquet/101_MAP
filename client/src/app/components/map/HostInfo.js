@@ -30,7 +30,8 @@ class HostInfo extends Component {
 
     shouldComponentUpdate(nextProps) {
         if (this.props.activeUser.user.login !== nextProps.activeUser.user.login ||
-        nextProps.user_metadata.success !== this.props.user_metadata.success)
+        nextProps.user_metadata.success !== this.props.user_metadata.success ||
+        this.props.mode !== nextProps.mode)
             return (true);
         return (false);
     }
@@ -147,10 +148,9 @@ class HostInfo extends Component {
     }
 
     render() {
-        if (!this.props.activeUser.hostname)
-        {
+        if (!this.props.activeUser.hostname) {
             return (
-                <div className={"hostInfoWrapper"}>
+                <div className={this.props.mode === "passive" ? "hostInfoWrapper hostInfoAnimated" : "hostInfoWrapper"}>
                     <div className={"splitter"}>
                         <div className={"leftCol"}>
                         </div>
@@ -170,7 +170,7 @@ class HostInfo extends Component {
             );
         }
         return (
-            <div className={"hostInfoWrapper"}>
+            <div className={this.props.mode ? "hostInfoWrapper hostInfoAnimated" : "hostInfoWrapper"}>
                 <div className={"splitter"}>
                     <div className={"leftCol"}>
                         <img
