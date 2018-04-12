@@ -7,11 +7,18 @@ class SocketCache {
         };
         this.addToken = this.addToken.bind(this);
     }
-    addToken(accessToken) {
-        this.globalStorage.socketCache[accessToken.access_token] = {
+    addToken(token, tokenInfo) {
+        Object.keys(this.globalStorage.socketCache).map((key) => {
+            if (this.globalStorage.socketCache[key].userId === tokenInfo.resource_owner_id) {
+                delete this.globalStorage.socketCache[key];
+            }
+        });
+        this.globalStorage.socketCache[token.access_token] = {
+            userId: tokenInfo.resource_owner_id,
+            refresh_token: token.refresh_token,
             checked_at: Math.floor(Date.now()/1000),
-            expires_in: accessToken.expires_in
-        };
+            expires_in: token.expires_in,
+        };  
     }
     searchToken(userToken) {
         const tmp = this.globalStorage.socketCache[userToken];

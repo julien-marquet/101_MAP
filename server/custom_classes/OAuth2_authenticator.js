@@ -8,6 +8,36 @@ class Oauth2_authenticator {
         this.i_queue = i_queue;
         this.i_socketCache = new SocketCache(globalStorage);
     }
+    refreshToken(token) {
+        return new Promise((resolve) => {
+            this.i_queue.push_head("refreshToken", {
+                url: `${apiEndpoint}oauth/token`,
+                body: {
+                    client_id: process.env.API_UID,
+                    client_secret: process.env.API_SECRET,
+                    refresh_token: this.globalStorage.socketCache[token].refresh_token,
+                    redirect_uri: redirect_uri,
+                    grant_type: "refresh_token",
+                },
+                method: "POST"
+            }).then((refreshToken) => {
+                if (refreshToken && !refreshToken.error) {
+                    this.i_socketCache.addToken(token, refreshToken);
+                    resolve(refreshToken.access_token);
+                }
+                resolve(null);
+            }, (err) => {
+                logger.add_log({
+                    type: "Warning",
+                    description: "Couldn't refresh user access token", 
+                    additionnal_infos: {
+                        Error: err
+                    }
+                });
+                resolve(null);
+            });
+        });
+    }
     getUserToken(code, callback) {
         this.i_queue.push_head("getUserToken", {
             url: `${apiEndpoint}oauth/token`,
@@ -19,16 +49,33 @@ class Oauth2_authenticator {
                 grant_type: "authorization_code"
             },
             method: "POST"
-        }).then((res) => {
-            if (res && !res.error) {
-                this.i_socketCache.addToken(res);
-                callback(res);
+        }).then((token) => {
+            if (token && !token.error) {
+                this.i_queue.push_head("tokenInfo", {
+                    method: "GET",
+                    url: `${apiEndpoint}oauth/token/info`,
+                    headers: {
+                        Authorization: `Bearer ${token.access_token}`,
+                    },
+                }).then((tokenInfo) => {
+                    this.i_socketCache.addToken(token, tokenInfo);
+                    callback(token);
+                }, (error) => {
+                    logger.add_log({
+                        type: "Warning",
+                        description: "Couldn't get user access token", 
+                        additionnal_infos: {
+                            Error: error
+                        }
+                    });
+                    callback(null);
+                });
             } else {
                 logger.add_log({
                     type: "Warning",
                     description: "Couldn't get user access token", 
                     additionnal_infos: {
-                        Error: res.error || "empty result"
+                        Error: token.error || "empty result"
                     }
                 });
                 callback(null);

@@ -11,16 +11,40 @@ class Users {
 
     getUserInfos(userId, userToken) {
         if (this.globalStorage.usersInfos[userId] === undefined) {
-            return (this.i_queue.push_tail(
-                "getUserInfos", {
-                    url: `${apiEndpoint}v2/users/${userId}`, 
-                    headers: {"authorization": `Bearer ${userToken}`
+            return new Promise((resolve) => {
+                this.i_queue.push_tail(
+                    "getUserInfos", {
+                        url: `${apiEndpoint}v2/users/${userId}`, 
+                        headers: {"authorization": `Bearer ${userToken}1`
+                        }
                     }
-                }
-            )).then(response => {
-                response.last_request = Date.now();
-                this.globalStorage.usersInfos[response.id] = response;
-                return (response);
+                ).then(response => {
+                    response.last_request = Date.now();
+                    this.globalStorage.usersInfos[response.id] = response;
+                    resolve ({response: response});
+                }, (err) => {
+                    if (err && err.infos && err.infos.status === 401) {
+                        this.Oauth2_authenticator.refreshToken(userToken).then((refreshed) => {
+                            if (refreshed) {
+                                this.i_queue.push_tail(
+                                    "getUserInfos", {
+                                        url: `${apiEndpoint}v2/users/${userId}`, 
+                                        headers: {"authorization": `Bearer ${refreshed}`
+                                        }
+                                    }
+                                ).then(response => {
+                                    response.last_request = Date.now();
+                                    this.globalStorage.usersInfos[response.id] = response;
+                                    resolve ({refresh_token: refreshed, response: response});
+                                }, (err) => {
+                                    resolve (err);
+                                });
+                            }
+                        }).catch((err) => {
+                            resolve (err);
+                        });
+                    }
+                });
             });
         }
         else {
