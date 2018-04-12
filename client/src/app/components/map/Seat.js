@@ -73,6 +73,9 @@ class Seat extends Component {
                     <div
                         className={this.state.isSearched || this.state.isActive ? "seatHover highlighted" : "seatHover"}
                         onClick={() => {
+                            if (this.props.mode === "passive") {
+                                this.props.quitPassiveMode();
+                            }
                             this.props.storeActiveUsers({
                                 ...this.props.user,
                                 hostname: this.props.hostname

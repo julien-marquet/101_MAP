@@ -2,17 +2,20 @@ import {connect} from "react-redux";
 
 import Seat from "../../components/map/Seat";
 import {ACTIVE_USER_SWAP} from "../../actions/users";
+import {MODE_PASSIVE_UNSET} from "../../actions/globalState";
 
-const mapStateToProps = state => {
+const mapStateToProps = ({users, globalState}) => {
     return {
-        searchedUser: state.users.searchedUser,
-        activeUser: state.users.activeUser
+        searchedUser: users.searchedUser,
+        activeUser: users.activeUser,
+        mode: globalState.mode
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        storeActiveUsers: payload => dispatch({type: ACTIVE_USER_SWAP, payload})
+        storeActiveUsers: payload => dispatch({type: ACTIVE_USER_SWAP, payload}),
+        quitPassiveMode: () => dispatch({type: MODE_PASSIVE_UNSET})
     };
 };
 
