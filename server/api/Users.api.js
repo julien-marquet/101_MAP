@@ -11,11 +11,11 @@ class Users {
 
     getUserInfos(userId, userToken) {
         if (this.globalStorage.usersInfos[userId] === undefined) {
-            return new Promise((resolve) => {
+            return new Promise((resolve, reject) => {
                 this.i_queue.push_tail(
                     "getUserInfos", {
                         url: `${apiEndpoint}v2/users/${userId}`, 
-                        headers: {"authorization": `Bearer ${userToken}1`
+                        headers: {"authorization": `Bearer ${userToken}`
                         }
                     }
                 ).then(response => {
@@ -37,8 +37,10 @@ class Users {
                                     this.globalStorage.usersInfos[response.id] = response;
                                     resolve ({refresh_token: refreshed, response: response});
                                 }, (err) => {
-                                    resolve (err);
+                                    reject (err);
                                 });
+                            } else {
+                                reject({message: "no existing entry"});
                             }
                         }).catch((err) => {
                             resolve (err);
@@ -53,7 +55,7 @@ class Users {
                 return (this.getUserInfos(userId, userToken));
             }
             else {
-                return (new Promise(resolve => resolve(this.globalStorage.usersInfos[userId])));
+                return (new Promise(resolve => resolve({response: this.globalStorage.usersInfos[userId]})));
             }
         }
     }

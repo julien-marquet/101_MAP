@@ -1,5 +1,3 @@
-const logger = require("../custom_modules/logger");
-
 class SocketCache {
     constructor(globalStorage) {
         this.globalStorage = globalStorage;
@@ -7,18 +5,19 @@ class SocketCache {
         };
         this.addToken = this.addToken.bind(this);
     }
-    addToken(token, tokenInfo) {
+    addToken(token, userId) {
         Object.keys(this.globalStorage.socketCache).map((key) => {
-            if (this.globalStorage.socketCache[key].userId === tokenInfo.resource_owner_id) {
+            if (this.globalStorage.socketCache[key].userId === userId) {
+                this.globalStorage.socketCache[key];
                 delete this.globalStorage.socketCache[key];
             }
         });
         this.globalStorage.socketCache[token.access_token] = {
-            userId: tokenInfo.resource_owner_id,
+            userId: userId,
             refresh_token: token.refresh_token,
             checked_at: Math.floor(Date.now()/1000),
             expires_in: token.expires_in,
-        };  
+        };
     }
     searchToken(userToken) {
         const tmp = this.globalStorage.socketCache[userToken];
@@ -34,23 +33,6 @@ class SocketCache {
         }
         else 
             return (null);
-    }
-    flushToken() {
-        const now = Math.floor(Date.now() / 1000);
-        let cpt = 0;
-        Object.keys(this.globalStorage.socketCache).map((key) => {
-            if (this.globalStorage.socketCache[key].checked_at + this.globalStorage.socketCache[key].expires_in < now) {
-                delete this.globalStorage.socketCache[key];
-                cpt++;
-            }
-        });
-        logger.add_log({
-            type: "Info",
-            description: "Expired tokens have been fleushed out", 
-            additionnal_infos: {
-                flushed_tokens: cpt
-            }
-        });
     }
 }
 

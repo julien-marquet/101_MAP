@@ -10,6 +10,9 @@ class Oauth2_authenticator {
     }
     refreshToken(token) {
         return new Promise((resolve) => {
+            if (!this.globalStorage.socketCache[token]) {
+                return resolve(null);
+            }
             this.i_queue.push_head("refreshToken", {
                 url: `${apiEndpoint}oauth/token`,
                 body: {
@@ -22,10 +25,11 @@ class Oauth2_authenticator {
                 method: "POST"
             }).then((refreshToken) => {
                 if (refreshToken && !refreshToken.error) {
-                    this.i_socketCache.addToken(token, refreshToken);
+                    this.i_socketCache.addToken(refreshToken, this.globalStorage.socketCache[token].userId);
                     resolve(refreshToken.access_token);
+                } else {
+                    resolve(null);
                 }
-                resolve(null);
             }, (err) => {
                 logger.add_log({
                     type: "Warning",
@@ -58,7 +62,7 @@ class Oauth2_authenticator {
                         Authorization: `Bearer ${token.access_token}`,
                     },
                 }).then((tokenInfo) => {
-                    this.i_socketCache.addToken(token, tokenInfo);
+                    this.i_socketCache.addToken(token, tokenInfo.resource_owner_id);
                     callback(token);
                 }, (error) => {
                     logger.add_log({
