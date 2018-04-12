@@ -65,7 +65,7 @@ class Toast extends Component {
         
     }
     renderIcons() {
-        if (this.props.toast.action === null) {
+        if (!this.props.toast.action) {
             return (
                 <i className={`icon-type fas ${this.chooseIcons()}`} />
             );
