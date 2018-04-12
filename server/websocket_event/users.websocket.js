@@ -45,7 +45,6 @@ const usersSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator) => 
             });                
             socket.emit("error.fetch", "No token provided");
         } else {
-            console.log(userToken);
             i_users_api.getUserInfos(userId, userToken)
                 .then(response => {
                     if (response.error) {
