@@ -48,7 +48,7 @@ class Warzone extends Component {
         if (this.props.mode === "passive") {
             const arrayLength = Object.keys(this.props.users.array).length;
             if (arrayLength > 0) {
-                const random = Math.floor(Math.random() * Math.floor(arrayLength + 1));
+                const random = Math.floor(Math.random() * Math.floor(arrayLength));
                 this.props.storeActiveUsers({
                     ...this.props.users.array[Object.keys(this.props.users.array)[random]],
                     hostname: Object.keys(this.props.users.array)[random]

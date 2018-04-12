@@ -154,14 +154,16 @@ class HostInfo extends Component {
                 <div className={"splitter"}>
                     <div className={"leftCol"}>
                         {userIsActive &&
-                            [<img
-                                className={"userPortrait"}
-                                onError={this.addDefaultSrc}
-                                ref={element => this.portrait = element}
-                                src={`https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
-                                alt={"User portrait"}
-                            />,
-                            this.renderFilter(this.props.activeUser.user.login)]
+                            <React.Fragment>
+                                <img
+                                    className={"userPortrait"}
+                                    onError={this.addDefaultSrc}
+                                    ref={element => this.portrait = element}
+                                    src={`https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
+                                    alt={"User portrait"}
+                                />
+                                {this.renderFilter(this.props.activeUser.user.login)}
+                            </React.Fragment>
                         }
                     </div>
                     <div className={`rightCol ${this.props.activeUser.user.login === "jfeve" ? "jfeve" : ""}`}>
@@ -173,26 +175,30 @@ class HostInfo extends Component {
                         </div>
                         <div className={"contentTop hostContent"} >
                             {userIsActive &&
-                                [<div className={"userName"}>
-                                    <h2>{this.props.activeUser.user.login}</h2>
-                                </div>,
-                                this.renderTags()]
+                                <React.Fragment>
+                                    <div className={"userName"}>
+                                        <h2>{this.props.activeUser.user.login}</h2>
+                                    </div>
+                                    {this.renderTags()}
+                                </React.Fragment>
                             }
                         </div>
                         {userIsActive && <Loader key="hostInfoLoader" name={"HostInfo"} in={this.props.user_metadata.success === null}/>}
                         <div className={"contentBottom hostContent"} >
                             {userIsActive &&
-                                [<ul className={"stats"}>
-                                    {this.renderMetadata()}
-                                </ul>,
-                                <a className={"profileButton"} href={"https://profile.intra.42.fr/users/" + this.props.activeUser.user.login}>
-                                    <div className={"buttonSkewed"} />
-                                    <div className={"buttonContent"}>
-                                        <div className={"linkUserAccount"} >
-                                            <span>Profile</span>
+                                <React.Fragment>
+                                    <ul className={"stats"}>
+                                        {this.renderMetadata()}
+                                    </ul>
+                                    <a className={"profileButton"} href={"https://profile.intra.42.fr/users/" + this.props.activeUser.user.login}>
+                                        <div className={"buttonSkewed"} />
+                                        <div className={"buttonContent"}>
+                                            <div className={"linkUserAccount"} >
+                                                <span>Profile</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>]
+                                    </a>
+                                </React.Fragment>
                             }
                         </div>
                     </div>
