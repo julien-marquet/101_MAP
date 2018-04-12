@@ -63,7 +63,10 @@ class Oauth2_authenticator {
                     },
                 }).then((tokenInfo) => {
                     this.i_socketCache.addToken(token, tokenInfo.resource_owner_id);
-                    callback(token);
+                    callback({
+                        ...token,
+                        userId: tokenInfo.resource_owner_id
+                    });
                 }, (error) => {
                     logger.add_log({
                         type: "Warning",

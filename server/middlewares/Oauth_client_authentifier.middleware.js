@@ -33,6 +33,7 @@ const Oauth_authentifier = ( i_Oauth2_authenticator) => {
                     if (!code_token)
                         next(new Error("Authentication error"));
                     else {
+                        socket.userId = code_token.userId;
                         socket.typeAuth = "code";
                         socket.userToken = code_token.access_token;
                         socket.checked_at = Math.floor(Date.now()/1000);
