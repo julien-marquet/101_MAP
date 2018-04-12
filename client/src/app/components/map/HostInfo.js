@@ -148,66 +148,52 @@ class HostInfo extends Component {
     }
 
     render() {
-        if (!this.props.activeUser.hostname) {
-            return (
-                <div className={this.props.mode === "passive" ? "hostInfoWrapper hostInfoAnimated" : "hostInfoWrapper"}>
-                    <div className={"splitter"}>
-                        <div className={"leftCol"}>
-                        </div>
-                        <div className={"rightCol"}>
-                            <div className={"main skewed"} />
-                            <div className={"secondary skewed"} >
-                                <div className={"hostName"}>
-                                </div>
-                            </div>
-                            <div className={"contentTop hostContent"} >
-                            </div>
-                            <div className={"contentBottom hostContent"} >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
+        const userIsActive = this.props.activeUser.hostname !== null;
         return (
-            <div className={this.props.mode ? "hostInfoWrapper hostInfoAnimated" : "hostInfoWrapper"}>
+            <div className={this.props.mode === "passive" ? "hostInfoWrapper hostInfoAnimated" : "hostInfoWrapper"}>
                 <div className={"splitter"}>
                     <div className={"leftCol"}>
-                        <img
-                            className={"userPortrait"}
-                            onError={this.addDefaultSrc}
-                            ref={element => this.portrait = element}
-                            src={`https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
-                            alt={"User portrait"}
-                        />
-                        {this.renderFilter(this.props.activeUser.user.login)}
+                        {userIsActive &&
+                            [<img
+                                className={"userPortrait"}
+                                onError={this.addDefaultSrc}
+                                ref={element => this.portrait = element}
+                                src={`https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
+                                alt={"User portrait"}
+                            />,
+                            this.renderFilter(this.props.activeUser.user.login)]
+                        }
                     </div>
-                    <div className={`rightCol ${this.props.activeUser.user.login === "jfeve" ? "jfeve" : ""}`}>
+                    <div className={"rightCol"}>
                         <div className={"main skewed"} />
                         <div className={"secondary skewed"} >
                             <div className={"hostName"}>
-                                <p>{this.props.activeUser.hostname}</p>
+                                {userIsActive && <p>{this.props.activeUser.hostname}</p>}
                             </div>
                         </div>
                         <div className={"contentTop hostContent"} >
-                            <div className={"userName"}>
-                                <h2>{this.props.activeUser.user.login}</h2>
-                            </div>
-                            {this.renderTags()}
+                            {userIsActive &&
+                                [<div className={"userName"}>
+                                    <h2>{this.props.activeUser.user.login}</h2>
+                                </div>,
+                                this.renderTags()]
+                            }
                         </div>
-                        <Loader key="hostInfoLoader" name={"HostInfo"} in={this.props.user_metadata.success === null}/>
+                        {userIsActive && <Loader key="hostInfoLoader" name={"HostInfo"} in={this.props.user_metadata.success === null}/>}
                         <div className={"contentBottom hostContent"} >
-                            <ul className={"stats"}>
-                                {this.renderMetadata()}
-                            </ul>
-                            <a className={"profileButton"} href={"https://profile.intra.42.fr/users/" + this.props.activeUser.user.login}>
-                                <div className={"buttonSkewed"} />
-                                <div className={"buttonContent"}>
-                                    <div className={"linkUserAccount"} >
-                                        <span>Profile</span>
+                            {userIsActive &&
+                                [<ul className={"stats"}>
+                                    {this.renderMetadata()}
+                                </ul>,
+                                <a className={"profileButton"} href={"https://profile.intra.42.fr/users/" + this.props.activeUser.user.login}>
+                                    <div className={"buttonSkewed"} />
+                                    <div className={"buttonContent"}>
+                                        <div className={"linkUserAccount"} >
+                                            <span>Profile</span>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>]
+                            }
                         </div>
                     </div>
                 </div>
