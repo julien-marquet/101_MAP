@@ -75,6 +75,7 @@ class Seat extends Component {
                         onClick={() => {
                             if (this.props.mode === "passive") {
                                 this.props.quitPassiveMode();
+                                localStorage.removeItem("mode");
                             }
                             this.props.storeActiveUsers({
                                 ...this.props.user,
