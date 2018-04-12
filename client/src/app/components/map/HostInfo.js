@@ -213,7 +213,8 @@ HostInfo.proptypes = {
     user_metadata: PropTypes.shape({
         success: PropTypes.bool,
         content: PropTypes.object
-    })
+    }),
+    mode: PropTypes.string
 };
 
 export default HostInfo;
