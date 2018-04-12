@@ -35,8 +35,8 @@ class Warzone extends Component {
     }
 
     componentDidUpdate(oldProps) {
-        if (oldProps.users.array.length === 0 && this.props.users.array.length !== 0 && this.props.mode === "passive" ||
-            oldProps.mode !== this.props.mode && this.props.mode === "passive") {
+        if ((oldProps.users.array.length === 0 && this.props.users.array.length !== 0 && this.props.mode === "passive") ||
+            (oldProps.mode !== this.props.mode && this.props.mode === "passive")) {
             if (this.timeout !== null) {
                 clearTimeout(this.timeout);
             }
