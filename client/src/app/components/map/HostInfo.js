@@ -164,7 +164,7 @@ class HostInfo extends Component {
                             this.renderFilter(this.props.activeUser.user.login)]
                         }
                     </div>
-                    <div className={"rightCol"}>
+                    <div className={`rightCol ${this.props.activeUser.user.login === "jfeve" ? "jfeve" : ""}`}>
                         <div className={"main skewed"} />
                         <div className={"secondary skewed"} >
                             <div className={"hostName"}>
