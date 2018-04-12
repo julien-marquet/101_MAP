@@ -62,7 +62,7 @@ const usersSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator) => 
                             type:"General", 
                             description:"Request UserInfos Succeeded"
                         });
-                        socket.emit("user.getted.infos", response);
+                        socket.emit("user.getted.infos", response.response);
                     }
                 })
                 .catch(error => {
