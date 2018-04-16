@@ -66,6 +66,7 @@ class App extends Component {
         }
         else {
             this.setState({loading:false});
+            document.addEventListener("keydown", this.keyDown);
         }
     }
 
