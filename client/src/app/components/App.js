@@ -46,7 +46,6 @@ class App extends Component {
     }
 
     keyDown({keyCode}) {
-        console.log(keyCode);
         if (keyCode === 32 || keyCode === 13) {
             this.askCode();
         }
