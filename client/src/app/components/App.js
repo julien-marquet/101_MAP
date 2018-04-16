@@ -21,6 +21,7 @@ class App extends Component {
         this.logoTheme = [logo_dark, logo_light];
 
         this.askCode = this.askCode.bind(this);
+        this.keyDown = this.keyDown.bind(this);
     }
     
     componentDidMount() {
@@ -28,11 +29,25 @@ class App extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (this.props.globalState.connected !== nextProps.globalState.connected) {
+            if (!nextProps.globalState.connected) {
+                document.addEventListener("keydown", this.keyDown);
+            }
+            else {
+                document.removeEventListener("keydown", this.keyDown);
+            }
+        }
         if (this.props.globalState.connected && !nextProps.globalState.connected) {
             this.props.socket.disconnect();
         }
         if (this.props.globalState.connected !== nextProps.globalState.connected && nextProps.globalState.connected) {
             this.setState({loading: false});
+        }
+    }
+
+    keyDown({keyCode}) {
+        if (keyCode === 32 || keyCode === 13) {
+            this.askCode();
         }
     }
 
