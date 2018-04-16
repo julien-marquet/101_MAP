@@ -4,6 +4,12 @@ import {TOAST_SHOW} from "../../actions/toasts";
 import {MODE_PASSIVE_SET} from "../../actions/globalState";
 import PassiveModeSwitch from "../../components/sidebar/PassiveModeSwitch";
 
+const mapStateToProps = ({globalState}) => {
+    return {
+        mode: globalState.mode
+    };
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         setPassiveMode: () => dispatch({type: MODE_PASSIVE_SET}),
@@ -11,4 +17,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(PassiveModeSwitch);
+export default connect(mapStateToProps, mapDispatchToProps)(PassiveModeSwitch);
