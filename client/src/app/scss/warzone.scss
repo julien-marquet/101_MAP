@@ -68,15 +68,12 @@
             }
             .dropdown-header {
                 border-style: solid;
-                border-width: 0 0 $dropdownSeparation 0;
             }
             .dropdown-content {
                 border-style: solid;
-                border-width: 0 0 $dropdownSeparation 0;
                 .dropdown-option {
                     transition: all 0.15s ease-in-out;
                     border-style: solid;
-                    border-width: $dropdownInnerSeparation 0;
                     &:hover {
                         transform: translateX(1px);
                     }

@@ -25,9 +25,7 @@
     .sidebar {
         background-color: $sidebarColor;
         .main-tile {
-            &:nth-child(2n+1) {
-                background-color: lighten($color: $sidebarColor, $amount: 4);
-            }
+            background-color: lighten($color: $sidebarColor, $amount: 4);
             &:hover {
                 background-color: lighten($color: $sidebarColor, $amount: 8);
             }
