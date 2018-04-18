@@ -26,10 +26,7 @@ class DisconnectSwitch extends Component {
                 </div>
             );       
         }
-        return (
-            <div>
-            </div>
-        );
+        return null;
     }
 }
 

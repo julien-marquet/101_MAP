@@ -67,10 +67,7 @@ class ThemeSwitch extends Component {
                 </div>
             );
         }
-        return (
-            <div>
-            </div>
-        );
+        return null;
     }
 }
 

@@ -30,10 +30,7 @@ class PassiveModeSwitch extends Component {
                 </div>
             );
         }
-        return (
-            <div>
-            </div>
-        );
+        return null;
     }
 }
 
