@@ -16,12 +16,18 @@ class DisconnectSwitch extends Component {
     }
 
     render() {
+        if (this.props.active) {
+            return (
+                <div
+                    onClick={this.disconnect}
+                    className={"disconnectSwitch btn tile main-tile"}
+                >
+                    <span><i className={"fas fa-power-off"}></i></span>
+                </div>
+            );       
+        }
         return (
-            <div
-                onClick={this.disconnect}
-                className={"disconnectSwitch btn tile main-tile"}
-            >
-                <span><i className={"fas fa-power-off"}></i></span>
+            <div>
             </div>
         );
     }

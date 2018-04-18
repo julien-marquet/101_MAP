@@ -29,9 +29,9 @@ class SideBar extends Component {
     render() {
         return (
             <div className={this.props.mode === "passive" ? "sidebar sidebarHided" : "sidebar"}>
-                <ThemeSwitch />
-                <PassiveModeSwitch />
-                <DisconnectSwitch />
+                <ThemeSwitch active={this.props.mode !== "passive"}/>
+                <PassiveModeSwitch active={this.props.mode !== "passive"}/>
+                <DisconnectSwitch active={this.props.mode !== "passive"}/>
             </div>
         );
     }

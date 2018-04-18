@@ -52,17 +52,23 @@ class ThemeSwitch extends Component {
     }
 
     render() {
+        if (this.props.active) {
+            return (
+                <div className={`ThemeSwitch multi-dropdown  main-tile ${this.state.opened ? "opened" : "closed"}`}>
+                    <div 
+                        className={"dropdown-header tile"}
+                        onClick={this.toggleDropDown}
+                    >
+                        <span> <i className={"fas fa-adjust"}></i></span>
+                    </div>
+                    <div className={"dropdown-content"}>
+                        {this.renderOptions()}
+                    </div>
+                </div>
+            );
+        }
         return (
-            <div className={`ThemeSwitch multi-dropdown  main-tile ${this.state.opened ? "opened" : "closed"}`}>
-                <div 
-                    className={"dropdown-header tile"}
-                    onClick={this.toggleDropDown}
-                >
-                    <span> <i className={"fas fa-adjust"}></i></span>
-                </div>
-                <div className={"dropdown-content"}>
-                    {this.renderOptions()}
-                </div>
+            <div>
             </div>
         );
     }
