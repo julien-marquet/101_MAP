@@ -8,7 +8,7 @@ class PassiveModeSwitch extends Component {
     }
 
     setPassiveMode() {
-        if (this.props.mode !== "passive") {
+        if (this.props.active) {
             this.props.setPassiveMode();
             localStorage.setItem("mode", "passive");
             this.props.showToast({
@@ -20,17 +20,14 @@ class PassiveModeSwitch extends Component {
     }
 
     render() {
-        if (this.props.active) {
-            return (
-                <div
-                    onClick={this.setPassiveMode}
-                    className={"btn tile main-tile"}
-                >
-                    <span><i className={"fas fa-film"}></i></span>
-                </div>
-            );
-        }
-        return null;
+        return (
+            <div
+                onClick={this.setPassiveMode}
+                className={"btn tile main-tile"}
+            >
+                <span><i className={"fas fa-film"}></i></span>
+            </div>
+        );
     }
 }
 

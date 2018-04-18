@@ -29,9 +29,11 @@ class ThemeSwitch extends Component {
     }
 
     toggleDropDown() {
-        this.setState({
-            opened: !this.state.opened
-        });
+        if (this.props.active) {
+            this.setState({
+                opened: !this.state.opened
+            });
+        }
     }
 
     renderOptions() {
@@ -52,22 +54,19 @@ class ThemeSwitch extends Component {
     }
 
     render() {
-        if (this.props.active) {
-            return (
-                <div className={`ThemeSwitch multi-dropdown  main-tile ${this.state.opened ? "opened" : "closed"}`}>
-                    <div 
-                        className={"dropdown-header tile"}
-                        onClick={this.toggleDropDown}
-                    >
-                        <span> <i className={"fas fa-adjust"}></i></span>
-                    </div>
-                    <div className={"dropdown-content"}>
-                        {this.renderOptions()}
-                    </div>
+        return (
+            <div className={`ThemeSwitch multi-dropdown  main-tile ${this.state.opened ? "opened" : "closed"}`}>
+                <div 
+                    className={"dropdown-header tile"}
+                    onClick={this.toggleDropDown}
+                >
+                    <span> <i className={"fas fa-adjust"}></i></span>
                 </div>
-            );
-        }
-        return null;
+                <div className={"dropdown-content"}>
+                    {this.renderOptions()}
+                </div>
+            </div>
+        );
     }
 }
 

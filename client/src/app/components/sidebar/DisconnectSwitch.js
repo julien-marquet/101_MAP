@@ -11,22 +11,21 @@ class DisconnectSwitch extends Component {
     }
 
     disconnect() {
-        removeCookie("userToken");
-        this.props.disconnectApp();
+        if (this.props.active) {
+            removeCookie("userToken");
+            this.props.disconnectApp();
+        }
     }
 
     render() {
-        if (this.props.active) {
-            return (
-                <div
-                    onClick={this.disconnect}
-                    className={"disconnectSwitch btn tile main-tile"}
-                >
-                    <span><i className={"fas fa-power-off"}></i></span>
-                </div>
-            );       
-        }
-        return null;
+        return (
+            <div
+                onClick={this.disconnect}
+                className={"disconnectSwitch btn tile main-tile"}
+            >
+                <span><i className={"fas fa-power-off"}></i></span>
+            </div>
+        );
     }
 }
 
