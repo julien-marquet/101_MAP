@@ -10,54 +10,50 @@ class Users {
     }
 
     getUserInfos(userId, userToken) {
-        return new Promise((resolve, reject) => {
-            if (this.globalStorage.usersInfos[userId] === undefined) {
-                this.i_queue.push_tail(
-                    "getUserInfos", {
-                        url: `${apiEndpoint}v2/users/${userId}`, 
-                        headers: {"authorization": `Bearer ${userToken}`
-                        }
+        if (this.globalStorage.usersInfos[userId] === undefined) {
+            return this.i_queue.push_tail(
+                "getUserInfos", {
+                    url: `${apiEndpoint}v2/users/${userId}`, 
+                    headers: {"authorization": `Bearer ${userToken}`
                     }
-                ).then(response => {
-                    response.last_request = Date.now();
-                    this.globalStorage.usersInfos[response.id] = response;
-                    resolve ({response: response});
-                }, (err) => {
+                }
+            ).then(response => {
+                response.last_request = Date.now();
+                this.globalStorage.usersInfos[response.id] = response;
+                return ({response});
+            })
+                .catch(err => {
                     if (err && err.infos && err.infos.status === 401) {
-                        this.Oauth2_authenticator.refreshToken(userToken).then((refreshed) => {
-                            if (refreshed) {
-                                this.i_queue.push_tail(
-                                    "getUserInfos", {
-                                        url: `${apiEndpoint}v2/users/${userId}`, 
-                                        headers: {"authorization": `Bearer ${refreshed}`
+                        return this.Oauth2_authenticator.refreshToken(userToken)
+                            .then((refreshed) => {
+                                if (refreshed) {
+                                    return this.i_queue.push_tail(
+                                        "getUserInfos", {
+                                            url: `${apiEndpoint}v2/users/${userId}`, 
+                                            headers: {"authorization": `Bearer ${refreshed}`
+                                            }
                                         }
-                                    }
-                                ).then(response => {
-                                    response.last_request = Date.now();
-                                    this.globalStorage.usersInfos[response.id] = response;
-                                    resolve ({refresh_token: refreshed, response: response});
-                                }, (err) => {
-                                    reject (err);
-                                });
-                            } else {
-                                reject ("try to refresh, no existing entry");
-                            }
-                        }).catch((err) => {
-                            reject (err);
-                        });
+                                    ).then(response => {
+                                        response.last_request = Date.now();
+                                        this.globalStorage.usersInfos[response.id] = response;
+                                        return ({response, refresh_token: refreshed});
+                                    });
+                                } else {
+                                    throw ("try to refresh, no existing entry");
+                                }
+                            });
                     }
                 });
+        }
+        else {
+            if ((Date.now() - this.globalStorage.usersInfos[userId].last_request) / 1000 > connectedUsers_cacheExpiration * 60) {
+                delete(this.globalStorage.usersInfos[userId]);
+                return (this.getUserInfos(userId, userToken));
             }
             else {
-                if ((Date.now() - this.globalStorage.usersInfos[userId].last_request) / 1000 > connectedUsers_cacheExpiration * 60) {
-                    delete(this.globalStorage.usersInfos[userId]);
-                    return (this.getUserInfos(userId, userToken));
-                }
-                else {
-                    resolve ({response: this.globalStorage.usersInfos[userId]});
-                }
+                return new Promise(resolve => resolve({response: this.globalStorage.usersInfos[userId]}));
             }
-        });
+        }
     }
 
     getConnectedUsers(campus)  {
