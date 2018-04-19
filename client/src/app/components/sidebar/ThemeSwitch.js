@@ -29,9 +29,11 @@ class ThemeSwitch extends Component {
     }
 
     toggleDropDown() {
-        this.setState({
-            opened: !this.state.opened
-        });
+        if (this.props.active) {
+            this.setState({
+                opened: !this.state.opened
+            });
+        }
     }
 
     renderOptions() {

@@ -30,7 +30,8 @@ class HostInfo extends Component {
 
     shouldComponentUpdate(nextProps) {
         if (this.props.activeUser.user.login !== nextProps.activeUser.user.login ||
-        nextProps.user_metadata.success !== this.props.user_metadata.success)
+        nextProps.user_metadata.success !== this.props.user_metadata.success ||
+        this.props.mode !== nextProps.mode)
             return (true);
         return (false);
     }
@@ -147,67 +148,58 @@ class HostInfo extends Component {
     }
 
     render() {
-        if (!this.props.activeUser.hostname)
-        {
-            return (
-                <div className={"hostInfoWrapper"}>
-                    <div className={"splitter"}>
-                        <div className={"leftCol"}>
-                        </div>
-                        <div className={"rightCol"}>
-                            <div className={"main skewed"} />
-                            <div className={"secondary skewed"} >
-                                <div className={"hostName"}>
-                                </div>
-                            </div>
-                            <div className={"contentTop hostContent"} >
-                            </div>
-                            <div className={"contentBottom hostContent"} >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
+        const userIsActive = this.props.activeUser.hostname !== null;
         return (
-            <div className={"hostInfoWrapper"}>
+            <div className={this.props.mode === "passive" ? "hostInfoWrapper hostInfoAnimated" : "hostInfoWrapper"}>
                 <div className={"splitter"}>
                     <div className={"leftCol"}>
-                        <img
-                            className={"userPortrait"}
-                            onError={this.addDefaultSrc}
-                            ref={element => this.portrait = element}
-                            src={`https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
-                            alt={"User portrait"}
-                        />
-                        {this.renderFilter(this.props.activeUser.user.login)}
+                        {userIsActive &&
+                            <React.Fragment>
+                                <img
+                                    className={"userPortrait"}
+                                    onError={this.addDefaultSrc}
+                                    ref={element => this.portrait = element}
+                                    src={`https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
+                                    alt={"User portrait"}
+                                />
+                                {this.renderFilter(this.props.activeUser.user.login)}
+                            </React.Fragment>
+                        }
                     </div>
                     <div className={`rightCol ${this.props.activeUser.user.login === "jfeve" ? "jfeve" : ""}`}>
                         <div className={"main skewed"} />
                         <div className={"secondary skewed"} >
                             <div className={"hostName"}>
-                                <p>{this.props.activeUser.hostname}</p>
+                                {userIsActive && <p>{this.props.activeUser.hostname}</p>}
                             </div>
                         </div>
                         <div className={"contentTop hostContent"} >
-                            <div className={"userName"}>
-                                <h2>{this.props.activeUser.user.login}</h2>
-                            </div>
-                            {this.renderTags()}
-                        </div>
-                        <Loader key="hostInfoLoader" name={"HostInfo"} in={this.props.user_metadata.success === null}/>
-                        <div className={"contentBottom hostContent"} >
-                            <ul className={"stats"}>
-                                {this.renderMetadata()}
-                            </ul>
-                            <a className={"profileButton"} href={"https://profile.intra.42.fr/users/" + this.props.activeUser.user.login}>
-                                <div className={"buttonSkewed"} />
-                                <div className={"buttonContent"}>
-                                    <div className={"linkUserAccount"} >
-                                        <span>Profile</span>
+                            {userIsActive &&
+                                <React.Fragment>
+                                    <div className={"userName"}>
+                                        <h2>{this.props.activeUser.user.login}</h2>
                                     </div>
-                                </div>
-                            </a>
+                                    {this.renderTags()}
+                                </React.Fragment>
+                            }
+                        </div>
+                        {userIsActive && <Loader key="hostInfoLoader" name={"HostInfo"} in={this.props.user_metadata.success === null}/>}
+                        <div className={"contentBottom hostContent"} >
+                            {userIsActive &&
+                                <React.Fragment>
+                                    <ul className={"stats"}>
+                                        {this.renderMetadata()}
+                                    </ul>
+                                    <a className={"profileButton"} href={"https://profile.intra.42.fr/users/" + this.props.activeUser.user.login}>
+                                        <div className={"buttonSkewed"} />
+                                        <div className={"buttonContent"}>
+                                            <div className={"linkUserAccount"} >
+                                                <span>Profile</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </React.Fragment>
+                            }
                         </div>
                     </div>
                 </div>
@@ -227,7 +219,8 @@ HostInfo.proptypes = {
     user_metadata: PropTypes.shape({
         success: PropTypes.bool,
         content: PropTypes.object
-    })
+    }),
+    mode: PropTypes.string
 };
 
 export default HostInfo;

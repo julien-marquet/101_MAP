@@ -1,7 +1,9 @@
 import {TOAST_HIDE, TOAST_SHOW} from "../actions/toasts";
 
 const initialState = {
-    toasts: {}
+    toasts: {
+        action: null
+    }
 };
 
 const toaster = (state = initialState, {type, payload}) => {

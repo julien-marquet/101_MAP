@@ -1,5 +1,10 @@
-import {DISCONNECT_APP, CONNECT_APP, ACTIVE_THEME_SWAP} from "../actions/globalState";
-
+import {
+    DISCONNECT_APP,
+    CONNECT_APP,
+    ACTIVE_THEME_SWAP,
+    MODE_PASSIVE_SET,
+    MODE_PASSIVE_UNSET
+} from "../actions/globalState";
 import globalConfig from "../../config/globalConfig";
 
 const initialState = {
@@ -7,7 +12,8 @@ const initialState = {
     themes: {
         array: globalConfig.themeArray,
         value: localStorage.getItem("param_theme") || globalConfig.themeArray.indexOf(globalConfig.defaultTheme)
-    }
+    },
+    mode: localStorage.getItem("mode") || "default"
 };
 
 const globalState = (state = initialState, {type, payload}) => {
@@ -29,6 +35,16 @@ const globalState = (state = initialState, {type, payload}) => {
         return {
             ...state,
             connected: true
+        };
+    case MODE_PASSIVE_SET:
+        return {
+            ...state,
+            mode: "passive"
+        };
+    case MODE_PASSIVE_UNSET:
+        return {
+            ...state,
+            mode: "default"
         };
     default:
         return state;

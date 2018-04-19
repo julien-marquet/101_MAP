@@ -28,26 +28,43 @@ class App extends Component {
         this.checkConnection();
     }
 
+    componentWillUnmount() {
+        document.removeEventListener("keydown", this.keyDown);
+    }
+
     componentWillReceiveProps(nextProps) {
-        if (this.props.globalState.connected !== nextProps.globalState.connected) {
-            if (!nextProps.globalState.connected) {
-                document.addEventListener("keydown", this.keyDown);
-            }
-            else {
-                document.removeEventListener("keydown", this.keyDown);
-            }
-        }
-        if (this.props.globalState.connected && !nextProps.globalState.connected) {
+        if (this.props.connected && !nextProps.connected) {
             this.props.socket.disconnect();
         }
-        if (this.props.globalState.connected !== nextProps.globalState.connected && nextProps.globalState.connected) {
+        if (this.props.connected !== nextProps.connected && nextProps.connected) {
             this.setState({loading: false});
         }
     }
 
     keyDown({keyCode}) {
-        if (keyCode === 32 || keyCode === 13) {
-            this.askCode();
+        if (!this.props.connected) {
+            if (keyCode === 32 || keyCode === 13) {
+                this.askCode();
+            }
+        }
+        else {
+            if (this.props.mode === "passive") {
+                if (keyCode === 27 || keyCode === 70) {
+                    this.props.quitPassiveMode();
+                    localStorage.removeItem("mode");
+                }
+            }
+            else {
+                if (keyCode === 70) {
+                    this.props.setPassiveMode();
+                    localStorage.setItem("mode", "passive");
+                    this.props.showToast({
+                        type: "info",		
+                        timeout: 2000,
+                        message: "Press escape to quit passive mode"
+                    });
+                }
+            }
         }
     }
 
@@ -58,10 +75,12 @@ class App extends Component {
             this.props.socket.connect(params.get("code"), userToken)
                 .then(() => {
                     this.props.connectApp();
+                    document.addEventListener("keydown", this.keyDown);
                 })
                 .catch(()=> {
                     removeCookie("userToken");
                     this.setState({loading: false});
+                    document.addEventListener("keydown", this.keyDown);
                 });
         }
         else {
@@ -75,7 +94,7 @@ class App extends Component {
     }
 
     renderApp() {
-        if (this.props.globalState.connected) {
+        if (this.props.connected) {
             return (<Warzone key={"Component1"} />);
         }
         else {
@@ -85,7 +104,7 @@ class App extends Component {
                         <h1>The Matrix</h1>
                         <img
                             className={"logo"}
-                            src={this.logoTheme[this.props.globalState.themes.value]}
+                            src={this.logoTheme[this.props.themes.value]}
                             alt={"Logo"}
                         />
                         <div
@@ -102,7 +121,7 @@ class App extends Component {
 
     render() {
         return (
-            <div className={`themeWrapper ${this.props.globalState.themes.array[this.props.globalState.themes.value]}`}>
+            <div className={`themeWrapper ${this.props.themes.array[this.props.themes.value]}`}>
                 <Loader key="ComponentLoader" in={this.state.loading}/>
                 {this.renderApp()}
                 <Toaster />

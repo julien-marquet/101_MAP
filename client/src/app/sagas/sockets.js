@@ -1,7 +1,4 @@
-import React from "react";
 import {takeEvery, all} from "redux-saga/effects";
-
-import config from "../../config/globalConfig";
 import {
     USERS_GETTED,
     USER_GET_METADATA_SUCCEEDED,
@@ -31,23 +28,6 @@ function setupListeners(socketClient, dispatch) {
                 action: null
             }
         });
-        setTimeout(() => {
-            dispatch({
-                type: TOAST_SHOW, 
-                payload: {		
-                    type: "warn",		
-                    timeout: null,		
-                    message: "Your token has expired, please get a new one !",		
-                    action: {
-                        func: () => {
-                            window.location.replace(`${config.apiEndPoint}/oauth/authorize?client_id=${config.clientId}&redirect_uri=${config.redirectUri}&response_type=code`);
-                        },
-                        label: <i className="fas fa-sync"></i>,
-                        dismissAfter: true
-                    },
-                }
-            });
-        }, (Math.floor(Date.now()/1000) - data.checked_at + data.expires_in)* 1000);
     });
 
     socketClient.on("error", err => {
@@ -56,7 +36,7 @@ function setupListeners(socketClient, dispatch) {
             payload: {		
                 type: "error",		
                 timeout: 3000,		
-                message: `Socket Error : ${err}`,		
+                message: `Error : ${err}`,		
                 action: null
             }
         });
@@ -88,7 +68,11 @@ function setupListeners(socketClient, dispatch) {
     });
 
     socketClient.on("user.getted.infos", response => {
-        dispatch({type: USER_GET_METADATA_SUCCEEDED, payload: response});
+        if (response.refresh_token) {
+            storeCookie("userToken", response.refresh_token);
+            socketClient.socket.query.token = response.refresh_token;
+        }
+        dispatch({type: USER_GET_METADATA_SUCCEEDED, payload: response.response});
     });
     socketClient.emit("users.get.all");
 }

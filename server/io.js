@@ -10,7 +10,6 @@ const websocketHandler = (server, globalStorage) => {
         i_users_api = new Users_api(globalStorage, i_Oauth2_authenticator, i_queue);
 
     require("./loopers/loop_request")(io, globalStorage, i_Oauth2_authenticator, i_users_api);
-    require("./loopers/loop_socketCache")(globalStorage);
 
     globalStorage.connectedUsers = 0;
 
@@ -24,6 +23,7 @@ const websocketHandler = (server, globalStorage) => {
         socket.emit("authSuccess", {
             type: socket.typeAuth,
             token: socket.userToken,
+            userId: socket.userId,
             checked_at: socket.checked_at,
             expires_in: socket.expires_in
         });

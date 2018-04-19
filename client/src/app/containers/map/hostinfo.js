@@ -3,10 +3,11 @@ import {connect} from "react-redux";
 import HostInfo from "../../components/map/HostInfo";
 import {USER_GET_METADATA} from "../../actions/users";
 
-const mapStateToProps = state => {
+const mapStateToProps = ({users, globalState}) => {
     return {
-        activeUser: state.users.activeUser,
-        user_metadata: state.users.user_metadata
+        activeUser: users.activeUser,
+        user_metadata: users.user_metadata,
+        mode: globalState.mode
     };
 };
 
