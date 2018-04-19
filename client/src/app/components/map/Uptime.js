@@ -7,7 +7,7 @@ class UpTime extends Component {
         super(props);
 
         this.timeout = null;
-        const date = moment.utc(props.begin_at).subtract(1, "hours");
+        const date = moment.utc(props.begin_at).subtract(2, "hours");
         this.state = {
             time : moment.utc().diff(date)
         };
