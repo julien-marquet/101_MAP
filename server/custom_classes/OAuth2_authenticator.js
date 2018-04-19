@@ -104,7 +104,7 @@ class Oauth2_authenticator {
         });
     }
     testTokenValidity(token) {
-        this.i_socketCache.searchToken(token);
+        return this.i_socketCache.searchToken(token);
     }
     getToken() {
         return new Promise ((resolve, reject) => {
