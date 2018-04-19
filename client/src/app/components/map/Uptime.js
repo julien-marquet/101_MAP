@@ -19,7 +19,7 @@ class UpTime extends Component {
         if (this.timeout !== null) {
             clearTimeout(this.timeout);
         }
-        const date = moment.utc(nextProps.begin_at).subtract(1, "hours");
+        const date = moment.utc(nextProps.begin_at).subtract(2, "hours");
         this.setState({
             time : moment.utc().diff(date)
         });
