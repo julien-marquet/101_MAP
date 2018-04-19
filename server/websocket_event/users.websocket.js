@@ -5,22 +5,18 @@ const usersSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator) => 
     const i_users_api = new Users(globalStorage, i_OAuth2_authenticator, i_queue);
     socket.on("users.get.all", () => {
         if (!globalStorage.connected_users_array) {
-            i_users_api.getConnectedUsers(9, (result) => {
-                if (result.success){
-                    socket.emit("connectedUsers", JSON.stringify(result.content));
-                    logger.add_log({
-                        type:"General", 
-                        description:"Emit connectedUsers from Request"
-                    });
-                }
-                else
-                {
-                    socket.emit("connectedUsers", JSON.stringify({"error": true, "message": result.message}));
-                    logger.add_log({
-                        type:"Error", 
-                        description:"couldn't Retrieve connectedUsers from Request"
-                    });					
-                }	
+            i_users_api.getConnectedUsers(9).then(result => {
+                socket.emit("connectedUsers", JSON.stringify(result));
+                logger.add_log({
+                    type:"General", 
+                    description:"Emit connectedUsers from Request"
+                });
+            }).catch(err => {
+                socket.emit("connectedUsers", JSON.stringify({"error": true, "message": err}));
+                logger.add_log({
+                    type:"Error", 
+                    description:"couldn't Retrieve connectedUsers from Request"
+                });		
             });
         } else {
             logger.add_log({
@@ -47,33 +43,21 @@ const usersSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator) => 
         } else {
             i_users_api.getUserInfos(userId, userToken)
                 .then(response => {
-                    if (response.error) {
-                        logger.add_log({
-                            type:"Error", 
-                            description:"Request UserInfos Failed", 
-                            additionnal_infos: {
-                                Error: response.error
-                            }
-                        });               
-                        socket.emit("error.fetch", response.error);
-                    }          
-                    else {
-                        logger.add_log({
-                            type:"General", 
-                            description:"Request UserInfos Succeeded"
-                        });
-                        socket.emit("user.getted.infos", response);
-                    }
+                    logger.add_log({
+                        type:"General", 
+                        description:"Request UserInfos Succeeded"
+                    });
+                    socket.emit("user.getted.infos", response);
                 })
                 .catch(error => {
                     logger.add_log({
                         type:"General", 
                         description:"Request UserInfos Failed", 
                         additionnal_infos: {
-                            Error: typeof error.infos === "object" ? JSON.stringify(error.infos) : error.infos
+                            Error: error
                         }
                     });          
-                    socket.emit("error.fetch", error.message);
+                    socket.emit("error.fetch", error);
                 });
         }
     });

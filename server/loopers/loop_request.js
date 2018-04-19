@@ -9,24 +9,20 @@ const loop_request = (io, globalStorage,i_Oauth2_authenticator, i_users_api) => 
                 type:"General", 
                 description:"Starting periodic request connectedUsers"
             });            
-            i_users_api.getConnectedUsers(9, (result) => {
-                if (result.success) {
-                    io.sockets.emit("connectedUsers", JSON.stringify(result.content));
-                    logger.add_log({
-                        type:"General", 
-                        description:"Periodic request connectedUsers Succeeded"
-                    });                                
-                }
-                else
-                {
-                    io.sockets.emit("connectedUsers", JSON.stringify({"error": true, "message": result.message}));
-                    logger.add_log({
-                        type:"Error", 
-                        description:"Periodic request connectedUsers Failed", 
-                        additional_infos: {
-                            Error: result.message
-                        }});                                                  
-                }
+            i_users_api.getConnectedUsers(9).then(result => {
+                io.sockets.emit("connectedUsers", JSON.stringify(result));
+                logger.add_log({
+                    type:"General", 
+                    description:"Periodic request connectedUsers Succeeded"
+                });                                
+            }).catch(err => {
+                io.sockets.emit("connectedUsers", JSON.stringify({"error": true, "message": err}));
+                logger.add_log({
+                    type:"Error", 
+                    description:"Periodic request connectedUsers Failed", 
+                    additional_infos: {
+                        Error: err
+                    }});      
             });
         }
     }, connectedUsers_loopRate * 1000);

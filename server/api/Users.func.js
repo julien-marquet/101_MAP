@@ -10,29 +10,31 @@ const users_func = {
         }
         return (dest);
     },
-    getPageOfConnectedUsers: (token, campus, pagination, push_head, callback) => {
-        push_head("getUsersList", {
-            url: `${apiEndpoint}v2/campus/${campus}/locations?filter[active]=true&sort=host&page=${pagination}`,
-            headers: {
-                "Authorization": "Bearer " + token.access_token
-            }
-        })
-            .then(response => {
-                if (response.length > 0)
-                    callback(response);
-                else
-                    callback(null);
+    getPageOfConnectedUsers: (token, campus, pagination, push_head) => {
+        return new Promise((resolve, reject) => {
+            push_head("getUsersList", {
+                url: `${apiEndpoint}v2/campus/${campus}/locations?filter[active]=true&sort=host&page=${pagination}`,
+                headers: {
+                    "Authorization": "Bearer " + token.access_token
+                }
             })
-            .catch(error => {
-                logger.add_log({
-                    type: "Error", 
-                    description: "Couldn't get campus data", 
-                    additionnal_infos: {
-                        Error: error
-                    }
+                .then(response => {
+                    if (response.length > 0)
+                        resolve(response);
+                    else
+                        reject(null);
+                })
+                .catch(error => {
+                    logger.add_log({
+                        type: "Error", 
+                        description: "Couldn't get campus data", 
+                        additionnal_infos: {
+                            Error: error
+                        }
+                    });
+                    reject(error);
                 });
-                callback(null);
-            });
+        });
     }
 };
 module.exports = users_func;

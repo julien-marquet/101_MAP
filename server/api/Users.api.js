@@ -10,8 +10,8 @@ class Users {
     }
 
     getUserInfos(userId, userToken) {
-        if (this.globalStorage.usersInfos[userId] === undefined) {
-            return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
+            if (this.globalStorage.usersInfos[userId] === undefined) {
                 this.i_queue.push_tail(
                     "getUserInfos", {
                         url: `${apiEndpoint}v2/users/${userId}`, 
@@ -40,36 +40,36 @@ class Users {
                                     reject (err);
                                 });
                             } else {
-                                reject({message: "no existing entry"});
+                                reject ("try to refresh, no existing entry");
                             }
                         }).catch((err) => {
-                            resolve (err);
+                            reject (err);
                         });
                     }
                 });
-            });
-        }
-        else {
-            if ((Date.now() - this.globalStorage.usersInfos[userId].last_request) / 1000 > connectedUsers_cacheExpiration * 60) {
-                delete(this.globalStorage.usersInfos[userId]);
-                return (this.getUserInfos(userId, userToken));
             }
             else {
-                return (new Promise(resolve => resolve({response: this.globalStorage.usersInfos[userId]})));
+                if ((Date.now() - this.globalStorage.usersInfos[userId].last_request) / 1000 > connectedUsers_cacheExpiration * 60) {
+                    delete(this.globalStorage.usersInfos[userId]);
+                    return (this.getUserInfos(userId, userToken));
+                }
+                else {
+                    resolve ({response: this.globalStorage.usersInfos[userId]});
+                }
             }
-        }
+        });
     }
 
-    getConnectedUsers(campus, callback)  {
-        let i = 1;
-        let usersArray = [];
-        let self = this;
-        let nb_connected_users = 0;
-        (function loop() {
-            if (i !== -1) {
-                self.Oauth2_authenticator.getToken(token => {
-                    if (token) {
-                        users_func.getPageOfConnectedUsers(token, campus, i, self.i_queue.push_head.bind(self.i_queue), pageArray => {
+    getConnectedUsers(campus)  {
+        return new Promise((resolve, reject) => {
+            let i = 1;
+            let usersArray = [];
+            let self = this;
+            let nb_connected_users = 0;
+            (function loop() {
+                if (i !== -1) {
+                    self.Oauth2_authenticator.getToken().then(token => {
+                        users_func.getPageOfConnectedUsers(token, campus, i, self.i_queue.push_head.bind(self.i_queue)).then(pageArray => {
                             if (!pageArray || pageArray.length < 30) {
                                 if (pageArray && pageArray.length > 0)
                                 {
@@ -89,37 +89,37 @@ class Users {
                                 i = -1;
                             }
                             loop();
+                        }).catch(err => {
+                            reject(err);
                         });
-                    }
-                    else 
-                        callback({success: false, message: "can't get server token"});
-                });
-            } else {
-                self.globalStorage.connected_users_array = {};
-                usersArray.map(({begin_at, user, id, host}) => {
-                    self.globalStorage.connected_users_array[host] = {
-                        begin_at,
-                        user,
-                        id
-                    };
-                });
-                self.globalStorage.connected_users_last_request = Date.now();
-                self.globalStorage.nb_connected_users = nb_connected_users;
-                if (usersArray.length > 0) {
-                    callback({
-                        success:true,
-                        content:{
+                    }).catch(err => {
+                        reject(err);
+                    });
+                } else {
+                    self.globalStorage.connected_users_array = {};
+                    usersArray.map(({begin_at, user, id, host}) => {
+                        self.globalStorage.connected_users_array[host] = {
+                            begin_at,
+                            user,
+                            id
+                        };
+                    });
+                    self.globalStorage.connected_users_last_request = Date.now();
+                    self.globalStorage.nb_connected_users = nb_connected_users;
+                    if (usersArray.length > 0) {
+                        resolve({
                             nb_connected_users: self.globalStorage.nb_connected_users,
                             last_request: self.globalStorage.connected_users_last_request, 
                             array: self.globalStorage.connected_users_array
-                        }});
+                        });
+                    }
+                    else {
+                        reject("can't get connected users");
+                    }        
                 }
-                else {
-                    callback({success: false, message: "can't get connected users"});
-                }        
-            }
-        }());
-    }
+            }());
+        });
+    }             
 }
 
 module.exports = Users;
