@@ -55,7 +55,7 @@ class App extends Component {
                 }
             }
             else {
-                if (keyCode === 70) {
+                if (keyCode === 70 && !(document.getElementsByTagName("input")[0] === document.activeElement)) {
                     this.props.setPassiveMode();
                     localStorage.setItem("mode", "passive");
                     this.props.showToast({
@@ -131,7 +131,8 @@ class App extends Component {
 }
 
 App.propTypes = {
-    socket: PropTypes.object.isRequired
+    socket: PropTypes.object.isRequired,
+    searchFocused: PropTypes.bool
 };
 
 export default App;
