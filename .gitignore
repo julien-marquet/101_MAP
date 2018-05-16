@@ -62,3 +62,5 @@ typings/
 client/src/app/scss/font-awesome/scss/*.css
 
 database
+
+*package-lock.json
