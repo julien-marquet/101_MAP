@@ -8,5 +8,6 @@ export default {
     themeArray: [
         "dark",
         "light"
-    ]
+    ],
+    konamiUrl: "http://localhost:3000/"
 };

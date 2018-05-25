@@ -18,6 +18,10 @@ class App extends Component {
             loading: true
         };
 
+        this.konami = {
+            valid: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65],
+            entered: []
+        };
         this.logoTheme = [logo_dark, logo_light];
 
         this.askCode = this.askCode.bind(this);
@@ -41,6 +45,18 @@ class App extends Component {
         }
     }
 
+    checkKonami(keyCode) {
+        this.konami.entered.push(keyCode);
+        const length = this.konami.entered.length - 1;
+        if (this.konami.entered[length] !== this.konami.valid[length]) {
+            this.konami.entered = [];
+        }
+        else if (this.konami.entered.length === this.konami.valid.length &&
+            this.konami.entered[length] === this.konami.valid[length]) {
+            window.location = config.konamiUrl;
+        }
+    }
+
     keyDown({keyCode}) {
         if (!this.props.connected) {
             if (keyCode === 32 || keyCode === 13) {
@@ -48,6 +64,7 @@ class App extends Component {
             }
         }
         else {
+            this.checkKonami(keyCode);
             if (this.props.mode === "passive") {
                 if (keyCode === 27 || keyCode === 70) {
                     this.props.quitPassiveMode();
