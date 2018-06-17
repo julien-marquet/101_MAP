@@ -1,0 +1,59 @@
+@import "utilities/cross-browser.scss";
+
+$backColor: #1e212a;
+$zoneColor: #292D39;
+$seatColor: #328989;
+$rowColor: #1e212a;
+$main: #292D39;
+$mainDark: #1e212a;
+$mainLight: #1e212a;
+$mainLighter: #ffffff;
+$darkShadow: #0a0b0e;
+$mediumShadow:rgba(0, 0, 0, 0.4);
+$lightShadow: #e5e5e5;
+$textPrimary: #328989;
+$textSecondary: #ffffff;
+$textTertiary: #3C4254;
+$loginColor: #c2c2d3;
+$sidebarColor: #121419;
+$sidebarBorderColor: #000;
+$textSideBar: #fff;
+$placeHolderColor: #121419;
+
+.scorerWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+    background-color: rgba($color: #c2c2d3, $alpha: 0.1);
+    z-index: 4;
+    .scorer {
+        position: relative;
+        background-color: #292D39;
+        width: 90vw;
+        height: 90vh;
+        padding: 5vh 5vw;
+        .dismissScore {
+            position: absolute;
+            top: 5vh;
+            right: 5vw;
+            background-color: transparent;
+            height: 5vw;
+            width: 5vw;
+            padding: 0;
+            border: none;
+            cursor: pointer;
+            i {
+                height: 100%;
+                width: 100%;
+                font-size: 5vw;
+                color: #c2c2d3;
+            }
+            &:hover {
+                i {
+                    color: darken($color: #c2c2d3, $amount: 30%);
+                }
+            }
+        }
+    }
+}
