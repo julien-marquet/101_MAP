@@ -29,27 +29,24 @@ class Scorer extends Component {
                     <div className={"concurrentWrapper"}>
                         <div className={"concurrentBlock win"}>
                             <img src={placeholder} />
-                            <p className={"concurrentLogin"}>Jean-patrick</p>
-                            <p className={"scoreLabel"}>Score :</p>
-                            <div className={"scoreBlock"}>
-                                101
+                            <div className={"concurrentLogin"}>
+                                <p>Jean-patrick</p>
                             </div>
-                            <div className={"concurrentStatus"}>
-                                <p>Win</p>
+                            <div className={"concurrentScore"}>
+                                <p> 101</p>
                             </div>
                         </div>
                         <div className={"concurrentBlock loose"}>
                             <img src={placeholder} />
-                            <p className={"concurrentLogin"}>Kimberlay</p>
-                            <p className={"scoreLabel"}>Score :</p>
-                            <div className={"scoreBlock"}>
-                                42
+                            <div className={"concurrentLogin"}>
+                                <p>Kim jung-hun</p>
                             </div>
-                            <div className={"concurrentStatus"}>
-                                <p>Loose</p>
+                            <div className={"concurrentScore"}>
+                                <p>42</p>
                             </div>
                         </div>
                     </div>
+                    <p className={"concurrentsStatus"}>Jean Patrick is winning !</p>
                 </div>
             </div>
         );
