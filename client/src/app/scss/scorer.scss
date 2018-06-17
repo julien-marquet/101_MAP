@@ -32,11 +32,11 @@ $placeHolderColor: #121419;
         background-color: #292D39;
         width: 90vw;
         height: 90vh;
-        padding: 5vh 5vw;
+        padding: 9vh 5vw 5vh 5vw;
         .dismissScore {
             position: absolute;
-            top: 5vh;
-            right: 5vw;
+            top: 2vh;
+            right: 2vw;
             background-color: transparent;
             height: 5vw;
             width: 5vw;
@@ -52,6 +52,63 @@ $placeHolderColor: #121419;
             &:hover {
                 i {
                     color: darken($color: #c2c2d3, $amount: 30%);
+                }
+            }
+        }
+        .concurrentWrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            .concurrentBlock {
+                position: relative;
+                width: 50%;
+                margin: 20px;
+                border: 2px solid #fff;
+                height: 500px;
+                display: flex;
+                flex-direction: column;
+                align-self : center;
+                img {
+                    width: 100%;
+                    height: 200px;
+                    object-fit: contain;
+                }
+                &.win {
+                    border: 2px solid green;
+                    .concurrentStatus {
+                        border: 2px solid green;
+                    }
+                }
+                &.loose {
+                    border: 2px solid red;
+                    .concurrentStatus {
+                        border: 2px solid red;
+                    }
+                }
+                &.draw {
+                    border: 2px solid orange;
+                    .concurrentStatus {
+                        border: 2px solid orange;
+                    }
+                }
+                .concurrentStatus {
+                    position: absolute;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    bottom: -25px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 200px;
+                    height: 50px;
+                    border: 2px solid #fff;
+                    background-color: #292D39;
+                    p {
+                        color: #fff;
+                        font-size: 25px;
+                        font-weight: bolder;
+                        text-align: center;
+                    }
                 }
             }
         }
