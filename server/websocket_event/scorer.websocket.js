@@ -2,8 +2,8 @@ const usersSocket = (socket, globalStorage, i_queue, i_Oauth_authenticator, i_sc
     socket.on("get.scores", () => {
         i_scorer.getScore(socket);
     });
-    socket.on("add.scores", () => {
-        i_scorer.addScores(socket);
+    socket.on("update.scores", () => {
+        i_scorer.updateScores(socket);
     });
 };
 

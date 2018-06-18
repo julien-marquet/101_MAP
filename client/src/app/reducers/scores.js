@@ -3,6 +3,7 @@ import {GET_SCORES_SUCCESS} from "../actions/scores";
 const initialState = {
     participants: [],
     winner: null,
+    isScorer: false
 };
 
 const toaster = (state = initialState, {type, payload}) => {
@@ -10,7 +11,8 @@ const toaster = (state = initialState, {type, payload}) => {
     case GET_SCORES_SUCCESS:
         return {
             participants: payload.participants,
-            winner: payload.winner
+            winner: payload.winner,
+            isScorer: payload.isScorer
         };
     default:
         return state;

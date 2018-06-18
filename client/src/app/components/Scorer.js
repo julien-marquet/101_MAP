@@ -52,6 +52,7 @@ class Scorer extends Component {
     }
 
     render(){ 
+        console.log(this.props)
         if (this.state.dismissed) {
             return (<div className={"scorerPlaceHolder"} />);
         }
