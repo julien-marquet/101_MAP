@@ -43,8 +43,16 @@ class Scorer extends Component {
                     <div className={"participantLogin"}>
                         <p>{participant.login}</p>
                     </div>
-                    <div className={"participantScore"}>
-                        <p>{participant.score}</p>
+                    <div className={"bottomWrapper"}>
+                        {this.props.isScorer && <div className={"scoreUpdate"}>
+                        -
+                        </div>}
+                        <div className={"participantScore"}>
+                            <p>{participant.score}</p>
+                        </div>
+                        {this.props.isScorer && <div className={"scoreUpdate"}>
+                        +
+                        </div>}
                     </div>
                 </div>
             );
@@ -52,7 +60,7 @@ class Scorer extends Component {
     }
 
     render(){ 
-        console.log(this.props)
+        console.log(this.props);
         if (this.state.dismissed) {
             return (<div className={"scorerPlaceHolder"} />);
         }

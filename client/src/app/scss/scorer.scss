@@ -110,7 +110,7 @@ $placeHolderColor: #121419;
                         text-align: center;
                     }
                 }
-                .participantScore {
+                .bottomWrapper {
                     position: absolute;
                     display: flex;
                     align-items: center;
@@ -118,15 +118,26 @@ $placeHolderColor: #121419;
                     bottom: -25px;
                     left: 50%;
                     transform: translateX(-50%);
-                    width: 200px;
                     height: 50px;
                     border: 2px solid #fff;
                     background-color: #292D39;
-                    p {
+                    .participantScore {
+                        height: 100%;
+                        width: 200px;
+                        p {
+                            color: #fff;
+                            font-size: 25px;
+                            font-weight: bolder;
+                            text-align: center;
+                        }
+                    }
+                    .scoreUpdate {
+                        width: 50px;
+                        height: 100%;
                         color: #fff;
-                        font-size: 25px;
-                        font-weight: bolder;
+                        font-size: 30px;
                         text-align: center;
+                        cursor: pointer;
                     }
                 }
             }

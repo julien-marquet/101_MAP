@@ -26,6 +26,7 @@ class Scorer {
         }
     }
     getScore(socket) {
+        console.log(socket.userId)
         socket.emit("get.scores.success", {
             participants: this.participants,
             winner: this.getWinner(),
