@@ -1,16 +1,17 @@
 import {connect} from "react-redux";
 
 import Scorer from "../components/Scorer";
+import { GET_SCORES } from "../actions/scores";
 
-const mapStateToProps = () => {
+const mapStateToProps = ({scores}) => {
     return {
-        
+        participants: scores.participants
     };
 };
 
-const mapDispatchToProps = () => {
+const mapDispatchToProps = (dispatch) => {
     return {
-       
+        getScores: payload => dispatch({type: GET_SCORES, payload}),
     };
 };
 

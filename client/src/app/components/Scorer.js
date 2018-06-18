@@ -12,7 +12,12 @@ class Scorer extends Component {
         };
     }
 
+    componentWillMount() {
+        this.props.getScores();
+    }
+
     render(){ 
+        console.log(this.props)
         if (this.state.dismissed) {
             return (<div className={"scorerPlaceHolder"} />);
         }
@@ -26,27 +31,27 @@ class Scorer extends Component {
                     }}>
                         <i className="fas fa-times" />
                     </button>
-                    <div className={"concurrentWrapper"}>
-                        <div className={"concurrentBlock win"}>
+                    <div className={"participantWrapper"}>
+                        <div className={"participantBlock win"}>
                             <img src={placeholder} />
-                            <div className={"concurrentLogin"}>
+                            <div className={"participantLogin"}>
                                 <p>Jean-patrick</p>
                             </div>
-                            <div className={"concurrentScore"}>
+                            <div className={"participantScore"}>
                                 <p> 101</p>
                             </div>
                         </div>
-                        <div className={"concurrentBlock loose"}>
+                        <div className={"participantBlock loose"}>
                             <img src={placeholder} />
-                            <div className={"concurrentLogin"}>
+                            <div className={"participantLogin"}>
                                 <p>Kim jung-hun</p>
                             </div>
-                            <div className={"concurrentScore"}>
+                            <div className={"participantScore"}>
                                 <p>42</p>
                             </div>
                         </div>
                     </div>
-                    <p className={"concurrentsStatus"}>Jean Patrick is winning !</p>
+                    <p className={"participantsStatus"}>Jean Patrick is winning !</p>
                 </div>
             </div>
         );

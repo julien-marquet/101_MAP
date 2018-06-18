@@ -55,11 +55,11 @@ $placeHolderColor: #121419;
                 }
             }
         }
-        .concurrentWrapper {
+        .participantWrapper {
             display: flex;
             flex-direction: row;
             justify-content: center;
-            .concurrentBlock {
+            .participantBlock {
                 position: relative;
                 width: 50%;
                 margin: 20px;
@@ -71,27 +71,27 @@ $placeHolderColor: #121419;
                 img {
                     width: 100%;
                     height: 100%;
-                    object-fit: contain;
+                    object-fit: cover;
                 }
                 &.win {
                     border: 2px solid green;
-                    .concurrentScore, .concurrentLogin {
+                    .participantScore, .participantLogin {
                         border: 2px solid green;
                     }
                 }
                 &.loose {
                     border: 2px solid red;
-                    .concurrentScore, .concurrentLogin {
+                    .participantScore, .participantLogin {
                         border: 2px solid red;
                     }
                 }
                 &.draw {
                     border: 2px solid orange;
-                    .concurrentScore, .concurrentLogin {
+                    .participantScore, .participantLogin {
                         border: 2px solid orange;
                     }
                 }
-                .concurrentLogin {
+                .participantLogin {
                     position: absolute;
                     display: flex;
                     align-items: center;
@@ -110,7 +110,7 @@ $placeHolderColor: #121419;
                         text-align: center;
                     }
                 }
-                .concurrentScore {
+                .participantScore {
                     position: absolute;
                     display: flex;
                     align-items: center;
@@ -131,7 +131,7 @@ $placeHolderColor: #121419;
                 }
             }
         }
-        .concurrentsStatus {
+        .participantsStatus {
             color: #fff;
             text-align: center;
             font-size: 30px;

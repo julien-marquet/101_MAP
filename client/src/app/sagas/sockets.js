@@ -6,9 +6,15 @@ import {
 } from "../actions/users";
 import {TOAST_SHOW} from "../actions/toasts";
 import {CONNECT_APP} from "../actions/globalState";
+import {GET_SCORES_SUCCESS} from "../actions/scores";
 import {storeCookie} from "../helpers/cookies.helper";
 
 function setupListeners(socketClient, dispatch) {
+
+    socketClient.on("get.scores.success", data => {
+        dispatch({type: GET_SCORES_SUCCESS, payload: data});
+    });
+
     socketClient.on("connectedUsers", data => {
         dispatch({type: USERS_GETTED, payload: JSON.parse(data)});
     });
