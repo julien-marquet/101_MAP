@@ -5,7 +5,8 @@ import { GET_SCORES } from "../actions/scores";
 
 const mapStateToProps = ({scores}) => {
     return {
-        participants: scores.participants
+        participants: scores.participants,
+        winner: scores.winner
     };
 };
 

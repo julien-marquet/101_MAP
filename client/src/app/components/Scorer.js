@@ -10,14 +10,48 @@ class Scorer extends Component {
         this.state = {
             dismissed: false
         };
+        this.renderParticipants = this.renderParticipants.bind(this);
     }
 
     componentWillMount() {
         this.props.getScores();
     }
 
+    getWinnerClass(participantId) {
+        if (this.props.winner === participantId) {
+            return "win";
+        } else if (this.props.winner === null) {
+            return "draw";
+        } else {
+            return "loose";
+        }
+    }
+
+    getWinnerAnnouncement() {
+        if (this.props.winner) {
+            return `${this.props.winner} is winning !`;
+        } else {
+            return "That's a draw !";
+        }
+    }
+
+    renderParticipants() {
+        return this.props.participants.map(participant => {
+            return (
+                <div key={`participantBlock${participant.id}`} className={`participantBlock ${this.getWinnerClass(participant.id)}`}>
+                    <img src={placeholder} />
+                    <div className={"participantLogin"}>
+                        <p>{participant.login}</p>
+                    </div>
+                    <div className={"participantScore"}>
+                        <p>{participant.score}</p>
+                    </div>
+                </div>
+            );
+        });
+    }
+
     render(){ 
-        console.log(this.props)
         if (this.state.dismissed) {
             return (<div className={"scorerPlaceHolder"} />);
         }
@@ -32,26 +66,9 @@ class Scorer extends Component {
                         <i className="fas fa-times" />
                     </button>
                     <div className={"participantWrapper"}>
-                        <div className={"participantBlock win"}>
-                            <img src={placeholder} />
-                            <div className={"participantLogin"}>
-                                <p>Jean-patrick</p>
-                            </div>
-                            <div className={"participantScore"}>
-                                <p> 101</p>
-                            </div>
-                        </div>
-                        <div className={"participantBlock loose"}>
-                            <img src={placeholder} />
-                            <div className={"participantLogin"}>
-                                <p>Kim jung-hun</p>
-                            </div>
-                            <div className={"participantScore"}>
-                                <p>42</p>
-                            </div>
-                        </div>
+                        {this.renderParticipants()}
                     </div>
-                    <p className={"participantsStatus"}>Jean Patrick is winning !</p>
+                    <p className={"participantsStatus"}>{this.getWinnerAnnouncement()}</p>
                 </div>
             </div>
         );
