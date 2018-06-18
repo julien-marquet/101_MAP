@@ -25,23 +25,32 @@ class Scorer {
             return null;
         }
     }
-    getScore(socket) {
-        console.log(socket.userId)
+    getScores(socket) {
         socket.emit("get.scores.success", {
             participants: this.participants,
             winner: this.getWinner(),
             isScorer: this.allowedScorer.includes(socket.userId)
         });
     }
-    updateScore(socket) {
-        console.log("update");
-        if (this.allowedScorer.includes(socket.userId)) {
-            socket.emit("update.scores.sucess", {
+    updateScores(socket, payload) {
+        if (this.allowedScorer.includes(socket.userId) && payload.target && payload.type) {
+            this.participants = this.participants.map(participant => {
+                if (participant.id === payload.target) {
+                    if (payload.type === "ADD")
+                        participant.score += 1;
+                    else if (payload.type === "REMOVE")
+                        participant.score = participant.score > 0 ? participant.score - 1 : 0;
+                    else if (payload.type === "RESET")
+                        participant.score = 0;
+                }
+                return participant;
+            });
+            socket.emit("update.scores.success", {
                 participants: this.participants,
                 winner: this.getWinner(),
                 isScorer: this.allowedScorer.includes(socket.userId)
             });
-            socket.broadcast.emit("update.scores", {
+            socket.broadcast.emit("update.scores.success", {
                 participants: this.participants,
                 winner: this.getWinner(),
                 isScorer: this.allowedScorer.includes(socket.userId)

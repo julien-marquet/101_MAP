@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 
 import Scorer from "../components/Scorer";
-import { GET_SCORES } from "../actions/scores";
+import { GET_SCORES, UPDATE_SCORES } from "../actions/scores";
 
 const mapStateToProps = ({scores}) => {
     return {
@@ -14,6 +14,7 @@ const mapStateToProps = ({scores}) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getScores: payload => dispatch({type: GET_SCORES, payload}),
+        updateScores: payload => dispatch({type: UPDATE_SCORES, payload}),
     };
 };
 

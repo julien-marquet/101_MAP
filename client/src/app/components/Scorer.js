@@ -27,9 +27,17 @@ class Scorer extends Component {
         }
     }
 
+    matchId(id) {
+        for (let i = 0; i < this.props.participants.length; i++) {
+            if (this.props.participants[i].id === id) {
+                return this.props.participants[i].login;
+            }
+        }
+    }
+
     getWinnerAnnouncement() {
         if (this.props.winner) {
-            return `${this.props.winner} is winning !`;
+            return `${this.matchId(this.props.winner)} is winning !`;
         } else {
             return "That's a draw !";
         }
@@ -44,13 +52,23 @@ class Scorer extends Component {
                         <p>{participant.login}</p>
                     </div>
                     <div className={"bottomWrapper"}>
-                        {this.props.isScorer && <div className={"scoreUpdate"}>
+                        {this.props.isScorer && <div className={"scoreUpdate"} onClick={() => {
+                            this.props.updateScores({
+                                target: participant.id,
+                                type: "REMOVE"
+                            });
+                        }}>
                         -
                         </div>}
                         <div className={"participantScore"}>
                             <p>{participant.score}</p>
                         </div>
-                        {this.props.isScorer && <div className={"scoreUpdate"}>
+                        {this.props.isScorer && <div className={"scoreUpdate"}  onClick={() => {
+                            this.props.updateScores({
+                                target: participant.id,
+                                type: "ADD"
+                            });
+                        }}>
                         +
                         </div>}
                     </div>
@@ -60,7 +78,6 @@ class Scorer extends Component {
     }
 
     render(){ 
-        console.log(this.props);
         if (this.state.dismissed) {
             return (<div className={"scorerPlaceHolder"} />);
         }
