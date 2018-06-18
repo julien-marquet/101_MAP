@@ -52,7 +52,7 @@ class Scorer extends Component {
                         <p>{participant.login}</p>
                     </div>
                     <div className={"bottomWrapper"}>
-                        {this.props.isScorer && <div className={"scoreUpdate"} onClick={() => {
+                        {this.props.isScorer && <div className={"scoreUpdate remove"} onClick={() => {
                             this.props.updateScores({
                                 target: participant.id,
                                 type: "REMOVE"
@@ -63,7 +63,7 @@ class Scorer extends Component {
                         <div className={"participantScore"}>
                             <p>{participant.score}</p>
                         </div>
-                        {this.props.isScorer && <div className={"scoreUpdate"}  onClick={() => {
+                        {this.props.isScorer && <div className={"scoreUpdate add"}  onClick={() => {
                             this.props.updateScores({
                                 target: participant.id,
                                 type: "ADD"

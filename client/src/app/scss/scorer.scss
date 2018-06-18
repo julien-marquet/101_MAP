@@ -75,19 +75,19 @@ $placeHolderColor: #121419;
                 }
                 &.win {
                     border: 2px solid green;
-                    .participantScore, .participantLogin {
+                    .participantScore, .participantLogin, .scoreUpdate  {
                         border: 2px solid green;
                     }
                 }
                 &.loose {
                     border: 2px solid red;
-                    .participantScore, .participantLogin {
+                    .participantScore, .participantLogin, .scoreUpdate  {
                         border: 2px solid red;
                     }
                 }
                 &.draw {
                     border: 2px solid orange;
-                    .participantScore, .participantLogin {
+                    .participantScore, .participantLogin, .scoreUpdate  {
                         border: 2px solid orange;
                     }
                 }
@@ -119,7 +119,6 @@ $placeHolderColor: #121419;
                     left: 50%;
                     transform: translateX(-50%);
                     height: 50px;
-                    border: 2px solid #fff;
                     background-color: #292D39;
                     .participantScore {
                         height: 100%;
@@ -138,6 +137,12 @@ $placeHolderColor: #121419;
                         font-size: 30px;
                         text-align: center;
                         cursor: pointer;
+                        &.remove {
+                            border-width: 2px 0 2px 2px;
+                        }
+                        &.add {
+                            border-width: 2px 2px 2px 0;
+                        }
                     }
                 }
             }
