@@ -1,9 +1,9 @@
 export const GET_GAME = "get.game";
 export const GET_GAME_SUCCESS = "get.game.success";
 
-export const START_GAME = "get.game";
-export const START_GAME_SUCCESS = "get.game.success";
-export const START_GAME_ERROR = "get.game.error";
+export const START_GAME = "start.game";
+export const START_GAME_SUCCESS = "start.game.success";
+export const START_GAME_ERROR = "start.game.error";
 
 export const RESET_GAME = "reset.game";
 export const RESET_GAME_SUCCESS = "reset.game";

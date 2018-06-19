@@ -78,7 +78,6 @@ class Scorer extends Component {
     }
 
     render(){ 
-        console.log(this.props)
         if (this.state.dismissed || !(this.props.isStarted || this.props.isScorer)) {
             return (<div className={"scorerPlaceHolder"} />);
         }
@@ -96,6 +95,13 @@ class Scorer extends Component {
                         {this.renderParticipants()}
                     </div>
                     <p className={"participantsStatus"}>{this.getWinnerAnnouncement()}</p>
+                    <div className={"roundControl"}>
+                        {(!this.props.isStarted) && <button className={"startRound"} onClick={() => {
+                            this.props.startGame();
+                        }}>
+                            Start 
+                        </button>}
+                    </div>
                 </div>
             </div>
         );

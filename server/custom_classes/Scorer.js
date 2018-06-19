@@ -81,7 +81,15 @@ class Scorer {
         });
     }
 
-
+    startGame(socket) {
+        this.isStarted = true;
+        socket.emit("start.game.success", {
+            isStarted: this.isStarted,
+        });
+        socket.broadcast.emit("start.game.success", {
+            isStarted: this.isStarted,
+        });
+    }
 
 
 
