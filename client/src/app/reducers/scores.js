@@ -6,7 +6,8 @@ const initialState = {
     participants: [],
     nextRound: null,
     isScorer: false,
-    isStarted: false
+    isStarted: false,
+    totalScores: null
 };
 
 const toaster = (state = initialState, {type, payload}) => {
@@ -18,15 +19,16 @@ const toaster = (state = initialState, {type, payload}) => {
             participants: payload.participants,
             nextRound: payload.nextRound,
             isScorer: payload.isScorer,
-            isStarted: payload.isStarted
+            isStarted: payload.isStarted,
+            totalScores : payload.totalScores,
         };
     case START_GAME_SUCCESS: 
-    console.log(payload)
         return {
             finishedRounds: payload.finishedRounds,
             activeRound: payload.activeRound,
             participants: payload.participants,
             nextRound: payload.nextRound,
+            totalScores : payload.totalScores,
             isScorer: payload.isScorer,
             isStarted: true,
         };
@@ -44,7 +46,9 @@ const toaster = (state = initialState, {type, payload}) => {
         return {
             ...state,
             nextRound: initialState.nextRound,
-            activeRound: payload.activeRound
+            activeRound: payload.activeRound,
+            totalScores : payload.totalScores,
+            finishedRounds: payload.finishedRounds, 
         };
     case UPDATE_ROUND_SUCCESS:
         return {

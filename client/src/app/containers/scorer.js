@@ -10,6 +10,7 @@ const mapStateToProps = ({scores}) => {
         participants: scores.participants,
         nextRound: scores.nextRound,
         isScorer: scores.isScorer,
+        totalScores : scores.totalScores,
         isStarted: scores.isStarted
     };
 };
