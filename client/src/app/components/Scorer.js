@@ -18,9 +18,9 @@ class Scorer extends Component {
     }
 
     getWinnerClass(participantId) {
-        if (this.props.winner === participantId) {
+        if (this.props.activeRound && this.props.activeRound.winner === participantId) {
             return "win";
-        } else if (this.props.winner === null) {
+        } else if (this.props.activeRound && this.props.activeRound.winner === null) {
             return "draw";
         } else {
             return "loose";
@@ -46,17 +46,12 @@ class Scorer extends Component {
         }
     }
 
-    getWinnerAnnouncement() {
-        if (this.props.winner) {
-            return `${this.matchId(this.props.winner)} is winning !`;
-        } else {
-            return "That's a draw !";
-        }
-    }
-
     getRoundStatus() {
-        if (this.props.activeRound) {
-            return "display active round result";
+        if (this.props.activeRound) { 
+            if (this.props.activeRound.winner) 
+                return `${this.matchId(this.props.activeRound.winner)} is winning the round !`;
+            else 
+                return "That's a draw !";
         } else if (this.props.nextRound) {
             return "display nextRound countDown";
         } else {

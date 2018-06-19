@@ -12,15 +12,15 @@ class Scorer {
 
         this.countDown = null;
     }
-    /*getWinner() {
-        if (this.participants[0].score > this.participants[1].score) {
-            return this.participants[0].id;
-        } else if (this.participants[0].score < this.participants[1].score) {
-            return this.participants[1].id;
+    getRoundWinner(round) {
+        if (round.scores[0].score > round.scores[1].score) {
+            return round.scores[0].id;
+        } else  if (round.scores[0].score < round.scores[1].score) {
+            return round.scores[1].id;
         } else {
             return null;
         }
-    }*/
+    }
     selectNextRound() {
         if (this.activeRound === null) {
             this.activeRound = this.rounds[0].id;
@@ -41,7 +41,10 @@ class Scorer {
     getActiveRound() {
         for (let i = 0; i < this.rounds.length; i++) {
             if (this.rounds[i].id === this.activeRound) {
-                return this.rounds[i];
+                return {
+                    ...this.rounds[i],
+                    winner: this.getRoundWinner(this.rounds[i])
+                };
             }
         }
         return null;
