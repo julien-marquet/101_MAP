@@ -9,6 +9,8 @@ class Scorer {
         this.activeRound = scorerConfig.activeRound;
         this.nextRound = scorerConfig.nextRound;
         this.isStarted = scorerConfig.isStarted;
+
+        this.countDown = null;
     }
     /*getWinner() {
         if (this.participants[0].score > this.participants[1].score) {
@@ -19,6 +21,22 @@ class Scorer {
             return null;
         }
     }*/
+    selectNextRound() {
+        if (this.activeRound === null) {
+            this.activeRound = this.rounds[0];
+        } else {
+            let found = false;
+            for (let i = 0; i < this.rounds.length; i++) {
+                if (found)
+                    this.activeRound = this.rounds[i];
+                else if (this.rounds[i].id === this.activeRound.id)
+                    found = true;
+            }
+            if (!found)
+                this.activeRound = null;
+        }
+    }
+
     getFinishedRounds() {
         const fRounds = [];
         this.rounds.forEach(round => {
@@ -27,18 +45,10 @@ class Scorer {
         });
         return fRounds;
     }
-    getActiveRound() {
-        for (let i = 0; i < this.rounds.length; i++) {
-            if (this.rounds[i].id === this.activeRound) {
-                return this.rounds[i];
-            }
-        }
-        return null;
-    }
     getGame(socket) {
         socket.emit("get.game.success", {
             finishedRounds: this.getFinishedRounds(),
-            activeRound: this.getActiveRound(),
+            activeRound: this.activeRound,
             participants: this.participants,
             nextRound: this.nextRound,
             isScorer: this.allowedScorer.includes(socket.userId),
@@ -47,12 +57,18 @@ class Scorer {
     }
 
     startGame(socket) {
+        if (!this.allowedScorer.includes(socket.userId)) {
+            socket.emit("start.game.error");
+        }
         this.isStarted = true;
         socket.emit("start.game.success");
         socket.broadcast.emit("start.game.success");
     }
 
     endGame(socket) {
+        if (!this.allowedScorer.includes(socket.userId)) {
+            socket.emit("end.game.error");
+        }
         this.rounds = scorerConfig.rounds;
         this.participants = scorerConfig.participants;
         this.allowedScorer = scorerConfig.allowedScorer;
@@ -63,7 +79,30 @@ class Scorer {
         socket.emit("end.game.success");
         socket.broadcast.emit("end.game.success");
     }
-
+    goNextRound(socket, payload) {
+        if (!this.allowedScorer.includes(socket.userId)) {
+            socket.emit("next.round.error");
+        }
+        if (this.countDown)
+            clearTimeout(this.countDown);
+        if (payload.countDown > 0) {
+            this.nextRound = Date.now() + payload.countDown * 1000;
+            socket.emit("next.round.success", {nextRound: this.nextRound});
+            socket.broadcast.emit("next.round.success" , {nextRound: this.nextRound});
+            this.countDown = setTimeout(() => {
+                this.selectNextRound();
+                this.nextRound = null;
+                socket.emit("start.round.success", {
+                    activeRound: this.activeRound,
+                    nextRound: this.nextRound
+                });
+                socket.broadcast.emit("start.round.success", {
+                    activeRound: this.activeRound,
+                    nextRound: this.nextRound
+                });
+            }, payload.countDown * 1000);
+        }
+    }
 
     /*getScores(socket) {
         socket.emit("get.scores.success", {

@@ -18,10 +18,10 @@ const usersSocket = (socket, globalStorage, i_queue, i_Oauth_authenticator, i_sc
         i_scorer.updateRound(socket, payload);
     });
     socket.on("finish.round", () => {
-        i_scorer.nextRound(socket);
+        i_scorer.finishRound(socket);
     });
-    socket.on("next.round", () => {
-        i_scorer.nextRound(socket);
+    socket.on("next.round", payload => {
+        i_scorer.goNextRound(socket, payload);
     });
     socket.on("prev.round", () => {
         i_scorer.prevRound(socket);

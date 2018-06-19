@@ -29,6 +29,10 @@ export const NEXT_ROUND = "next.round";
 export const NEXT_ROUND_SUCCESS = "next.round.success";
 export const NEXT_ROUND_ERROR = "next.round.error";
 
+export const START_ROUND = "start.round";
+export const START_ROUND_SUCCESS = "start.round.success";
+export const START_ROUND_ERROR = "start.round.error";
+
 export const PREV_ROUND = "prev.round";
 export const PREV_ROUND_SUCCESS = "prev.round.success";
 export const PREV_ROUND_ERROR = "prev.round.error";
