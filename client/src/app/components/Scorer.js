@@ -27,6 +27,17 @@ class Scorer extends Component {
         }
     }
 
+    getScore(id) {
+        if (id && this.props.activeRound) {
+            for (let i = 0; i < this.props.activeRound.scores.length; i++) {
+                if (this.props.activeRound.scores[i].id === id) {
+                    return this.props.activeRound.scores[i].score;
+                }
+            }
+        }
+        return -1;
+    }
+
     matchId(id) {
         for (let i = 0; i < this.props.participants.length; i++) {
             if (this.props.participants[i].id === id) {
@@ -62,23 +73,23 @@ class Scorer extends Component {
                         <p>{participant.login}</p>
                     </div>
                     <div className={"bottomWrapper"}>
-                        {this.props.isScorer && <div className={"scoreUpdate remove"} /*onClick={() => {
-                            this.props.updateScores({
+                        {this.props.isScorer && <div className={"scoreUpdate remove"} onClick={() => {
+                            this.props.updateRound({
                                 target: participant.id,
                                 type: "REMOVE"
                             });
-                        }}*/>
+                        }}>
                         -
                         </div>}
                         <div className={"participantScore"}>
-                            <p>{participant.score}</p>
+                            <p>{this.getScore(participant.id)}</p>
                         </div>
-                        {this.props.isScorer && <div className={"scoreUpdate add"}  /*onClick={() => {
-                            this.props.updateScores({
+                        {this.props.isScorer && <div className={"scoreUpdate add"}  onClick={() => {
+                            this.props.updateRound({
                                 target: participant.id,
                                 type: "ADD"
                             });
-                        }}*/>
+                        }}>
                         +
                         </div>}
                     </div>
@@ -88,7 +99,7 @@ class Scorer extends Component {
     }
 
     render(){ 
-        console.log(this.props)
+        console.log(this.props);
         if (this.state.dismissed || !(this.props.isStarted || this.props.isScorer)) {
             return (<div className={"scorerPlaceHolder"} />);
         }
@@ -106,6 +117,7 @@ class Scorer extends Component {
                         {this.renderParticipants()}
                     </div>
                     <p className={"gameStatus"}>{this.getRoundStatus()}</p>
+                    {(!this.props.isScored) &&
                     <div className={"controll"}>
                         {(!this.props.isStarted) && <button className={"startRound"} onClick={() => {
                             this.props.startGame();
@@ -122,10 +134,8 @@ class Scorer extends Component {
                                 this.props.goNextRound({countDown: this.refs.roundCountDown.value});
                             }}>Start round in</button>
                             <input type={"number"} ref={"roundCountDown"} /> minutes
-                        </div>}
-                        
-                        
-                    </div>
+                        </div>}   
+                    </div>}
                 </div>
             </div>
         );

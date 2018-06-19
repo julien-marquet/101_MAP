@@ -1,4 +1,4 @@
-import {GET_GAME_SUCCESS, START_GAME_SUCCESS, END_GAME_SUCCESS, NEXT_ROUND_SUCCESS, START_ROUND_SUCCESS} from "../actions/scores";
+import {GET_GAME_SUCCESS, START_GAME_SUCCESS, END_GAME_SUCCESS, NEXT_ROUND_SUCCESS, START_ROUND_SUCCESS, UPDATE_ROUND_SUCCESS} from "../actions/scores";
 
 const initialState = {
     finishedRounds: [],
@@ -39,6 +39,11 @@ const toaster = (state = initialState, {type, payload}) => {
         return {
             ...state,
             nextRound: initialState.nextRound,
+            activeRound: payload.activeRound
+        };
+    case UPDATE_ROUND_SUCCESS:
+        return {
+            ...state,
             activeRound: payload.activeRound
         };
     default:
