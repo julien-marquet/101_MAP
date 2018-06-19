@@ -1,49 +1,14 @@
+const scorerConfig = require("../config/scorerConfig");
+
 class Scorer {
     constructor() {
-        this.rounds = [{
-            id: 1,
-            finished: false,
-            title: "RoundTitle",
-            description: "Alors voila c'est comme ca qu'on fait et ca commence maintenant !",
-            scores: [{
-                id: 1,
-                score: 0
-            }, {
-                id: 2,
-                score: 0
-            }]
-        }, {
-            id : 2,
-            finished: false,
-            title: "RoundTitle2",
-            description: "Alors voila c'est comme ca qu'on fait et ca commence maintenant !",
-            scores: [{
-                id: 1,
-                score: 0
-            }, {
-                id: 2,
-                score: 0
-            }]
-        }];
-        this.participants = [
-            {
-                id: 1,
-                login: "BODO",
-                score: 0,
-            },
-            {
-                id: 2,
-                login: "MAX",
-                score: 0
-            }
-        ];
-        this.allowedScorer = [
-            31049
-        ];
-        this.finished = false;
-        this.activeRound = null;
-        this.nextRound = null;
-        this.isStarted = false;
+        this.rounds = scorerConfig.rounds;
+        this.participants = scorerConfig.participants;
+        this.allowedScorer = scorerConfig.allowedScorer;
+        this.finished = scorerConfig.finished;
+        this.activeRound = scorerConfig.activeRound;
+        this.nextRound = scorerConfig.nextRound;
+        this.isStarted = scorerConfig.isStarted;
     }
     /*getWinner() {
         if (this.participants[0].score > this.participants[1].score) {
@@ -83,14 +48,21 @@ class Scorer {
 
     startGame(socket) {
         this.isStarted = true;
-        socket.emit("start.game.success", {
-            isStarted: this.isStarted,
-        });
-        socket.broadcast.emit("start.game.success", {
-            isStarted: this.isStarted,
-        });
+        socket.emit("start.game.success");
+        socket.broadcast.emit("start.game.success");
     }
 
+    endGame(socket) {
+        this.rounds = scorerConfig.rounds;
+        this.participants = scorerConfig.participants;
+        this.allowedScorer = scorerConfig.allowedScorer;
+        this.finished = scorerConfig.finished;
+        this.activeRound = scorerConfig.activeRound;
+        this.nextRound = scorerConfig.nextRound;
+        this.isStarted = scorerConfig.isStarted;
+        socket.emit("end.game.success");
+        socket.broadcast.emit("end.game.success");
+    }
 
 
     /*getScores(socket) {

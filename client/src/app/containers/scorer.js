@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 
 import Scorer from "../components/Scorer";
-import { GET_GAME, START_GAME } from "../actions/scores";
+import { GET_GAME, START_GAME, END_GAME } from "../actions/scores";
 
 const mapStateToProps = ({scores}) => {
     return {
@@ -17,7 +17,8 @@ const mapStateToProps = ({scores}) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getGame: payload => dispatch({type: GET_GAME, payload}),
-        startGame: payload => dispatch({type: START_GAME, payload})
+        startGame: payload => dispatch({type: START_GAME, payload}),
+        endGame: payload => dispatch({type: END_GAME, payload})
     };
 };
 

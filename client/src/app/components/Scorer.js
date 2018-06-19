@@ -43,6 +43,16 @@ class Scorer extends Component {
         }
     }
 
+    getRoundStatus() {
+        if (this.props.activeRound) {
+            return "display active round result";
+        } else if (this.props.nextRound) {
+            return "display nextRound countDown";
+        } else {
+            return "The game is started";
+        }
+    }
+
     renderParticipants() {
         return this.props.participants.map(participant => {
             return (
@@ -78,6 +88,7 @@ class Scorer extends Component {
     }
 
     render(){ 
+        console.log(this.props)
         if (this.state.dismissed || !(this.props.isStarted || this.props.isScorer)) {
             return (<div className={"scorerPlaceHolder"} />);
         }
@@ -94,12 +105,17 @@ class Scorer extends Component {
                     <div className={"participantWrapper"}>
                         {this.renderParticipants()}
                     </div>
-                    <p className={"participantsStatus"}>{this.getWinnerAnnouncement()}</p>
-                    <div className={"roundControl"}>
+                    <p className={"gameStatus"}>{this.getRoundStatus()}</p>
+                    <div className={"controll"}>
                         {(!this.props.isStarted) && <button className={"startRound"} onClick={() => {
                             this.props.startGame();
                         }}>
-                            Start 
+                            Start game
+                        </button>}
+                        {(this.props.isStarted) && <button className={"startRound"} onClick={() => {
+                            this.props.endGame();
+                        }}>
+                            End game 
                         </button>}
                     </div>
                 </div>
