@@ -14,7 +14,7 @@ class Scorer extends Component {
     }
 
     componentWillMount() {
-        this.props.getScores();
+        this.props.getGame();
     }
 
     getWinnerClass(participantId) {
@@ -52,23 +52,23 @@ class Scorer extends Component {
                         <p>{participant.login}</p>
                     </div>
                     <div className={"bottomWrapper"}>
-                        {this.props.isScorer && <div className={"scoreUpdate remove"} onClick={() => {
+                        {this.props.isScorer && <div className={"scoreUpdate remove"} /*onClick={() => {
                             this.props.updateScores({
                                 target: participant.id,
                                 type: "REMOVE"
                             });
-                        }}>
+                        }}*/>
                         -
                         </div>}
                         <div className={"participantScore"}>
                             <p>{participant.score}</p>
                         </div>
-                        {this.props.isScorer && <div className={"scoreUpdate add"}  onClick={() => {
+                        {this.props.isScorer && <div className={"scoreUpdate add"}  /*onClick={() => {
                             this.props.updateScores({
                                 target: participant.id,
                                 type: "ADD"
                             });
-                        }}>
+                        }}*/>
                         +
                         </div>}
                     </div>
@@ -78,7 +78,8 @@ class Scorer extends Component {
     }
 
     render(){ 
-        if (this.state.dismissed) {
+        console.log(this.props)
+        if (this.state.dismissed || !(this.props.isStarted || this.props.isScorer)) {
             return (<div className={"scorerPlaceHolder"} />);
         }
         return (

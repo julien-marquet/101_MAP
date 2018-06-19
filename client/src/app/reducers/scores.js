@@ -1,24 +1,24 @@
-import {GET_SCORES_SUCCESS, UPDATE_SCORES_SUCCESS} from "../actions/scores";
+import {GET_GAME_SUCCESS} from "../actions/scores";
 
 const initialState = {
+    finishedRounds: [],
+    activeRound: null,
     participants: [],
-    winner: null,
-    isScorer: false
+    nextRound: null,
+    isScorer: false,
+    isStarted: false
 };
 
 const toaster = (state = initialState, {type, payload}) => {
     switch (type) {
-    case GET_SCORES_SUCCESS:
+    case GET_GAME_SUCCESS:
         return {
+            finishedRounds: payload.finishedRounds,
+            activeRound: payload.activeRound,
             participants: payload.participants,
-            winner: payload.winner,
-            isScorer: payload.isScorer
-        };
-    case UPDATE_SCORES_SUCCESS: 
-        return {
-            participants: payload.participants,
-            winner: payload.winner,
-            isScorer: payload.isScorer
+            nextRound: payload.nextRound,
+            isScorer: payload.isScorer,
+            isStarted: payload.isStarted
         };
     default:
         return state;

@@ -1,5 +1,30 @@
 class Scorer {
     constructor() {
+        this.rounds = [{
+            id: 1,
+            finished: false,
+            title: "RoundTitle",
+            description: "Alors voila c'est comme ca qu'on fait et ca commence maintenant !",
+            scores: [{
+                id: 1,
+                score: 0
+            }, {
+                id: 2,
+                score: 0
+            }]
+        }, {
+            id : 2,
+            finished: false,
+            title: "RoundTitle2",
+            description: "Alors voila c'est comme ca qu'on fait et ca commence maintenant !",
+            scores: [{
+                id: 1,
+                score: 0
+            }, {
+                id: 2,
+                score: 0
+            }]
+        }];
         this.participants = [
             {
                 id: 1,
@@ -15,8 +40,12 @@ class Scorer {
         this.allowedScorer = [
             31049
         ];
+        this.finished = false;
+        this.activeRound = null;
+        this.nextRound = null;
+        this.isStarted = false;
     }
-    getWinner() {
+    /*getWinner() {
         if (this.participants[0].score > this.participants[1].score) {
             return this.participants[0].id;
         } else if (this.participants[0].score < this.participants[1].score) {
@@ -24,8 +53,39 @@ class Scorer {
         } else {
             return null;
         }
+    }*/
+    getFinishedRounds() {
+        const fRounds = [];
+        this.rounds.forEach(round => {
+            if (round.finished === true)
+                fRounds.push(round);
+        });
+        return fRounds;
     }
-    getScores(socket) {
+    getActiveRound() {
+        for (let i = 0; i < this.rounds.length; i++) {
+            if (this.rounds[i].id === this.activeRound) {
+                return this.rounds[i];
+            }
+        }
+        return null;
+    }
+    getGame(socket) {
+        socket.emit("get.game.success", {
+            finishedRounds: this.getFinishedRounds(),
+            activeRound: this.getActiveRound(),
+            participants: this.participants,
+            nextRound: this.nextRound,
+            isScorer: this.allowedScorer.includes(socket.userId),
+            isStarted: this.isStarted,
+        });
+    }
+
+
+
+
+
+    /*getScores(socket) {
         socket.emit("get.scores.success", {
             participants: this.participants,
             winner: this.getWinner(),
@@ -59,7 +119,7 @@ class Scorer {
             socket.emit("update.scores.error", "not allowed");
         }
     }
-    
+    */
 }
 
 module.exports = Scorer;

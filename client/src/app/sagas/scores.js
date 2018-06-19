@@ -1,21 +1,15 @@
 import {all, takeLatest} from "redux-saga/effects";
 
-import {GET_SCORES, UPDATE_SCORES} from "../actions/scores";
+import {GET_GAME} from "../actions/scores";
 
-function getScores(socketClient) {
+function getGame(socketClient) {
     console.log("get")
-    socketClient.emit("get.scores");
-}
-
-function updateScores(socketClient, {payload}) {
-    console.log("update");
-    socketClient.emit("update.scores", payload);
+    socketClient.emit("get.game");
 }
 
 function* flow(socketClient) {
     yield all([
-        takeLatest(GET_SCORES, getScores, socketClient),
-        takeLatest(UPDATE_SCORES, updateScores, socketClient)
+        takeLatest(GET_GAME, getGame, socketClient),
     ]);
 }
 
