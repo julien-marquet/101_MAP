@@ -21,14 +21,19 @@ const toaster = (state = initialState, {type, payload}) => {
             isStarted: payload.isStarted
         };
     case START_GAME_SUCCESS: 
+    console.log(payload)
         return {
-            ...state,
+            finishedRounds: payload.finishedRounds,
+            activeRound: payload.activeRound,
+            participants: payload.participants,
+            nextRound: payload.nextRound,
+            isScorer: payload.isScorer,
             isStarted: true,
         };
     case END_GAME_SUCCESS: 
         return {
-            ...state,
-            isStarted: initialState.isStarted
+            ...initialState,
+            isScorer: state.isScorer
         };
     case NEXT_ROUND_SUCCESS:
         return {

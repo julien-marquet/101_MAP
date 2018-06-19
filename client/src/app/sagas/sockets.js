@@ -14,8 +14,8 @@ function setupListeners(socketClient, dispatch) {
     socketClient.on("get.game.success", data => {
         dispatch({type: GET_GAME_SUCCESS, payload: data});
     });
-    socketClient.on("start.game.success", () => {
-        dispatch({type: START_GAME_SUCCESS});
+    socketClient.on("start.game.success", data => {
+        dispatch({type: START_GAME_SUCCESS, payload: data});
     });
     socketClient.on("end.game.success", () => {
         dispatch({type: END_GAME_SUCCESS});

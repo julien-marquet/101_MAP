@@ -2,14 +2,14 @@ const scorerConfig = require("../config/scorerConfig");
 
 class Scorer {
     constructor() {
-        this.rounds = scorerConfig.rounds;
-        this.participants = scorerConfig.participants;
-        this.allowedScorer = scorerConfig.allowedScorer;
+        this.rounds = JSON.parse(JSON.stringify(scorerConfig.rounds));
+        this.participants = JSON.parse(JSON.stringify(scorerConfig.participants));
+        this.allowedScorer = JSON.parse(JSON.stringify(scorerConfig.allowedScorer));
         this.finished = scorerConfig.finished;
-        this.activeRound = scorerConfig.activeRound;
-        this.nextRound = scorerConfig.nextRound;
-        this.isStarted = scorerConfig.isStarted;
-
+        this.activeRound = null;
+        this.nextRound = null;
+        this.isStarted = false;
+        this.totalScores = 0;
         this.countDown = null;
     }
     getRoundWinner(round) {
@@ -66,6 +66,7 @@ class Scorer {
             nextRound: this.nextRound,
             isScorer: this.allowedScorer.includes(socket.userId),
             isStarted: this.isStarted,
+            totalScores: this.totalScores,
         });
     }
 
@@ -74,21 +75,38 @@ class Scorer {
             socket.emit("start.game.error");
         }
         this.isStarted = true;
-        socket.emit("start.game.success");
-        socket.broadcast.emit("start.game.success");
+        socket.emit("start.game.success", {
+            finishedRounds: this.getFinishedRounds(),
+            activeRound: this.getActiveRound(),
+            participants: this.participants,
+            nextRound: this.nextRound,
+            isScorer: this.allowedScorer.includes(socket.userId),
+            isStarted: this.isStarted,
+            totalScores: this.totalScores,
+        });
+        socket.broadcast.emit("start.game.success", {
+            finishedRounds: this.getFinishedRounds(),
+            activeRound: this.getActiveRound(),
+            participants: this.participants,
+            nextRound: this.nextRound,
+            isScorer: this.allowedScorer.includes(socket.userId),
+            isStarted: this.isStarted,
+            totalScores: this.totalScores,
+        });
     }
 
     endGame(socket) {
         if (!this.allowedScorer.includes(socket.userId)) {
             socket.emit("end.game.error");
         }
-        this.rounds = scorerConfig.rounds;
-        this.participants = scorerConfig.participants;
-        this.allowedScorer = scorerConfig.allowedScorer;
+        this.rounds = JSON.parse(JSON.stringify(scorerConfig.rounds));
+        this.participants = JSON.parse(JSON.stringify(scorerConfig.participants));
+        this.allowedScorer = JSON.parse(JSON.stringify(scorerConfig.allowedScorer));
         this.finished = scorerConfig.finished;
-        this.activeRound = scorerConfig.activeRound;
-        this.nextRound = scorerConfig.nextRound;
-        this.isStarted = scorerConfig.isStarted;
+        this.activeRound = null;
+        this.nextRound = null;
+        this.isStarted = false;
+        this.totalScores = 0;
         socket.emit("end.game.success");
         socket.broadcast.emit("end.game.success");
     }

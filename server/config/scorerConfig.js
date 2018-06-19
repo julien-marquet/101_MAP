@@ -42,5 +42,15 @@ module.exports = {
     finished: false,
     activeRound: null,
     nextRound: null,
-    isStarted: false
+    isStarted: false,
+    totalScores: [
+        {
+            id: 1,
+            score: 0
+        },
+        {
+            id: 2,
+            score: 0
+        }
+    ]
 };
