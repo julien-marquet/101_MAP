@@ -296,7 +296,7 @@ class Scorer {
             if (this.rounds[i].id === this.activeRound) {
                 if (this.rounds[i].finished === false) {
                     this.rounds[i] = JSON.parse(JSON.stringify(this.initialRounds[i]));
-                    const winner2 = this.getRoundWinner(this.initialRounds[i - 1]);
+                    const winner2 = this.getRoundWinner(this.rounds[i - 1]);
                     if (winner2 !== null) {
                         this.totalScores[winner2 - 1].score -= 1;
                     }
