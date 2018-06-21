@@ -226,6 +226,37 @@ class Scorer {
             socket.emit("finish.round.error", "error");
         }
     }
+    resetRound(socket) {
+        if (!this.allowedScorer.includes(socket.userId) || !this.activeRound) {
+            socket.emit("reset.round.error", "error");
+            return ;
+        }
+        for (let i = 0; i < this.rounds.length; i++) {
+            if (this.rounds[i].id === this.activeRound) {
+                if (this.rounds[i].finished === false) {
+                    this.rounds[i] = JSON.parse(JSON.stringify(scorerConfig.rounds[i]));
+                } else {
+                    const winner = this.getRoundWinner(this.rounds[i]);
+                    if (winner !== null) {
+                        this.totalScores[winner - 1].score -= 1;
+                    }
+                    this.rounds[i] = JSON.parse(JSON.stringify(scorerConfig.rounds[i]));
+                }
+                if (this.finished)
+                    this.finished = false;
+                socket.emit("reset.round.success", {totalScores: this.totalScores,
+                    finishedRounds: this.getFinishedRounds(),
+                    activeRound: this.getActiveRound(),
+                    finished: this.finished,
+                });
+                socket.broadcast.emit("reset.round.success", {totalScores: this.totalScores,
+                    finishedRounds: this.getFinishedRounds(),
+                    activeRound: this.getActiveRound(),
+                    finished: this.finished,
+                });
+            }
+        }
+    }
 }
 
 module.exports = Scorer;

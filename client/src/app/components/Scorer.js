@@ -56,6 +56,9 @@ class Scorer extends Component {
             else 
                 return "The game is finished, hat was a draw !";
         }
+        else if (this.props.nextRound) {
+            return "display nextRound countDown";
+        }
         else if (this.props.activeRound) {
             if (this.props.activeRound.finished) {
                 if (this.props.activeRound.winner) 
@@ -68,8 +71,6 @@ class Scorer extends Component {
                 else 
                     return "That's a draw !";
             }
-        } else if (this.props.nextRound) {
-            return "display nextRound countDown";
         } else if (this.props.isStarted) {
             return "The game is started, waiting for a round to start";
         } else {
@@ -162,6 +163,11 @@ class Scorer extends Component {
                             this.props.finishRound();
                         }}>
                             Finish Round
+                        </button>}
+                        {(this.props.isStarted) && <button className={"resetRound"} onClick={() => {
+                            this.props.resetRound();
+                        }}>
+                            Reset Round
                         </button>}
                     </div>}
                 </div>
