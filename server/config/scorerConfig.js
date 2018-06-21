@@ -17,7 +17,7 @@ module.exports = {
     }],
     participants: [
         "PATRICK",
-        "BODO"
+        "MONIQUE"
     ],
     allowedScorer: [
         31049
