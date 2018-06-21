@@ -113,7 +113,6 @@ class Scorer extends Component {
     }
 
     render(){ 
-        console.log(this.props);
         if (this.state.dismissed || !(this.props.isStarted || this.props.isScorer)) {
             return (<div className={"scorerPlaceHolder"} />);
         }

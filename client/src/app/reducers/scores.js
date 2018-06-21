@@ -13,7 +13,6 @@ const initialState = {
 };
 
 const toaster = (state = initialState, {type, payload}) => {
-    console.log(payload)
     switch (type) {
     case GET_GAME_SUCCESS:
         return {
