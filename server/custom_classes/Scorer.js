@@ -13,6 +13,15 @@ class Scorer {
         this.countDown = null;
     }
 
+    updateGameStatus(socket) {
+        const finished = this.getFinishedRounds();
+        if (this.rounds.length === finished.length) {
+            this.finished = true;
+            socket.emit("finish.game.success");
+            socket.broadcast.emit("finish.game.success");
+        }
+    }
+
     markAsFinished(id) {
         if (id) {
             for (let i = 0; i < this.rounds.length; i++) {
@@ -59,9 +68,7 @@ class Scorer {
             if (found < this.rounds.length)
                 this.activeRound = this.rounds[found].id;
             else
-                this.activeRound = null;
-            
-                
+                this.activeRound = null;    
         }
     }
 
@@ -86,6 +93,16 @@ class Scorer {
         return fRounds;
     }
     getGame(socket) {
+        console.log({
+            finishedRounds: this.getFinishedRounds(),
+            activeRound: this.getActiveRound(),
+            participants: this.participants,
+            nextRound: this.nextRound,
+            isScorer: this.allowedScorer.includes(socket.userId),
+            isStarted: this.isStarted,
+            finished: this.finished,
+            totalScores: this.totalScores,
+        })
         socket.emit("get.game.success", {
             finishedRounds: this.getFinishedRounds(),
             activeRound: this.getActiveRound(),
@@ -93,6 +110,7 @@ class Scorer {
             nextRound: this.nextRound,
             isScorer: this.allowedScorer.includes(socket.userId),
             isStarted: this.isStarted,
+            finished: this.finished,
             totalScores: this.totalScores,
         });
     }
@@ -110,6 +128,7 @@ class Scorer {
             nextRound: this.nextRound,
             isScorer: this.allowedScorer.includes(socket.userId),
             isStarted: this.isStarted,
+            finished: this.finished,
             totalScores: this.totalScores,
         });
         socket.broadcast.emit("start.game.success", {
@@ -119,6 +138,7 @@ class Scorer {
             nextRound: this.nextRound,
             isScorer: this.allowedScorer.includes(socket.userId),
             isStarted: this.isStarted,
+            finished: this.finished,
             totalScores: this.totalScores,
         });
     }
@@ -131,11 +151,12 @@ class Scorer {
         this.rounds = JSON.parse(JSON.stringify(scorerConfig.rounds));
         this.participants = JSON.parse(JSON.stringify(scorerConfig.participants));
         this.allowedScorer = JSON.parse(JSON.stringify(scorerConfig.allowedScorer));
-        this.finished = scorerConfig.finished;
+        this.finished = false;
         this.activeRound = null;
         this.nextRound = null;
         this.isStarted = false;
         this.totalScores = JSON.parse(JSON.stringify(scorerConfig.totalScores));
+        this.countDown = null;
         socket.emit("end.game.success");
         socket.broadcast.emit("end.game.success");
     }
@@ -166,6 +187,7 @@ class Scorer {
                 nextRound: this.nextRound,
                 totalScores: this.totalScores
             });
+            this.updateGameStatus(socket);
         }, payload.countDown * 1000);
     }
     updateRound(socket, payload) {
@@ -197,8 +219,9 @@ class Scorer {
             return ;
         }
         if (this.markAsFinished(this.activeRound || null)) {
-            socket.emit("finish.round.success", {totalScores: this.totalScores});
-            socket.broadcast.emit("finish.round.success", {totalScores: this.totalScores});
+            socket.emit("finish.round.success", {finishedRounds:this.getFinishedRounds(), totalScores: this.totalScores});
+            socket.broadcast.emit("finish.round.success", {finishedRounds:this.getFinishedRounds(), totalScores: this.totalScores});
+            this.updateGameStatus(socket);
         } else {
             socket.emit("finish.round.error", "error");
         }

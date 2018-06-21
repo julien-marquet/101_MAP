@@ -5,9 +5,9 @@ export const START_GAME = "start.game";
 export const START_GAME_SUCCESS = "start.game.success";
 export const START_GAME_ERROR = "start.game.error";
 
-export const RESET_GAME = "reset.game";
-export const RESET_GAME_SUCCESS = "reset.game";
-export const RESET_GAME_ERROR = "reset.game.error";
+export const FINISH_GAME = "finish.game";
+export const FINISH_GAME_SUCCESS = "finish.game.success";
+export const FINISH_GAME_ERROR = "finish.game.error";
 
 export const END_GAME = "end.game";
 export const END_GAME_SUCCESS = "end.game.success";

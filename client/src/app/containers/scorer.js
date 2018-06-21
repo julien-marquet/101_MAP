@@ -11,7 +11,8 @@ const mapStateToProps = ({scores}) => {
         nextRound: scores.nextRound,
         isScorer: scores.isScorer,
         totalScores : scores.totalScores,
-        isStarted: scores.isStarted
+        isStarted: scores.isStarted,
+        finished: scores.finished
     };
 };
 
