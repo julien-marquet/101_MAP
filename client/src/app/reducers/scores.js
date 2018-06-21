@@ -124,7 +124,17 @@ const toaster = (state = initialState, {type, payload}) => {
         };
     case PREV_ROUND_SUCCESS: 
         return {
-            ...state
+            ...state,
+            activeRound: {
+                ...payload.activeRound
+            },
+            totalScores: [
+                ...payload.totalScores,
+            ],
+            finishedRounds: [
+                ...payload.finishedRounds,
+            ],
+            finished: payload.finished,
         };
     default:
         return state;

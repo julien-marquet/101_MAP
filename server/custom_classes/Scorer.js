@@ -249,9 +249,45 @@ class Scorer {
         }
     }
     prevRound(socket) {
-        if (!this.allowedScorer.includes(socket.userId) || !this.activeRound) {
+        if (!this.allowedScorer.includes(socket.userId) || !this.activeRound || this.activeRound <= 1) {
             socket.emit("prev.round.error", "error");
             return ;
+        }
+        for (let i = 1; i < this.rounds.length; i++) {
+            if (this.rounds[i].id === this.activeRound) {
+                if (this.rounds[i].finished === false) {
+                    this.rounds[i] = JSON.parse(JSON.stringify(scorerConfig.rounds[i]));
+                    const winner2 = this.getRoundWinner(this.rounds[i - 1]);
+                    if (winner2 !== null) {
+                        this.totalScores[winner2 - 1].score -= 1;
+                    }
+                    this.rounds[i - 1] = JSON.parse(JSON.stringify(scorerConfig.rounds[i - 1]));
+                }  else {
+                    const winner = this.getRoundWinner(this.rounds[i]);
+                    if (winner !== null) {
+                        this.totalScores[winner - 1].score -= 1;
+                    }
+                    const winner2 = this.getRoundWinner(this.rounds[i - 1]);
+                    if (winner2 !== null) {
+                        this.totalScores[winner2 - 1].score -= 1;
+                    }
+                    this.rounds[i] = JSON.parse(JSON.stringify(scorerConfig.rounds[i]));
+                    this.rounds[i - 1] = JSON.parse(JSON.stringify(scorerConfig.rounds[i - 1]));
+                }
+                if (this.finished)
+                    this.finished = false;
+                this.activeRound -= 1;
+                socket.emit("prev.round.success", {totalScores: this.totalScores,
+                    finishedRounds: this.getFinishedRounds(),
+                    activeRound: this.getActiveRound(),
+                    finished: this.finished,
+                });
+                socket.broadcast.emit("prev.round.success", {totalScores: this.totalScores,
+                    finishedRounds: this.getFinishedRounds(),
+                    activeRound: this.getActiveRound(),
+                    finished: this.finished,
+                });
+            }
         }
     }
 }

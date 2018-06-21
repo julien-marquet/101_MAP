@@ -23,6 +23,18 @@ module.exports = {
             id: 2,
             score: 0
         }]
+    }, {
+        id : 3,
+        finished: false,
+        title: "RoundTitle3",
+        description: "Alors voila c'est comme ca qu'on fait et ca commence maintenant !",
+        scores: [{
+            id: 1,
+            score: 0
+        }, {
+            id: 2,
+            score: 0
+        }]
     }],
     participants: [
         {
