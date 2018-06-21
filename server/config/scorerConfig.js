@@ -37,10 +37,6 @@ module.exports = {
     allowedScorer: [
         31049
     ],
-    finished: false,
-    activeRound: null,
-    nextRound: null,
-    isStarted: false,
     totalScores: [
         {
             id: 1,

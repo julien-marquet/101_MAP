@@ -1,4 +1,4 @@
-import {GET_GAME_SUCCESS, START_GAME_SUCCESS, END_GAME_SUCCESS, NEXT_ROUND_SUCCESS, START_ROUND_SUCCESS, UPDATE_ROUND_SUCCESS} from "../actions/scores";
+import {GET_GAME_SUCCESS, START_GAME_SUCCESS, END_GAME_SUCCESS, NEXT_ROUND_SUCCESS, START_ROUND_SUCCESS, UPDATE_ROUND_SUCCESS, FINISH_ROUND_SUCCESS} from "../actions/scores";
 
 const initialState = {
     finishedRounds: [],
@@ -11,24 +11,41 @@ const initialState = {
 };
 
 const toaster = (state = initialState, {type, payload}) => {
+    console.log(payload)
     switch (type) {
     case GET_GAME_SUCCESS:
         return {
-            finishedRounds: payload.finishedRounds,
-            activeRound: payload.activeRound,
-            participants: payload.participants,
+            finishedRounds: [
+                ...payload.finishedRounds,
+            ],
+            activeRound: payload.activeRound ? {
+                ...payload.activeRound,
+            } : null,
+            participants: [
+                ...payload.participants,
+            ],
             nextRound: payload.nextRound,
             isScorer: payload.isScorer,
             isStarted: payload.isStarted,
-            totalScores : payload.totalScores,
+            totalScores : [
+                ...payload.totalScores,
+            ]
         };
     case START_GAME_SUCCESS: 
         return {
-            finishedRounds: payload.finishedRounds,
-            activeRound: payload.activeRound,
-            participants: payload.participants,
+            finishedRounds: [
+                ...payload.finishedRounds,
+            ],
+            activeRound: payload.activeRound ? {
+                ...payload.activeRound,
+            } : null,
+            participants: [
+                ...payload.participants,
+            ],
             nextRound: payload.nextRound,
-            totalScores : payload.totalScores,
+            totalScores : [
+                ...payload.totalScores,
+            ],
             isScorer: payload.isScorer,
             isStarted: true,
         };
@@ -46,14 +63,33 @@ const toaster = (state = initialState, {type, payload}) => {
         return {
             ...state,
             nextRound: initialState.nextRound,
-            activeRound: payload.activeRound,
-            totalScores : payload.totalScores,
-            finishedRounds: payload.finishedRounds, 
+            activeRound: payload.activeRound ? {
+                ...payload.activeRound,
+            } : null,
+            totalScores : [
+                ...payload.totalScores,
+            ],
+            finishedRounds: [
+                ...payload.finishedRounds,
+            ]
         };
     case UPDATE_ROUND_SUCCESS:
         return {
             ...state,
-            activeRound: payload.activeRound
+            activeRound: payload.activeRound ? {
+                ...payload.activeRound,
+            } : null,
+        };
+    case FINISH_ROUND_SUCCESS:
+        return {
+            ...state,
+            totalScores: [
+                ...payload.totalScores
+            ],
+            activeRound: {
+                ...state.activeRound,
+                finished: true
+            },
         };
     default:
         return state;

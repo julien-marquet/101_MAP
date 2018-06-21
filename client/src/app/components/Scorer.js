@@ -136,7 +136,12 @@ class Scorer extends Component {
                                 this.props.goNextRound({countDown: this.refs.roundCountDown.value});
                             }}>Start round in</button>
                             <input type={"number"} ref={"roundCountDown"} /> minutes
-                        </div>}   
+                        </div>}
+                        {(this.props.isStarted) && <button className={"finishRound"} onClick={() => {
+                            this.props.finishRound();
+                        }}>
+                            Finish Round
+                        </button>}
                     </div>}
                 </div>
             </div>

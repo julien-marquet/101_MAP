@@ -17,15 +17,20 @@ class Scorer {
         if (id) {
             for (let i = 0; i < this.rounds.length; i++) {
                 if (this.rounds[i].id === id) {
-                    this.rounds[i].finished = true;
-                    if (this.rounds[i].scores[0].score > this.rounds[i].scores[1].score) {
-                        this.rounds[i].winner = this.rounds[i].scores[0].id;
-                        this.totalScores[0].score += 1;
-                    } else  if (this.rounds[i].scores[0].score < this.rounds[i].scores[1].score) {
-                        this.rounds[i].winner = this.rounds[i].scores[1].id;
-                        this.totalScores[1].score += 1;
+                    if (!this.rounds[i].finished) {
+                        this.rounds[i].finished = true;
+                        if (this.rounds[i].scores[0].score > this.rounds[i].scores[1].score) {
+                            this.rounds[i].winner = this.rounds[i].scores[0].id;
+                            this.totalScores[0].score += 1;
+                        } else  if (this.rounds[i].scores[0].score < this.rounds[i].scores[1].score) {
+                            this.rounds[i].winner = this.rounds[i].scores[1].id;
+                            this.totalScores[1].score += 1;
+                        } else {
+                            this.rounds[i].winner = null;
+                        }
+                        return true;
                     } else {
-                        this.rounds[i].winner = null;
+                        return false;
                     }
                 }
             }
@@ -81,15 +86,6 @@ class Scorer {
         return fRounds;
     }
     getGame(socket) {
-        console.log({
-            finishedRounds: this.getFinishedRounds(),
-            activeRound: this.getActiveRound(),
-            participants: this.participants,
-            nextRound: this.nextRound,
-            isScorer: this.allowedScorer.includes(socket.userId),
-            isStarted: this.isStarted,
-            totalScores: this.totalScores,
-        })
         socket.emit("get.game.success", {
             finishedRounds: this.getFinishedRounds(),
             activeRound: this.getActiveRound(),
@@ -104,6 +100,7 @@ class Scorer {
     startGame(socket) {
         if (!this.allowedScorer.includes(socket.userId)) {
             socket.emit("start.game.error");
+            return ;
         }
         this.isStarted = true;
         socket.emit("start.game.success", {
@@ -129,6 +126,7 @@ class Scorer {
     endGame(socket) {
         if (!this.allowedScorer.includes(socket.userId)) {
             socket.emit("end.game.error");
+            return ;
         }
         this.rounds = JSON.parse(JSON.stringify(scorerConfig.rounds));
         this.participants = JSON.parse(JSON.stringify(scorerConfig.participants));
@@ -144,6 +142,7 @@ class Scorer {
     goNextRound(socket, payload) {
         if (!this.allowedScorer.includes(socket.userId)) {
             socket.emit("next.round.error");
+            return ;
         }
         clearTimeout(this.countDown);
         if (!(payload.countDown > 0))
@@ -172,6 +171,7 @@ class Scorer {
     updateRound(socket, payload) {
         if (!this.allowedScorer.includes(socket.userId) || !payload.target || !payload.type || !this.activeRound) {
             socket.emit("update.round.error", "error");
+            return ;
         }
         for (let i = 0; i < this.rounds.length; i++) {
             if (this.rounds[i].id === this.activeRound) {
@@ -189,6 +189,18 @@ class Scorer {
         }
         socket.emit("update.round.success", {activeRound: this.getActiveRound()});
         socket.broadcast.emit("update.round.success", {activeRound: this.getActiveRound()});
+    }
+    finishRound(socket) {
+        if (!this.allowedScorer.includes(socket.userId) || !this.activeRound) {
+            socket.emit("finish.round.error", "error");
+            return ;
+        }
+        if (this.markAsFinished(this.activeRound || null)) {
+            socket.emit("finish.round.success", {totalScores: this.totalScores});
+            socket.broadcast.emit("finish.round.success", {totalScores: this.totalScores});
+        } else {
+            socket.emit("finish.round.error", "error");
+        }
     }
 }
 

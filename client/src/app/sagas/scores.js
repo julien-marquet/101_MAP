@@ -1,6 +1,6 @@
 import {all, takeLatest} from "redux-saga/effects";
 
-import {GET_GAME, START_GAME, END_GAME, NEXT_ROUND, UPDATE_ROUND} from "../actions/scores";
+import {GET_GAME, START_GAME, END_GAME, NEXT_ROUND, UPDATE_ROUND, FINISH_ROUND} from "../actions/scores";
 
 function getGame(socketClient) {
     socketClient.emit("get.game");
@@ -22,13 +22,18 @@ function updateRound(socketClient, {payload}) {
     socketClient.emit("update.round", payload);
 }
 
+function finishRound(socketClient) {
+    socketClient.emit("finish.round");
+}
+
 function* flow(socketClient) {
     yield all([
         takeLatest(GET_GAME, getGame, socketClient),
         takeLatest(START_GAME, startGame, socketClient),
         takeLatest(END_GAME, endGame, socketClient),
         takeLatest(NEXT_ROUND, nextRound, socketClient),
-        takeLatest(UPDATE_ROUND, updateRound, socketClient)
+        takeLatest(UPDATE_ROUND, updateRound, socketClient),
+        takeLatest(FINISH_ROUND, finishRound, socketClient)
     ]);
 }
 
