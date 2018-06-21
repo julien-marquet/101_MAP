@@ -126,6 +126,7 @@ class Scorer extends Component {
                     }}>
                         <i className="fas fa-times" />
                     </button>
+                    {(this.props.activeRound) && <h2>Round Number : {this.props.activeRound.id}</h2>}
                     {(this.props.activeRound) && <h2>{this.props.activeRound.title}</h2>}
                     {(this.props.activeRound) && <p>{this.props.activeRound.description}</p>}
                     <div className={"participantWrapper"}>
