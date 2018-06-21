@@ -174,7 +174,7 @@ class Scorer {
             return ;
         }
         for (let i = 0; i < this.rounds.length; i++) {
-            if (this.rounds[i].id === this.activeRound) {
+            if (this.rounds[i].id === this.activeRound && this.rounds[i].finished === false) {
                 this.rounds[i].scores = this.rounds[i].scores.map(elem => {
                     if (elem.id === payload.target) {
                         if (payload.type === "ADD")
@@ -184,11 +184,12 @@ class Scorer {
                     }
                     return elem;
                 });
-                break ;
+                socket.emit("update.round.success", {activeRound: this.getActiveRound()});
+                socket.broadcast.emit("update.round.success", {activeRound: this.getActiveRound()});
+                return ;
             }
         }
-        socket.emit("update.round.success", {activeRound: this.getActiveRound()});
-        socket.broadcast.emit("update.round.success", {activeRound: this.getActiveRound()});
+        socket.emit("update.round.error", "error");
     }
     finishRound(socket) {
         if (!this.allowedScorer.includes(socket.userId) || !this.activeRound) {
