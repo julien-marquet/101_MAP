@@ -84,6 +84,7 @@ const toaster = (state = initialState, {type, payload}) => {
     case UPDATE_ROUND_SUCCESS:
         return {
             ...state,
+            nextRound: initialState.nextRound,
             activeRound: payload.activeRound ? {
                 ...payload.activeRound,
             } : null,
@@ -91,6 +92,7 @@ const toaster = (state = initialState, {type, payload}) => {
     case FINISH_ROUND_SUCCESS:
         return {
             ...state,
+            nextRound: initialState.nextRound,
             totalScores: [
                 ...payload.totalScores
             ],
@@ -110,6 +112,7 @@ const toaster = (state = initialState, {type, payload}) => {
     case RESET_ROUND_SUCCESS:
         return {
             ...state,
+            nextRound: initialState.nextRound,
             activeRound: {
                 ...payload.activeRound
             },
@@ -124,6 +127,7 @@ const toaster = (state = initialState, {type, payload}) => {
     case PREV_ROUND_SUCCESS: 
         return {
             ...state,
+            nextRound: initialState.nextRound,
             activeRound: {
                 ...payload.activeRound
             },
