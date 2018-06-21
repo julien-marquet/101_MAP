@@ -179,6 +179,7 @@ class Scorer {
             socket.emit("end.game.error");
             return ;
         }
+        clearTimeout(this.countDown);
         this.rounds = JSON.parse(JSON.stringify(this.initialRounds));
         this.allowedScorer = JSON.parse(JSON.stringify(scorerConfig.allowedScorer));
         this.finished = false;
@@ -225,6 +226,7 @@ class Scorer {
             socket.emit("update.round.error", "error");
             return ;
         }
+        clearTimeout(this.countDown);
         for (let i = 0; i < this.rounds.length; i++) {
             if (this.rounds[i].id === this.activeRound && this.rounds[i].finished === false) {
                 this.rounds[i].scores = this.rounds[i].scores.map(elem => {
@@ -248,6 +250,7 @@ class Scorer {
             socket.emit("finish.round.error", "error");
             return ;
         }
+        clearTimeout(this.countDown);
         if (this.markAsFinished(this.activeRound || null)) {
             socket.emit("finish.round.success", {finishedRounds:this.getFinishedRounds(), totalScores: this.totalScores});
             socket.broadcast.emit("finish.round.success", {finishedRounds:this.getFinishedRounds(), totalScores: this.totalScores});
@@ -261,6 +264,7 @@ class Scorer {
             socket.emit("reset.round.error", "error");
             return ;
         }
+        clearTimeout(this.countDown);
         for (let i = 0; i < this.rounds.length; i++) {
             if (this.rounds[i].id === this.activeRound) {
                 if (this.rounds[i].finished === false) {
@@ -292,6 +296,7 @@ class Scorer {
             socket.emit("prev.round.error", "error");
             return ;
         }
+        clearTimeout(this.countDown);
         for (let i = 1; i < this.rounds.length; i++) {
             if (this.rounds[i].id === this.activeRound) {
                 if (this.rounds[i].finished === false) {
