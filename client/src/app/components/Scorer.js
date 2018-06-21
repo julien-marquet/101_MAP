@@ -48,10 +48,17 @@ class Scorer extends Component {
 
     getRoundStatus() {
         if (this.props.activeRound) { 
-            if (this.props.activeRound.winner) 
-                return `${this.matchId(this.props.activeRound.winner)} is winning the round !`;
-            else 
-                return "That's a draw !";
+            if (this.props.activeRound.finished) {
+                if (this.props.activeRound.winner) 
+                    return `${this.matchId(this.props.activeRound.winner)} has won the round !`;
+                else 
+                    return "That was a draw !";
+            } else {
+                if (this.props.activeRound.winner) 
+                    return `${this.matchId(this.props.activeRound.winner)} is winning the round !`;
+                else 
+                    return "That's a draw !";
+            }
         } else if (this.props.nextRound) {
             return "display nextRound countDown";
         } else {
@@ -135,7 +142,7 @@ class Scorer extends Component {
                             <button className={"startRound"} onClick={() => {
                                 this.props.goNextRound({countDown: this.refs.roundCountDown.value});
                             }}>Start round in</button>
-                            <input type={"number"} ref={"roundCountDown"} /> minutes
+                            <input type={"number"} ref={"roundCountDown"} /> seconds
                         </div>}
                         {(this.props.isStarted) && <button className={"finishRound"} onClick={() => {
                             this.props.finishRound();
