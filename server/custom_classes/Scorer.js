@@ -2,15 +2,55 @@ const scorerConfig = require("../config/scorerConfig");
 
 class Scorer {
     constructor() {
-        this.rounds = JSON.parse(JSON.stringify(scorerConfig.rounds));
-        this.participants = JSON.parse(JSON.stringify(scorerConfig.participants));
+        this.participants = this.buildParticipants();
+
+        this.initialRounds = this.buildInitialRounds();
+        this.initialTotal = this.buildInitialTotal();
+        this.rounds = JSON.parse(JSON.stringify(this.initialRounds));
         this.allowedScorer = JSON.parse(JSON.stringify(scorerConfig.allowedScorer));
         this.finished = false;
         this.activeRound = null;
         this.nextRound = null;
         this.isStarted = false;
-        this.totalScores = JSON.parse(JSON.stringify(scorerConfig.totalScores));
+        this.totalScores = JSON.parse(JSON.stringify(this.initialTotal));
         this.countDown = null;
+    }
+
+    buildParticipants() {
+        const participants = JSON.parse(JSON.stringify(scorerConfig.participants));
+        const res = [];
+        for (let j = 0; j < participants.length; j++) {
+            res.push({
+                login: participants[j],
+                id: j + 1
+            });
+        }
+        return res;
+    }
+
+    buildInitialTotal() {
+        const total = [];
+        for (let j = 0; j < this.participants.length; j++) {
+            total.push({
+                id: this.participants[j].id,
+                score: 0,
+            });
+        }
+        return total;
+    }
+
+    buildInitialRounds() {
+        const rounds = JSON.parse(JSON.stringify(scorerConfig.rounds));
+        for (let i = 0; i < rounds.length; i++) {
+            rounds[i].id = i + 1;
+            for (let j = 0; j < this.participants.length; j++) {
+                rounds[i].scores.push({
+                    id: this.participants[j].id,
+                    score: 0,
+                });
+            }
+        }
+        return rounds;
     }
 
     updateGameStatus(socket) {
@@ -139,14 +179,13 @@ class Scorer {
             socket.emit("end.game.error");
             return ;
         }
-        this.rounds = JSON.parse(JSON.stringify(scorerConfig.rounds));
-        this.participants = JSON.parse(JSON.stringify(scorerConfig.participants));
+        this.rounds = JSON.parse(JSON.stringify(this.initialRounds));
         this.allowedScorer = JSON.parse(JSON.stringify(scorerConfig.allowedScorer));
         this.finished = false;
         this.activeRound = null;
         this.nextRound = null;
         this.isStarted = false;
-        this.totalScores = JSON.parse(JSON.stringify(scorerConfig.totalScores));
+        this.totalScores = JSON.parse(JSON.stringify(this.initialTotal));
         this.countDown = null;
         socket.emit("end.game.success");
         socket.broadcast.emit("end.game.success");
@@ -225,13 +264,13 @@ class Scorer {
         for (let i = 0; i < this.rounds.length; i++) {
             if (this.rounds[i].id === this.activeRound) {
                 if (this.rounds[i].finished === false) {
-                    this.rounds[i] = JSON.parse(JSON.stringify(scorerConfig.rounds[i]));
+                    this.rounds[i] = JSON.parse(JSON.stringify(this.initialRounds[i]));
                 } else {
                     const winner = this.getRoundWinner(this.rounds[i]);
                     if (winner !== null) {
                         this.totalScores[winner - 1].score -= 1;
                     }
-                    this.rounds[i] = JSON.parse(JSON.stringify(scorerConfig.rounds[i]));
+                    this.rounds[i] = JSON.parse(JSON.stringify(this.initialRounds[i]));
                 }
                 if (this.finished)
                     this.finished = false;
@@ -256,12 +295,12 @@ class Scorer {
         for (let i = 1; i < this.rounds.length; i++) {
             if (this.rounds[i].id === this.activeRound) {
                 if (this.rounds[i].finished === false) {
-                    this.rounds[i] = JSON.parse(JSON.stringify(scorerConfig.rounds[i]));
-                    const winner2 = this.getRoundWinner(this.rounds[i - 1]);
+                    this.rounds[i] = JSON.parse(JSON.stringify(this.initialRounds[i]));
+                    const winner2 = this.getRoundWinner(this.initialRounds[i - 1]);
                     if (winner2 !== null) {
                         this.totalScores[winner2 - 1].score -= 1;
                     }
-                    this.rounds[i - 1] = JSON.parse(JSON.stringify(scorerConfig.rounds[i - 1]));
+                    this.rounds[i - 1] = JSON.parse(JSON.stringify(this.initialRounds[i - 1]));
                 }  else {
                     const winner = this.getRoundWinner(this.rounds[i]);
                     if (winner !== null) {
@@ -271,8 +310,8 @@ class Scorer {
                     if (winner2 !== null) {
                         this.totalScores[winner2 - 1].score -= 1;
                     }
-                    this.rounds[i] = JSON.parse(JSON.stringify(scorerConfig.rounds[i]));
-                    this.rounds[i - 1] = JSON.parse(JSON.stringify(scorerConfig.rounds[i - 1]));
+                    this.rounds[i] = JSON.parse(JSON.stringify(this.initialRounds[i]));
+                    this.rounds[i - 1] = JSON.parse(JSON.stringify(this.initialRounds[i - 1]));
                 }
                 if (this.finished)
                     this.finished = false;
