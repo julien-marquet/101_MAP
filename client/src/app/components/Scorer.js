@@ -141,6 +141,7 @@ class Scorer extends Component {
                         </ul>
                     </div>}
                     {(this.props.isStarted) && <p>{`Finished rounds : ${this.props.finishedRounds.length}`}</p>}
+                    {(this.props.isStarted) && <p>{`Total rounds : ${this.props.totalRounds}`}</p>}
                     {(!this.props.isScored) &&
                     <div className={"controll"}>
                         {(!this.props.isStarted) && <button className={"startRound"} onClick={() => {
@@ -163,6 +164,11 @@ class Scorer extends Component {
                             this.props.finishRound();
                         }}>
                             Finish Round
+                        </button>}
+                        {(this.props.isStarted) && <button className={"prevRound"} onClick={() => {
+                            this.props.prevRound();
+                        }}>
+                            Previous Round
                         </button>}
                         {(this.props.isStarted) && <button className={"resetRound"} onClick={() => {
                             this.props.resetRound();

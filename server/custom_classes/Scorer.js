@@ -67,8 +67,6 @@ class Scorer {
             }
             if (found < this.rounds.length)
                 this.activeRound = this.rounds[found].id;
-            else
-                this.activeRound = null;    
         }
     }
 
@@ -93,16 +91,6 @@ class Scorer {
         return fRounds;
     }
     getGame(socket) {
-        console.log({
-            finishedRounds: this.getFinishedRounds(),
-            activeRound: this.getActiveRound(),
-            participants: this.participants,
-            nextRound: this.nextRound,
-            isScorer: this.allowedScorer.includes(socket.userId),
-            isStarted: this.isStarted,
-            finished: this.finished,
-            totalScores: this.totalScores,
-        })
         socket.emit("get.game.success", {
             finishedRounds: this.getFinishedRounds(),
             activeRound: this.getActiveRound(),
@@ -112,6 +100,7 @@ class Scorer {
             isStarted: this.isStarted,
             finished: this.finished,
             totalScores: this.totalScores,
+            totalRounds: this.rounds.length
         });
     }
 
@@ -130,6 +119,7 @@ class Scorer {
             isStarted: this.isStarted,
             finished: this.finished,
             totalScores: this.totalScores,
+            totalRounds: this.rounds.length
         });
         socket.broadcast.emit("start.game.success", {
             finishedRounds: this.getFinishedRounds(),
@@ -140,6 +130,7 @@ class Scorer {
             isStarted: this.isStarted,
             finished: this.finished,
             totalScores: this.totalScores,
+            totalRounds: this.rounds.length
         });
     }
 
@@ -255,6 +246,12 @@ class Scorer {
                     finished: this.finished,
                 });
             }
+        }
+    }
+    prevRound(socket) {
+        if (!this.allowedScorer.includes(socket.userId) || !this.activeRound) {
+            socket.emit("prev.round.error", "error");
+            return ;
         }
     }
 }
