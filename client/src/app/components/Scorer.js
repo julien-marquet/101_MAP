@@ -61,8 +61,10 @@ class Scorer extends Component {
             }
         } else if (this.props.nextRound) {
             return "display nextRound countDown";
+        } else if (this.props.isStarted) {
+            return "The game is started, waiting for a round to start";
         } else {
-            return "The game is started";
+            return "No game started";
         }
     }
 

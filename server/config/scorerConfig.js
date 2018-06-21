@@ -27,11 +27,11 @@ module.exports = {
     participants: [
         {
             id: 1,
-            login: "BODO",
+            login: "PATRCK",
         },
         {
             id: 2,
-            login: "MAX",
+            login: "PAUL",
         }
     ],
     allowedScorer: [

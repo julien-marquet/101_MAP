@@ -5,7 +5,7 @@ class Scorer {
         this.rounds = JSON.parse(JSON.stringify(scorerConfig.rounds));
         this.participants = JSON.parse(JSON.stringify(scorerConfig.participants));
         this.allowedScorer = JSON.parse(JSON.stringify(scorerConfig.allowedScorer));
-        this.finished = scorerConfig.finished;
+        this.finished = false;
         this.activeRound = null;
         this.nextRound = null;
         this.isStarted = false;
