@@ -212,6 +212,10 @@ $paddingWidth: 0.5vw;
             }
         }
         .gameStatus {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            width: calc(#{$baseWidth} * 8);
             p {
                 font-size: 4vh;
                 margin-top: 10px;

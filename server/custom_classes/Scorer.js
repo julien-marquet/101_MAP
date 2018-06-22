@@ -201,6 +201,7 @@ class Scorer {
         this.nextRound = null;
         if (!(payload.countDown > 0))
             payload.countDown = 0;
+        this.markAsFinished(this.activeRound || null);
         this.nextRound = Date.now() + payload.countDown * 1000;
         socket.emit("next.round.success", {nextRound: this.nextRound});
         socket.broadcast.emit("next.round.success" , {nextRound: this.nextRound});
@@ -228,8 +229,6 @@ class Scorer {
             socket.emit("update.round.error", "error");
             return ;
         }
-        clearTimeout(this.countDown);
-        this.nextRound = null;
         for (let i = 0; i < this.rounds.length; i++) {
             if (this.rounds[i].id === this.activeRound && this.rounds[i].finished === false) {
                 this.rounds[i].scores = this.rounds[i].scores.map(elem => {

@@ -34,6 +34,12 @@ class CountDown extends Component {
         return false;
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            countDown: this.initiateCountDown(nextProps.countDown)
+        });
+    }
+
     render()
     {
         const hours = Math.floor((this.state.countDown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

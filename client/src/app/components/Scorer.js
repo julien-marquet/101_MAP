@@ -33,10 +33,8 @@ class Scorer extends Component {
     getStatus() {
 
         if (!this.props.isStarted) {
-        console.log("bla");
             return (<p>{"No game started"}</p>);}
         else if (this.props.finished) {
-            console.log("bli")
             if (this.props.totalScores[0].score > this.props.totalScores[1].score)
                 return (<p>{`The game is finished, ${this.matchId(this.props.totalScores[0].id)} won !`}</p>);
             else if (this.props.totalScores[1].score > this.props.totalScores[0].score) 
