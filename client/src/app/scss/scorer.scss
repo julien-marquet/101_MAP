@@ -212,8 +212,15 @@ $paddingWidth: 0.5vw;
             }
         }
         .gameStatus {
-            font-size: 4vh;
-            margin-top: 10px;
+            p {
+                font-size: 4vh;
+                margin-top: 10px;
+                display: inline-block;
+            }
+            .countDown {
+                margin-left: 1vh;
+                display: inline-block;
+            }
         }
         .controlWrapper {
             margin-top: 1vh;
