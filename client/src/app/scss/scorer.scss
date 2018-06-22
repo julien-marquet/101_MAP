@@ -124,13 +124,23 @@ $paddingWidth: 0.5vw;
                 width: calc(#{$baseWidth} * 4 );
                 border: 1px solid #fff;
                 min-height: 40vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img {
+                    width: 99%;
+                    height: 99%;
+                    object-fit: contain;
+                }
                 .participantLogin {
                     padding: $paddingWidth;
                     width: calc(#{$baseWidth} * 2 - (#{$paddingWidth} * 2));
                     border: 1px solid #fff;
                     border-width: 0 1px 1px 1px;
                     position: absolute;
+                    top: 0;
                     right: $baseWidth;
+                    background-color: #292D39;
                     p {
                         font-size: 3vh;
                         text-align: center;

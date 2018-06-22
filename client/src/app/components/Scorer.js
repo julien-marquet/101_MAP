@@ -26,6 +26,7 @@ class Scorer extends Component {
                             BODO
                         </p>
                     </div>
+                    <img src={placeholder} />
                 </div>
             );
         });
