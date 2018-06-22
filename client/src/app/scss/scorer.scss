@@ -91,12 +91,38 @@ $paddingWidth: 0.5vw;
             }
         }
         .roundScoresWrapper {
+            button {
+                border: 1px solid #fff;
+                background-color: transparent;
+                padding: $paddingWidth;
+                color: #fff;
+                margin: 0;
+                width: calc(#{$baseWidth} / 2);
+                font-size: 2vh;
+                outline: none;
+                border-width: 0 0 1px 1px;
+                &:hover {
+                    background-color: #fff;
+                    color: #292D39;
+                }
+                &:active {
+                    background-color: darken($color: #fff, $amount: 15);
+                }
+                &:last-of-type {
+                    border-width: 0px 1px 1px 0px;
+                }
+                &:nth-last-of-type(2) {
+                    border-width: 0px 1px 1px 0px;
+                }
+            }
             div {
                 border: 1px solid #fff;
                 border-width: 0px 1px 1px 1px;
                 &.roundScore {
-                    
+                    display: flex;
+                    justify-content: center;
                     p {
+                        width: $baseWidth;
                         text-align: center;
                     }
                 }

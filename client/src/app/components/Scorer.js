@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, Fragment} from "react";
 import "../scss/scorer.css";
 import placeholder from "../../img/placeholder.png";
 
@@ -32,6 +32,30 @@ class Scorer extends Component {
         });
     }
 
+    renderRoundScore(id) {
+        return (
+            <Fragment>
+                {this.props.isScorer && <button className={"scoreUpdate remove"} onClick={() => {
+                    this.props.updateRound({
+                        target: id,
+                        type: "REMOVE"
+                    });
+                }}>
+                        -
+                </button>}
+                <div className={"roundScore"}><p>2</p></div>
+                {this.props.isScorer && <button className={"scoreUpdate add"} onClick={() => {
+                    this.props.updateRound({
+                        target: id,
+                        type: "ADD"
+                    });
+                }}>
+                        +
+                </button>}
+            </Fragment>
+        );
+    }
+
     render(){
         console.log(this.props);
         if (this.state.dismissed || !(this.props.isStarted || this.props.isScorer)) {
@@ -57,17 +81,17 @@ class Scorer extends Component {
                         <span className={"versus"}><p>Vs</p></span>
                     </div>
                     <div className={"roundScoresWrapper scoresWrapper"}>
-                        <div className={"roundScore"}><p>2</p></div>
-                        <div className={"roundText"}><p>Round 4 / 12</p></div>
-                        <div className={"roundScore"}><p>1</p></div>
+                        {this.renderRoundScore(1)}
+                        <div className={"roundText"}><p>Round {this.props.finishedRounds.length + 1} / {this.props.totalRounds}</p></div>
+                        {this.renderRoundScore(2)}
                     </div>
                     {(this.props.activeRound && !this.props.activeRound.finished) &&
                     <div className={"roundInformationsWrapper"}>
                         <h1 className={"roundTitle"}>
-                            Titre du round
+                            {this.props.activeRound.title}
                         </h1>
                         <p className={"roundDescription"}>
-                            Et est admodum mirum videre plebem innumeram mentibus ardore quodam infuso cum dimicationum curulium eventu pendentem. haec similiaque memorabile nihil vel serium agi Romae permittunt. ergo redeundum ad textum.
+                            {this.props.activeRound.description}
                         </p>
                     </div>}
                     {(!this.props.activeRound || this.props.activeRound.finished) &&
@@ -84,15 +108,15 @@ class Scorer extends Component {
                             <p>seconds</p>
                         </div>}
                         <div className={"otherWrapper"}>
-                            <button className={"controlButton"} onClick={() => {
+                            {(this.props.isStarted) &&<button className={"controlButton"} onClick={() => {
                                 this.props.finishRound();
-                            }}>Finish Round</button>
-                            <button className={"controlButton"} onClick={() => {
+                            }}>Finish Round</button>}
+                            {(this.props.isStarted) && <button className={"controlButton"} onClick={() => {
                                 this.props.prevRound();
-                            }}>Previous Round</button>
-                            <button className={"controlButton"} onClick={() => {
+                            }}>Previous Round</button>}
+                            {(this.props.isStarted) &&<button className={"controlButton"} onClick={() => {
                                 this.props.resetRound();
-                            }}>Reset Round</button>
+                            }}>Reset Round</button>}
                             {(!this.props.isStarted) &&  <button className={"controlButton"} onClick={() => {
                                 this.props.startGame();
                             }}>Start Game</button>}
