@@ -20,145 +20,160 @@ $sidebarBorderColor: #000;
 $textSideBar: #fff;
 $placeHolderColor: #121419;
 
+$baseWidth: 8vw;
+$paddingWidth: 0.5vw;
+
 .scorerWrapper {
     p {
         color : #fff;
     }
+    background-color: #292D39;
     color: #fff;
     position: absolute;
     top: 0;
     left: 0;
-    padding: 0;
-    background-color: rgba($color: #c2c2d3, $alpha: 0.1);
     z-index: 4;
-    .scorer {
-        position: relative;
-        background-color: #292D39;
-        width: 90vw;
-        height: 90vh;
-        padding: 9vh 5vw 5vh 5vw;
-        .dismissScore {
-            position: absolute;
-            top: 2vh;
-            right: 2vw;
-            background-color: transparent;
-            height: 5vw;
-            width: 5vw;
-            padding: 0;
-            border: none;
-            cursor: pointer;
+    width: 90vw;
+    height: 90vh;
+    padding: 5vh 5vw 5vh 5vw;
+    .dismissScore {
+        position: absolute;
+        top: 2vh;
+        right: 2vw;
+        background-color: transparent;
+        z-index: 5;
+        height: 5vw;
+        width: 5vw;
+        padding: 0;
+        border: none;
+        cursor: pointer;
+        i {
+            height: 100%;
+            width: 100%;
+            font-size: 5vw;
+            color: #c2c2d3;
+        }
+        &:hover {
             i {
-                height: 100%;
-                width: 100%;
-                font-size: 5vw;
-                color: #c2c2d3;
-            }
-            &:hover {
-                i {
-                    color: darken($color: #c2c2d3, $amount: 30%);
-                }
+                color: darken($color: #c2c2d3, $amount: 30%);
             }
         }
-        .participantWrapper {
+    }
+    .scorer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .scoresWrapper {
             display: flex;
             flex-direction: row;
             justify-content: center;
-            .participantBlock {
-                position: relative;
-                width: 50%;
-                margin: 20px;
-                border: 2px solid #fff;
-                height: 500px;
-                display: flex;
-                flex-direction: column;
-                align-self : center;
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }
-                &.win {
-                    border: 2px solid green;
-                    .participantScore, .participantLogin, .scoreUpdate  {
-                        border: 2px solid green;
-                    }
-                }
-                &.loose {
-                    border: 2px solid red;
-                    .participantScore, .participantLogin, .scoreUpdate  {
-                        border: 2px solid red;
-                    }
-                }
-                &.draw {
-                    border: 2px solid orange;
-                    .participantScore, .participantLogin, .scoreUpdate  {
-                        border: 2px solid orange;
-                    }
-                }
-                .participantLogin {
-                    position: absolute;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    top: -25px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    width: 200px;
-                    height: 50px;
-                    border: 2px solid #fff;
-                    background-color: #292D39;
+            div {
+                padding: $paddingWidth;
+                font-size: 3vh;
+                width: calc(#{$baseWidth} * 2 - (#{$paddingWidth} * 2));
+            }
+        }
+        .globalScoresWrapper {
+            div {
+                &.globalScore {
+                    
                     p {
-                        color: #fff;
-                        font-size: 25px;
-                        font-weight: bolder;
                         text-align: center;
                     }
                 }
-                .bottomWrapper {
-                    position: absolute;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    bottom: -25px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    height: 50px;
-                    background-color: #292D39;
-                    .participantScore {
-                        height: 100%;
-                        width: 200px;
-                        p {
-                            color: #fff;
-                            font-size: 25px;
-                            font-weight: bolder;
-                            text-align: center;
-                        }
-                    }
-                    .scoreUpdate {
-                        width: 50px;
-                        height: 100%;
-                        color: #fff;
-                        font-size: 30px;
+                &.globalText {
+                    border: 1px solid #fff;
+                    border-width: 1px 1px 0 1px;
+                    p {
                         text-align: center;
-                        cursor: pointer;
-                        &.remove {
-                            border-width: 2px 0 2px 2px;
-                        }
-                        &.add {
-                            border-width: 2px 2px 2px 0;
-                        }
                     }
                 }
             }
         }
-        .gameStatus {
-            color: #fff;
-            text-align: center;
-            font-size: 30px;
-            margin-top: 20px; 
+        .roundScoresWrapper {
+            div {
+                border: 1px solid #fff;
+                border-width: 0px 1px 1px 1px;
+                &.roundScore {
+                    
+                    p {
+                        text-align: center;
+                    }
+                }
+                &.roundText {
+                    p {
+                        text-align: center;
+                    }
+                }
+                &:first-of-type {
+                    border-width: 0px 0px 1px 1px;
+                }
+                &:last-of-type {
+                    border-width: 0px 1px 1px 0px;
+                }
+            }
+
         }
-        .totalWrapper {
-            color: #fff;
+        .participantsWrapper {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            .participant {
+                position: relative;
+                width: calc(#{$baseWidth} * 4 );
+                border: 1px solid #fff;
+                min-height: 40vh;
+                .participantLogin {
+                    padding: $paddingWidth;
+                    width: calc(#{$baseWidth} * 2 - (#{$paddingWidth} * 2));
+                    border: 1px solid #fff;
+                    border-width: 0 1px 1px 1px;
+                    position: absolute;
+                    right: $baseWidth;
+                    p {
+                        font-size: 3vh;
+                        text-align: center;
+                    }
+                }
+                &:last-of-type {
+                    border-width: 1px 1px 1px 0;
+                    .participantLogin {
+                        left: $baseWidth;
+                    }
+                }
+            }
+
+            .versus {
+                display: block;
+                position: absolute;
+                border: 1px solid #fff;
+                height: 6vh;
+                width: 6vh;
+                top: 50%;
+                transform: translateY(-50%);
+                background-color: #fff;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                p {
+                    font-size: 4vh;
+                    color: #292D39;
+                    text-align: center;
+                    font-weight: bolder;
+                }
+            }
+        }
+        .roundInformationsWrapper {
+            width: calc(#{$baseWidth} * 8);
+            .roundTitle {
+                margin: 1vh;
+                font-size: 3.5vh;
+            }
+            .roundDescription {
+                margin: 1vh;
+                font-size: 2vh;
+            }
         }
     }
 }
