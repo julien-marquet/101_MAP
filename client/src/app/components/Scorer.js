@@ -67,6 +67,21 @@ class Scorer extends Component {
                             Et est admodum mirum videre plebem innumeram mentibus ardore quodam infuso cum dimicationum curulium eventu pendentem. haec similiaque memorabile nihil vel serium agi Romae permittunt. ergo redeundum ad textum.
                         </p>
                     </div>
+                    <div className={"controlWrapper"}>
+                        <div className={"startRoundWrapper"}>
+                            <button className={"controlButton"}>Start next round</button>
+                            <p>in</p>
+                            <input placeholder={"0"} type={"number"} ref={"roundCountDown"} />
+                            <p>seconds</p>
+                        </div>
+                        <div className={"otherWrapper"}>
+                            <button className={"controlButton"}>Finish Round</button>
+                            <button className={"controlButton"}>Previous Round</button>
+                            <button className={"controlButton"}>Reset Round</button>
+                            <button className={"controlButton"}>Start Game</button>
+                            <button className={"controlButton"}>End game</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

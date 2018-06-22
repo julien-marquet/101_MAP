@@ -175,5 +175,54 @@ $paddingWidth: 0.5vw;
                 font-size: 2vh;
             }
         }
+        .controlWrapper {
+            margin-top: 1vh;
+            border: 1px solid #fff;
+            width: calc(#{$baseWidth} * 8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            button {
+                border: 1px solid #fff;
+                background-color: transparent;
+                padding: $paddingWidth;
+                color: #fff;
+                margin: 5px;
+                font-size: 2vh;
+                outline: none;
+                &:hover {
+                    background-color: #fff;
+                    color: #292D39;
+                }
+                &:active {
+                    background-color: darken($color: #fff, $amount: 15);
+                }
+            }
+            .startRoundWrapper {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                p {
+                    font-size: 2vh;
+                    margin: 5px;
+                }
+                input {
+                    background-color: transparent;
+                    border: 2px solid #fff;
+                    border-width: 0 0 1px 0;
+                    outline: none;
+                    color: #fff;
+                    padding: 0;
+                    height: 3vh;
+                    font-size: 3vh;
+                    width: 5vw;
+                    margin: 0 5px;
+                }
+                button {
+                    margin-bottom: 0; 
+                }
+            }
+        }
     }
 }
