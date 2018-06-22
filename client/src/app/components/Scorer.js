@@ -10,7 +10,7 @@ class Scorer extends Component {
         this.state = {
             dismissed: false
         };
-        //this.renderParticipants = this.renderParticipants.bind(this);
+        this.renderParticipants = this.renderParticipants.bind(this);
     }
 
     componentWillMount() {
@@ -32,7 +32,8 @@ class Scorer extends Component {
         });
     }
 
-    render(){ 
+    render(){
+        console.log(this.props);
         if (this.state.dismissed || !(this.props.isStarted || this.props.isScorer)) {
             return (<div className={"scorerPlaceHolder"} />);
         }
@@ -60,6 +61,7 @@ class Scorer extends Component {
                         <div className={"roundText"}><p>Round 4 / 12</p></div>
                         <div className={"roundScore"}><p>1</p></div>
                     </div>
+                    {(this.props.activeRound && !this.props.activeRound.finished) &&
                     <div className={"roundInformationsWrapper"}>
                         <h1 className={"roundTitle"}>
                             Titre du round
@@ -67,20 +69,36 @@ class Scorer extends Component {
                         <p className={"roundDescription"}>
                             Et est admodum mirum videre plebem innumeram mentibus ardore quodam infuso cum dimicationum curulium eventu pendentem. haec similiaque memorabile nihil vel serium agi Romae permittunt. ergo redeundum ad textum.
                         </p>
-                    </div>
+                    </div>}
+                    {(!this.props.activeRound || this.props.activeRound.finished) &&
+                    <div className={"gameStatus"}>
+                        <p>Status</p>
+                    </div>}
                     <div className={"controlWrapper"}>
-                        <div className={"startRoundWrapper"}>
-                            <button className={"controlButton"}>Start next round</button>
+                        {(this.props.isStarted) && <div className={"startRoundWrapper"}>
+                            <button className={"controlButton"} onClick={() => {
+                                this.props.goNextRound({countDown: this.refs.roundCountDown.value});
+                            }}>Start next round</button>
                             <p>in</p>
                             <input placeholder={"0"} type={"number"} ref={"roundCountDown"} />
                             <p>seconds</p>
-                        </div>
+                        </div>}
                         <div className={"otherWrapper"}>
-                            <button className={"controlButton"}>Finish Round</button>
-                            <button className={"controlButton"}>Previous Round</button>
-                            <button className={"controlButton"}>Reset Round</button>
-                            <button className={"controlButton"}>Start Game</button>
-                            <button className={"controlButton"}>End game</button>
+                            <button className={"controlButton"} onClick={() => {
+                                this.props.finishRound();
+                            }}>Finish Round</button>
+                            <button className={"controlButton"} onClick={() => {
+                                this.props.prevRound();
+                            }}>Previous Round</button>
+                            <button className={"controlButton"} onClick={() => {
+                                this.props.resetRound();
+                            }}>Reset Round</button>
+                            {(!this.props.isStarted) &&  <button className={"controlButton"} onClick={() => {
+                                this.props.startGame();
+                            }}>Start Game</button>}
+                            {(this.props.isStarted) && <button className={"controlButton"} onClick={() => {
+                                this.props.endGame();
+                            }}>End game</button>}
                         </div>
                     </div>
                 </div>
