@@ -274,6 +274,9 @@ $borderSize: 2px;
                     margin: 5px;
                 }
                 input {
+                    &::placeholder {
+                        color: $borderColor;
+                    }
                     background-color: transparent;
                     border: 2px solid $borderColor;
                     border-width: 0 0 $borderSize 0;
