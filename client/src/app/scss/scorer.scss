@@ -111,11 +111,7 @@ $borderSize: 2px;
                         text-align: center;
                     }
                 }
-                &.roundText {
-                    p {
-                        text-align: center;
-                    }
-                }
+
                 &:first-of-type {
                     border-width: 0px 0px $borderSize $borderSize;
                 }
@@ -137,6 +133,14 @@ $borderSize: 2px;
                     }
                     &.loose {
                         background-color: red;
+                    }
+                }
+                &.roundText {
+                    &.fullBorder {
+                        border-width: 0 $borderSize $borderSize $borderSize;
+                    }
+                    p {
+                        text-align: center;
                     }
                 }
             }
@@ -175,8 +179,8 @@ $borderSize: 2px;
                     }
                     .winningIcon {
                         position: absolute;
-                        top: 0;
-                        width: 4vh;
+                        top: 0vh;
+                        width: 3vh;
                         height: auto;
                     }
                 }

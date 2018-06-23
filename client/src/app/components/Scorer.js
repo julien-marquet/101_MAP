@@ -46,12 +46,12 @@ class Scorer extends Component {
                 return (<p>{"The game is finished, that was a draw !"}</p>);
         } else if (this.props.nextRound) {
             return (
-                <Fragment><p>{"The next round will start in "}</p>
+                <Fragment><p>{"The round will start in "}</p>
                     <CountDown countDown={this.props.nextRound}/>
                 </Fragment>);
         } else if (this.props.nextFinish) {
             return (
-                <Fragment><p>{"The next round will end in "}</p>
+                <Fragment><p>{"The round will end in "}</p>
                     <CountDown countDown={this.props.nextFinish}/>
                 </Fragment>);
         } else if (this.props.activeRound && this.props.activeRound.finished) {
@@ -120,27 +120,31 @@ class Scorer extends Component {
     }
 
     renderRoundScore(id) {
-        return (
-            <Fragment>
-                {this.props.isScorer && <button className={"scoreUpdate remove"} onClick={() => {
-                    this.props.updateRound({
-                        target: id,
-                        type: "REMOVE"
-                    });
-                }}>
+        if (this.props.isStarted && this.props.activeRound && !this.props.activeRound.finished) {
+            return (
+                <Fragment>
+                    {this.props.isScorer && <button className={"scoreUpdate remove"} onClick={() => {
+                        this.props.updateRound({
+                            target: id,
+                            type: "REMOVE"
+                        });
+                    }}>
                         -
-                </button>}
-                <div className={"roundScore"}><p>{this.getScore(id)}</p><div className={`roundIndicator ${this.getWinnerClass(id)}`} /></div>
-                {this.props.isScorer && <button className={"scoreUpdate add"} onClick={() => {
-                    this.props.updateRound({
-                        target: id,
-                        type: "ADD"
-                    });
-                }}>
+                    </button>}
+                    <div className={"roundScore"}><p>{this.getScore(id)}</p><div className={`roundIndicator ${this.getWinnerClass(id)}`} /></div>
+                    {this.props.isScorer && <button className={"scoreUpdate add"} onClick={() => {
+                        this.props.updateRound({
+                            target: id,
+                            type: "ADD"
+                        });
+                    }}>
                         +
-                </button>}
-            </Fragment>
-        );
+                    </button>}
+                </Fragment>
+            );
+        } else {
+            return null;
+        }
     }
 
     render(){
@@ -167,12 +171,12 @@ class Scorer extends Component {
                         <span className={"versus"}><p>Vs</p></span>
                     </div>}
                     
-                    {(this.props.isStarted && this.props.activeRound && !this.props.activeRound.finished) && <div className={"roundScoresWrapper scoresWrapper"}>
+                    <div className={"roundScoresWrapper scoresWrapper"}>
                         {this.renderRoundScore(1)}
-                        <div className={"roundText"}><p>Round {this.props.finishedRounds.length + 1} / {this.props.totalRounds}</p></div>
+                        <div className={`roundText ${!(this.props.isStarted && this.props.activeRound && !this.props.activeRound.finished) ? "fullBorder" : ""}`}><p>Round {this.props.finishedRounds.length + 1} / {this.props.totalRounds}</p></div>
                         {this.renderRoundScore(2)}
-                    </div>}
-                    {(this.props.isStarted && this.props.activeRound && !this.props.activeRound.finished) &&
+                    </div>
+                    {(this.props.isStarted && this.props.activeRound && !this.props.activeRound.finished && !this.props.nextFinish) &&
                     <div className={"roundInformationsWrapper"}>
                         <h1 className={"roundTitle"}>
                             {this.props.activeRound.title}
