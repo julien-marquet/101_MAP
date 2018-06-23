@@ -91,6 +91,7 @@ $paddingWidth: 0.5vw;
             }
         }
         .roundScoresWrapper {
+            position: relative;
             button {
                 border: 1px solid #fff;
                 background-color: transparent;
@@ -137,6 +138,23 @@ $paddingWidth: 0.5vw;
                 &:last-of-type {
                     border-width: 0px 1px 1px 0px;
                 }
+                &.roundIndicator {
+                    position: absolute;
+                    bottom: 0;
+                    height: 1vh;
+                    width: $baseWidth;
+                    padding: 0;
+                    border-width: 0 0 1px 0;
+                    &.win {
+                        background-color: green;
+                    }
+                    &.draw {
+                        background-color: orange;
+                    }
+                    &.loose {
+                        background-color: red;
+                    }
+                }
             }
 
         }
@@ -171,6 +189,12 @@ $paddingWidth: 0.5vw;
                         font-size: 3vh;
                         text-align: center;
                     }
+                    .winningIcon {
+                        position: absolute;
+                        top: 0;
+                        width: 4vh;
+                        height: auto;
+                    }
                 }
                 &:last-of-type {
                     border-width: 1px 1px 1px 0;
@@ -192,6 +216,7 @@ $paddingWidth: 0.5vw;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
+                border: 5px solid #292D39;
                 p {
                     font-size: 4vh;
                     color: #292D39;

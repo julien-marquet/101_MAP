@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import "../scss/scorer.css";
 import placeholder from "../../img/placeholder.png";
+import crown from "../../img/crown.png";
 import CountDown from "../components/CountDown.js";
 
 class Scorer extends Component {
@@ -16,6 +17,8 @@ class Scorer extends Component {
         this.renderGlobalScore = this.renderGlobalScore.bind(this);
         this.getStatus = this.getStatus.bind(this);
         this.matchId = this.matchId.bind(this);
+        this.getWinnerClass = this.getWinnerClass.bind(this);
+        this.isWinning = this.isWinning.bind(this);
     }
 
     componentWillMount() {
@@ -69,6 +72,24 @@ class Scorer extends Component {
         return -1;
     }
 
+    getWinnerClass(participantId) {
+        if (this.props.activeRound && this.props.activeRound.winner === participantId) {
+            return "win";
+        } else if (this.props.activeRound && this.props.activeRound.winner === null) {
+            return "draw";
+        } else {
+            return "loose";
+        }
+    }
+
+    isWinning(participantId) {
+        if (this.props.totalScores[participantId - 1].score > this.props.totalScores[participantId % 2].score) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     renderParticipants() {
         return this.props.participants.map(participant => {
             return (
@@ -76,6 +97,7 @@ class Scorer extends Component {
                     <div className={"participantLogin"}>
                         <p>
                             {participant.login}
+                            {(this.isWinning(participant.id)) && <img className={"winningIcon"} src={crown} />}
                         </p>
                     </div>
                     <img src={placeholder} />
@@ -103,7 +125,7 @@ class Scorer extends Component {
                 }}>
                         -
                 </button>}
-                <div className={"roundScore"}><p>{this.getScore(id)}</p></div>
+                <div className={"roundScore"}><p>{this.getScore(id)}</p><div className={`roundIndicator ${this.getWinnerClass(id)}`} /></div>
                 {this.props.isScorer && <button className={"scoreUpdate add"} onClick={() => {
                     this.props.updateRound({
                         target: id,
