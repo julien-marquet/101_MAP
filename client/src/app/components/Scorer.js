@@ -173,7 +173,7 @@ class Scorer extends Component {
                     
                     {(this.props.isStarted) && <div className={"roundScoresWrapper scoresWrapper"}>
                         {this.renderRoundScore(1)}
-                        <div className={`roundText ${!(this.props.activeRound && !this.props.activeRound.finished) ? "fullBorder" : ""}`}><p>Round {this.props.finishedRounds.length + 1} / {this.props.totalRounds}</p></div>
+                        <div className={`roundText ${!(this.props.activeRound && !this.props.activeRound.finished) ? "fullBorder" : ""}`}><p>Round {this.props.activeRound ? this.props.activeRound.id : 0} / {this.props.totalRounds}</p></div>
                         {this.renderRoundScore(2)}
                     </div>}
                     {(this.props.isStarted && this.props.activeRound && !this.props.activeRound.finished) &&
