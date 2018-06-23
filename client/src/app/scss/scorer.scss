@@ -1,34 +1,17 @@
 @import "utilities/cross-browser.scss";
 
-$backColor: #1e212a;
-$zoneColor: #292D39;
-$seatColor: #328989;
-$rowColor: #1e212a;
-$main: #292D39;
-$mainDark: #1e212a;
-$mainLight: #1e212a;
-$mainLighter: #ffffff;
-$darkShadow: #0a0b0e;
-$mediumShadow:rgba(0, 0, 0, 0.4);
-$lightShadow: #e5e5e5;
-$textPrimary: #328989;
-$textSecondary: #ffffff;
-$textTertiary: #3C4254;
-$loginColor: #c2c2d3;
-$sidebarColor: #121419;
-$sidebarBorderColor: #000;
-$textSideBar: #fff;
-$placeHolderColor: #121419;
-
 $baseWidth: 8vw;
 $paddingWidth: 0.5vw;
+$borderColor: #fff;
+$mainColor: #292D39;
+$borderSize: 2px;
 
 .scorerWrapper {
     p {
-        color : #fff;
+        color : $borderColor;
     }
-    background-color: #292D39;
-    color: #fff;
+    background-color: $mainColor;
+    color: $borderColor;
     position: absolute;
     top: 0;
     left: 0;
@@ -82,8 +65,8 @@ $paddingWidth: 0.5vw;
                     }
                 }
                 &.globalText {
-                    border: 1px solid #fff;
-                    border-width: 1px 1px 0 1px;
+                    border: $borderSize solid $borderColor;
+                    border-width: $borderSize $borderSize 0 $borderSize;
                     p {
                         text-align: center;
                     }
@@ -93,32 +76,32 @@ $paddingWidth: 0.5vw;
         .roundScoresWrapper {
             position: relative;
             button {
-                border: 1px solid #fff;
+                border: $borderSize solid $borderColor;
                 background-color: transparent;
                 padding: $paddingWidth;
-                color: #fff;
+                color: $borderColor;
                 margin: 0;
                 width: calc(#{$baseWidth} / 2);
                 font-size: 2vh;
                 outline: none;
-                border-width: 0 0 1px 1px;
+                border-width: 0 0 $borderSize $borderSize;
                 &:hover {
-                    background-color: #fff;
-                    color: #292D39;
+                    background-color: $borderColor;
+                    color: $mainColor;
                 }
                 &:active {
-                    background-color: darken($color: #fff, $amount: 15);
+                    background-color: darken($color: $borderColor, $amount: 15);
                 }
                 &:last-of-type {
-                    border-width: 0px 1px 1px 0px;
+                    border-width: 0px $borderSize $borderSize 0px;
                 }
                 &:nth-last-of-type(2) {
-                    border-width: 0px 1px 1px 0px;
+                    border-width: 0px $borderSize $borderSize 0px;
                 }
             }
             div {
-                border: 1px solid #fff;
-                border-width: 0px 1px 1px 1px;
+                border: $borderSize solid $borderColor;
+                border-width: 0px $borderSize $borderSize $borderSize;
                 &.roundScore {
                     display: flex;
                     justify-content: center;
@@ -133,10 +116,10 @@ $paddingWidth: 0.5vw;
                     }
                 }
                 &:first-of-type {
-                    border-width: 0px 0px 1px 1px;
+                    border-width: 0px 0px $borderSize $borderSize;
                 }
                 &:last-of-type {
-                    border-width: 0px 1px 1px 0px;
+                    border-width: 0px $borderSize $borderSize 0px;
                 }
                 &.roundIndicator {
                     position: absolute;
@@ -144,7 +127,7 @@ $paddingWidth: 0.5vw;
                     height: 1vh;
                     width: $baseWidth;
                     padding: 0;
-                    border-width: 0 0 1px 0;
+                    border-width: 0 0 $borderSize 0;
                     &.win {
                         background-color: green;
                     }
@@ -166,7 +149,7 @@ $paddingWidth: 0.5vw;
             .participant {
                 position: relative;
                 width: calc(#{$baseWidth} * 4 );
-                border: 1px solid #fff;
+                border: $borderSize solid $borderColor;
                 min-height: 40vh;
                 display: flex;
                 justify-content: center;
@@ -179,12 +162,12 @@ $paddingWidth: 0.5vw;
                 .participantLogin {
                     padding: $paddingWidth;
                     width: calc(#{$baseWidth} * 2 - (#{$paddingWidth} * 2));
-                    border: 1px solid #fff;
-                    border-width: 0 1px 1px 1px;
+                    border: $borderSize solid $borderColor;
+                    border-width: 0 $borderSize $borderSize $borderSize;
                     position: absolute;
                     top: 0;
                     right: $baseWidth;
-                    background-color: #292D39;
+                    background-color: $mainColor;
                     p {
                         font-size: 3vh;
                         text-align: center;
@@ -197,7 +180,7 @@ $paddingWidth: 0.5vw;
                     }
                 }
                 &:last-of-type {
-                    border-width: 1px 1px 1px 0;
+                    border-width: $borderSize $borderSize $borderSize 0;
                     .participantLogin {
                         left: $baseWidth;
                     }
@@ -207,19 +190,18 @@ $paddingWidth: 0.5vw;
             .versus {
                 display: block;
                 position: absolute;
-                border: 1px solid #fff;
                 height: 6vh;
                 width: 6vh;
                 top: 50%;
                 transform: translateY(-50%);
-                background-color: #fff;
+                background-color: $borderColor;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                border: 5px solid #292D39;
+                border: calc(#{$borderSize} * 3) solid $mainColor;
                 p {
                     font-size: 4vh;
-                    color: #292D39;
+                    color: $mainColor;
                     text-align: center;
                     font-weight: bolder;
                 }
@@ -255,26 +237,26 @@ $paddingWidth: 0.5vw;
         }
         .controlWrapper {
             margin-top: 1vh;
-            border: 1px solid #fff;
+            border: $borderSize solid $borderColor;
             width: calc(#{$baseWidth} * 8);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             button {
-                border: 1px solid #fff;
+                border: $borderSize solid $borderColor;
                 background-color: transparent;
                 padding: $paddingWidth;
-                color: #fff;
+                color: $borderColor;
                 margin: 5px;
                 font-size: 2vh;
                 outline: none;
                 &:hover {
-                    background-color: #fff;
-                    color: #292D39;
+                    background-color: $borderColor;
+                    color: $mainColor;
                 }
                 &:active {
-                    background-color: darken($color: #fff, $amount: 15);
+                    background-color: darken($color: $borderColor, $amount: 15);
                 }
             }
             .startRoundWrapper {
@@ -287,10 +269,10 @@ $paddingWidth: 0.5vw;
                 }
                 input {
                     background-color: transparent;
-                    border: 2px solid #fff;
-                    border-width: 0 0 1px 0;
+                    border: 2px solid $borderColor;
+                    border-width: 0 0 $borderSize 0;
                     outline: none;
-                    color: #fff;
+                    color: $borderColor;
                     padding: 0;
                     height: 3vh;
                     font-size: 3vh;
