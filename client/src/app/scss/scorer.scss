@@ -267,6 +267,17 @@ $borderSize: 2px;
                 &:active {
                     background-color: darken($color: $borderColor, $amount: 15);
                 }
+                &.buttonWarning {
+                    border-color: red;
+                    color: red;
+                    &:hover {
+                        background-color: red;
+                        color: $mainColor;
+                    }
+                    &:active {
+                        background-color: darken(red, 10);
+                    }
+                }
             }
             .startRoundWrapper, .finishRoundWrapper {
                 display: flex;

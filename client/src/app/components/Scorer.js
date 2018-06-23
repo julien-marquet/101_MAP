@@ -216,7 +216,7 @@ class Scorer extends Component {
                             {(!this.props.isStarted) &&  <button className={"controlButton"} onClick={() => {
                                 this.props.startGame();
                             }}>Start Game</button>}
-                            {(this.props.isStarted) && <button className={"controlButton"} onClick={() => {
+                            {(this.props.isStarted) && <button className={"controlButton buttonWarning"} onClick={() => {
                                 this.props.endGame();
                             }}>End game</button>}
                         </div>
