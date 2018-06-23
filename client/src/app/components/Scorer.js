@@ -217,7 +217,10 @@ class Scorer extends Component {
                                 this.props.startGame();
                             }}>Start Game</button>}
                             {(this.props.isStarted) && <button className={"controlButton buttonWarning"} onClick={() => {
-                                this.props.endGame();
+                                const retVal = window.confirm("This will end the game. All stored results will be deleted. Do you want to continue ?");
+                                if( retVal == true ){
+                                    this.props.endGame();
+                                }
                             }}>End game</button>}
                         </div>
                     </div>
