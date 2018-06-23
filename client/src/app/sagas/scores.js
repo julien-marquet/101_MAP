@@ -22,8 +22,8 @@ function updateRound(socketClient, {payload}) {
     socketClient.emit("update.round", payload);
 }
 
-function finishRound(socketClient) {
-    socketClient.emit("finish.round");
+function finishRound(socketClient, {payload}) {
+    socketClient.emit("finish.round", payload);
 }
 
 function resetRound(socketClient) {

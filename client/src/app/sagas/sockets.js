@@ -6,7 +6,7 @@ import {
 } from "../actions/users";
 import {TOAST_SHOW} from "../actions/toasts";
 import {CONNECT_APP} from "../actions/globalState";
-import {GET_GAME_SUCCESS, START_GAME_SUCCESS, END_GAME_SUCCESS, NEXT_ROUND_SUCCESS, START_ROUND_SUCCESS, UPDATE_ROUND_SUCCESS, FINISH_ROUND_SUCCESS, FINISH_GAME_SUCCESS, RESET_ROUND_SUCCESS, PREV_ROUND_SUCCESS} from "../actions/scores";
+import {GET_GAME_SUCCESS, START_GAME_SUCCESS, END_GAME_SUCCESS, NEXT_ROUND_SUCCESS, START_ROUND_SUCCESS, UPDATE_ROUND_SUCCESS, FINISH_ROUND_SUCCESS, FINISH_GAME_SUCCESS, RESET_ROUND_SUCCESS, PREV_ROUND_SUCCESS, NEXT_FINISH_SUCCESS} from "../actions/scores";
 import {storeCookie} from "../helpers/cookies.helper";
 
 function setupListeners(socketClient, dispatch) {
@@ -46,6 +46,10 @@ function setupListeners(socketClient, dispatch) {
 
     socketClient.on("prev.round.success", data => {
         dispatch({type: PREV_ROUND_SUCCESS, payload: data});
+    });
+
+    socketClient.on("next.finish.success", data => {
+        dispatch({type: NEXT_FINISH_SUCCESS, payload: data});
     });
 
     socketClient.on("connectedUsers", data => {

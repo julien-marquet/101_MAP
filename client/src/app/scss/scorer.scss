@@ -260,7 +260,7 @@ $borderSize: 2px;
                     background-color: darken($color: $borderColor, $amount: 15);
                 }
             }
-            .startRoundWrapper {
+            .startRoundWrapper, .finishRoundWrapper {
                 display: flex;
                 flex-direction: row;
                 align-items: center;

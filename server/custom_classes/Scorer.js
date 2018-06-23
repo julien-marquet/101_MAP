@@ -14,6 +14,7 @@ class Scorer {
         this.isStarted = false;
         this.totalScores = JSON.parse(JSON.stringify(this.initialTotal));
         this.countDown = null;
+        this.nextFinish = null;
     }
 
     buildParticipants() {
@@ -136,6 +137,7 @@ class Scorer {
             activeRound: this.getActiveRound(),
             participants: this.participants,
             nextRound: this.nextRound,
+            nextFinish: this.nextFinish,
             isScorer: this.allowedScorer.includes(socket.userId),
             isStarted: this.isStarted,
             finished: this.finished,
@@ -155,6 +157,7 @@ class Scorer {
             activeRound: this.getActiveRound(),
             participants: this.participants,
             nextRound: this.nextRound,
+            nextFinish: this.nextFinish,
             isScorer: this.allowedScorer.includes(socket.userId),
             isStarted: this.isStarted,
             finished: this.finished,
@@ -166,6 +169,7 @@ class Scorer {
             activeRound: this.getActiveRound(),
             participants: this.participants,
             nextRound: this.nextRound,
+            nextFinish: this.nextFinish,
             isScorer: this.allowedScorer.includes(socket.userId),
             isStarted: this.isStarted,
             finished: this.finished,
@@ -185,10 +189,10 @@ class Scorer {
         this.allowedScorer = JSON.parse(JSON.stringify(scorerConfig.allowedScorer));
         this.finished = false;
         this.activeRound = null;
-        this.nextRound = null;
         this.isStarted = false;
         this.totalScores = JSON.parse(JSON.stringify(this.initialTotal));
         this.countDown = null;
+        this.nextFinish = null;
         socket.emit("end.game.success");
         socket.broadcast.emit("end.game.success");
     }
@@ -199,6 +203,7 @@ class Scorer {
         }
         clearTimeout(this.countDown);
         this.nextRound = null;
+        this.nextFinish = null;
         if (!(payload.countDown > 0))
             payload.countDown = 0;
         this.markAsFinished(this.activeRound || null);
@@ -246,20 +251,30 @@ class Scorer {
         }
         socket.emit("update.round.error", "error");
     }
-    finishRound(socket) {
-        if (!this.allowedScorer.includes(socket.userId) || !this.activeRound) {
+    finishRound(socket, payload) {
+        if (!this.allowedScorer.includes(socket.userId) || !this.activeRound || this.getActiveRound().finished) {
             socket.emit("finish.round.error", "error");
             return ;
         }
         clearTimeout(this.countDown);
         this.nextRound = null;
-        if (this.markAsFinished(this.activeRound || null)) {
-            socket.emit("finish.round.success", {finishedRounds:this.getFinishedRounds(), totalScores:  [...this.totalScores]});
-            socket.broadcast.emit("finish.round.success", {finishedRounds:this.getFinishedRounds(), totalScores:  [...this.totalScores]});
-            this.updateGameStatus(socket);
-        } else {
-            socket.emit("finish.round.error", "error");
-        }
+        this.nextFinish = null;
+        
+        if (!(payload.countDown > 0))
+            payload.countDown = 0;
+        this.nextFinish = Date.now() + payload.countDown * 1000;
+        socket.emit("next.finish.success", {nextFinish: this.nextFinish});
+        socket.broadcast.emit("next.finish.success" , {nextFinish: this.nextFinish});
+        
+        this.countDown = setTimeout(() => {
+            if (this.markAsFinished(this.activeRound || null)) {
+                socket.emit("finish.round.success", {finishedRounds:this.getFinishedRounds(), totalScores:  [...this.totalScores]});
+                socket.broadcast.emit("finish.round.success", {finishedRounds:this.getFinishedRounds(), totalScores:  [...this.totalScores]});
+                this.updateGameStatus(socket);
+            } else {
+                socket.emit("finish.round.error", "error");
+            }
+        }, payload.countDown * 1000);
     }
     resetRound(socket) {
         if (!this.allowedScorer.includes(socket.userId) || !this.activeRound) {
@@ -268,6 +283,7 @@ class Scorer {
         }
         clearTimeout(this.countDown);
         this.nextRound = null;
+        this.nextFinish = null;
         for (let i = 0; i < this.rounds.length; i++) {
             if (this.rounds[i].id === this.activeRound) {
                 if (this.rounds[i].finished === false) {
@@ -301,6 +317,7 @@ class Scorer {
         }
         clearTimeout(this.countDown);
         this.nextRound = null;
+        this.nextFinish = null;
         for (let i = 1; i < this.rounds.length; i++) {
             if (this.rounds[i].id === this.activeRound) {
                 if (this.rounds[i].finished === false) {

@@ -21,6 +21,8 @@ export const UPDATE_ROUND = "update.round";
 export const UPDATE_ROUND_SUCCESS = "update.round.success";
 export const UPDATE_ROUND_ERROR = "update.round.error";
 
+export const NEXT_FINISH_SUCCESS = "next.finish.success";
+
 export const FINISH_ROUND = "finish.round";
 export const FINISH_ROUND_SUCCESS = "finish.round.success";
 export const FINISH_ROUND_ERROR = "finish.round.error";

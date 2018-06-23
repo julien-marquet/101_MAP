@@ -49,6 +49,11 @@ class Scorer extends Component {
                 <Fragment><p>{"The next round will start in "}</p>
                     <CountDown countDown={this.props.nextRound}/>
                 </Fragment>);
+        } else if (this.props.nextFinish) {
+            return (
+                <Fragment><p>{"The next round will end in "}</p>
+                    <CountDown countDown={this.props.nextFinish}/>
+                </Fragment>);
         } else if (this.props.activeRound && this.props.activeRound.finished) {
             if (this.props.activeRound.scores[0].score > this.props.activeRound.scores[1].score)
                 return (<p>{`The round is finished, ${this.matchId(this.props.activeRound.scores[0].id)} won !`}</p>);
@@ -176,7 +181,7 @@ class Scorer extends Component {
                             {this.props.activeRound.description}
                         </p>
                     </div>}
-                    {(!this.props.isStarted || !this.props.activeRound || this.props.activeRound.finished || this.props.nextRound) &&
+                    {(!this.props.isStarted || !this.props.activeRound || this.props.activeRound.finished || this.props.nextRound || this.props.nextFinish) &&
                     <div className={"gameStatus"}>
                         {this.getStatus()}
                     </div>}
@@ -189,10 +194,15 @@ class Scorer extends Component {
                             <input placeholder={"0"} type={"number"} ref={"roundCountDown"} />
                             <p>seconds</p>
                         </div>}
+                        {(this.props.isStarted) && <div className={"finishRoundWrapper"}>
+                            <button className={"controlButton"} onClick={() => {
+                                this.props.finishRound({countDown: this.refs.finishRoundCountDown.value});
+                            }}>Finish round</button>
+                            <p>in</p>
+                            <input placeholder={"0"} type={"number"} ref={"finishRoundCountDown"} />
+                            <p>seconds</p>
+                        </div>}
                         <div className={"otherWrapper"}>
-                            {(this.props.isStarted) &&<button className={"controlButton"} onClick={() => {
-                                this.props.finishRound();
-                            }}>Finish Round</button>}
                             {(this.props.isStarted) && <button className={"controlButton"} onClick={() => {
                                 this.props.prevRound();
                             }}>Previous Round</button>}

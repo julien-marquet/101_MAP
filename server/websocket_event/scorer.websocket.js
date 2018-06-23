@@ -17,8 +17,8 @@ const usersSocket = (socket, globalStorage, i_queue, i_Oauth_authenticator, i_sc
     socket.on("update.round", (payload) => {
         i_scorer.updateRound(socket, payload);
     });
-    socket.on("finish.round", () => {
-        i_scorer.finishRound(socket);
+    socket.on("finish.round", (payload) => {
+        i_scorer.finishRound(socket, payload);
     });
     socket.on("next.round", payload => {
         i_scorer.goNextRound(socket, payload);
