@@ -268,6 +268,7 @@ class Scorer {
         
         this.countDown = setTimeout(() => {
             if (this.markAsFinished(this.activeRound || null)) {
+                this.nextFinish = null;
                 socket.emit("finish.round.success", {finishedRounds:this.getFinishedRounds(), totalScores:  [...this.totalScores]});
                 socket.broadcast.emit("finish.round.success", {finishedRounds:this.getFinishedRounds(), totalScores:  [...this.totalScores]});
                 this.updateGameStatus(socket);
