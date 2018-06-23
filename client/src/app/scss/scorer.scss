@@ -34,11 +34,11 @@ $borderSize: 2px;
             height: 100%;
             width: 100%;
             font-size: 5vw;
-            color: #c2c2d3;
+            color: $borderColor;
         }
         &:hover {
             i {
-                color: darken($color: #c2c2d3, $amount: 30%);
+                color: darken($color: $borderColor, $amount: 30%);
             }
         }
     }
