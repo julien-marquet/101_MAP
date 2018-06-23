@@ -7,6 +7,9 @@ $mainColor: #292D39;
 $borderSize: 2px;
 
 .scorerWrapper {
+    button {
+        cursor: pointer;
+    }
     overflow-y: auto;
     p {
         color : $borderColor;
