@@ -69,6 +69,9 @@ const toaster = (state = initialState, {type, payload}) => {
             activeRound: {
                 ...state.activeRound,
                 finished: true
+            },
+            totalScores: {
+                ...payload.totalScores
             }
         };
     case START_ROUND_SUCCESS:
