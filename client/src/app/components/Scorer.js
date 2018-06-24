@@ -189,7 +189,7 @@ class Scorer extends Component {
                     <div className={"gameStatus"}>
                         {this.getStatus()}
                     </div>}
-                    <div className={"controlWrapper"}>
+                    {(this.props.isScorer) && <div className={"controlWrapper"}>
                         {(this.props.isStarted) && <div className={"startRoundWrapper"}>
                             <button className={"controlButton"} onClick={() => {
                                 this.props.goNextRound({countDown: this.refs.roundCountDown.value});
@@ -223,7 +223,7 @@ class Scorer extends Component {
                                 }
                             }}>End game</button>}
                         </div>
-                    </div>
+                    </div>}
                 </div>
             </div>
         );
