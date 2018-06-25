@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import "../scss/scorer.css";
-import placeholder from "../../img/placeholder.png";
+import MAX from "../../img/MAX.png";
+import BODO from "../../img/placeholder.png";
 import crown from "../../img/crown.png";
 import CountDown from "../components/CountDown.js";
 
@@ -105,7 +106,8 @@ class Scorer extends Component {
                             {(this.isWinning(participant.id)) && <img className={"winningIcon"} src={crown} />}
                         </p>
                     </div>
-                    <img src={placeholder} />
+                    {(participant.id === 1) && <img src={MAX} />}
+                    {(participant.id === 2) && <img src={BODO} />}
                 </div>
             );
         });

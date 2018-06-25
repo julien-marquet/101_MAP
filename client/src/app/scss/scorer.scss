@@ -159,14 +159,25 @@ $borderSize: 4px;
                 position: relative;
                 width: calc(#{$baseWidth} * 4 - (#{$borderSize} / 2));
                 border: $borderSize solid $borderColor;
-                min-height: 40vh;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                background-color: darken($mainColor, 5);
+                &:last-of-type {
+                    img {
+                        transform: translateX($borderSize) !important;
+                    }
+                }
+                &:first-of-type {
+                    img {
+                    transform: translateX(calc(#{$borderSize} * -1.5)) !important;
+                    }
+                }
                 img {
-                    width: 99%;
-                    height: 99%;
-                    object-fit: contain;
+                    min-height: 40vh;
+                    max-height: 40vh;
+                    //margin-top: calc(4vh + #{$paddingWidth} * 2 + (#{$borderSize} * 2));
+                    //margin-bottom: $borderSize;
                 }
                 .participantLogin {
                     padding: $paddingWidth;
@@ -177,8 +188,10 @@ $borderSize: 4px;
                     top: 0;
                     right: $baseWidth;
                     background-color: $mainColor;
+                    z-index: 10;
                     p {
                         font-size: 3vh;
+                        line-height: 4vh;
                         text-align: center;
                     }
                     .winningIcon {
@@ -226,6 +239,8 @@ $borderSize: 4px;
             .roundDescription {
                 margin: 1vh;
                 font-size: 2vh;
+                white-space: pre-wrap;
+                padding-left: 1vw;
             }
         }
         .gameStatus {
