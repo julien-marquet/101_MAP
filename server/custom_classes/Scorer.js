@@ -170,7 +170,6 @@ class Scorer {
             participants: this.participants,
             nextRound: this.nextRound,
             nextFinish: this.nextFinish,
-            isScorer: this.allowedScorer.includes(socket.userId),
             isStarted: this.isStarted,
             finished: this.finished,
             totalScores:  [...this.totalScores],

@@ -36,7 +36,7 @@ const toaster = (state = initialState, {type, payload}) => {
             finished: payload.finished,
             totalRounds: payload.totalRounds
         };
-    case START_GAME_SUCCESS: 
+    case START_GAME_SUCCESS:
         return {
             finishedRounds: [
                 ...payload.finishedRounds,
@@ -52,7 +52,7 @@ const toaster = (state = initialState, {type, payload}) => {
             totalScores : [
                 ...payload.totalScores,
             ],
-            isScorer: payload.isScorer,
+            isScorer: payload.isScorer || state.isScorer,
             isStarted: true,
             finished: payload.finished,
             totalRounds: payload.totalRounds
