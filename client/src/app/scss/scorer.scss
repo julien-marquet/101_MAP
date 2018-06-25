@@ -1,0 +1,327 @@
+@import "utilities/cross-browser.scss";
+
+$baseWidth: 8vw; // entre 5 et 9
+$paddingWidth: 0.5vw;
+$borderColor: #fff;
+$mainColor: #292D39;
+$borderSize: 4px;
+
+.scorerWrapper {
+    button {
+        cursor: pointer;
+    }
+    overflow-y: auto;
+    p {
+        color : $borderColor;
+    }
+    background-color: $mainColor;
+    color: $borderColor;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    width: 90vw;
+    height: 90vh;
+    padding: 5vh 5vw 5vh 5vw;
+    .dismissScore {
+        position: absolute;
+        top: 2vh;
+        right: 2vw;
+        background-color: transparent;
+        z-index: 5;
+        height: 5vw;
+        width: 5vw;
+        padding: 0;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        i {
+            height: 100%;
+            width: 100%;
+            font-size: 5vw;
+            color: $borderColor;
+        }
+        &:hover {
+            i {
+                color: darken($color: $borderColor, $amount: 30%);
+            }
+        }
+    }
+    .scorer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .scoresWrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            div {
+                padding: $paddingWidth;
+                font-size: 3vh;
+                width: calc(#{$baseWidth} * 2 - (#{$paddingWidth} * 2));
+            }
+        }
+        .globalScoresWrapper {
+            div {
+                &.globalScore {
+                    
+                    p {
+                        text-align: center;
+                    }
+                }
+                &.globalText {
+                    border: $borderSize solid $borderColor;
+                    border-width: $borderSize $borderSize 0 $borderSize;
+                    p {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+        .roundScoresWrapper {
+            position: relative;
+            button {
+                border: $borderSize solid $borderColor;
+                background-color: transparent;
+                padding: $paddingWidth;
+                color: $borderColor;
+                margin: 0;
+                width: calc(#{$baseWidth} / 2 - (#{$borderSize} / 2));
+                font-size: 2vh;
+                outline: none;
+                border-width: 0 0 $borderSize $borderSize;
+                &:hover {
+                    background-color: $borderColor;
+                    color: $mainColor;
+                }
+                &:active {
+                    background-color: darken($color: $borderColor, $amount: 15);
+                }
+                &:last-of-type {
+                    border-width: 0px $borderSize $borderSize 0px;
+                }
+                &:nth-last-of-type(2) {
+                    border-width: 0px $borderSize $borderSize 0px;
+                }
+            }
+            div {
+                border: $borderSize solid $borderColor;
+                border-width: 0px $borderSize $borderSize $borderSize;
+                &.roundScore {
+                    display: flex;
+                    justify-content: center;
+                    p {
+                        width: $baseWidth;
+                        text-align: center;
+                    }
+                }
+
+                &:first-of-type {
+                    border-width: 0px 0px $borderSize $borderSize;
+                }
+                &:last-of-type {
+                    border-width: 0px $borderSize $borderSize 0px;
+                }
+                &.roundIndicator {
+                    position: absolute;
+                    bottom: 0;
+                    height: 1vh;
+                    width: $baseWidth;
+                    padding: 0;
+                    border-width: 0 0 $borderSize 0;
+                    &.win {
+                        background-color: green;
+                    }
+                    &.draw {
+                        background-color: orange;
+                    }
+                    &.loose {
+                        background-color: red;
+                    }
+                }
+                &.roundText {
+                    &.fullBorder {
+                        border-width: 0 $borderSize $borderSize $borderSize;
+                    }
+                    p {
+                        text-align: center;
+                    }
+                }
+            }
+
+        }
+        .participantsWrapper {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            .participant {
+                position: relative;
+                width: calc(#{$baseWidth} * 4 - (#{$borderSize} / 2));
+                border: $borderSize solid $borderColor;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: darken($mainColor, 5);
+                &:last-of-type {
+                    img {
+                        transform: translateX($borderSize) !important;
+                    }
+                }
+                &:first-of-type {
+                    img {
+                    transform: translateX(calc(#{$borderSize} * -1.5)) !important;
+                    }
+                }
+                img {
+                    min-height: 40vh;
+                    max-height: 40vh;
+                    //margin-top: calc(4vh + #{$paddingWidth} * 2 + (#{$borderSize} * 2));
+                    //margin-bottom: $borderSize;
+                }
+                .participantLogin {
+                    padding: $paddingWidth;
+                    width: calc(#{$baseWidth} * 2 - (#{$paddingWidth} * 2));
+                    border: $borderSize solid $borderColor;
+                    border-width: 0 $borderSize $borderSize $borderSize;
+                    position: absolute;
+                    top: 0;
+                    right: $baseWidth;
+                    background-color: $mainColor;
+                    z-index: 10;
+                    p {
+                        font-size: 3vh;
+                        line-height: 4vh;
+                        text-align: center;
+                    }
+                    .winningIcon {
+                        position: absolute;
+                        top: 0vh;
+                        width: 3vh;
+                        height: auto;
+                    }
+                }
+                &:last-of-type {
+                    border-width: $borderSize $borderSize $borderSize 0;
+                    .participantLogin {
+                        left: $baseWidth;
+                    }
+                }
+            }
+
+            .versus {
+                display: block;
+                position: absolute;
+                height: 6vh;
+                width: 6vh;
+                font-family: "Comic Sans MS";
+                top: 50%;
+                transform: translateY(-50%);
+                background-color: $borderColor;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                border: calc(#{$borderSize} * 3) solid $mainColor;
+                p {
+                    font-size: 4vh;
+                    color: $mainColor;
+                    text-align: center;
+                    font-weight: bolder;
+                }
+            }
+        }
+        .roundInformationsWrapper {
+            padding: $paddingWidth 0;
+            width: calc(#{$baseWidth} * 8);
+            .roundTitle {
+                margin: 1vh;
+                font-size: 3.5vh;
+            }
+            .roundDescription {
+                margin: 1vh;
+                font-size: 2vh;
+                white-space: pre-wrap;
+                padding-left: 1vw;
+            }
+        }
+        .gameStatus {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            width: calc(#{$baseWidth} * 8);
+            padding: $paddingWidth 0;
+            p {
+                font-size: 4vh;
+                margin-top: 10px;
+                display: inline-block;
+            }
+            .countDown {
+                margin-left: 1vh;
+                display: inline-block;
+            }
+        }
+        .controlWrapper {
+            margin-top: 1vh;
+            border: $borderSize solid $borderColor;
+            width: calc(#{$baseWidth} * 8 - (#{$borderSize} / 2));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            button {
+                border: $borderSize solid $borderColor;
+                background-color: transparent;
+                padding: $paddingWidth;
+                color: $borderColor;
+                margin: 5px;
+                font-size: 2vh;
+                outline: none;
+                &:hover {
+                    background-color: $borderColor;
+                    color: $mainColor;
+                }
+                &:active {
+                    background-color: darken($color: $borderColor, $amount: 15);
+                }
+                &.buttonWarning {
+                    border-color: red;
+                    color: red;
+                    &:hover {
+                        background-color: red;
+                        color: $mainColor;
+                    }
+                    &:active {
+                        background-color: darken(red, 10);
+                    }
+                }
+            }
+            .startRoundWrapper, .finishRoundWrapper {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                p {
+                    font-size: 2vh;
+                    margin: 5px;
+                }
+                input {
+                    &::placeholder {
+                        color: $borderColor;
+                    }
+                    background-color: transparent;
+                    border: 2px solid $borderColor;
+                    border-width: 0 0 $borderSize 0;
+                    outline: none;
+                    color: $borderColor;
+                    padding: 0;
+                    height: 3vh;
+                    font-size: 3vh;
+                    width: 5vw;
+                    margin: 0 5px;
+                }
+                button {
+                    margin-bottom: 0; 
+                }
+            }
+        }
+    }
+}

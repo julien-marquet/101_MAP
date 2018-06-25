@@ -6,9 +6,52 @@ import {
 } from "../actions/users";
 import {TOAST_SHOW} from "../actions/toasts";
 import {CONNECT_APP} from "../actions/globalState";
+import {GET_GAME_SUCCESS, START_GAME_SUCCESS, END_GAME_SUCCESS, NEXT_ROUND_SUCCESS, START_ROUND_SUCCESS, UPDATE_ROUND_SUCCESS, FINISH_ROUND_SUCCESS, FINISH_GAME_SUCCESS, RESET_ROUND_SUCCESS, PREV_ROUND_SUCCESS, NEXT_FINISH_SUCCESS} from "../actions/scores";
 import {storeCookie} from "../helpers/cookies.helper";
 
 function setupListeners(socketClient, dispatch) {
+
+    socketClient.on("get.game.success", data => {
+        dispatch({type: GET_GAME_SUCCESS, payload: data});
+    });
+    socketClient.on("start.game.success", data => {
+        dispatch({type: START_GAME_SUCCESS, payload: data});
+    });
+    socketClient.on("end.game.success", () => {
+        dispatch({type: END_GAME_SUCCESS});
+    });
+    socketClient.on("next.round.success", data => {
+        dispatch({type: NEXT_ROUND_SUCCESS, payload: data});
+    });
+
+    socketClient.on("start.round.success", data => {
+        dispatch({type: START_ROUND_SUCCESS, payload: data});
+    });
+
+    socketClient.on("update.round.success", data => {
+        dispatch({type: UPDATE_ROUND_SUCCESS, payload: data});
+    });
+
+    socketClient.on("finish.round.success", data => {
+        dispatch({type: FINISH_ROUND_SUCCESS, payload: data});
+    });
+
+    socketClient.on("finish.game.success", () => {
+        dispatch({type: FINISH_GAME_SUCCESS});
+    });
+
+    socketClient.on("reset.round.success", data => {
+        dispatch({type: RESET_ROUND_SUCCESS, payload: data});
+    });
+
+    socketClient.on("prev.round.success", data => {
+        dispatch({type: PREV_ROUND_SUCCESS, payload: data});
+    });
+
+    socketClient.on("next.finish.success", data => {
+        dispatch({type: NEXT_FINISH_SUCCESS, payload: data});
+    });
+
     socketClient.on("connectedUsers", data => {
         dispatch({type: USERS_GETTED, payload: JSON.parse(data)});
     });

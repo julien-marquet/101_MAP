@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, Fragment} from "react";
 import PropTypes from "prop-types";
 
 import {retrieveCookie, removeCookie} from "../helpers/cookies.helper";
@@ -8,6 +8,7 @@ import logo_light from "../../img/101_logo_light.svg";
 import logo_dark from "../../img/101_logo_dark.svg";
 import Loader from "../components/Loader";
 import Toaster from "../containers/toaster";
+import Scorer from "../containers/scorer";
 import "../scss/App.css";
 
 class App extends Component {
@@ -112,7 +113,11 @@ class App extends Component {
 
     renderApp() {
         if (this.props.connected) {
-            return (<Warzone key={"Component1"} />);
+            return (
+                <Fragment>
+                    <Warzone key={"Component1"} />
+                    <Scorer />
+                </Fragment>);
         }
         else {
             return (

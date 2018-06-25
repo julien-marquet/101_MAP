@@ -28,6 +28,7 @@ const Oauth_authentifier = i_Oauth2_authenticator => {
         }
         else {
             socket.typeAuth = "token";
+            socket.userId = token.userId;
             next();
         }
     });
