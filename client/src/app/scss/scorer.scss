@@ -4,7 +4,7 @@ $baseWidth: 8vw; // entre 5 et 9
 $paddingWidth: 0.5vw;
 $borderColor: #fff;
 $mainColor: #292D39;
-$borderSize: 2px;
+$borderSize: 4px;
 
 .scorerWrapper {
     button {
@@ -86,7 +86,7 @@ $borderSize: 2px;
                 padding: $paddingWidth;
                 color: $borderColor;
                 margin: 0;
-                width: calc(#{$baseWidth} / 2);
+                width: calc(#{$baseWidth} / 2 - (#{$borderSize} / 2));
                 font-size: 2vh;
                 outline: none;
                 border-width: 0 0 $borderSize $borderSize;
@@ -157,7 +157,7 @@ $borderSize: 2px;
             justify-content: center;
             .participant {
                 position: relative;
-                width: calc(#{$baseWidth} * 4 );
+                width: calc(#{$baseWidth} * 4 - (#{$borderSize} / 2));
                 border: $borderSize solid $borderColor;
                 min-height: 40vh;
                 display: flex;
@@ -247,7 +247,7 @@ $borderSize: 2px;
         .controlWrapper {
             margin-top: 1vh;
             border: $borderSize solid $borderColor;
-            width: calc(#{$baseWidth} * 8);
+            width: calc(#{$baseWidth} * 8 - (#{$borderSize} / 2));
             display: flex;
             flex-direction: column;
             justify-content: center;
