@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from "react";
 import "../scss/scorer.css";
 import MAX from "../../img/MAX.png";
-import BODO from "../../img/placeholder.png";
+import BODO from "../../img/BODO.png";
 import crown from "../../img/crown.png";
 import CountDown from "../components/CountDown.js";
 
