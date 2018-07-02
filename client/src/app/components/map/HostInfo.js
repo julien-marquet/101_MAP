@@ -111,6 +111,7 @@ class HostInfo extends Component {
     }
     renderMetadata() {
         if (this.props.user_metadata.success) {
+            const level = this.props.user_metadata.content.cursus_users.find(obj => obj.cursus_id === 1) || this.props.user_metadata.content.cursus_users.find(obj => obj.cursus_id !== 1);
             return [
                 <UpTime  key={"s-uptime"} begin_at={this.props.activeUser.begin_at} />,
                 <li key="s-corr" className={"stat stat-2"}>
@@ -139,7 +140,7 @@ class HostInfo extends Component {
                         Level :
                         </span>
                         <span className={"statValue"}>
-                            {this.props.user_metadata.content.cursus_users.find(obj => obj.cursus_id === 1).level.toFixed(2)}
+                            {level.level.toFixed(2)}
                         </span>    
                     </p>
                 </li>
