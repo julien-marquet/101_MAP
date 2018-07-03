@@ -7,7 +7,7 @@ class UpTime extends Component {
         super(props);
 
         this.timeout = null;
-        const date = moment.utc(props.begin_at).subtract(Math.abs((new Date(props.begin_at)).getTimezoneOffset()) / 60, "hours");
+        const date = moment.utc(props.begin_at);
         this.state = {
             time : moment.utc().diff(date)
         };
@@ -19,7 +19,7 @@ class UpTime extends Component {
         if (this.timeout !== null) {
             clearTimeout(this.timeout);
         }
-        const date = moment.utc(nextProps.begin_at).subtract(Math.abs((new Date(nextProps.begin_at)).getTimezoneOffset()) / 60, "hours");
+        const date = moment.utc(nextProps.begin_at);
         this.setState({
             time : moment.utc().diff(date)
         });
