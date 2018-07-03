@@ -12,6 +12,7 @@ class Seat extends Component {
             isSearched: false,
             isActive: false
         };
+        this.imgSrc = 0;
         this.addDefaultSrc = this.addDefaultSrc.bind(this);
     }
 
@@ -54,11 +55,14 @@ class Seat extends Component {
     }
 
     addDefaultSrc(ev) {
-        const ext = ev.target.src.slice(-3);
-        if(this.props.user !== undefined && ext !== "jpg" && ext !== "svg")
+        if (this.props.user !== undefined && this.imgSrc === 0) {
+            ev.target.src = `https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`;
+        } else if (this.props.user !== undefined && this.imgSrc === 1) {
             ev.target.src = `https://cdn.intra.42.fr/users/large_${this.props.user.user.login}.jpg`;
-        else if (this.props.user !== undefined && ext === "jpg")
+        } else {
             ev.target.src = placeholder;
+        }
+        this.imgSrc += 1;
     }
 
     render() {
@@ -85,7 +89,7 @@ class Seat extends Component {
                     >
                         <img
                             onError={this.addDefaultSrc}
-                            src={`https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`}
+                            src={this.props.user.pool ? `https://101find.me:82/piscine/female/female_${this.props.user.user.login}.jpg` : `https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`}
                             className={"userImg"}
                             alt={"User"}
                         />

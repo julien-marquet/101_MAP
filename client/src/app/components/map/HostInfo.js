@@ -41,7 +41,7 @@ class HostInfo extends Component {
             ev.target.src = placeholder;
         }
         else {
-            if (ev.target.src.slice(-3) === "jpg") {
+            if (!this.props.activeUser.pool && ev.target.src.slice(-3) === "jpg") {
                 ev.target.src = placeholder;
                 if (ev.target.className !== "userPortrait") {
                     ev.target.className = "userPortrait";
@@ -160,7 +160,7 @@ class HostInfo extends Component {
                                     className={"userPortrait"}
                                     onError={this.addDefaultSrc}
                                     ref={element => this.portrait = element}
-                                    src={`https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
+                                    src={this.props.activeUser.pool ? `https://101find.me:82/piscine/female/female_${this.props.activeUser.user.login}.jpg` : `https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
                                     alt={"User portrait"}
                                 />
                                 {this.renderFilter(this.props.activeUser.user.login)}
