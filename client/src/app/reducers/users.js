@@ -11,6 +11,7 @@ const initialState = {
     array: [],
     last_request: null,
     nb_connected_users: 0,
+    inPoolNbr: 0,
     activeUser: {
         hostname: null,
         begin_at: null,

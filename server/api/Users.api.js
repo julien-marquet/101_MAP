@@ -57,6 +57,7 @@ class Users {
     }
 
     getConnectedUsers(campus)  {
+        const inPool = ["ledebut", "asag", "fakl", "rnoc", "vhuc", "ygok", "dcoat", "kanne", "mchey", "vcher", "vfoex", "afalco", "amorin", "aradix", "bperez", "btriki", "dakgul", "dbolut", "etoker", "frseve", "jsabot", "kpesci", "lnieto", "mrevol", "njouve", "nsalle", "ntahar", "rcepre", "widrye", "wsayad", "xjanin", "aganoun", "awonkam", "bjuarez", "bmuller", "dmboule", "dypayen", "faneyer", "fcordon", "fdufour", "flfinet", "glandre", "glucien", "gszpiro", "gveloso", "humoyne", "husahuc", "ivrosic", "jalucas", "jmanevy", "jromero", "kgardie", "lfragne", "lgirerd", "manquez", "matheme", "mbogard", "mforler", "mintran", "mmarcon", "nangelo", "nnieddu", "ocrossi", "qmercey", "rfanjas", "sbedene", "sducamp", "skeller", "swdenis", "tthuret", "vsamiez", "wmoulin", "yhattab", "aben-hal", "achappui", "acorblin", "afeldman", "alepercq", "amaadour", "aniervas", "antdelri", "arazanaj", "aubucher", "axegerve", "barey-ga", "bmokrani", "boeuvrar", "brey-gal", "brirouil", "bsoleill", "cdeschen", "clchauvi", "conrodri", "cscialpi", "davfelix", "ebourgeo", "echevali", "ehudeley", "einnocen", "elgrusko", "eschnell", "fcarrere", "fchancel", "fhenriet", "fleonard", "fllecocq", "ftourret", "gderramo", "gterrien", "hopoutea", "hutorres", "idmessao", "jbenassa", "jbenzegh", "jbuisson", "jcarrill", "jclerqui", "jde-la-m", "jde-mour", "jeangran", "jehechav", "jfouquet", "jfrankow", "jgraindo", "jlaurair", "jleuenbe", "jlhotell", "jofiguer", "jominodi", "jopailla", "juliemar", "kabouama", "kel-akio", "krambono", "ksouza-s", "lernault", "lfouilla", "lhasenfr", "loatilem", "loiberti", "losainra", "lverdeci", "maberkan", "maboisso", "macaudet", "madurand", "magnelli", "maparici", "mbartels", "mdelarbr", "mhotting", "mhouppin", "midiallo", "mjalenqu", "mlecieux", "mnaccach", "moghomra", "moudmine", "mweingae", "naplouvi", "nboufeld", "nhoffste", "nrivoire", "oshklyar", "paujulli", "pbarriol", "pitirard", "pmaucote", "pstoraci", "qmonmous", "rcabotia", "rchaddou", "rcodazzi", "rlegendr", "sachenin", "schekiro", "shechaic", "shorwood", "sifouche", "slunetta", "smainfro", "ssoubeir", "tbollach", "tclerc-p", "tdautrem", "thdos-sa", "thfelpin", "thfiessi", "tiperoul", "tmalzieu", "tmezouri", "tomberna", "tprzybyl", "tvarnier", "vasalome", "vascelli", "vbenedet", "vde-sain", "vdesmons", "vicaster", "videloff", "yalabidi", "ycorvais", "ylapiquo", "yvmartor", "yyacouba", "zseignon", "ztrouill"];
         return new Promise((resolve, reject) => {
             let i = 1;
             let usersArray = [];
@@ -92,21 +93,29 @@ class Users {
                         reject(err);
                     });
                 } else {
+                    let inPoolNbr = 0;
                     self.globalStorage.connected_users_array = {};
-                    usersArray.map(({begin_at, user, id, host}) => {
+                    usersArray.map(({host, begin_at, user, id}) => {
+                        const pool = inPool.includes(user.login);
+                        if (pool) {
+                            inPoolNbr += 1;
+                        }
                         self.globalStorage.connected_users_array[host] = {
-                            begin_at,
-                            user,
-                            id
+                            begin_at: begin_at,
+                            user: user,
+                            id: id,
+                            pool
                         };
                     });
                     self.globalStorage.connected_users_last_request = Date.now();
                     self.globalStorage.nb_connected_users = nb_connected_users;
+                    self.globalStorage.inPoolNbr = inPoolNbr;
                     if (usersArray.length > 0) {
                         resolve({
                             nb_connected_users: self.globalStorage.nb_connected_users,
                             last_request: self.globalStorage.connected_users_last_request, 
-                            array: self.globalStorage.connected_users_array
+                            array: self.globalStorage.connected_users_array,
+                            inPoolNbr: self.globalStorage.inPoolNbr
                         });
                     }
                     else {
