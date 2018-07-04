@@ -152,7 +152,7 @@ class HostInfo extends Component {
         const userIsActive = this.props.activeUser.hostname !== null;
         return (
             <div className={this.props.mode === "passive" ? "hostInfoWrapper hostInfoAnimated" : "hostInfoWrapper"}>
-                {userIsActive && <i className={"fas fa-times closeHostInfo"} onClick={this.props.clearActiveUser}></i>}
+                {userIsActive && this.props.mode !== "passive" && <i className={"fas fa-times closeHostInfo"} onClick={this.props.clearActiveUser}></i>}
                 <div className={"splitter"}>
                     <div className={"leftCol"}>
                         {userIsActive &&
