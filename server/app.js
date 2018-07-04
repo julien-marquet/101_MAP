@@ -61,5 +61,7 @@ db.once("open", () => {
 });
 
 process.on("SIGINT", () => tokenHelper.saveTokens(globalStorage));
+process.on("SIGHUP", () => tokenHelper.saveTokens(globalStorage));
+process.on("SIGTERM", () => tokenHelper.saveTokens(globalStorage));
 process.stdin.setEncoding("utf8");
 process.stdin.on("data", text => stdinHelper.treateCommand(text, io.sockets));
