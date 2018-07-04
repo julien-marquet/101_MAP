@@ -16,8 +16,6 @@ class Oauth2_authenticator {
             this.i_queue.push_head("refreshToken", {
                 url: `${apiEndpoint}oauth/token`,
                 body: {
-                    client_id: process.env.CLIENT_ID,
-                    client_secret: process.env.CLIENT_SECRET,
                     refresh_token: this.globalStorage.socketCache[token].refresh_token,
                     redirect_uri: redirect_uri,
                     grant_type: "refresh_token",
