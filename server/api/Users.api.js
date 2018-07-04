@@ -14,8 +14,7 @@ class Users {
             return this.i_queue.push_tail(
                 "getUserInfos", {
                     url: `${apiEndpoint}v2/users/${userId}`, 
-                    headers: {"authorization": `Bearer ${userToken}`
-                    }
+                    headers: {"authorization": `Bearer ${userToken}`}
                 }
             ).then(response => {
                 response.last_request = Date.now();
