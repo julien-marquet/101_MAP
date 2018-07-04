@@ -3,7 +3,8 @@ import {
     ACTIVE_USER_SWAP,
     USER_GET_METADATA,
     USER_GET_METADATA_SUCCEEDED,
-    USER_GET_METADATA_FAILED
+    USER_GET_METADATA_FAILED,
+    USER_CLEAR_ACTIVE
 } from "../actions/users";
 import {SEARCH_UPDATE_CONTENT} from "../actions/search";
 
@@ -76,6 +77,11 @@ const users = (state = initialState, {type, payload}) => {
         return {
             ...state,
             searchedUser: payload.content
+        };
+    case USER_CLEAR_ACTIVE:
+        return {
+            ...state,
+            activeUser: {...initialState.activeUser}
         };
     default:
         return state;
