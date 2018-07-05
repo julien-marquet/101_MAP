@@ -20,7 +20,6 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-console.log(`${__dirname}/imgs`);
 app.use("/imgs", express.static(`${__dirname}/imgs`));
 app.use(express.static(__dirname + clientPath));
 app.use((req, res, next) => {
