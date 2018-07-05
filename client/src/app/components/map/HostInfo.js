@@ -5,6 +5,7 @@ import UpTime from "./Uptime";
 import Loader from "../Loader";
 import placeholder from "../../../img/placeholder_profil.svg";
 import jfeve from "../../../img/jfeve.gif";
+import globalConfig from "../../../config/globalConfig";
 
 class HostInfo extends Component {
     constructor(props) {
@@ -161,7 +162,7 @@ class HostInfo extends Component {
                                     className={"userPortrait"}
                                     onError={this.addDefaultSrc}
                                     ref={element => this.portrait = element}
-                                    src={this.props.activeUser.pool ? `https://101find.me:82/piscine/female/female_${this.props.activeUser.user.login}.jpg` : `https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
+                                    src={this.props.activeUser.pool ? `${globalConfig.serverEndpoint}/imgs/faces/female_${this.props.activeUser.user.login}.jpg` : `https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
                                     alt={"User portrait"}
                                 />
                                 {this.renderFilter(this.props.activeUser.user.login)}
