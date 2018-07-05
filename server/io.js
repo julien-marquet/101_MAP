@@ -13,7 +13,7 @@ const websocketHandler = (server, globalStorage) => {
 
     globalStorage.connectedUsers = 0;
 
-    io.use(require("./middlewares/Oauth_client_authentifier.middleware")(i_Oauth2_authenticator));
+    io.use(require("./middlewares/Oauth_client_authentifier.middleware")(i_Oauth2_authenticator, globalStorage));
 	
     io.on("connection", (socket) => {
         logger.add_log({
@@ -38,5 +38,6 @@ const websocketHandler = (server, globalStorage) => {
         });
         require("./websocket_event/index")(socket, globalStorage, i_queue, i_Oauth2_authenticator);
     });
+    return (io);
 };
 module.exports = websocketHandler;

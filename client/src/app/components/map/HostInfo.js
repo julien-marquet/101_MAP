@@ -18,7 +18,7 @@ class HostInfo extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.activeUser.id !== nextProps.activeUser.id) {
+        if (this.props.activeUser.id !== nextProps.activeUser.id && nextProps.activeUser.id !== 0) {
             this.props.getUserMetadata(nextProps.activeUser.user.id);
             if (this.portrait !== null) {
                 if (this.portrait.className !== "userPortrait") {
@@ -152,6 +152,7 @@ class HostInfo extends Component {
         const userIsActive = this.props.activeUser.hostname !== null;
         return (
             <div className={this.props.mode === "passive" ? "hostInfoWrapper hostInfoAnimated" : "hostInfoWrapper"}>
+                {userIsActive && this.props.mode !== "passive" && <i className={"fas fa-times closeHostInfo"} onClick={this.props.clearActiveUser}></i>}
                 <div className={"splitter"}>
                     <div className={"leftCol"}>
                         {userIsActive &&

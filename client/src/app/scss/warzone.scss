@@ -302,6 +302,14 @@
         overflow: hidden;
         position: relative;
         transition: transform 0.5s ease-in-out;
+        .closeHostInfo {
+            position: absolute;
+            top: get_size(0.5, $coefficient);
+            right: get_size(1, $coefficient);
+            z-index: 10;
+            font-size: get_size(1.7, $coefficient);
+            cursor: pointer;
+        }
         .adminFilter {
             width: 22%;
             height: 15%;

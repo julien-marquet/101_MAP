@@ -11,8 +11,9 @@ const express = require("express"),
     env = require("dotenv").config(),
     bodyParser = require("body-parser"),
     cors = require("cors"),
-    morgan = require("morgan");
-
+    morgan = require("morgan"),
+    tokenHelper = require("./helpers/tokenCache.helper"),
+    stdinHelper = require("./helpers/stdin.helper");
 const {clientPath, serverPort} = require("./config/globalConfig");
 
 app.use(cors());
@@ -20,7 +21,7 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + clientPath));
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     var err = new Error("Not Found");
     err.status = 404;
     next(err);
@@ -49,7 +50,7 @@ db.once("open", () => {
         type: "General", 
         description: "Succesfully Connected to database"
     });
-    server.listen(serverPort, function () {
+    server.listen(serverPort, () => {
         logger.add_log({type: "General", 
             description: "Succesfully launched server", 
             additionnal_infos: {
@@ -59,3 +60,8 @@ db.once("open", () => {
     });
 });
 
+process.on("SIGINT", () => tokenHelper.saveTokens(globalStorage));
+process.on("SIGHUP", () => tokenHelper.saveTokens(globalStorage));
+process.on("SIGTERM", () => tokenHelper.saveTokens(globalStorage));
+process.stdin.setEncoding("utf8");
+process.stdin.on("data", text => stdinHelper.treateCommand(text, io.sockets));
