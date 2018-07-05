@@ -89,7 +89,7 @@ class Seat extends Component {
                     >
                         <img
                             onError={this.addDefaultSrc}
-                            src={this.props.user.pool ? `https://101find.me:82/piscine/female/female_${this.props.user.user.login}.jpg` : `https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`}
+                            src={this.props.user.pool ? `${globalConfig.serverEndpoint}/imgs/faces/female_${this.props.user.user.login}.jpg` : `https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`}
                             className={"userImg"}
                             alt={"User"}
                         />
