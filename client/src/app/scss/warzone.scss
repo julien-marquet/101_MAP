@@ -674,7 +674,9 @@
     }
 }
 
-
+.hiddenImg {
+    display: none;
+}
 
 @import 'themes/dark.scss';
 @import 'themes/light.scss';

@@ -10,13 +10,16 @@ class Seat extends Component {
 
         this.state = {
             isSearched: false,
-            isActive: false
+            isActive: false,
+            hidden: true
         };
         this.imgSrc = 0;
         this.addDefaultSrc = this.addDefaultSrc.bind(this);
+        this.showImg = this.showImg.bind(this);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        console.log(nextState.hidden)
         if ((this.props.user === undefined && nextProps.user !== undefined) ||
             (nextProps.user === undefined && this.props.user !== undefined)) {
             return true;
@@ -26,7 +29,7 @@ class Seat extends Component {
             this.state.isSearched !== nextState.isSearched)) {
             return true;
         }
-        if (nextState.isSearched !== this.state.isSearched || nextState.isActive !== this.state.isActive) {
+        if (nextState.isSearched !== this.state.isSearched || nextState.isActive !== this.state.isActive || nextState.hidden !== this.state.hidden) {
             return true;
         }
         return false;
@@ -65,8 +68,13 @@ class Seat extends Component {
         this.imgSrc += 1;
     }
 
+    showImg() {
+        this.setState({
+            hidden: false
+        });
+    }
+
     render() {
-        
         if (this.props.user === undefined) {
             return (
                 <div className={"seat"} />
@@ -88,14 +96,13 @@ class Seat extends Component {
                             });
                         }}
                     >
-                        <div />
+                        {!this.state.hidden &&  <div />}
                         <img
                             onError={this.addDefaultSrc}
+                            onLoad={() => this.setState({hidden: false})}
                             src={`https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`}
-                            className={"userImg"}
-                            alt={"User"}
+                            className={`userImg ${this.state.hidden ? "hiddenImg" : ""}`}
                         />
-
                     </div>
                 </div>                    
             );
