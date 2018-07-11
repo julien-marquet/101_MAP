@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 import UpTime from "./Uptime";
 import Loader from "../Loader";
 import placeholder from "../../../img/placeholder_profil.svg";
-import jfeve from "../../../img/jfeve.gif";
-import globalConfig from "../../../config/globalConfig";
 
 class HostInfo extends Component {
     constructor(props) {
@@ -55,19 +53,16 @@ class HostInfo extends Component {
     }
 
     renderFilter(login) {
-        if (login === "jfeve") {
-            return (
-                <img
-                    className={"fireJfeve"}
-                    src={jfeve}
-                    alt={"jFeve"}
-                />
-            );
-        }
-        else if (login === "legrivel" || login === "jmarquet") {
+        if (login === "legrivel" || login === "jmarquet") {
             return (
                 <div className={"adminFilter"}>
                     <h2>Admin</h2>
+                </div>
+            );
+        } else if (this.props.activeUser.pool) {
+            return (
+                <div className={"poolTag"}>
+                    <h2>Piscineux</h2>
                 </div>
             );
         }
@@ -162,7 +157,7 @@ class HostInfo extends Component {
                                     className={"userPortrait"}
                                     onError={this.addDefaultSrc}
                                     ref={element => this.portrait = element}
-                                    src={this.props.activeUser.pool ? `${globalConfig.serverEndpoint}/imgs/faces/female_${this.props.activeUser.user.login}.jpg` : `https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
+                                    src={`https://cdn.intra.42.fr/users/large_${this.props.activeUser.user.login}.JPG`}
                                     alt={"User portrait"}
                                 />
                                 {this.renderFilter(this.props.activeUser.user.login)}

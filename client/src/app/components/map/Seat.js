@@ -66,6 +66,7 @@ class Seat extends Component {
     }
 
     render() {
+        
         if (this.props.user === undefined) {
             return (
                 <div className={"seat"} />
@@ -75,7 +76,7 @@ class Seat extends Component {
             return (
                 <div className={"seat taken"}>
                     <div
-                        className={this.state.isSearched || this.state.isActive ? "seatHover highlighted" : "seatHover"}
+                        className={this.state.isSearched || this.state.isActive ? `seatHover highlighted ${this.props.user.pool ? "newbie" : ""}` : `seatHover ${this.props.user.pool ? "newbie" : ""}`}
                         onClick={() => {
                             if (this.props.mode === "passive") {
                                 this.props.quitPassiveMode();
@@ -87,12 +88,14 @@ class Seat extends Component {
                             });
                         }}
                     >
+                        <div />
                         <img
                             onError={this.addDefaultSrc}
-                            src={this.props.user.pool ? `${globalConfig.serverEndpoint}/imgs/faces/female_${this.props.user.user.login}.jpg` : `https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`}
+                            src={`https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`}
                             className={"userImg"}
                             alt={"User"}
                         />
+
                     </div>
                 </div>                    
             );
