@@ -19,7 +19,6 @@ class Seat extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        console.log(nextState.hidden)
         if ((this.props.user === undefined && nextProps.user !== undefined) ||
             (nextProps.user === undefined && this.props.user !== undefined)) {
             return true;
@@ -61,7 +60,7 @@ class Seat extends Component {
         if (this.props.user !== undefined && this.imgSrc === 0) {
             ev.target.src = `https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`;
         } else if (this.props.user !== undefined && this.imgSrc === 1) {
-            ev.target.src = `https://cdn.intra.42.fr/users/large_${this.props.user.user.login}.jpg`;
+            ev.target.src = `https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.jpg`;
         } else {
             ev.target.src = placeholder;
         }
