@@ -11,10 +11,11 @@ class Seat extends Component {
         this.state = {
             isSearched: false,
             isActive: false,
-            hidden: true
+            hidden: true,
+            imgSrc: 0
         };
-        this.imgSrc = 0;
-        this.addDefaultSrc = this.addDefaultSrc.bind(this);
+        this.changeImgSrc = this.changeImgSrc.bind(this);
+        this.getImgSrc = this.getImgSrc.bind(this);
         this.showImg = this.showImg.bind(this);
     }
 
@@ -28,7 +29,7 @@ class Seat extends Component {
             this.state.isSearched !== nextState.isSearched)) {
             return true;
         }
-        if (nextState.isSearched !== this.state.isSearched || nextState.isActive !== this.state.isActive || nextState.hidden !== this.state.hidden) {
+        if (nextState.imgSrc !== this.state.imgSrc || nextState.isSearched !== this.state.isSearched || nextState.isActive !== this.state.isActive || nextState.hidden !== this.state.hidden) {
             return true;
         }
         return false;
@@ -56,15 +57,18 @@ class Seat extends Component {
         }
     }
 
-    addDefaultSrc(ev) {
-        if (this.props.user !== undefined && this.imgSrc === 0) {
-            ev.target.src = `https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`;
-        } else if (this.props.user !== undefined && this.imgSrc === 1) {
-            ev.target.src = `https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.jpg`;
-        } else {
-            ev.target.src = placeholder;
-        }
-        this.imgSrc += 1;
+    getImgSrc() {
+        if (this.props.user === undefined || this.state.imgSrc > 1)
+            return placeholder;
+        else if (this.state.imgSrc === 0)
+            return (`https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`);
+        else
+            return (`https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.jpg`);
+    }
+    changeImgSrc() {
+        this.setState({
+            imgSrc: this.state.imgSrc + 1
+        });
     }
 
     showImg() {
@@ -97,9 +101,9 @@ class Seat extends Component {
                     >
                         {!this.state.hidden &&  <div />}
                         <img
-                            onError={this.addDefaultSrc}
+                            onError={this.changeImgSrc}
                             onLoad={() => this.setState({hidden: false})}
-                            src={`https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`}
+                            src={this.getImgSrc()}
                             className={`userImg ${this.state.hidden ? "hiddenImg" : ""}`}
                         />
                     </div>
