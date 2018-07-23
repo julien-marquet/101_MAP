@@ -84,10 +84,20 @@ class Seat extends Component {
             );
         }
         else {
+            let className = this.state.isSearched;
+            if (className === null || className === undefined || !className) {
+                className = "seatHover";
+                if (this.props.user.pool) {
+                    className += " newbie";
+                }
+                if (this.state.isActive) {
+                    className += " highlighted";
+                }
+            }
             return (
                 <div className={"seat taken"}>
                     <div
-                        className={this.state.isSearched || this.state.isActive ? `seatHover highlighted ${this.props.user.pool ? "newbie" : ""}` : `seatHover ${this.props.user.pool ? "newbie" : ""}`}
+                        className={className}
                         onClick={() => {
                             if (this.props.mode === "passive") {
                                 this.props.quitPassiveMode();
