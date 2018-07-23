@@ -16,7 +16,6 @@ function is_valid_token(i_Oauth2_authenticator, token) {
 const Oauth_authentifier = (i_Oauth2_authenticator, globalStorage) => {
     return ((socket, next) => {
         const token = is_valid_token(i_Oauth2_authenticator, socket.handshake.query.token);
-        console.log("Checking token validity");
         if (token === false) {
             if (tokenCache[socket.handshake.query.token] !== undefined) {
                 globalStorage.socketCache[socket.handshake.query.token] = {...tokenCache[socket.handshake.query.token]};

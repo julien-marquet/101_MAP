@@ -1,4 +1,5 @@
 const fs = require("fs");
+const logger = require("../custom_modules/logger");
 
 module.exports = {
     saveTokens: globalStorage => {
@@ -9,7 +10,11 @@ module.exports = {
             fs.writeSync(fd, "}");
             fs.closeSync(fd);
         } catch (error) {
-            console.log("An error occured during writing tokens to file", error);
+            logger.add_log({
+                type: "Error",
+                description: "An error occured during writing tokens to file",
+                additionnal_infos: {Error: error}
+            });
         }
         process.exit(0);
     }
