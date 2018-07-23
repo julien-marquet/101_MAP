@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import UpTime from "./Uptime";
 import Loader from "../Loader";
 import placeholder from "../../../img/placeholder_profil.svg";
-import jfeve from "../../../img/jfeve.gif";
 
 class HostInfo extends Component {
     constructor(props) {
@@ -41,7 +40,7 @@ class HostInfo extends Component {
             ev.target.src = placeholder;
         }
         else {
-            if (ev.target.src.slice(-3) === "jpg") {
+            if (!this.props.activeUser.pool && ev.target.src.slice(-3) === "jpg") {
                 ev.target.src = placeholder;
                 if (ev.target.className !== "userPortrait") {
                     ev.target.className = "userPortrait";
@@ -54,19 +53,16 @@ class HostInfo extends Component {
     }
 
     renderFilter(login) {
-        if (login === "jfeve") {
-            return (
-                <img
-                    className={"fireJfeve"}
-                    src={jfeve}
-                    alt={"jFeve"}
-                />
-            );
-        }
-        else if (login === "legrivel" || login === "jmarquet") {
+        if (login === "legrivel" || login === "jmarquet") {
             return (
                 <div className={"adminFilter"}>
                     <h2>Admin</h2>
+                </div>
+            );
+        } else if (this.props.activeUser.pool) {
+            return (
+                <div className={"poolTag"}>
+                    <h2>Piscineux</h2>
                 </div>
             );
         }

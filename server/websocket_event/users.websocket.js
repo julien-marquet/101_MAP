@@ -26,7 +26,8 @@ const usersSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator) => 
             socket.emit("connectedUsers", JSON.stringify({
                 last_request: globalStorage.connected_users_last_request, 
                 nb_connected_users: globalStorage.nb_connected_users,
-                array: globalStorage.connected_users_array
+                array: globalStorage.connected_users_array,
+                inPoolNbr: globalStorage.inPoolNbr
             }));
         }
     });

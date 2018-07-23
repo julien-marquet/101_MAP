@@ -60,7 +60,7 @@
         }
         .multi-dropdown {
             &.opened .dropdown-content {
-                max-height: calc(#{$tileSize} * #{$themeNb} + (2 * #{$dropdownSeparation}) + (#{$themeNb} * (#{$dropdownInnerSeparation} * 2) + (2 * #{$iconSpacing}));
+                max-height: calc(#{$tileSize} * #{$themeNb} + (2 * #{$dropdownSeparation}) + (#{$themeNb} * (#{$dropdownInnerSeparation} * 2) + (2 * #{$iconSpacing})));
             }
             &.closed .dropdown-content {
                 transform-origin: top;
@@ -113,14 +113,14 @@
     @keyframes pulse {
         0% {
             transform: scale(1.1);
-            z-index: 1;
+            //z-index: 1;
         }
         100% {
             top: -(($zoom - 1) * 50%) !important;
             left: -(($zoom - 1) * 50%)!important;
-            transform: scale(1.5);
+            transform: scale(1.4);
             box-shadow: get_size(0.2, $coefficient) get_size(0.2, $coefficient)  get_size(0.8, $coefficient) rgba(0, 0, 0, 0.4);
-            z-index: 1;  
+            //z-index: 1;  
         }
     }
     
@@ -147,7 +147,21 @@
         display: flex;
         flex-direction: column;
     }
-
+    .newbie {
+        div {
+            width: get_size(0.7, $coefficient);
+            height: get_size(0.7, $coefficient);
+            border: get_size(0.1, $coefficient) rgba(255, 255, 255, 0.7) solid;
+            background-color: rgba(0, 155, 216, 0.623);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 1px 5px 0 rgba(0, 0, 0, 0.22), 0 3px 1px -2px rgba(0, 0, 0, 0.3);
+            position: absolute;
+            bottom: get_size(0.2, $coefficient);
+            right: get_size(0.2, $coefficient);
+            border-radius: 50%;
+            @include fix_animation();
+            z-index: 5;
+        }
+    }
     .seatHover {
         position: absolute;
         display: flex;
@@ -327,16 +341,35 @@
                 transform: translateY(-50%);
             }
         }
+        .poolTag {
+            width: 22%;
+            height: 15%;
+            position: absolute;
+            bottom: get_size(-0.2, $coefficient);
+            left: 0;
+            font-weight: bold;
+            font-size: get_size(1.6, $coefficient);
+            padding-left:  get_size(0.4, $coefficient);
+            text-align: center;
+            color: $textPrimary;
+            h2 {
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
         .splitter {
             display: flex;
             height: 100%;
             .leftCol {
                 z-index: 1;
                 width: 40%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 .userPortrait {
                     position: relative;
                     height: 100%;
-                    left: -60%;
                     @include fix_animation();
                 }
                 .fireJfeve {
@@ -636,9 +669,14 @@
             text-align: center;
         }
     }
+    .poolIcon {
+        height: get_size(2.7, $coefficient);
+    }
 }
 
-
+.hiddenImg {
+    display: none;
+}
 
 @import 'themes/dark.scss';
 @import 'themes/light.scss';

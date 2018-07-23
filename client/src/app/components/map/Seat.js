@@ -10,9 +10,13 @@ class Seat extends Component {
 
         this.state = {
             isSearched: false,
-            isActive: false
+            isActive: false,
+            hidden: true,
+            imgSrc: 0
         };
-        this.addDefaultSrc = this.addDefaultSrc.bind(this);
+        this.changeImgSrc = this.changeImgSrc.bind(this);
+        this.getImgSrc = this.getImgSrc.bind(this);
+        this.showImg = this.showImg.bind(this);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -25,7 +29,7 @@ class Seat extends Component {
             this.state.isSearched !== nextState.isSearched)) {
             return true;
         }
-        if (nextState.isSearched !== this.state.isSearched || nextState.isActive !== this.state.isActive) {
+        if (nextState.imgSrc !== this.state.imgSrc || nextState.isSearched !== this.state.isSearched || nextState.isActive !== this.state.isActive || nextState.hidden !== this.state.hidden) {
             return true;
         }
         return false;
@@ -53,12 +57,24 @@ class Seat extends Component {
         }
     }
 
-    addDefaultSrc(ev) {
-        const ext = ev.target.src.slice(-3);
-        if(this.props.user !== undefined && ext !== "jpg" && ext !== "svg")
-            ev.target.src = `https://cdn.intra.42.fr/users/large_${this.props.user.user.login}.jpg`;
-        else if (this.props.user !== undefined && ext === "jpg")
-            ev.target.src = placeholder;
+    getImgSrc() {
+        if (this.props.user === undefined || this.state.imgSrc > 1)
+            return placeholder;
+        else if (this.state.imgSrc === 0)
+            return (`https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`);
+        else
+            return (`https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.jpg`);
+    }
+    changeImgSrc() {
+        this.setState({
+            imgSrc: this.state.imgSrc + 1
+        });
+    }
+
+    showImg() {
+        this.setState({
+            hidden: false
+        });
     }
 
     render() {
@@ -68,10 +84,20 @@ class Seat extends Component {
             );
         }
         else {
+            let className = this.state.isSearched;
+            if (className === null || className === undefined || !className) {
+                className = "seatHover";
+                if (this.props.user.pool) {
+                    className += " newbie";
+                }
+                if (this.state.isActive) {
+                    className += " highlighted";
+                }
+            }
             return (
                 <div className={"seat taken"}>
                     <div
-                        className={this.state.isSearched || this.state.isActive ? "seatHover highlighted" : "seatHover"}
+                        className={className}
                         onClick={() => {
                             if (this.props.mode === "passive") {
                                 this.props.quitPassiveMode();
@@ -83,11 +109,12 @@ class Seat extends Component {
                             });
                         }}
                     >
+                        {!this.state.hidden &&  <div />}
                         <img
-                            onError={this.addDefaultSrc}
-                            src={`https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`}
-                            className={"userImg"}
-                            alt={"User"}
+                            onError={this.changeImgSrc}
+                            onLoad={() => this.setState({hidden: false})}
+                            src={this.getImgSrc()}
+                            className={`userImg ${this.state.hidden ? "hiddenImg" : ""}`}
                         />
                     </div>
                 </div>                    
