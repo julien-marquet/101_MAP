@@ -9,7 +9,7 @@ class Oauth2_authenticator {
         this.i_socketCache = new SocketCache(globalStorage);
     }
     refreshToken(token) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             if (!this.globalStorage.socketCache[token]) {
                 return resolve(null);
             }
@@ -21,23 +21,25 @@ class Oauth2_authenticator {
                     grant_type: "refresh_token",
                 },
                 method: "POST"
-            }).then((refreshToken) => {
-                if (refreshToken && !refreshToken.error) {
-                    this.i_socketCache.addToken(refreshToken, this.globalStorage.socketCache[token].userId);
-                    resolve(refreshToken.access_token);
-                } else {
-                    resolve(null);
-                }
-            }, (err) => {
-                logger.add_log({
-                    type: "Warning",
-                    description: "Couldn't refresh user access token", 
-                    additionnal_infos: {
-                        Error: err
+            })
+                .then((refreshToken) => {
+                    if (refreshToken && !refreshToken.error) {
+                        this.i_socketCache.addToken(refreshToken, this.globalStorage.socketCache[token].userId);
+                        return resolve(refreshToken.access_token);
+                    } else {
+                        if (refreshToken !== null && refreshToken.error !== null) {
+                            return reject(refreshToken.error);
+                        }
                     }
+                })
+                .catch(error => {
+                    logger.add_log({
+                        type: "Warning",
+                        description: "Couldn't refresh user access token", 
+                        additionnal_infos: {Error: error}
+                    });
+                    return reject(error);
                 });
-                resolve(null);
-            });
         });
     }
     getUserToken(code) {

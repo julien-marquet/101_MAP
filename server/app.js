@@ -1,14 +1,14 @@
+require("dotenv").config();
 const express = require("express"), 
     databaseConfig = require("./config/databaseConfig"),
-    mongoose = require("mongoose"),
-    models = require("./models/index")(),
-    logger = require("./custom_modules/logger"),
+    mongoose = require("mongoose");
+require("./models/index")();
+const logger = require("./custom_modules/logger"),
     app = express(),
     server = require("http").Server(app),
     Storage = require("storage"),
     globalStorage = new Storage(),
     io = require("./io")(server, globalStorage),
-    env = require("dotenv").config(),
     bodyParser = require("body-parser"),
     cors = require("cors"),
     morgan = require("morgan"),

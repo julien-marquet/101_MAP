@@ -1,4 +1,5 @@
 const users_func = require("./Users.func"),
+    logger = require("../custom_modules/logger"),
     {apiEndpoint, connectedUsers_cacheExpiration} = require("../config/globalConfig");
 
 class Users {
@@ -38,8 +39,20 @@ class Users {
                                         return ({response, refresh_token: refreshed});
                                     });
                                 } else {
+                                    logger.add_log({
+                                        type: "Error",
+                                        description: "Try to refresh...",
+                                        additionnal_infos: {userToken, refreshedToken: refreshed}
+                                    });
                                     throw ("try to refresh, no existing entry");
                                 }
+                            })
+                            .catch(error => {
+                                logger.add_log({
+                                    type: "Error", 
+                                    description: "An unknown error during token refresh",
+                                    additionnal_infos: {Error: error}
+                                });
                             });
                     }
                 });
@@ -56,6 +69,7 @@ class Users {
     }
 
     getConnectedUsers(campus)  {
+        console.log("Getting connected users");
         const inPool = ["ledebut", "asag", "fakl", "rnoc", "vhuc", "ygok", "dcoat", "kanne", "mchey", "vcher", "vfoex", "afalco", "amorin", "aradix", "bperez", "btriki", "dakgul", "dbolut", "etoker", "frseve", "jsabot", "kpesci", "lnieto", "mrevol", "njouve", "nsalle", "ntahar", "rcepre", "widrye", "wsayad", "xjanin", "aganoun", "awonkam", "bjuarez", "bmuller", "dmboule", "dypayen", "faneyer", "fcordon", "fdufour", "flfinet", "glandre", "glucien", "gszpiro", "gveloso", "humoyne", "husahuc", "ivrosic", "jalucas", "jmanevy", "jromero", "kgardie", "lfragne", "lgirerd", "manquez", "matheme", "mbogard", "mforler", "mintran", "mmarcon", "nangelo", "nnieddu", "ocrossi", "qmercey", "rfanjas", "sbedene", "sducamp", "skeller", "swdenis", "tthuret", "vsamiez", "wmoulin", "yhattab", "aben-hal", "achappui", "acorblin", "afeldman", "alepercq", "amaadour", "aniervas", "antdelri", "arazanaj", "aubucher", "axegerve", "barey-ga", "bmokrani", "boeuvrar", "brey-gal", "brirouil", "bsoleill", "cdeschen", "clchauvi", "conrodri", "cscialpi", "davfelix", "ebourgeo", "echevali", "ehudeley", "einnocen", "elgrusko", "eschnell", "fcarrere", "fchancel", "fhenriet", "fleonard", "fllecocq", "ftourret", "gderramo", "gterrien", "hopoutea", "hutorres", "idmessao", "jbenassa", "jbenzegh", "jbuisson", "jcarrill", "jclerqui", "jde-la-m", "jde-mour", "jeangran", "jehechav", "jfouquet", "jfrankow", "jgraindo", "jlaurair", "jleuenbe", "jlhotell", "jofiguer", "jominodi", "jopailla", "juliemar", "kabouama", "kel-akio", "krambono", "ksouza-s", "lernault", "lfouilla", "lhasenfr", "loatilem", "loiberti", "losainra", "lverdeci", "maberkan", "maboisso", "macaudet", "madurand", "magnelli", "maparici", "mbartels", "mdelarbr", "mhotting", "mhouppin", "midiallo", "mjalenqu", "mlecieux", "mnaccach", "moghomra", "moudmine", "mweingae", "naplouvi", "nboufeld", "nhoffste", "nrivoire", "oshklyar", "paujulli", "pbarriol", "pitirard", "pmaucote", "pstoraci", "qmonmous", "rcabotia", "rchaddou", "rcodazzi", "rlegendr", "sachenin", "schekiro", "shechaic", "shorwood", "sifouche", "slunetta", "smainfro", "ssoubeir", "tbollach", "tclerc-p", "tdautrem", "thdos-sa", "thfelpin", "thfiessi", "tiperoul", "tmalzieu", "tmezouri", "tomberna", "tprzybyl", "tvarnier", "vasalome", "vascelli", "vbenedet", "vde-sain", "vdesmons", "vicaster", "videloff", "yalabidi", "ycorvais", "ylapiquo", "yvmartor", "yyacouba", "zseignon", "ztrouill"];
         return new Promise((resolve, reject) => {
             let i = 1;
@@ -67,8 +81,7 @@ class Users {
                     self.Oauth2_authenticator.getToken().then(token => {
                         users_func.getPageOfConnectedUsers(token, campus, i, self.i_queue.push_head.bind(self.i_queue)).then(pageArray => {
                             if (!pageArray || pageArray.length < 30) {
-                                if (pageArray && pageArray.length > 0)
-                                {
+                                if (pageArray && pageArray.length > 0) {
                                     pageArray = users_func.selectValid(pageArray);
                                     usersArray = usersArray.concat(pageArray);
                                     nb_connected_users += pageArray.length;
@@ -85,12 +98,8 @@ class Users {
                                 i = -1;
                             }
                             loop();
-                        }).catch(err => {
-                            reject(err);
-                        });
-                    }).catch(err => {
-                        reject(err);
-                    });
+                        }).catch(err => reject(err));
+                    }).catch(err => reject(err));
                 } else {
                     let inPoolNbr = 0;
                     self.globalStorage.connected_users_array = {};
