@@ -1,4 +1,5 @@
 const users_func = require("./Users.func"),
+    logger = require("../custom_modules/logger"),
     {apiEndpoint, connectedUsers_cacheExpiration} = require("../config/globalConfig");
 
 class Users {
@@ -38,8 +39,20 @@ class Users {
                                         return ({response, refresh_token: refreshed});
                                     });
                                 } else {
+                                    logger.add_log({
+                                        type: "Error",
+                                        description: "Try to refresh...",
+                                        additionnal_infos: {userToken, refreshedToken: refreshed}
+                                    });
                                     throw ("try to refresh, no existing entry");
                                 }
+                            })
+                            .catch(error => {
+                                logger.add_log({
+                                    type: "Error", 
+                                    description: "An unknown error during token refresh",
+                                    additionnal_infos: {Error: error}
+                                });
                             });
                     }
                 });
@@ -67,8 +80,7 @@ class Users {
                     self.Oauth2_authenticator.getToken().then(token => {
                         users_func.getPageOfConnectedUsers(token, campus, i, self.i_queue.push_head.bind(self.i_queue)).then(pageArray => {
                             if (!pageArray || pageArray.length < 30) {
-                                if (pageArray && pageArray.length > 0)
-                                {
+                                if (pageArray && pageArray.length > 0) {
                                     pageArray = users_func.selectValid(pageArray);
                                     usersArray = usersArray.concat(pageArray);
                                     nb_connected_users += pageArray.length;
@@ -85,12 +97,8 @@ class Users {
                                 i = -1;
                             }
                             loop();
-                        }).catch(err => {
-                            reject(err);
-                        });
-                    }).catch(err => {
-                        reject(err);
-                    });
+                        }).catch(err => reject(err));
+                    }).catch(err => reject(err));
                 } else {
                     let inPoolNbr = 0;
                     self.globalStorage.connected_users_array = {};
