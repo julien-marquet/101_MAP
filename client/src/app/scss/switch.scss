@@ -1,0 +1,19 @@
+$switchWidth: 20px;
+
+.switch {
+    height: $switchWidth * 3;
+    width: $switchWidth;
+    background-color: purple;
+    .switchButton {
+        background-color: orange;
+        width: 100%;
+        height: $switchWidth;
+        cursor: grab;
+    }
+    .position1 {
+        transform: translateY($switchWidth);
+    }
+    .position2 {
+        transform: translateY($switchWidth * 2);
+    }
+}

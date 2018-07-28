@@ -23,9 +23,15 @@ class App extends Component {
             entered: []
         };
         this.logoTheme = [logo_dark, logo_light];
-
+        this.switchButton = {
+            isDragged: false,
+            startPosition: 0
+        };
+        
         this.askCode = this.askCode.bind(this);
         this.keyDown = this.keyDown.bind(this);
+        this.dragging = this.dragging.bind(this);
+        this.mouseMove = this.mouseMove.bind(this);
     }
     
     componentDidMount() {
@@ -136,9 +142,35 @@ class App extends Component {
         }
     }
 
+    dragging({target, clientY}, release = false) {
+        if ((this.switchButton.isDragged && release) || target.className.includes("switchButton")) {
+            this.switchButton.startPosition = clientY;
+            this.switchButton.isDragged = !this.switchButton.isDragged;
+        }
+    }
+
+    mouseMove({clientY}) {
+        if (this.switchButton.isDragged) {
+            const position = this.switchButton.position - clientY;
+            if (Math.abs(position) > 30) {
+                this.switchButton.position = clientY;
+                if (position > 0 && this.props.switchButton.position > 0) {
+                    this.props.moveSwitch(this.props.switchButton.position - 1);
+                } else if (position < 0 && this.props.switchButton.position < 2) {
+                    this.props.moveSwitch(this.props.switchButton.position + 1);
+                }
+            }
+        }
+    }
+
     render() {
         return (
-            <div className={`themeWrapper ${this.props.themes.array[this.props.themes.value]}`}>
+            <div
+                className={`themeWrapper ${this.props.themes.array[this.props.themes.value]}`}
+                onMouseUp={event => this.dragging(event, true)}
+                onMouseDown={this.dragging}
+                onMouseMove={this.mouseMove}
+            >
                 <Loader key="ComponentLoader" in={this.state.loading}/>
                 {this.renderApp()}
                 <Toaster />
@@ -149,7 +181,9 @@ class App extends Component {
 
 App.propTypes = {
     socket: PropTypes.object.isRequired,
-    searchFocused: PropTypes.bool
+    searchFocused: PropTypes.bool,
+    switchButton: PropTypes.object.isRequired,
+    moveSwitch: PropTypes.func.isRequired
 };
 
 export default App;
