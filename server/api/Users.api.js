@@ -17,11 +17,12 @@ class Users {
                     url: `${apiEndpoint}v2/users/${userId}`, 
                     headers: {"authorization": `Bearer ${userToken}`}
                 }
-            ).then(response => {
-                response.last_request = Date.now();
-                this.globalStorage.usersInfos[response.id] = response;
-                return ({response});
-            })
+            )
+                .then(response => {
+                    response.last_request = Date.now();
+                    this.globalStorage.usersInfos[response.id] = response;
+                    return ({response});
+                })
                 .catch(err => {
                     if (err && err.infos && err.infos.status === 401) {
                         return this.Oauth2_authenticator.refreshToken(userToken)
@@ -53,6 +54,7 @@ class Users {
                                     description: "An unknown error during token refresh",
                                     additionnal_infos: {Error: error}
                                 });
+                                throw ("Couldn't refresh token");
                             });
                     }
                 });
