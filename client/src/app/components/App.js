@@ -15,7 +15,8 @@ class App extends Component {
         super(props);
 
         this.state = {
-            loading: true
+            loading: true,
+            extraStyle: ""
         };
 
         this.konami = {
@@ -25,7 +26,9 @@ class App extends Component {
         this.logoTheme = [logo_dark, logo_light];
         this.switchButton = {
             isDragged: false,
-            startPosition: 0
+            startPosition: 0,
+            lastDragPosition: 0,
+            canMove: true
         };
         
         this.askCode = this.askCode.bind(this);
@@ -43,6 +46,9 @@ class App extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (this.props.switchButton.position !== nextProps.switchButton.position) {
+            this.switchButton.canMove = true;
+        }
         if (this.props.connected && !nextProps.connected) {
             this.props.socket.disconnect();
         }
@@ -146,18 +152,35 @@ class App extends Component {
         if ((this.switchButton.isDragged && release) || target.className.includes("switchButton")) {
             this.switchButton.startPosition = clientY;
             this.switchButton.isDragged = !this.switchButton.isDragged;
+            this.switchButton.dragPosition = this.props.switchButton.position;
+            this.setState({extraStyle: this.switchButton.isDragged ? "userSelectNone" : ""});
         }
     }
 
+    moveSwitch(position) {
+        this.switchButton.canMove = false;
+        this.switchButton.dragPosition = this.props.switchButton.position;
+        this.props.moveSwitch(position);
+    }
+
     mouseMove({clientY}) {
-        if (this.switchButton.isDragged) {
-            const position = this.switchButton.position - clientY;
-            if (Math.abs(position) > 30) {
-                this.switchButton.position = clientY;
-                if (position > 0 && this.props.switchButton.position > 0) {
-                    this.props.moveSwitch(this.props.switchButton.position - 1);
-                } else if (position < 0 && this.props.switchButton.position < 2) {
-                    this.props.moveSwitch(this.props.switchButton.position + 1);
+        if (this.switchButton.isDragged && this.switchButton.canMove) {
+            const diff = 9;
+            const position = this.switchButton.startPosition - clientY;
+            const absPosition = Math.abs(position);
+            if (position > 0) {
+                if (absPosition > diff * 2.5 && this.props.switchButton.position !== 0) {
+                    this.moveSwitch(0);
+                } else if (absPosition > diff / 1.5 && absPosition < diff * 2 && this.props.switchButton.position > 0 &&
+                    Math.abs((this.props.switchButton.position - 1) - this.switchButton.dragPosition) <= 1) {
+                    this.moveSwitch(this.props.switchButton.position - 1);
+                }
+            } else {
+                if (absPosition > diff * 2.5 && this.props.switchButton.position !== 2) {
+                    this.moveSwitch(2);
+                } else if (absPosition > diff / 1.5 && absPosition < diff * 2 && this.props.switchButton.position < 2 &&
+                    Math.abs((this.props.switchButton.position + 1) - this.switchButton.dragPosition) <= 1) {
+                    this.moveSwitch(this.props.switchButton.position + 1);
                 }
             }
         }
@@ -166,12 +189,12 @@ class App extends Component {
     render() {
         return (
             <div
-                className={`themeWrapper ${this.props.themes.array[this.props.themes.value]}`}
+                className={`themeWrapper ${this.props.themes.array[this.props.themes.value]} ${this.state.extraStyle}`}
                 onMouseUp={event => this.dragging(event, true)}
                 onMouseDown={this.dragging}
                 onMouseMove={this.mouseMove}
             >
-                <Loader key="ComponentLoader" in={this.state.loading}/>
+                <Loader key="ComponentLoader" in={this.state.loading} />
                 {this.renderApp()}
                 <Toaster />
             </div>

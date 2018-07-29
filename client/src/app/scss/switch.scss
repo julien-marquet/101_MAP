@@ -1,19 +1,32 @@
-$switchWidth: 20px;
+@import "utilities/responsive.scss";
 
-.switch {
-    height: $switchWidth * 3;
-    width: $switchWidth;
-    background-color: purple;
-    .switchButton {
-        background-color: orange;
-        width: 100%;
-        height: $switchWidth;
-        cursor: grab;
+@mixin applyStyle($portrait) {
+    $coefficient: get_coefficient($portrait);
+    $switchWidth: 3;
+    .switch {
+        z-index: 2;
+        height: get_size($switchWidth * 3, $coefficient);
+        width: get_size($switchWidth, $coefficient);
+        background-color: purple;
+        margin-right: get_size(1, $coefficient);
+        .switchButton {
+            background-color: orange;
+            width: 100%;
+            height: get_size($switchWidth, $coefficient);
+            cursor: grab;
+        }
+        .position1 {
+            transform: translateY(get_size($switchWidth, $coefficient));
+        }
+        .position2 {
+            transform: translateY(get_size($switchWidth * 2, $coefficient));
+        }
     }
-    .position1 {
-        transform: translateY($switchWidth);
-    }
-    .position2 {
-        transform: translateY($switchWidth * 2);
-    }
+}
+
+@media screen and (max-aspect-ratio: "#{$ratio-width} / #{$ratio-height}") {
+    @include applyStyle($portrait: true);
+}
+@media screen and (min-aspect-ratio: "#{$ratio-width} / #{$ratio-height}") {
+    @include applyStyle($portrait: false);
 }
