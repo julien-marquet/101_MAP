@@ -81,7 +81,7 @@ class Seat extends Component {
     }
 
     getSwitchStatusStyle() {
-        return (this.props.switchStatus === 0 && this.props.user.pool || this.props.switchStatus === 2 && !this.props.user.pool ? {opacity: 0.3} : {});
+        return (this.props.switchStatus === 0 && this.props.user.pool || this.props.switchStatus === 2 && !this.props.user.pool ? {opacity: 0.2} : {});
     }
 
     render() {

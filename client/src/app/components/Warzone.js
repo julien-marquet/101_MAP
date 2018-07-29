@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from "react";
+import PropTypes from "prop-types";
 
 import SeatRow from "./map/Seatrow";
 import HostInfo from "../containers/map/hostinfo";
@@ -10,9 +11,26 @@ import "../scss/warzone.css";
 class Warzone extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            extraStyle: ""
+        };
+        this.switchButton = {
+            isDragged: false,
+            startPosition: 0,
+            lastDragPosition: 0,
+            canMove: true
+        };
 
         this.timeout = null;
         this.selectRandomUsers = this.selectRandomUsers.bind(this);
+        this.dragging = this.dragging.bind(this);
+        this.mouseMove = this.mouseMove.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.switchButton.position !== nextProps.switchButton.position) {
+            this.switchButton.canMove = true;
+        }
     }
 
     componentWillMount() {
@@ -89,10 +107,54 @@ class Warzone extends Component {
             </Fragment>
         );
     }
+
+    dragging({target, clientY}, release = false) {
+        if ((this.switchButton.isDragged && release) || target.className.includes("switchButton")) {
+            this.switchButton.startPosition = clientY;
+            this.switchButton.isDragged = !this.switchButton.isDragged;
+            this.switchButton.dragPosition = this.props.switchButton.position;
+            this.setState({extraStyle: this.switchButton.isDragged ? "userSelectNone" : ""});
+        }
+    }
+
+    moveSwitch(position) {
+        this.switchButton.canMove = false;
+        this.switchButton.dragPosition = this.props.switchButton.position;
+        this.props.moveSwitch(position);
+    }
+
+    mouseMove({clientY}) {
+        if (this.switchButton.isDragged && this.switchButton.canMove) {
+            const diff = window.innerHeight / 100;
+            const position = this.switchButton.startPosition - clientY;
+            const absPosition = Math.abs(position);
+            if (position > 0) {
+                if (absPosition > diff * 2.5 && this.props.switchButton.position !== 0) {
+                    this.moveSwitch(0);
+                } else if (absPosition > diff / 1.5 && absPosition <
+                diff * 2 && this.props.switchButton.position > 0 &&
+                    Math.abs((this.props.switchButton.position - 1) - this.switchButton.dragPosition) <= 1) {
+                    this.moveSwitch(this.props.switchButton.position - 1);
+                }
+            } else {
+                if (absPosition > diff * 2.5 && this.props.switchButton.position !== 2) {
+                    this.moveSwitch(2);
+                } else if (absPosition > diff / 1.5 && absPosition < diff * 2 && this.props.switchButton.position < 2 &&
+                    Math.abs((this.props.switchButton.position + 1) - this.switchButton.dragPosition) <= 1) {
+                    this.moveSwitch(this.props.switchButton.position + 1);
+                }
+            }
+        }
+    }
   
     render() {
         return (
-            <div className={"wrapper"}>
+            <div
+                className={`wrapper ${this.state.extraStyle}`}
+                onMouseUp={event => this.dragging(event, true)}
+                onMouseDown={this.dragging}
+                onMouseMove={this.mouseMove}
+            >
                 <SideBar />
                 <div className={"infosWrapper"}>
                     <Switch />
@@ -110,5 +172,10 @@ class Warzone extends Component {
         );
     }
 }
+
+Warzone.propTypes = {
+    switchButton: PropTypes.object.isRequired,
+    moveSwitch: PropTypes.func.isRequired
+};
 
 export default Warzone;
