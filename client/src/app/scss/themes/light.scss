@@ -21,6 +21,12 @@
             }
         }
     }
+    .switch {
+        background-color: $sidebarColor;
+        .switchButton {
+            background-color: $seatColor;
+        }
+    }
     .sidebar {
         background-color: $sidebarColor;
         .main-tile {

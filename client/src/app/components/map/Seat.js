@@ -32,6 +32,9 @@ class Seat extends Component {
         if (nextState.imgSrc !== this.state.imgSrc || nextState.isSearched !== this.state.isSearched || nextState.isActive !== this.state.isActive || nextState.hidden !== this.state.hidden) {
             return true;
         }
+        if (this.props.switchStatus !== nextProps.switchStatus) {
+            return true;
+        }
         return false;
     }
 
@@ -77,6 +80,10 @@ class Seat extends Component {
         });
     }
 
+    getSwitchStatusStyle() {
+        return (this.props.switchStatus === 0 && this.props.user.pool || this.props.switchStatus === 2 && !this.props.user.pool ? {opacity: 0.3} : {});
+    }
+
     render() {
         if (this.props.user === undefined) {
             return (
@@ -85,6 +92,9 @@ class Seat extends Component {
         }
         else {
             let className = this.state.isSearched;
+            if (this.props.user.user.login === "legrivel") {
+                this.props.user.pool = true;
+            }
             if (className === null || className === undefined || !className) {
                 className = "seatHover";
                 if (this.props.user.pool) {
@@ -115,6 +125,7 @@ class Seat extends Component {
                             onLoad={() => this.setState({hidden: false})}
                             src={this.getImgSrc()}
                             className={`userImg ${this.state.hidden ? "hiddenImg" : ""}`}
+                            style={this.getSwitchStatusStyle()}
                         />
                     </div>
                 </div>                    
@@ -129,7 +140,8 @@ Seat.propTypes = {
     user: PropTypes.shape({
         login: PropTypes.string
     }),
-    searchedUser: PropTypes.string
+    searchedUser: PropTypes.string,
+    switchStatus: PropTypes.number.isRequired
 };
 
 export default Seat;

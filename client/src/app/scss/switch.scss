@@ -1,4 +1,6 @@
 @import "utilities/responsive.scss";
+@import "themes/dark.scss";
+@import "themes/light.scss";
 
 @mixin applyStyle($portrait) {
     $coefficient: get_coefficient($portrait);
@@ -7,12 +9,12 @@
         z-index: 2;
         height: get_size($switchWidth * 3, $coefficient);
         width: get_size($switchWidth, $coefficient);
-        background-color: purple;
         margin-right: get_size(1, $coefficient);
+        border-radius: get_size(2, $coefficient);
         .switchButton {
-            background-color: orange;
             width: 100%;
             height: get_size($switchWidth, $coefficient);
+            border-radius: 100%;
             cursor: grab;
         }
         .position1 {
