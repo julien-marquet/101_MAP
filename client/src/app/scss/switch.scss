@@ -1,17 +1,18 @@
 @import "utilities/responsive.scss";
+@import "utilities/cross-browser.scss";
 @import "themes/dark.scss";
 @import "themes/light.scss";
 
 @mixin applyStyle($portrait) {
     $coefficient: get_coefficient($portrait);
-    $switchWidth: 3;
+    $switchWidth: 2.5;
     .switch {
-        z-index: 2;
         height: get_size($switchWidth * 3, $coefficient);
         width: get_size($switchWidth, $coefficient);
         margin-right: get_size(1, $coefficient);
         border-radius: get_size(2, $coefficient);
         .switchButton {
+            @include transition(all 0.1s ease-in-out);
             width: 100%;
             height: get_size($switchWidth, $coefficient);
             border-radius: 100%;

@@ -81,7 +81,7 @@ class Seat extends Component {
     }
 
     getSwitchStatusStyle() {
-        return (this.props.switchStatus === 0 && this.props.user.pool || this.props.switchStatus === 2 && !this.props.user.pool ? {opacity: 0.2} : {});
+        return ((this.props.switchStatus === 0 && this.props.user.pool) || (this.props.switchStatus === 2 && !this.props.user.pool) ? {opacity: 0.2} : {});
     }
 
     render() {
@@ -92,9 +92,6 @@ class Seat extends Component {
         }
         else {
             let className = this.state.isSearched;
-            if (this.props.user.user.login === "legrivel") {
-                this.props.user.pool = true;
-            }
             if (className === null || className === undefined || !className) {
                 className = "seatHover";
                 if (this.props.user.pool) {
