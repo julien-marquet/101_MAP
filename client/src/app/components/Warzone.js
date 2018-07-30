@@ -17,7 +17,6 @@ class Warzone extends Component {
         this.switchButton = {
             isDragged: false,
             startPosition: 0,
-            lastDragPosition: 0,
             canMove: true
         };
         this.switch = null;
