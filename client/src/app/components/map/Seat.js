@@ -91,9 +91,9 @@ class Seat extends Component {
             );
         }
         else {
-            let className = this.state.isSearched;
-            if (className === null || className === undefined || !className) {
-                className = "seatHover";
+            let className = "";
+            if (!this.state.isSearched) {
+                className += "seatHover";
                 if (this.props.user.pool) {
                     className += " newbie";
                 }
