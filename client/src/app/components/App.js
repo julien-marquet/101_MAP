@@ -64,6 +64,11 @@ class App extends Component {
         }
         else {
             this.checkKonami(keyCode);
+            if (keyCode === 72) {
+                this.props.moveSwitch(this.props.switchButton.position === 2 ? 0 : this.props.switchButton.position + 1);
+            } else if (keyCode === 84) {
+                this.props.storeActiveTheme(this.props.themes.value === 1 ? {value: 0} : {value: 1});
+            }
             if (this.props.mode === "passive") {
                 if (keyCode === 27 || keyCode === 70) {
                     this.props.quitPassiveMode();
@@ -79,6 +84,9 @@ class App extends Component {
                         timeout: 2000,
                         message: "Press escape to quit passive mode"
                     });
+                }
+                if (keyCode === 27) {
+                    this.props.clearActiveUser();
                 }
             }
         }
@@ -148,7 +156,11 @@ class App extends Component {
 
 App.propTypes = {
     socket: PropTypes.object.isRequired,
-    searchFocused: PropTypes.bool
+    searchFocused: PropTypes.bool,
+    moveSwitch: PropTypes.func.isRequired,
+    switchButton: PropTypes.object.isRequired,
+    clearActiveUser: PropTypes.func.isRequired,
+    storeActiveTheme: PropTypes.func.isRequired
 };
 
 export default App;
