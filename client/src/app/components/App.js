@@ -63,11 +63,13 @@ class App extends Component {
             }
         }
         else {
-            this.checkKonami(keyCode);
-            if (keyCode === 72) {
-                this.props.moveSwitch(this.props.switchButton.position === 2 ? 0 : this.props.switchButton.position + 1);
-            } else if (keyCode === 84) {
-                this.props.storeActiveTheme(this.props.themes.value === 1 ? {value: 0} : {value: 1});
+            if (!(document.getElementsByTagName("input")[0] === document.activeElement)) {
+                this.checkKonami(keyCode);
+                if (keyCode === 72) {
+                    this.props.moveSwitch(this.props.switchButton.position === 2 ? 0 : this.props.switchButton.position + 1);
+                } else if (keyCode === 84) {
+                    this.props.storeActiveTheme(this.props.themes.value === 1 ? {value: 0} : {value: 1});
+                }
             }
             if (this.props.mode === "passive") {
                 if (keyCode === 27 || keyCode === 70) {
@@ -76,14 +78,16 @@ class App extends Component {
                 }
             }
             else {
-                if (keyCode === 70 && !(document.getElementsByTagName("input")[0] === document.activeElement)) {
-                    this.props.setPassiveMode();
-                    localStorage.setItem("mode", "passive");
-                    this.props.showToast({
-                        type: "info",		
-                        timeout: 2000,
-                        message: "Press escape to quit passive mode"
-                    });
+                if (!(document.getElementsByTagName("input")[0] === document.activeElement)) {
+                    if (keyCode === 70) {
+                        this.props.setPassiveMode();
+                        localStorage.setItem("mode", "passive");
+                        this.props.showToast({
+                            type: "info",		
+                            timeout: 2000,
+                            message: "Press escape to quit passive mode"
+                        });
+                    }
                 }
                 if (keyCode === 27) {
                     this.props.clearActiveUser();
