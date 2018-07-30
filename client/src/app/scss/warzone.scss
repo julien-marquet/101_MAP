@@ -135,6 +135,7 @@
         min-height: 0;
         cursor: pointer;
         @include fix_animation();
+        @include transition(opacity 0.1s linear);
     }
 
     .seatRow {
@@ -666,6 +667,7 @@
             justify-content: space-between;
         }
         .global-infos {
+            @include transition(opacity 0.2s ease-in-out);
             font-size: get_size(2.5, $coefficient);
             position: relative;
             display: flex;
