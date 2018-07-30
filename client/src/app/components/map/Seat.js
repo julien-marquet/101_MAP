@@ -91,15 +91,12 @@ class Seat extends Component {
             );
         }
         else {
-            let className = "";
-            if (!this.state.isSearched) {
-                className += "seatHover";
-                if (this.props.user.pool) {
-                    className += " newbie";
-                }
-                if (this.state.isActive) {
-                    className += " highlighted";
-                }
+            let className = "seatHover";
+            if (this.state.isSearched || this.state.isActive) {
+                className += " highlighted";
+            }
+            if (this.props.user.pool) {
+                className += " newbie";
             }
             return (
                 <div className={"seat taken"}>
