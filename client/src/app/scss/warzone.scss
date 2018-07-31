@@ -656,28 +656,30 @@
             cursor: pointer;
         }
     }
-    .infosWrapper {
-        position: relative;
-        bottom: get_size(3.5, $coefficient);
-        left: get_size(58, $coefficient);
+    .infosBigWrapper {
         display: flex;
-        .globalInfosWrapper {
+        justify-content: right;
+        margin-right: get_size(0.8, $coefficient);
+        .infosWrapper {
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .global-infos {
-            @include transition(opacity 0.2s ease-in-out);
-            font-size: get_size(2.5, $coefficient);
-            position: relative;
-            display: flex;
-            i {
-                padding-top: get_size(0.3, $coefficient);
-                display: inline-block;
-                margin-right: get_size(1, $coefficient);
+            .globalInfosWrapper {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
             }
-            p {
-                text-align: center;
+            .global-infos {
+                @include transition(opacity 0.2s ease-in-out);
+                font-size: get_size(2.5, $coefficient);
+                position: relative;
+                display: flex;
+                i {
+                    padding-top: get_size(0.3, $coefficient);
+                    display: inline-block;
+                    margin-right: get_size(1, $coefficient);
+                }
+                p {
+                    text-align: center;
+                }
             }
         }
     }
