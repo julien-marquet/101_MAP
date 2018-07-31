@@ -658,7 +658,7 @@
     }
     .infosBigWrapper {
         display: flex;
-        justify-content: right;
+        justify-content: flex-end;
         margin-right: get_size(0.8, $coefficient);
         .infosWrapper {
             display: flex;
