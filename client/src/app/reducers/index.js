@@ -4,10 +4,12 @@ import app from "./app";
 import users from "./users";
 import globalState from "./globalState";
 import toaster from "./toaster";
+import switchButton from "./switchButton";
 
 export default combineReducers({
     app,
     users,
     globalState,
-    toaster
+    toaster,
+    switchButton
 });

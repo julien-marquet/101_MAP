@@ -32,6 +32,9 @@ class Seat extends Component {
         if (nextState.imgSrc !== this.state.imgSrc || nextState.isSearched !== this.state.isSearched || nextState.isActive !== this.state.isActive || nextState.hidden !== this.state.hidden) {
             return true;
         }
+        if (this.props.switchStatus !== nextProps.switchStatus) {
+            return true;
+        }
         return false;
     }
 
@@ -77,6 +80,10 @@ class Seat extends Component {
         });
     }
 
+    getSwitchStatusStyle() {
+        return ((this.props.switchStatus === 0 && this.props.user.pool) || (this.props.switchStatus === 2 && !this.props.user.pool) ? {opacity: 0.2} : {});
+    }
+
     render() {
         if (this.props.user === undefined) {
             return (
@@ -84,15 +91,12 @@ class Seat extends Component {
             );
         }
         else {
-            let className = this.state.isSearched;
-            if (className === null || className === undefined || !className) {
-                className = "seatHover";
-                if (this.props.user.pool) {
-                    className += " newbie";
-                }
-                if (this.state.isActive) {
-                    className += " highlighted";
-                }
+            let className = "seatHover";
+            if (this.state.isSearched || this.state.isActive) {
+                className += " highlighted";
+            }
+            if (this.props.user.pool) {
+                className += " newbie";
             }
             return (
                 <div className={"seat taken"}>
@@ -115,6 +119,7 @@ class Seat extends Component {
                             onLoad={() => this.setState({hidden: false})}
                             src={this.getImgSrc()}
                             className={`userImg ${this.state.hidden ? "hiddenImg" : ""}`}
+                            style={this.getSwitchStatusStyle()}
                         />
                     </div>
                 </div>                    
@@ -129,7 +134,8 @@ Seat.propTypes = {
     user: PropTypes.shape({
         login: PropTypes.string
     }),
-    searchedUser: PropTypes.string
+    searchedUser: PropTypes.string,
+    switchStatus: PropTypes.number.isRequired
 };
 
 export default Seat;

@@ -13,7 +13,6 @@ import "../scss/App.css";
 class App extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             loading: true
         };
@@ -23,7 +22,7 @@ class App extends Component {
             entered: []
         };
         this.logoTheme = [logo_dark, logo_light];
-
+        
         this.askCode = this.askCode.bind(this);
         this.keyDown = this.keyDown.bind(this);
     }
@@ -64,7 +63,14 @@ class App extends Component {
             }
         }
         else {
-            this.checkKonami(keyCode);
+            if (!(document.getElementsByTagName("input")[0] === document.activeElement)) {
+                this.checkKonami(keyCode);
+                if (keyCode === 72) {
+                    this.props.moveSwitch(this.props.switchButton.position === 2 ? 0 : this.props.switchButton.position + 1);
+                } else if (keyCode === 84) {
+                    this.props.storeActiveTheme(this.props.themes.value === 1 ? {value: 0} : {value: 1});
+                }
+            }
             if (this.props.mode === "passive") {
                 if (keyCode === 27 || keyCode === 70) {
                     this.props.quitPassiveMode();
@@ -72,14 +78,19 @@ class App extends Component {
                 }
             }
             else {
-                if (keyCode === 70 && !(document.getElementsByTagName("input")[0] === document.activeElement)) {
-                    this.props.setPassiveMode();
-                    localStorage.setItem("mode", "passive");
-                    this.props.showToast({
-                        type: "info",		
-                        timeout: 2000,
-                        message: "Press escape to quit passive mode"
-                    });
+                if (!(document.getElementsByTagName("input")[0] === document.activeElement)) {
+                    if (keyCode === 70) {
+                        this.props.setPassiveMode();
+                        localStorage.setItem("mode", "passive");
+                        this.props.showToast({
+                            type: "info",		
+                            timeout: 2000,
+                            message: "Press escape to quit passive mode"
+                        });
+                    }
+                }
+                if (keyCode === 27) {
+                    this.props.clearActiveUser();
                 }
             }
         }
@@ -139,7 +150,7 @@ class App extends Component {
     render() {
         return (
             <div className={`themeWrapper ${this.props.themes.array[this.props.themes.value]}`}>
-                <Loader key="ComponentLoader" in={this.state.loading}/>
+                <Loader key="ComponentLoader" in={this.state.loading} />
                 {this.renderApp()}
                 <Toaster />
             </div>
@@ -149,7 +160,11 @@ class App extends Component {
 
 App.propTypes = {
     socket: PropTypes.object.isRequired,
-    searchFocused: PropTypes.bool
+    searchFocused: PropTypes.bool,
+    moveSwitch: PropTypes.func.isRequired,
+    switchButton: PropTypes.object.isRequired,
+    clearActiveUser: PropTypes.func.isRequired,
+    storeActiveTheme: PropTypes.func.isRequired
 };
 
 export default App;

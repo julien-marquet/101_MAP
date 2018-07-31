@@ -1,0 +1,35 @@
+@import "utilities/responsive.scss";
+@import "utilities/cross-browser.scss";
+@import "themes/dark.scss";
+@import "themes/light.scss";
+
+@mixin applyStyle($portrait) {
+    $coefficient: get_coefficient($portrait);
+    $switchWidth: 2.5;
+    .switch {
+        height: get_size($switchWidth * 3, $coefficient);
+        width: get_size($switchWidth, $coefficient);
+        margin-right: get_size(1, $coefficient);
+        border-radius: get_size(2, $coefficient);
+        .switchButton {
+            @include transition(all 0.1s linear);
+            width: 100%;
+            height: get_size($switchWidth, $coefficient);
+            border-radius: 100%;
+            cursor: grab;
+        }
+        .position1 {
+            transform: translateY(get_size($switchWidth, $coefficient));
+        }
+        .position2 {
+            transform: translateY(get_size($switchWidth * 2, $coefficient));
+        }
+    }
+}
+
+@media screen and (max-aspect-ratio: "#{$ratio-width} / #{$ratio-height}") {
+    @include applyStyle($portrait: true);
+}
+@media screen and (min-aspect-ratio: "#{$ratio-width} / #{$ratio-height}") {
+    @include applyStyle($portrait: false);
+}
