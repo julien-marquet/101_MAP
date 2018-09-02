@@ -21,6 +21,7 @@ class Warzone extends Component {
         };
         this.switch = null;
         this.timeout = null;
+        this.i = 0;
         
         this.selectRandomUsers = this.selectRandomUsers.bind(this);
         this.dragging = this.dragging.bind(this);
@@ -72,6 +73,8 @@ class Warzone extends Component {
                     ...this.props.users.array[Object.keys(this.props.users.array)[random]],
                     hostname: Object.keys(this.props.users.array)[random]
                 });
+            } else if (arrayLength === 0 && this.props.users.activeUser.id !== 0) {
+                this.props.clearActiveUser();
             }
             this.timeout = setTimeout(this.selectRandomUsers, 7000);
         }
@@ -181,7 +184,10 @@ class Warzone extends Component {
 
 Warzone.propTypes = {
     switchButton: PropTypes.object.isRequired,
-    moveSwitch: PropTypes.func.isRequired
+    moveSwitch: PropTypes.func.isRequired,
+    storeActiveUsers: PropTypes.func.isRequired,
+    users: PropTypes.object.isRequired,
+    clearActiveUser: PropTypes.func.isRequired
 };
 
 export default Warzone;
