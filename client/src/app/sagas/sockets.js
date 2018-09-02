@@ -72,6 +72,7 @@ function setupListeners(socketClient, dispatch) {
             storeCookie("userToken", response.refresh_token);
             socketClient.socket.query.token = response.refresh_token;
         }
+        console.log("Repsonse: ", response);
         dispatch({type: USER_GET_METADATA_SUCCEEDED, payload: response.response});
     });
     socketClient.on("token.refreshed", token => {
