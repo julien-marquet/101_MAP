@@ -21,7 +21,6 @@ class Warzone extends Component {
         };
         this.switch = null;
         this.timeout = null;
-        this.i = 0;
         
         this.selectRandomUsers = this.selectRandomUsers.bind(this);
         this.dragging = this.dragging.bind(this);
