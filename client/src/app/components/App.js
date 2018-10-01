@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 
 import {retrieveCookie, removeCookie} from "../helpers/cookies.helper";
+import WarzoneBomber from "../containers/warzoneBomber";
 import Warzone from "../containers/warzone";
 import config from "../../config/globalConfig";
 import logo_light from "../../img/101_logo_light.svg";
@@ -123,7 +124,10 @@ class App extends Component {
 
     renderApp() {
         if (this.props.connected) {
-            return (<Warzone key={"Component1"} />);
+            if (!this.props.bomberman) {
+                return (<Warzone key={"Component1"} />);
+            }
+            return (<WarzoneBomber key={"Bomberman"}/>);
         }
         else {
             return (
@@ -164,7 +168,8 @@ App.propTypes = {
     moveSwitch: PropTypes.func.isRequired,
     switchButton: PropTypes.object.isRequired,
     clearActiveUser: PropTypes.func.isRequired,
-    storeActiveTheme: PropTypes.func.isRequired
+    storeActiveTheme: PropTypes.func.isRequired,
+    bomberman: PropTypes.bool.isRequired
 };
 
 export default App;

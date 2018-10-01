@@ -14,6 +14,10 @@ class SearchBar extends Component {
     }
 
     handleChange(event, value) {
+        if (value.toLowerCase() === "bomberman") {
+            this.props.updateSearch("");
+            return this.props.launchBomber();
+        }
         this.props.updateSearch(value);
         const perfectMatch = this.results.find(elem => elem.user.login === event.target.value);
         if (perfectMatch !== undefined)
@@ -76,6 +80,7 @@ class SearchBar extends Component {
 SearchBar.propTypes = {
     storeActiveUsers: PropTypes.func.isRequired,
     updateSearch: PropTypes.func.isRequired,
+    launchBomber: PropTypes.func.isRequired,
     searchedUser: PropTypes.string
 };
 

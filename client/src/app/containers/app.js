@@ -12,11 +12,12 @@ import {USER_CLEAR_ACTIVE} from "../actions/users";
 import {ACTIVE_THEME_SWAP} from "../actions/globalState";
 
 const mapStateToProps = ({globalState, switchButton}) => {
-    const {mode, themes, connected} = globalState;
+    const {mode, themes, connected, bomberman} = globalState;
     return {
         mode,
         themes,
         connected,
+        bomberman,
         switchButton: {
             position: switchButton.position
         }
