@@ -30,9 +30,9 @@ class SearchBar extends Component {
     }
 
     getMatchingUsers() {
-        this.results = [];         
+        this.results = [];
         Object.entries(this.props.users).forEach(value => {
-            // TODO Do not value[1] !== undefined
+            // TODO Make value[1] never undefined
             if (value[1] !== undefined && value[1].user.login.includes(this.props.searchedUser.toLowerCase()))
                 this.results.push({
                     ...value[1],

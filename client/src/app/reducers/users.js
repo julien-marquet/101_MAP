@@ -93,17 +93,12 @@ const users = (state = initialState, {type, payload}) => {
             currentUser: payload
         };
     case GAME_PLAYER_MOVE:
-        // TODO Change this
-        const array = {};
-        Object.keys(state.array).map(e => {
-            if (e !== payload.old) {
-                array[e] = state.array[e];
-            }
-        });
+        const array = {...state.array};
+        delete array[payload.old];
         array[payload.new] = state.array[payload.old];
         return {
             ...state,
-            array: {...array}
+            array
         };
     default:
         return state;
