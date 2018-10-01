@@ -1,6 +1,6 @@
 import {all, takeEvery} from "redux-saga/effects";
 
-import {GAME_LAUNCH} from "../actions/bomberman";
+import {MODE_SET_GAME} from "../actions/bomberman";
 
 function launchGame(socketClient) {
     socketClient.emit("game.launch", {userToken: socketClient.socket.query.token});
@@ -8,7 +8,7 @@ function launchGame(socketClient) {
 
 function* flow(socketClient) {
     yield all([
-        takeEvery(GAME_LAUNCH, launchGame, socketClient)
+        takeEvery(MODE_SET_GAME, launchGame, socketClient)
     ]);
 }
 

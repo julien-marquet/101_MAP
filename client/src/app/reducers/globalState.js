@@ -5,12 +5,11 @@ import {
     MODE_PASSIVE_SET,
     MODE_PASSIVE_UNSET
 } from "../actions/globalState";
-import {GAME_LAUNCH} from "../actions/bomberman";
+import {MODE_SET_GAME} from "../actions/bomberman";
 import globalConfig from "../../config/globalConfig";
 
 const initialState = {
     connected: false,
-    bomberman: false,
     themes: {
         array: globalConfig.themeArray,
         value: localStorage.getItem("param_theme") || globalConfig.themeArray.indexOf(globalConfig.defaultTheme)
@@ -48,10 +47,10 @@ const globalState = (state = initialState, {type, payload}) => {
             ...state,
             mode: "default"
         };
-    case GAME_LAUNCH:
+    case MODE_SET_GAME:
         return {
             ...state,
-            bomberman: true
+            mode: "game"
         };
     default:
         return state;

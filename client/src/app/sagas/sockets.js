@@ -5,6 +5,7 @@ import {
     USER_GET_METADATA_FAILED,
     USER_WHOAMI
 } from "../actions/users";
+import {GAME_PLAYER_POSITION_SET} from "../actions/bomberman";
 import {TOAST_SHOW} from "../actions/toasts";
 import {CONNECT_APP} from "../actions/globalState";
 import {storeCookie} from "../helpers/cookies.helper";
@@ -81,8 +82,12 @@ function setupListeners(socketClient, dispatch) {
     });
     socketClient.on("page.refresh", () => window.location.reload());
     socketClient.on("whoami", user => {
-        console.log(user);
-        dispatch({type: USER_WHOAMI, payload: user})
+        if (user.hostname === undefined) {
+            console.error("User not connected");
+        } else {
+            dispatch({type: GAME_PLAYER_POSITION_SET, payload: user.hostname});
+        }
+        dispatch({type: USER_WHOAMI, payload: user});
     });
     socketClient.emit("users.get.all");
 }

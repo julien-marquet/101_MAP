@@ -35,6 +35,9 @@ class Seat extends Component {
         if (this.props.switchStatus !== nextProps.switchStatus) {
             return true;
         }
+        if (this.props.currentUser.id === undefined && nextProps.currentUser.id !== undefined) {
+            return true;
+        }
         return false;
     }
 
@@ -87,7 +90,9 @@ class Seat extends Component {
     render() {
         if (this.props.user === undefined) {
             return (
-                <div className={"seat"} />
+                <div className={"seat"}>
+                    <p style={{fontSize: "0.6em"}}>{this.props.hostname}</p>
+                </div>
             );
         }
         else {

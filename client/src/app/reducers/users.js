@@ -8,9 +8,10 @@ import {
     USER_WHOAMI
 } from "../actions/users";
 import {SEARCH_UPDATE_CONTENT} from "../actions/search";
+import {GAME_PLAYER_MOVE} from "../actions/bomberman";
 
 const initialState = {
-    array: [],
+    array: {},
     last_request: null,
     nb_connected_users: 0,
     inPoolNbr: 0,
@@ -90,6 +91,19 @@ const users = (state = initialState, {type, payload}) => {
         return {
             ...state,
             currentUser: payload
+        };
+    case GAME_PLAYER_MOVE:
+        // TODO Change this
+        const array = {};
+        Object.keys(state.array).map(e => {
+            if (e !== payload.old) {
+                array[e] = state.array[e];
+            }
+        });
+        array[payload.new] = state.array[payload.old];
+        return {
+            ...state,
+            array: {...array}
         };
     default:
         return state;
