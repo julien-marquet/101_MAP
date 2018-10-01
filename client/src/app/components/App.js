@@ -172,7 +172,7 @@ App.propTypes = {
     clearActiveUser: PropTypes.func.isRequired,
     storeActiveTheme: PropTypes.func.isRequired,
     mode: PropTypes.string.isRequired,
-    position: PropTypes.string.isRequired,
+    position: PropTypes.string,
     movePlayer: PropTypes.func.isRequired
 };
 

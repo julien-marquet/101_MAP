@@ -9,8 +9,8 @@ function handleGameMoves(keyCode, position, move) {
             move({new: `z${z}r${r + 1}p${p}`, old: position});
         }
     } else if (keyCode === 38) {
-        if (config.mapPositions[`z${z}`][r - 1] !== undefined &&
-            config.mapPositions[`z${z}`][r - 1][p] !== undefined) {
+        if (config.mapPositions[`z${z}`][r + 1] !== undefined &&
+            config.mapPositions[`z${z}`][r + 1][p] !== undefined) {
             move({new: `z${z}r${r + 2}p${p + 1}`, old: position});
         }
     } else if (keyCode === 39) {
@@ -18,8 +18,8 @@ function handleGameMoves(keyCode, position, move) {
             move({new: `z${z}r${r + 1}p${p + 2}`, old: position});
         }
     } else if (keyCode === 40) {
-        if (config.mapPositions[`z${z}`][r + 1] !== undefined &&
-            config.mapPositions[`z${z}`][r + 1][p] !== undefined) {
+        if (config.mapPositions[`z${z}`][r - 1] !== undefined &&
+            config.mapPositions[`z${z}`][r - 1][p] !== undefined) {
             move({new: `z${z}r${r}p${p + 1}`, old: position});
         }
     }
