@@ -98,6 +98,9 @@ class Seat extends Component {
             if (this.props.user.pool) {
                 className += " newbie";
             }
+            if (this.props.currentUser.id !== undefined && this.props.currentUser.id !== this.props.user.user.id) {
+                className += " grayscale";
+            }
             return (
                 <div className={"seat taken"}>
                     <div
@@ -135,7 +138,8 @@ Seat.propTypes = {
         login: PropTypes.string
     }),
     searchedUser: PropTypes.string,
-    switchStatus: PropTypes.number.isRequired
+    switchStatus: PropTypes.number.isRequired,
+    currentUser: PropTypes.object.isRequired
 };
 
 export default Seat;

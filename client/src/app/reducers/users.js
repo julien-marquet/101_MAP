@@ -4,7 +4,8 @@ import {
     USER_GET_METADATA,
     USER_GET_METADATA_SUCCEEDED,
     USER_GET_METADATA_FAILED,
-    USER_CLEAR_ACTIVE
+    USER_CLEAR_ACTIVE,
+    USER_WHOAMI
 } from "../actions/users";
 import {SEARCH_UPDATE_CONTENT} from "../actions/search";
 
@@ -27,7 +28,8 @@ const initialState = {
         success: null,
         content: null
     },
-    searchedUser: ""
+    searchedUser: "",
+    currentUser: {}
 };
 
 const users = (state = initialState, {type, payload}) => {
@@ -83,6 +85,11 @@ const users = (state = initialState, {type, payload}) => {
         return {
             ...state,
             activeUser: {...initialState.activeUser}
+        };
+    case USER_WHOAMI:
+        return {
+            ...state,
+            currentUser: payload
         };
     default:
         return state;

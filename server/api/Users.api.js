@@ -1,4 +1,3 @@
-const fetch = require("node-fetch");
 const users_func = require("./Users.func"),
     logger = require("../custom_modules/logger"),
     {apiEndpoint, connectedUsers_cacheExpiration} = require("../config/globalConfig");

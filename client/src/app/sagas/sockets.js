@@ -2,7 +2,8 @@ import {takeEvery, all} from "redux-saga/effects";
 import {
     USERS_GETTED,
     USER_GET_METADATA_SUCCEEDED,
-    USER_GET_METADATA_FAILED
+    USER_GET_METADATA_FAILED,
+    USER_WHOAMI
 } from "../actions/users";
 import {TOAST_SHOW} from "../actions/toasts";
 import {CONNECT_APP} from "../actions/globalState";
@@ -79,6 +80,10 @@ function setupListeners(socketClient, dispatch) {
         socketClient.socket.query.token = token;
     });
     socketClient.on("page.refresh", () => window.location.reload());
+    socketClient.on("whoami", user => {
+        console.log(user);
+        dispatch({type: USER_WHOAMI, payload: user})
+    });
     socketClient.emit("users.get.all");
 }
 
