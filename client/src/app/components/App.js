@@ -1,7 +1,9 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 
+import handleGameMoves from "../helpers/game/moves.helper";
 import {retrieveCookie, removeCookie} from "../helpers/cookies.helper";
+import WarzoneBomber from "../containers/warzoneBomber";
 import Warzone from "../containers/warzone";
 import config from "../../config/globalConfig";
 import logo_light from "../../img/101_logo_light.svg";
@@ -76,8 +78,9 @@ class App extends Component {
                     this.props.quitPassiveMode();
                     localStorage.removeItem("mode");
                 }
-            }
-            else {
+            } else if (this.props.mode === "game") {
+                handleGameMoves(keyCode, this.props.position, this.props.movePlayer);
+            } else {
                 if (!(document.getElementsByTagName("input")[0] === document.activeElement)) {
                     if (keyCode === 70) {
                         this.props.setPassiveMode();
@@ -123,7 +126,10 @@ class App extends Component {
 
     renderApp() {
         if (this.props.connected) {
-            return (<Warzone key={"Component1"} />);
+            if (!this.props.mode === "game") {
+                return (<Warzone key={"Component1"} />);
+            }
+            return (<WarzoneBomber key={"Bomberman"}/>);
         }
         else {
             return (
@@ -164,7 +170,10 @@ App.propTypes = {
     moveSwitch: PropTypes.func.isRequired,
     switchButton: PropTypes.object.isRequired,
     clearActiveUser: PropTypes.func.isRequired,
-    storeActiveTheme: PropTypes.func.isRequired
+    storeActiveTheme: PropTypes.func.isRequired,
+    mode: PropTypes.string.isRequired,
+    position: PropTypes.string,
+    movePlayer: PropTypes.func.isRequired
 };
 
 export default App;

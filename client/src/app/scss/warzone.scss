@@ -692,6 +692,11 @@
     display: none;
 }
 
+.grayscale {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
 @import 'themes/dark.scss';
 @import 'themes/light.scss';
 

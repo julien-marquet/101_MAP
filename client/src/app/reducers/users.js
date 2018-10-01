@@ -4,12 +4,14 @@ import {
     USER_GET_METADATA,
     USER_GET_METADATA_SUCCEEDED,
     USER_GET_METADATA_FAILED,
-    USER_CLEAR_ACTIVE
+    USER_CLEAR_ACTIVE,
+    USER_WHOAMI
 } from "../actions/users";
 import {SEARCH_UPDATE_CONTENT} from "../actions/search";
+import {GAME_PLAYER_MOVE} from "../actions/bomberman";
 
 const initialState = {
-    array: [],
+    array: {},
     last_request: null,
     nb_connected_users: 0,
     inPoolNbr: 0,
@@ -27,7 +29,8 @@ const initialState = {
         success: null,
         content: null
     },
-    searchedUser: ""
+    searchedUser: "",
+    currentUser: {}
 };
 
 const users = (state = initialState, {type, payload}) => {
@@ -83,6 +86,24 @@ const users = (state = initialState, {type, payload}) => {
         return {
             ...state,
             activeUser: {...initialState.activeUser}
+        };
+    case USER_WHOAMI:
+        return {
+            ...state,
+            currentUser: payload
+        };
+    case GAME_PLAYER_MOVE:
+        // TODO Change this
+        const array = {};
+        Object.keys(state.array).map(e => {
+            if (e !== payload.old) {
+                array[e] = state.array[e];
+            }
+        });
+        array[payload.new] = state.array[payload.old];
+        return {
+            ...state,
+            array: {...array}
         };
     default:
         return state;

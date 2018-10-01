@@ -9,7 +9,8 @@ const mapStateToProps = ({users, globalState, switchButton}) => {
         searchedUser: users.searchedUser,
         activeUser: users.activeUser,
         mode: globalState.mode,
-        switchStatus: switchButton.position
+        switchStatus: switchButton.position,
+        currentUser: users.currentUser
     };
 };
 

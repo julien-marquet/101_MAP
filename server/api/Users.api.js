@@ -10,6 +10,51 @@ class Users {
         this.Oauth2_authenticator = Oauth2_authenticator;
     }
 
+    refreshToken(userToken) {
+        return this.Oauth2_authenticator.refreshToken(userToken)
+            .then(refreshedToken => {
+                if (refreshedToken) {
+                    return refreshedToken;
+                } else {
+                    logger.add_log({
+                        type: "Error",
+                        description: "Try to refresh...",
+                        additionnal_infos: {userToken, refreshedToken}
+                    });
+                    throw ("try to refresh, no existing entry");
+                }
+            })
+            .catch(error => {
+                logger.add_log({
+                    type: "Error", 
+                    description: "An unknown error during token refresh",
+                    additionnal_infos: {Error: error}
+                });
+                throw ("Couldn't refresh token");
+            });
+    }
+
+    getCurrentUser(userToken) {
+        return this.i_queue.push_tail(
+            "getCurrentUser", {
+                url: `${apiEndpoint}v2/me`, 
+                headers: {"authorization": `Bearer ${userToken}`}
+            }
+        )
+            .catch(error => {
+                if (error.infos.status === 401) {
+                    return this.refreshToken(userToken)
+                        .then(userToken => this.getCurrentUser(userToken));
+                } else {
+                    logger.add_log({
+                        type: "Error", 
+                        description: "API error", 
+                        additionnal_infos: {error}
+                    });
+                }
+            });
+    }
+
     getUserInfos(userId, userToken) {
         if (this.globalStorage.usersInfos[userId] === undefined) {
             return this.i_queue.push_tail(
@@ -25,37 +70,8 @@ class Users {
                 })
                 .catch(err => {
                     if (err && err.infos && err.infos.status === 401) {
-                        return this.Oauth2_authenticator.refreshToken(userToken)
-                            .then((refreshed) => {
-                                if (refreshed) {
-                                    return this.i_queue.push_tail(
-                                        "getUserInfos", {
-                                            url: `${apiEndpoint}v2/users/${userId}`, 
-                                            headers: {"authorization": `Bearer ${refreshed}`
-                                            }
-                                        }
-                                    ).then(response => {
-                                        response.last_request = Date.now();
-                                        this.globalStorage.usersInfos[response.id] = response;
-                                        return ({response, refresh_token: refreshed});
-                                    });
-                                } else {
-                                    logger.add_log({
-                                        type: "Error",
-                                        description: "Try to refresh...",
-                                        additionnal_infos: {userToken, refreshedToken: refreshed}
-                                    });
-                                    throw ("try to refresh, no existing entry");
-                                }
-                            })
-                            .catch(error => {
-                                logger.add_log({
-                                    type: "Error", 
-                                    description: "An unknown error during token refresh",
-                                    additionnal_infos: {Error: error}
-                                });
-                                throw ("Couldn't refresh token");
-                            });
+                        return this.refreshToken(userToken)
+                            .then(userToken => this.getUserInfos(userId, userToken));
                     }
                 });
         }
