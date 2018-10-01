@@ -35,6 +35,9 @@ class Seat extends Component {
         if (this.props.switchStatus !== nextProps.switchStatus) {
             return true;
         }
+        if (this.props.currentUser.id === undefined && nextProps.currentUser.id !== undefined) {
+            return true;
+        }
         return false;
     }
 
@@ -87,7 +90,9 @@ class Seat extends Component {
     render() {
         if (this.props.user === undefined) {
             return (
-                <div className={"seat"} />
+                <div className={"seat"}>
+                    <p style={{fontSize: "0.6em"}}>{this.props.hostname}</p>
+                </div>
             );
         }
         else {
@@ -97,6 +102,9 @@ class Seat extends Component {
             }
             if (this.props.user.pool) {
                 className += " newbie";
+            }
+            if (this.props.currentUser.id !== undefined && this.props.currentUser.id !== this.props.user.user.id) {
+                className += " grayscale";
             }
             return (
                 <div className={"seat taken"}>
@@ -135,7 +143,8 @@ Seat.propTypes = {
         login: PropTypes.string
     }),
     searchedUser: PropTypes.string,
-    switchStatus: PropTypes.number.isRequired
+    switchStatus: PropTypes.number.isRequired,
+    currentUser: PropTypes.object.isRequired
 };
 
 export default Seat;
