@@ -13,6 +13,10 @@ class SearchBar extends Component {
         this.handleSelection = this.handleSelection.bind(this);
     }
 
+    shouldComponentUpdate(nextProps) {
+        return this.props.searchedUser !== nextProps.searchedUser;
+    }
+
     handleChange(event, value) {
         if (value.toLowerCase() === "bomberman") {
             this.props.updateSearch("");

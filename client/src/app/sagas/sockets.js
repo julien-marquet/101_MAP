@@ -11,9 +11,7 @@ import {CONNECT_APP} from "../actions/globalState";
 import {storeCookie} from "../helpers/cookies.helper";
 
 function setupListeners(socketClient, dispatch) {
-    socketClient.on("connectedUsers", data => {
-        dispatch({type: USERS_GETTED, payload: JSON.parse(data)});
-    });
+    socketClient.on("connectedUsers", data => dispatch({type: USERS_GETTED, payload: JSON.parse(data)}));
     
     socketClient.on("authSuccess", data => {
         window.history.pushState("Home", "Home", "/");
@@ -90,10 +88,6 @@ function setupListeners(socketClient, dispatch) {
         dispatch({type: USER_WHOAMI, payload: user});
     });
     socketClient.emit("users.get.all");
-
-    // socketClient.on("game.player.move", payload => {
-    //     dispatch()
-    // });
 }
 
 function* flow(socketClient, dispatch) {

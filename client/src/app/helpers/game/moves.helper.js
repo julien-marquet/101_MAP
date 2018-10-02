@@ -1,7 +1,6 @@
 import config from "../../../config/globalConfig";
 
 function handleGameMoves(keyCode, position, move, usersPositions) {
-    console.log(usersPositions);
     const z = parseInt(position.split("z")[1].split("r")[0], 10);
     const r = parseInt(position.split("r")[1].split("p")[0], 10) - 1;
     const p = parseInt(position.split("p")[1], 10) - 1;
@@ -13,9 +12,8 @@ function handleGameMoves(keyCode, position, move, usersPositions) {
         }
     }
     if (keyCode === 37) {
-        // &&
-        // usersPositions[`z${z}r${r + 1}p${p}`] === undefined
-        if (config.mapPositions[`z${z}`][r][p - 1] !== undefined) {
+        if (config.mapPositions[`z${z}`][r][p - 1] !== undefined &&
+            usersPositions[`z${z}r${r + 1}p${p}`] === undefined) {
             move({direction: "left", newPos: `z${z}r${r + 1}p${p}`, oldPos: position});
         }
     } else if (keyCode === 38) {

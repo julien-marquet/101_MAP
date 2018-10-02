@@ -26,6 +26,7 @@ class Seat extends Component {
         }
         if (this.props.user !== undefined && nextProps.user !== undefined &&
             (this.props.user.user.login !== nextProps.user.user.login ||
+            this.props.user.type !== nextProps.user.type ||
             this.state.isSearched !== nextState.isSearched)) {
             return true;
         }
@@ -103,7 +104,9 @@ class Seat extends Component {
             if (this.props.user.pool) {
                 className += " newbie";
             }
-            if (this.props.currentUser.id !== undefined && this.props.currentUser.id !== this.props.user.user.id) {
+            if (this.props.currentUser.id !== undefined &&
+                this.props.currentUser.id !== this.props.user.user.id &&
+                this.props.user.type === "wall") {
                 className += " grayscale";
             }
             return (

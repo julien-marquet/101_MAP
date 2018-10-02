@@ -35,7 +35,6 @@ class Seatrow extends Component {
                 key={`row${rowIndex + 1}`}
             >
                 {seatsRow.map((seat, seatIndex) => {
-          
                     return (
                         <Seat
                             key={`seat${seatIndex + 1}`}
