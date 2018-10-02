@@ -16,6 +16,7 @@ const logger = require("./custom_modules/logger"),
     stdinHelper = require("./helpers/stdin.helper");
 const {clientPath, serverPort} = require("./config/globalConfig");
 
+globalStorage.players = {};
 app.use(cors());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({extended: true}));

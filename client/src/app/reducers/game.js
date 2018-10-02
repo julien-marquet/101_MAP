@@ -17,7 +17,7 @@ const game = (state = initialState, {type, payload}) => {
     case GAME_PLAYER_MOVE:
         return {
             ...state,
-            position: payload.new
+            position: payload.newPos
         };
     default:
         return state;

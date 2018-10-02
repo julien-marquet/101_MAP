@@ -21,7 +21,9 @@ const websocketHandler = (server, globalStorage) => {
     const	io = require("socket.io")(server);
     const   i_queue = new Queue(globalStorage),
         i_Oauth2_authenticator = new Oauth2_authenticator(globalStorage, i_queue),
-        i_users_api = new Users_api(globalStorage, i_Oauth2_authenticator, i_queue);
+        i_users_api = new Users_api(globalStorage, i_Oauth2_authenticator, i_queue),
+        Game = require("./helpers/game.helper"),
+        GameHelper = new Game(globalStorage);
 
     require("./loopers/loop_request")(io, globalStorage, i_Oauth2_authenticator, i_users_api);
 
@@ -49,8 +51,13 @@ const websocketHandler = (server, globalStorage) => {
                 description:"Socket Connection Lost"
             });			
             globalStorage.connectedUsers--;
+            Object.keys(globalStorage).map(key => {
+                if (globalStorage[key] === socket.userToken) {
+                    delete globalStorage[key];
+                }
+            });
         });
-        socketFiles.map(fun => fun(socket, globalStorage, i_queue, i_Oauth2_authenticator, i_users_api));
+        socketFiles.map(fun => fun(socket, globalStorage, i_queue, i_Oauth2_authenticator, i_users_api, GameHelper));
     });
     return (io);
 };

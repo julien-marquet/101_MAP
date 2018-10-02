@@ -94,8 +94,8 @@ const users = (state = initialState, {type, payload}) => {
         };
     case GAME_PLAYER_MOVE:
         const array = {...state.array};
-        delete array[payload.old];
-        array[payload.new] = state.array[payload.old];
+        delete array[payload.oldPos];
+        array[payload.newPos] = state.array[payload.oldPos];
         return {
             ...state,
             array

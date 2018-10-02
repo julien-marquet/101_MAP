@@ -125,6 +125,7 @@ class Users {
                             begin_at
                         };
                     });
+                    self.globalStorage.connected_users_array["z2r4p3"] = {"id": 101,"user":{"id":30974,"login":"legrivel","url":"https://api.intra.42.fr/v2/users/legrivel"},"begin_at":"2018-09-30T20:32:30.000Z"};
                     self.globalStorage.connected_users_last_request = Date.now();
                     self.globalStorage.nb_connected_users = nb_connected_users;
                     self.globalStorage.inPoolNbr = 0;

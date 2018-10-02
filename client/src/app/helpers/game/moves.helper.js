@@ -6,21 +6,21 @@ function handleGameMoves(keyCode, position, move) {
     const p = parseInt(position.split("p")[1], 10) - 1;
     if (keyCode === 37) {
         if (config.mapPositions[`z${z}`][r][p - 1] !== undefined) {
-            move({new: `z${z}r${r + 1}p${p}`, old: position});
+            move({direction: "left", newPos: `z${z}r${r + 1}p${p}`, oldPos: position});
         }
     } else if (keyCode === 38) {
         if (config.mapPositions[`z${z}`][r + 1] !== undefined &&
             config.mapPositions[`z${z}`][r + 1][p] !== undefined) {
-            move({new: `z${z}r${r + 2}p${p + 1}`, old: position});
+            move({direction: "up", newPos: `z${z}r${r + 2}p${p + 1}`, oldPos: position});
         }
     } else if (keyCode === 39) {
         if (config.mapPositions[`z${z}`][r][p + 1] !== undefined) {
-            move({new: `z${z}r${r + 1}p${p + 2}`, old: position});
+            move({direction: "right", newPos: `z${z}r${r + 1}p${p + 2}`, oldPos: position});
         }
     } else if (keyCode === 40) {
         if (config.mapPositions[`z${z}`][r - 1] !== undefined &&
             config.mapPositions[`z${z}`][r - 1][p] !== undefined) {
-            move({new: `z${z}r${r}p${p + 1}`, old: position});
+            move({direction: "down", newPos: `z${z}r${r}p${p + 1}`, oldPos: position});
         }
     }
 }

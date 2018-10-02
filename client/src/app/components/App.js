@@ -78,7 +78,7 @@ class App extends Component {
                     this.props.quitPassiveMode();
                     localStorage.removeItem("mode");
                 }
-            } else if (this.props.mode === "game") {
+            } else if (this.props.mode === "game" && this.props.position !== null) {
                 handleGameMoves(keyCode, this.props.position, this.props.movePlayer);
             } else {
                 if (!(document.getElementsByTagName("input")[0] === document.activeElement)) {
