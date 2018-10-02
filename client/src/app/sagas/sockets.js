@@ -5,7 +5,10 @@ import {
     USER_GET_METADATA_FAILED,
     USER_WHOAMI
 } from "../actions/users";
-import {GAME_PLAYER_POSITION_SET} from "../actions/bomberman";
+import {
+    GAME_PLAYER_POSITION_SET,
+    GAME_PLAYER_CURRENT_MOVE
+} from "../actions/bomberman";
 import {TOAST_SHOW} from "../actions/toasts";
 import {CONNECT_APP} from "../actions/globalState";
 import {storeCookie} from "../helpers/cookies.helper";
@@ -88,6 +91,11 @@ function setupListeners(socketClient, dispatch) {
         dispatch({type: USER_WHOAMI, payload: user});
     });
     socketClient.emit("users.get.all");
+    socketClient.on("game.player.move", payload => {
+        if (payload.isRollback) {
+            dispatch({type: GAME_PLAYER_CURRENT_MOVE, payload});
+        }
+    });
 }
 
 function* flow(socketClient, dispatch) {

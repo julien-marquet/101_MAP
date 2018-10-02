@@ -35,7 +35,8 @@ const websocketHandler = (server, globalStorage) => {
         logger.add_log({
             type:"General", 
             description:"Socket Connection established"
-        });		
+        });
+        socket.join("default");
         socket.emit("authSuccess", {
             type: socket.typeAuth,
             token: socket.userToken,

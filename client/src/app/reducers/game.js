@@ -1,6 +1,6 @@
 import {
     GAME_PLAYER_POSITION_SET,
-    GAME_PLAYER_MOVE
+    GAME_PLAYER_CURRENT_MOVE
 } from "../actions/bomberman";
 
 const initialState = {
@@ -14,7 +14,7 @@ const game = (state = initialState, {type, payload}) => {
             ...state,
             position: payload
         };
-    case GAME_PLAYER_MOVE:
+    case GAME_PLAYER_CURRENT_MOVE:
         return {
             ...state,
             position: payload.newPos

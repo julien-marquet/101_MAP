@@ -20,6 +20,8 @@ class Game {
         delete this.storage.players[oldPos];
         this.storage.gameMap[newPos] = this.storage.gameMap[oldPos];
         delete this.storage.gameMap[oldPos];
+        console.log("Players: ", this.storage.players);
+        console.log("GameMap: ", this.storage.gameMap);
         return null;
     }
 
@@ -27,9 +29,9 @@ class Game {
         if (this.storage.players[oldPos] !== userToken) {
             // ERROR
         }
-        const z = parseInt(newPos.split("z")[1].split("r")[0], 10);
-        const r = parseInt(newPos.split("r")[1].split("p")[0], 10) - 1;
-        const p = parseInt(newPos.split("p")[1], 10) - 1;
+        const z = parseInt(oldPos.split("z")[1].split("r")[0], 10);
+        const r = parseInt(oldPos.split("r")[1].split("p")[0], 10) - 1;
+        const p = parseInt(oldPos.split("p")[1], 10) - 1;
         if (direction === "left") {
             if (config.mapPositions[`z${z}`][r][p - 1] !== undefined &&
                 this.storage.gameMap[newPos] === undefined) {
@@ -50,7 +52,7 @@ class Game {
                 return this.setPos(userToken, oldPos, newPos);
             }
         }
-        return {pos: oldPos};
+        return {oldPos: newPos, newPos: oldPos};
     }
 }
 

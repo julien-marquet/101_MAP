@@ -1,6 +1,7 @@
 const gameSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator, User, Game) => {
     socket.on("game.launch", ({userToken}) => {
         socket.join("game");
+        socket.leave("default");
         if (globalStorage.gameMap === null) {
             Game.createMap();
         }
@@ -27,7 +28,9 @@ const gameSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator, User
     socket.on("game.player.move", payload => {
         const result = Game.move(payload);
         if (result !== null) {
-            socket.emit("game.player.move");
+            console.log("hmmm");
+            result.isRollback = true;
+            socket.emit("game.player.move", result);
         } else {
             socket.broadcast.to("game").emit("game.player.move");
         }
