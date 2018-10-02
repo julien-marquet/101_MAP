@@ -90,6 +90,10 @@ function setupListeners(socketClient, dispatch) {
         dispatch({type: USER_WHOAMI, payload: user});
     });
     socketClient.emit("users.get.all");
+
+    // socketClient.on("game.player.move", payload => {
+    //     dispatch()
+    // });
 }
 
 function* flow(socketClient, dispatch) {

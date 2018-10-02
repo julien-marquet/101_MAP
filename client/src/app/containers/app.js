@@ -12,12 +12,13 @@ import {USER_CLEAR_ACTIVE} from "../actions/users";
 import {ACTIVE_THEME_SWAP} from "../actions/globalState";
 import {GAME_PLAYER_MOVE} from "../actions/bomberman";
 
-const mapStateToProps = ({globalState, switchButton, game}) => {
+const mapStateToProps = ({globalState, switchButton, game, users}) => {
     const {mode, themes, connected} = globalState;
     return {
         mode,
         themes,
         connected,
+        usersPositions: users.array,
         position: game.position,
         switchButton: {
             position: switchButton.position
