@@ -17,6 +17,7 @@ const logger = require("./custom_modules/logger"),
 const {clientPath, serverPort} = require("./config/globalConfig");
 
 globalStorage.players = {};
+globalStorage.gameMap = null;
 app.use(cors());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({extended: true}));
