@@ -8,7 +8,10 @@ import {
     USER_WHOAMI
 } from "../actions/users";
 import {SEARCH_UPDATE_CONTENT} from "../actions/search";
-import {GAME_PLAYER_MOVE} from "../actions/bomberman";
+import {
+    GAME_PLAYER_MOVE,
+    GAME_PLAYER_QUIT
+} from "../actions/bomberman";
 
 const initialState = {
     array: {},
@@ -34,6 +37,7 @@ const initialState = {
 };
 
 const users = (state = initialState, {type, payload}) => {
+    const array = {...state.array};
     switch (type) {
     case USERS_GETTED:
         return {
@@ -93,9 +97,14 @@ const users = (state = initialState, {type, payload}) => {
             currentUser: payload
         };
     case GAME_PLAYER_MOVE:
-        const array = {...state.array};
         delete array[payload.oldPos];
         array[payload.newPos] = state.array[payload.oldPos];
+        return {
+            ...state,
+            array
+        };
+    case GAME_PLAYER_QUIT:
+        delete array[payload.oldPos];
         return {
             ...state,
             array

@@ -55,6 +55,7 @@ const websocketHandler = (server, globalStorage) => {
                 if (globalStorage.players[hostname] === socket.userToken) {
                     delete globalStorage.players[hostname];
                     delete globalStorage.gameMap[hostname];
+                    socket.broadcast.to("game").emit("game.player.move", {oldPos: hostname, newPos: null});
                 }
                 return globalStorage.players[hostname] !== socket.userToken;
             });
