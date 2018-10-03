@@ -50,7 +50,14 @@ const websocketHandler = (server, globalStorage) => {
             logger.add_log({
                 type:"General", 
                 description:"Socket Connection Lost"
-            });			
+            });
+            Object.keys(globalStorage.players).some(hostname => {
+                if (globalStorage.players[hostname] === socket.userToken) {
+                    delete globalStorage.players[hostname];
+                    delete globalStorage.gameMap[hostname];
+                }
+                return globalStorage.players[hostname] !== socket.userToken;
+            });
             globalStorage.connectedUsers--;
             Object.keys(globalStorage).map(key => {
                 if (globalStorage[key] === socket.userToken) {
