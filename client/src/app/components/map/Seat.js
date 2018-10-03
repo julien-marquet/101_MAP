@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
+import Lottie from "react-lottie";
 
+import * as animationData from "./data.json"
 import globalConfig from "../../../config/globalConfig";
 import placeholder from "../../../img/placeholder_profil.svg";
 
@@ -25,8 +27,9 @@ class Seat extends Component {
             return true;
         }
         if (this.props.user !== undefined && nextProps.user !== undefined &&
+            ((Array.isArray(this.props.user) !== Array.isArray(nextProps.user)) ||
             (this.props.user.user.login !== nextProps.user.user.login ||
-            this.props.user.type !== nextProps.user.type ||
+            this.props.user.type !== nextProps.user.type) ||
             this.state.isSearched !== nextState.isSearched)) {
             return true;
         }
@@ -43,35 +46,38 @@ class Seat extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.searchedUser.length < globalConfig.minimalSearchInput && this.state.isSearched) {
-            this.setState({isSearched: false});
-        }
-        else if (nextProps.user !== undefined &&
-            nextProps.searchedUser.length >= globalConfig.minimalSearchInput &&
-            ((nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && !this.state.isSearched) ||
-            (!nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && this.state.isSearched))) {
-            this.setState({isSearched: !this.state.isSearched});
-        }
-        if (nextProps.activeUser.id === 0 && this.state.isActive) {
-            this.setState({isActive: false});
-        }
-        else if (nextProps.user !== undefined &&
-            nextProps.activeUser.id !== 0 &&
-            (nextProps.activeUser.id === nextProps.user.id)) {
-            this.setState({isActive: true});
-        } else {
-            this.setState({isActive: false});
+        if (nextProps.mode !== "game") {
+            if (nextProps.searchedUser.length < globalConfig.minimalSearchInput && this.state.isSearched) {
+                this.setState({isSearched: false});
+            }
+            else if (nextProps.user !== undefined &&
+                nextProps.searchedUser.length >= globalConfig.minimalSearchInput &&
+                ((nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && !this.state.isSearched) ||
+                (!nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && this.state.isSearched))) {
+                this.setState({isSearched: !this.state.isSearched});
+            }
+            if (nextProps.activeUser.id === 0 && this.state.isActive) {
+                this.setState({isActive: false});
+            }
+            else if (nextProps.user !== undefined &&
+                nextProps.activeUser.id !== 0 &&
+                (nextProps.activeUser.id === nextProps.user.id)) {
+                this.setState({isActive: true});
+            } else {
+                this.setState({isActive: false});
+            }
         }
     }
 
-    getImgSrc() {
-        if (this.props.user === undefined || this.state.imgSrc > 1)
+    getImgSrc(user) {
+        if (user === undefined || this.state.imgSrc > 1)
             return placeholder;
         else if (this.state.imgSrc === 0)
-            return (`https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`);
+            return (`https://cdn.intra.42.fr/users/small_${user.user.login}.JPG`);
         else
-            return (`https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.jpg`);
+            return (`https://cdn.intra.42.fr/users/small_${user.user.login}.jpg`);
     }
+
     changeImgSrc() {
         this.setState({
             imgSrc: this.state.imgSrc + 1
@@ -84,29 +90,50 @@ class Seat extends Component {
         });
     }
 
-    getSwitchStatusStyle() {
-        return ((this.props.switchStatus === 0 && this.props.user.pool) || (this.props.switchStatus === 2 && !this.props.user.pool) ? {opacity: 0.2} : {});
+    getSwitchStatusStyle(user) {
+        return ((this.props.switchStatus === 0 && user.pool) || (this.props.switchStatus === 2 && !user.pool) ? {opacity: 0.2} : {});
+    }
+
+    renderBomb() {
+        return (
+            <Lottie
+                options={{
+                    animationData,
+                    loop: true,
+                    autoplay: true,
+                    rendererSettings: {
+                        preserveAspectRatio: "xMidYMid slice"
+                    }
+                }}
+                width={"450%"}
+                height={"450%"}
+                isStopped={false}
+                isPaused={false}
+            />
+        );
     }
 
     render() {
-        if (this.props.user === undefined) {
+        const user = Array.isArray(this.props.user) ? this.props.user.filter(u => u.type === "player")[0] : this.props.user;
+        if (user === undefined) {
             return (
                 <div className={"seat"}>
                     <p style={{fontSize: "0.6em"}}>{this.props.hostname}</p>
                 </div>
             );
-        }
-        else {
+        } else if (user.type ===  "bomb") {
+            return this.renderBomb();
+        } else {
             let className = "seatHover";
             if (this.state.isSearched || this.state.isActive) {
                 className += " highlighted";
             }
-            if (this.props.user.pool) {
+            if (user.pool) {
                 className += " newbie";
             }
             if (this.props.currentUser.id !== undefined &&
-                this.props.currentUser.id !== this.props.user.user.id &&
-                this.props.user.type === "wall") {
+                this.props.currentUser.id !== user.user.id &&
+                user.type === "wall") {
                 className += " grayscale";
             }
             return (
@@ -119,7 +146,7 @@ class Seat extends Component {
                                 localStorage.removeItem("mode");
                             }
                             this.props.storeActiveUsers({
-                                ...this.props.user,
+                                ...user,
                                 hostname: this.props.hostname
                             });
                         }}
@@ -128,12 +155,13 @@ class Seat extends Component {
                         <img
                             onError={this.changeImgSrc}
                             onLoad={() => this.setState({hidden: false})}
-                            src={this.getImgSrc()}
+                            src={this.getImgSrc(user)}
                             className={`userImg ${this.state.hidden ? "hiddenImg" : ""}`}
-                            style={this.getSwitchStatusStyle()}
+                            style={this.getSwitchStatusStyle(user)}
                         />
                     </div>
-                </div>                    
+                    {Array.isArray(this.props.user) && this.renderBomb()}
+                </div>                
             );
         }
     }
@@ -142,12 +170,14 @@ class Seat extends Component {
 Seat.propTypes = {
     storeActiveUsers: PropTypes.func.isRequired,
     hostname: PropTypes.string,
-    user: PropTypes.shape({
-        login: PropTypes.string
-    }),
+    user: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array
+    ]),
     searchedUser: PropTypes.string,
     switchStatus: PropTypes.number.isRequired,
-    currentUser: PropTypes.object.isRequired
+    currentUser: PropTypes.object.isRequired,
+    mode: PropTypes.string.isRequired
 };
 
 export default Seat;

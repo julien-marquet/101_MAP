@@ -79,7 +79,7 @@ class App extends Component {
                     localStorage.removeItem("mode");
                 }
             } else if (this.props.mode === "game" && this.props.position !== null) {
-                handleGameMoves(keyCode, this.props.position, this.props.movePlayer, this.props.usersPositions);
+                handleGameMoves(keyCode, this.props.position, this.props.movePlayer, this.props.fire, this.props.usersPositions);
             } else {
                 if (!(document.getElementsByTagName("input")[0] === document.activeElement)) {
                     if (keyCode === 70) {
@@ -174,7 +174,8 @@ App.propTypes = {
     mode: PropTypes.string.isRequired,
     position: PropTypes.string,
     movePlayer: PropTypes.func.isRequired,
-    usersPositions: PropTypes.object.isRequired
+    usersPositions: PropTypes.object.isRequired,
+    fire: PropTypes.func.isRequired
 };
 
 export default App;

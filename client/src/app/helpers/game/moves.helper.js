@@ -1,6 +1,6 @@
 import config from "../../../config/globalConfig";
 
-function handleGameMoves(keyCode, position, move, usersPositions) {
+function handleGameMoves(keyCode, position, move, fire, usersPositions) {
     const z = parseInt(position.split("z")[1].split("r")[0], 10);
     const r = parseInt(position.split("r")[1].split("p")[0], 10) - 1;
     const p = parseInt(position.split("p")[1], 10) - 1;
@@ -33,6 +33,8 @@ function handleGameMoves(keyCode, position, move, usersPositions) {
             usersPositions[`z${z}r${r}p${p + 1}`] === undefined) {
             move({direction: "down", newPos: `z${z}r${r}p${p + 1}`, oldPos: position});
         }
+    } else if (keyCode === 32) {
+        fire({pos: position});
     }
 }
 

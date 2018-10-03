@@ -103,11 +103,16 @@
     
     .seat {
         @include fix_animation();
+        display: flex;
+        align-items: center;
         margin: $seatSidesMargin;
         width: $seatSize;
         position: relative;
         height: $seatSize;
         border-radius: $radius;
+        svg *:not(path) {
+            fill: transparent;
+        }
     }
 
     @keyframes pulse {

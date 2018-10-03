@@ -123,7 +123,7 @@ class WarzoneBomber extends Component {
     }
 
     dragging({target, clientY}, release = false) {
-        if ((this.switchButton.isDragged && release) || target.className.includes("switchButton")) {
+        if ((this.switchButton.isDragged && release) || (typeof target.className === "string" && target.className.includes("switchButton"))) {
             this.switchButton.startPosition = clientY;
             this.switchButton.isDragged = !this.switchButton.isDragged;
             this.switchButton.dragPosition = this.props.switchButton.position;

@@ -10,7 +10,8 @@ import {
 import {SEARCH_UPDATE_CONTENT} from "../actions/search";
 import {
     GAME_PLAYER_MOVE,
-    GAME_PLAYER_QUIT
+    GAME_PLAYER_QUIT,
+    GAME_PLAYER_FIRE
 } from "../actions/bomberman";
 
 const initialState = {
@@ -105,6 +106,12 @@ const users = (state = initialState, {type, payload}) => {
         };
     case GAME_PLAYER_QUIT:
         delete array[payload.oldPos];
+        return {
+            ...state,
+            array
+        };
+    case GAME_PLAYER_FIRE:
+        array[payload.pos] = [array[payload.pos], {type: "bomb"}];
         return {
             ...state,
             array
