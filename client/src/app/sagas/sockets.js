@@ -7,7 +7,8 @@ import {
 } from "../actions/users";
 import {
     GAME_PLAYER_POSITION_SET,
-    GAME_PLAYER_CURRENT_MOVE
+    GAME_PLAYER_CURRENT_MOVE,
+    GAME_PLAYER_MOVE
 } from "../actions/bomberman";
 import {TOAST_SHOW} from "../actions/toasts";
 import {CONNECT_APP} from "../actions/globalState";
@@ -94,6 +95,8 @@ function setupListeners(socketClient, dispatch) {
     socketClient.on("game.player.move", payload => {
         if (payload.isRollback) {
             dispatch({type: GAME_PLAYER_CURRENT_MOVE, payload});
+        } else {
+            dispatch({type: GAME_PLAYER_MOVE, payload});
         }
     });
 }

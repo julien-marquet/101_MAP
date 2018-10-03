@@ -1,6 +1,6 @@
 const logger = require("../custom_modules/logger");
 
-const usersSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator, i_users_api) => {
+const usersSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, i_users_api) => {
     socket.on("users.get.all", () => {
         if (!globalStorage.connected_users_array) {
             i_users_api.getConnectedUsers(9).then(result => {

@@ -20,7 +20,6 @@ class Game {
         delete this.storage.players[oldPos];
         this.storage.gameMap[newPos] = this.storage.gameMap[oldPos];
         delete this.storage.gameMap[oldPos];
-        console.log("Players: ", this.storage.players);
         console.log("GameMap: ", this.storage.gameMap);
         return null;
     }

@@ -1,4 +1,4 @@
-const gameSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator, User, Game) => {
+const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, User, Game) => {
     socket.on("game.launch", ({userToken}) => {
         socket.join("game");
         socket.leave("default");
@@ -20,7 +20,8 @@ const gameSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator, User
                     ...globalStorage.connected_users_array[user.hostname]
                 };
                 socket.emit("whoami", user);
-                socket.emit("connectedUsers", JSON.stringify({array: globalStorage.gameMap}));
+                io.sockets.emit("connectedUsers", JSON.stringify({array: globalStorage.gameMap}));
+                // socket.broadcast.to("game").emit("game.player.move", {oldPos: user.hostname, newPos: user.hostname});
             })
             .catch(() => socket.emit("error", "Couldn't get player infos"));
     });
@@ -28,11 +29,10 @@ const gameSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator, User
     socket.on("game.player.move", payload => {
         const result = Game.move(payload);
         if (result !== null) {
-            console.log("hmmm");
             result.isRollback = true;
             socket.emit("game.player.move", result);
         } else {
-            socket.broadcast.to("game").emit("game.player.move");
+            socket.broadcast.to("game").emit("game.player.move", payload);
         }
     });
 };

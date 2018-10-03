@@ -65,7 +65,7 @@ const websocketHandler = (server, globalStorage) => {
                 }
             });
         });
-        socketFiles.map(fun => fun(socket, globalStorage, i_queue, i_Oauth2_authenticator, i_users_api, GameHelper));
+        socketFiles.map(fun => fun(io, socket, globalStorage, i_queue, i_Oauth2_authenticator, i_users_api, GameHelper));
     });
     return (io);
 };
