@@ -37,7 +37,9 @@ class SearchBar extends Component {
         this.results = [];
         Object.entries(this.props.users).forEach(value => {
             // TODO Make value[1] never undefined
-            if (value[1] !== undefined && value[1].user.login.includes(this.props.searchedUser.toLowerCase()))
+            if (value[1] !== undefined &&
+                value[1].user !== undefined &&
+                value[1].user.login.includes(this.props.searchedUser.toLowerCase()))
                 this.results.push({
                     ...value[1],
                     hostname: value[0]
@@ -48,7 +50,7 @@ class SearchBar extends Component {
 
     render() {
         return (
-            <div className={this.props.mode === "passive" ? "searchBar searchBarHided" : "searchBar"}>
+            <div className={this.props.mode === "passive" || this.props.mode === "game" ? "searchBar searchBarHided" : "searchBar"}>
                 <Autocomplete
                     wrapperProps={{
                         className: "wrapperSearch",
@@ -86,7 +88,8 @@ SearchBar.propTypes = {
     storeActiveUsers: PropTypes.func.isRequired,
     updateSearch: PropTypes.func.isRequired,
     launchBomber: PropTypes.func.isRequired,
-    searchedUser: PropTypes.string
+    searchedUser: PropTypes.string,
+    mode: PropTypes.string.isRequired
 };
 
 export default SearchBar;

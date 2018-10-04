@@ -1,5 +1,9 @@
 const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, User, Game) => {
     socket.on("game.launch", ({userToken}) => {
+        if (Object.keys(globalStorage.players).filter(key=> globalStorage.players[key]).length > 0) {
+            // ERROR
+            // return ;
+        }
         socket.join("game");
         socket.leave("default");
         if (globalStorage.gameMap === null) {
@@ -33,7 +37,7 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
             result.isRollback = true;
             socket.emit("game.player.move", result);
         } else {
-            payload.content[payload.oldPos] = null;
+            payload.content[payload.oldPos] = globalStorage.gameMap[payload.oldPos] || null;
             socket.broadcast.to("game").emit("game.player.move", payload.content);
         }
     });

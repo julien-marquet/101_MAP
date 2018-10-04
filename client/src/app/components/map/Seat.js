@@ -22,15 +22,21 @@ class Seat extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.mode !== nextProps.mode) {
+            return true;
+        }
+        if (this.props.mode === "game") {
+            return true;
+        }
         if ((this.props.user === undefined && nextProps.user !== undefined) ||
             (nextProps.user === undefined && this.props.user !== undefined)) {
             return true;
         }
         if (this.props.user !== undefined && nextProps.user !== undefined &&
-            ((Array.isArray(this.props.user) !== Array.isArray(nextProps.user)) ||
+            (this.props.user.type !== "bomb" &&
             (this.props.user.user.login !== nextProps.user.user.login ||
             this.props.user.type !== nextProps.user.type) ||
-            this.state.isSearched !== nextState.isSearched)) {
+                this.state.isSearched !== nextState.isSearched)) {
             return true;
         }
         if (nextState.imgSrc !== this.state.imgSrc || nextState.isSearched !== this.state.isSearched || nextState.isActive !== this.state.isActive || nextState.hidden !== this.state.hidden) {
@@ -47,10 +53,11 @@ class Seat extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.mode !== "game") {
+            console.log("NextProps", nextProps);
             if (nextProps.searchedUser.length < globalConfig.minimalSearchInput && this.state.isSearched) {
                 this.setState({isSearched: false});
             }
-            else if (nextProps.user !== undefined &&
+            else if (nextProps.user !== undefined && nextProps.user.type !== "bomb" &&
                 nextProps.searchedUser.length >= globalConfig.minimalSearchInput &&
                 ((nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && !this.state.isSearched) ||
                 (!nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && this.state.isSearched))) {
@@ -122,7 +129,11 @@ class Seat extends Component {
                 </div>
             );
         } else if (user.type ===  "bomb") {
-            return this.renderBomb();
+            return (
+                <div className={"seat"}>
+                    {this.renderBomb()}
+                </div>
+            );
         } else {
             let className = "seatHover";
             if (this.state.isSearched || this.state.isActive) {

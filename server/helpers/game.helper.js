@@ -18,8 +18,13 @@ class Game {
     setPos(userToken, oldPos, newPos) {
         this.storage.players[newPos] = this.storage.players[oldPos];
         delete this.storage.players[oldPos];
-        this.storage.gameMap[newPos] = this.storage.gameMap[oldPos];
-        delete this.storage.gameMap[oldPos];
+        if (Array.isArray(this.storage.gameMap[oldPos])) {
+            this.storage.gameMap[newPos] = this.storage.gameMap[oldPos].filter(e => e.type === "player")[0];
+            this.storage.gameMap[oldPos] = this.storage.gameMap[oldPos] = this.storage.gameMap[oldPos].filter(e => e.type !== "player")[0];
+        } else {
+            this.storage.gameMap[newPos] = this.storage.gameMap[oldPos];
+            delete this.storage.gameMap[oldPos];
+        }
         return null;
     }
 
@@ -56,7 +61,6 @@ class Game {
                 [newPos]: this.storage.gameMap[newPos]
             }
         };
-        // return {oldPos: newPos, newPos: oldPos};
     }
 
     fire({userToken, pos}) {
