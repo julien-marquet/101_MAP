@@ -9,7 +9,8 @@ import {
     GAME_PLAYER_POSITION_SET,
     GAME_PLAYER_CURRENT_MOVE,
     GAME_PLAYER_MOVE,
-    GAME_PLAYER_QUIT
+    GAME_PLAYER_QUIT,
+    GAME_ENTITY_DELETE
 } from "../actions/bomberman";
 import {TOAST_SHOW} from "../actions/toasts";
 import {CONNECT_APP} from "../actions/globalState";
@@ -94,6 +95,15 @@ function setupListeners(socketClient, dispatch) {
     });
     socketClient.emit("users.get.all");
     socketClient.on("game.player.move", payload => {
+        Object.keys(payload).map(key => {
+            if (payload[key] === null) {
+                delete payload[key];
+                dispatch({type: GAME_ENTITY_DELETE, payload: key});
+            }
+        });
+        if (Object.keys(payload).length === 0) {
+            return ;
+        }
         if (payload.isRollback) {
             dispatch({type: GAME_PLAYER_CURRENT_MOVE, payload});
         } else {

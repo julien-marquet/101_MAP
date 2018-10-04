@@ -11,7 +11,8 @@ import {SEARCH_UPDATE_CONTENT} from "../actions/search";
 import {
     GAME_PLAYER_MOVE,
     GAME_PLAYER_QUIT,
-    GAME_PLAYER_FIRE
+    GAME_PLAYER_FIRE,
+    GAME_ENTITY_DELETE
 } from "../actions/bomberman";
 
 const initialState = {
@@ -38,7 +39,6 @@ const initialState = {
 };
 
 const users = (state = initialState, {type, payload}) => {
-    const array = {...state.array};
     switch (type) {
     case USERS_GETTED:
         return {
@@ -98,23 +98,36 @@ const users = (state = initialState, {type, payload}) => {
             currentUser: payload
         };
     case GAME_PLAYER_MOVE:
-        delete array[payload.oldPos];
-        array[payload.newPos] = state.array[payload.oldPos];
         return {
             ...state,
-            array
+            array: {
+                ...state.array,
+                ...payload
+            }
         };
     case GAME_PLAYER_QUIT:
-        delete array[payload.oldPos];
         return {
             ...state,
-            array
+            array: {
+                ...state.array,
+                [payload.oldPos]: undefined
+            }
         };
     case GAME_PLAYER_FIRE:
-        array[payload.pos] = [array[payload.pos], {type: "bomb"}];
         return {
             ...state,
-            array
+            array: {
+                ...state.array,
+                [payload.pos]: [state.array[payload.pos], {type: "bomb"}]
+            }
+        };
+    case GAME_ENTITY_DELETE:
+        return {
+            ...state,
+            array: {
+                ...state.array,
+                [payload]: undefined
+            }
         };
     default:
         return state;

@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import Lottie from "react-lottie";
 
-import * as animationData from "./data.json"
+import * as animationData from "./data.json";
 import globalConfig from "../../../config/globalConfig";
 import placeholder from "../../../img/placeholder_profil.svg";
 

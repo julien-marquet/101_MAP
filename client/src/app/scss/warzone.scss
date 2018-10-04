@@ -113,6 +113,9 @@
         svg *:not(path) {
             fill: transparent;
         }
+        svg {
+            margin-top: 10%;
+        }
     }
 
     @keyframes pulse {

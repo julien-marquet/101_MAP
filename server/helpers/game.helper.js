@@ -20,7 +20,6 @@ class Game {
         delete this.storage.players[oldPos];
         this.storage.gameMap[newPos] = this.storage.gameMap[oldPos];
         delete this.storage.gameMap[oldPos];
-        console.log("GameMap: ", this.storage.gameMap);
         return null;
     }
 
@@ -51,7 +50,13 @@ class Game {
                 return this.setPos(userToken, oldPos, newPos);
             }
         }
-        return {oldPos: newPos, newPos: oldPos};
+        return {
+            content: {
+                [oldPos]: this.storage.gameMap[oldPos],
+                [newPos]: this.storage.gameMap[newPos]
+            }
+        };
+        // return {oldPos: newPos, newPos: oldPos};
     }
 }
 

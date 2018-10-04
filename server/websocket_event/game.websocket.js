@@ -27,12 +27,14 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
     });
 
     socket.on("game.player.move", payload => {
+        // Validator for params
         const result = Game.move(payload);
         if (result !== null) {
             result.isRollback = true;
             socket.emit("game.player.move", result);
         } else {
-            socket.broadcast.to("game").emit("game.player.move", payload);
+            payload.content[payload.oldPos] = null;
+            socket.broadcast.to("game").emit("game.player.move", payload.content);
         }
     });
 };
