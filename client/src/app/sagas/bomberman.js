@@ -1,12 +1,13 @@
 import {all, takeEvery, put} from "redux-saga/effects";
 
 import {retrieveCookie} from "../helpers/cookies.helper";
-
 import {
     MODE_SET_GAME,
     GAME_PLAYER_MOVE,
     GAME_PLAYER_CURRENT_MOVE,
-    GAME_ENTITY_DELETE
+    GAME_ENTITY_DELETE,
+    GAME_PLAYER_CURRENT_FIRE,
+    GAME_PLAYER_FIRE
 } from "../actions/bomberman";
 
 function launchGame(socketClient) {
@@ -28,10 +29,16 @@ function* sendMove(socketClient, {payload}) {
     }
 }
 
+function* sendFire(socketClient, {payload}) {
+    yield put({type: GAME_PLAYER_FIRE, payload});
+    socketClient.emit("game.player.fire", {pos: Object.keys(payload)[0], userToken: retrieveCookie("userToken")});
+}
+
 function* flow(socketClient) {
     yield all([
         takeEvery(MODE_SET_GAME, launchGame, socketClient),
-        takeEvery(GAME_PLAYER_CURRENT_MOVE, sendMove, socketClient) 
+        takeEvery(GAME_PLAYER_CURRENT_MOVE, sendMove, socketClient),
+        takeEvery(GAME_PLAYER_CURRENT_FIRE, sendFire, socketClient)
     ]);
 }
 

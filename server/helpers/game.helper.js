@@ -58,6 +58,14 @@ class Game {
         };
         // return {oldPos: newPos, newPos: oldPos};
     }
+
+    fire({userToken, pos}) {
+        if (this.storage.players[pos] !== userToken) {
+            return pos;
+        }
+        this.storage.gameMap[pos] = [this.storage.gameMap[pos], {type: "bomb", owner: userToken}];
+        return null;
+    }
 }
 
 module.exports = Game;

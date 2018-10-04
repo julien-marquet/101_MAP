@@ -9,8 +9,8 @@ import {
     GAME_PLAYER_POSITION_SET,
     GAME_PLAYER_CURRENT_MOVE,
     GAME_PLAYER_MOVE,
-    GAME_PLAYER_QUIT,
-    GAME_ENTITY_DELETE
+    GAME_ENTITY_DELETE,
+    GAME_PLAYER_FIRE
 } from "../actions/bomberman";
 import {TOAST_SHOW} from "../actions/toasts";
 import {CONNECT_APP} from "../actions/globalState";
@@ -110,10 +110,11 @@ function setupListeners(socketClient, dispatch) {
             if (payload.newPos !== null) {
                 dispatch({type: GAME_PLAYER_MOVE, payload});
             } else {
-                dispatch({type: GAME_PLAYER_QUIT, payload});
+                dispatch({type: GAME_ENTITY_DELETE, payload: payload.oldPos});
             }
         }
     });
+    socketClient.on("game.player.fire", payload => dispatch({type: GAME_PLAYER_FIRE, payload}));
 }
 
 function* flow(socketClient, dispatch) {

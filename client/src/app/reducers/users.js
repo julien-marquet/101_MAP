@@ -10,7 +10,6 @@ import {
 import {SEARCH_UPDATE_CONTENT} from "../actions/search";
 import {
     GAME_PLAYER_MOVE,
-    GAME_PLAYER_QUIT,
     GAME_PLAYER_FIRE,
     GAME_ENTITY_DELETE
 } from "../actions/bomberman";
@@ -105,20 +104,13 @@ const users = (state = initialState, {type, payload}) => {
                 ...payload
             }
         };
-    case GAME_PLAYER_QUIT:
-        return {
-            ...state,
-            array: {
-                ...state.array,
-                [payload.oldPos]: undefined
-            }
-        };
     case GAME_PLAYER_FIRE:
         return {
             ...state,
             array: {
                 ...state.array,
-                [payload.pos]: [state.array[payload.pos], {type: "bomb"}]
+                ...payload
+                // [payload]: [state.array[payload], {type: "bomb"}]
             }
         };
     case GAME_ENTITY_DELETE:

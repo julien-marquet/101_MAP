@@ -47,7 +47,7 @@ function handleGameMoves(keyCode, position, move, fire, usersPositions) {
             }});
         }
     } else if (keyCode === 32) {
-        fire({pos: position});
+        fire({[position]: [usersPositions[position], {type: "bomb"}]});
     }
 }
 

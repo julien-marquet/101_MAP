@@ -37,6 +37,24 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
             socket.broadcast.to("game").emit("game.player.move", payload.content);
         }
     });
+
+    socket.on("game.player.fire", payload => {
+        /// Validator for params
+        const result = Game.fire(payload);
+        if (result !== null) {
+            result.isRollback = true;
+            socket.emit("game.entity.remove", result);
+        } else {
+            const newPos = globalStorage.gameMap[payload.pos];
+            newPos.some((e, key) => {
+                if (e.type === "bomb") {
+                    delete newPos[key].owner;
+                }
+                return e.type === "bomb";
+            });
+            socket.broadcast.to("game").emit("game.player.fire", {[payload.pos]: newPos});
+        }
+    });
 };
 
 module.exports = gameSocket;
