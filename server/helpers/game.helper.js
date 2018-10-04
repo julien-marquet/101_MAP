@@ -64,7 +64,8 @@ class Game {
     }
 
     fire({userToken, pos}) {
-        if (this.storage.players[pos] !== userToken) {
+        if (this.storage.players[pos] !== userToken ||
+            Array.isArray(this.storage.gameMap[pos])) {
             return pos;
         }
         this.storage.gameMap[pos] = [this.storage.gameMap[pos], {type: "bomb", owner: userToken}];

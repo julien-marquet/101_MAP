@@ -50,6 +50,7 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
             socket.emit("game.entity.remove", result);
         } else {
             const newPos = globalStorage.gameMap[payload.pos];
+            console.log("Newpos", newPos);
             newPos.some((e, key) => {
                 if (e.type === "bomb") {
                     delete newPos[key].owner;
