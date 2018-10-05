@@ -11,7 +11,8 @@ import {SEARCH_UPDATE_CONTENT} from "../actions/search";
 import {
     GAME_PLAYER_MOVE,
     GAME_PLAYER_FIRE,
-    GAME_ENTITY_DELETE
+    GAME_ENTITY_DELETE,
+    GAME_ENTITIES_DELETE
 } from "../actions/bomberman";
 
 const initialState = {
@@ -114,11 +115,20 @@ const users = (state = initialState, {type, payload}) => {
             }
         };
     case GAME_ENTITY_DELETE:
+        console.log("Destroying from reducer: ", payload);
         return {
             ...state,
             array: {
                 ...state.array,
                 [payload]: undefined
+            }
+        };
+    case GAME_ENTITIES_DELETE:
+        return {
+            ...state,
+            array: {
+                ...state.array,
+                ...payload
             }
         };
     default:

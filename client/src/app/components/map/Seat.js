@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import Lottie from "react-lottie";
 
+import * as animationData2 from "./data2.json";
 import * as animationData from "./data.json";
 import globalConfig from "../../../config/globalConfig";
 import placeholder from "../../../img/placeholder_profil.svg";
@@ -53,7 +54,7 @@ class Seat extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.mode !== "game") {
-            console.log("NextProps", nextProps);
+            // console.log("NextProps", nextProps);
             if (nextProps.searchedUser.length < globalConfig.minimalSearchInput && this.state.isSearched) {
                 this.setState({isSearched: false});
             }
@@ -106,7 +107,7 @@ class Seat extends Component {
             <Lottie
                 options={{
                     animationData,
-                    loop: true,
+                    loop: false,
                     autoplay: true,
                     rendererSettings: {
                         preserveAspectRatio: "xMidYMid slice"
@@ -116,11 +117,20 @@ class Seat extends Component {
                 height={"450%"}
                 isStopped={false}
                 isPaused={false}
+                eventListeners={[{
+                    eventName: "complete",
+                    callback: () => {
+                        console.log("Destroying from component");
+                        this.props.destroy(this.props.hostname);
+                    }
+                }]}
             />
         );
     }
 
     render() {
+        // console.log("Render Seat", this.props.hostname);
+        const isArray = Array.isArray(this.props.user);
         const user = Array.isArray(this.props.user) ? this.props.user.filter(u => u.type === "player")[0] : this.props.user;
         if (user === undefined) {
             return (
@@ -130,7 +140,7 @@ class Seat extends Component {
             );
         } else if (user.type ===  "bomb") {
             return (
-                <div className={"seat"}>
+                <div className={"seat bomb"}>
                     {this.renderBomb()}
                 </div>
             );
@@ -148,7 +158,7 @@ class Seat extends Component {
                 className += " grayscale";
             }
             return (
-                <div className={"seat taken"}>
+                <div className={isArray ? "seat taken bomb" : "seat taken"}>
                     <div
                         className={className}
                         onClick={() => {
@@ -171,7 +181,7 @@ class Seat extends Component {
                             style={this.getSwitchStatusStyle(user)}
                         />
                     </div>
-                    {Array.isArray(this.props.user) && this.renderBomb()}
+                    {isArray && this.renderBomb()}
                 </div>                
             );
         }
@@ -188,7 +198,8 @@ Seat.propTypes = {
     searchedUser: PropTypes.string,
     switchStatus: PropTypes.number.isRequired,
     currentUser: PropTypes.object.isRequired,
-    mode: PropTypes.string.isRequired
+    mode: PropTypes.string.isRequired,
+    destroy: PropTypes.func.isRequired
 };
 
 export default Seat;

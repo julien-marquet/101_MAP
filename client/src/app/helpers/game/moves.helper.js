@@ -10,6 +10,22 @@ function handleGameMoves(keyCode, position, move, fire, usersPositions) {
         } else if (keyCode === 39) {
             keyCode = 37;
         }
+    } else if (z === 3) {
+        if (keyCode === 37) {
+            keyCode = 38;
+        } else if (keyCode === 38) {
+            keyCode = 37;
+        } else if (keyCode === 39) {
+            keyCode = 40;
+        } else if (keyCode === 40) {
+            keyCode = 39;
+        }
+    } else if (z === 1) {
+        if (keyCode === 38) {
+            keyCode = 40;
+        } else if (keyCode === 40) {
+            keyCode = 38;
+        }
     }
     const isArray = Array.isArray(usersPositions[position]);
     if (keyCode === 37) {

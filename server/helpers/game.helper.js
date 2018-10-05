@@ -23,9 +23,45 @@ class Game {
             this.storage.gameMap[oldPos] = this.storage.gameMap[oldPos] = this.storage.gameMap[oldPos].filter(e => e.type !== "player")[0];
         } else {
             this.storage.gameMap[newPos] = this.storage.gameMap[oldPos];
-            delete this.storage.gameMap[oldPos];
+            this.deleteEntity(oldPos);
         }
         return null;
+    }
+
+    deleteEntity(pos) {
+        delete this.storage.gameMap[pos];
+        return pos;
+    }
+
+    bombExplode(pos) {
+        this.deleteEntity(pos);
+        const z = parseInt(pos.split("z")[1].split("r")[0], 10);
+        const r = parseInt(pos.split("r")[1].split("p")[0], 10);
+        const p = parseInt(pos.split("p")[1], 10);
+        const deleted = {};
+        const exploded = {up: false, down: false, left: false, right: false};
+        if (this.storage.gameMap[`z${z}r${r}p${p - 1}`] !== undefined) {
+            exploded.left = true;
+            deleted[this.deleteEntity(`z${z}r${r}p${p - 1}`)] = null;
+        } if (this.storage.gameMap[`z${z}r${r}p${p - 2}`] !== undefined && !exploded.left) {
+            deleted[this.deleteEntity(`z${z}r${r}p${p - 2}`)] = null;
+        } if (this.storage.gameMap[`z${z}r${r}p${p + 1}`] !== undefined) {
+            exploded.right = true;
+            deleted[this.deleteEntity(`z${z}r${r}p${p + 1}`)] = null;
+        } if (this.storage.gameMap[`z${z}r${r}p${p + 2}`] !== undefined && !exploded.right) {
+            deleted[this.deleteEntity(`z${z}r${r}p${p + 2}`)] = null;
+        } if (this.storage.gameMap[`z${z}r${r - 1}p${p}`] !== undefined) {
+            exploded.up = true;
+            deleted[this.deleteEntity(`z${z}r${r - 1}p${p}`)] = null;
+        } if (this.storage.gameMap[`z${z}r${r - 2}p${p}`] !== undefined && !exploded.up) {
+            deleted[this.deleteEntity(`z${z}r${r - 2}p${p}`)] = null;
+        } if (this.storage.gameMap[`z${z}r${r + 1}p${p}`] !== undefined) {
+            exploded.down = true;
+            deleted[this.deleteEntity(`z${z}r${r + 1}p${p}`)] = null;
+        } if (this.storage.gameMap[`z${z}r${r + 2}p${p}`] !== undefined && exploded.down) {
+            deleted[this.deleteEntity(`z${z}r${r + 2}p${p}`)] = null;
+        }
+        return deleted;
     }
 
     move({userToken, newPos, direction, oldPos}) {
@@ -68,7 +104,11 @@ class Game {
             Array.isArray(this.storage.gameMap[pos])) {
             return pos;
         }
-        this.storage.gameMap[pos] = [this.storage.gameMap[pos], {type: "bomb", owner: userToken}];
+        if (this.storage.gameMap[pos] === undefined) {
+            this.storage.gameMap[pos] = {type: "bomb", owner: userToken};
+        } else {
+            this.storage.gameMap[pos] = [this.storage.gameMap[pos], {type: "bomb", owner: userToken}];
+        }
         return null;
     }
 }

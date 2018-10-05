@@ -110,6 +110,9 @@
         position: relative;
         height: $seatSize;
         border-radius: $radius;
+    }
+
+    .bomb {
         svg *:not(path) {
             fill: transparent;
         }
