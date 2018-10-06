@@ -2,8 +2,10 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import Lottie from "react-lottie";
 
-import * as animationData2 from "./data2.json";
-import * as animationData from "./data.json";
+import * as bomb from "./bomb.json";
+import * as explosion from "./explosion.json";
+import * as flames from "./flames.json";
+import * as flamesEnd from "./flamesEnd.json";
 import globalConfig from "../../../config/globalConfig";
 import placeholder from "../../../img/placeholder_profil.svg";
 
@@ -102,11 +104,48 @@ class Seat extends Component {
         return ((this.props.switchStatus === 0 && user.pool) || (this.props.switchStatus === 2 && !user.pool) ? {opacity: 0.2} : {});
     }
 
+    bombExplode() {
+        const z = parseInt(this.props.hostname.split("z")[1].split("r")[0], 10);
+        const r = parseInt(this.props.hostname.split("r")[1].split("p")[0], 10);
+        const p = parseInt(this.props.hostname.split("p")[1], 10);
+        const entities = {
+            [this.props.hostname]: {type: "explosion"},
+            [`z${z}r${r}p${p + 1}`]: {type: "flames", direction: "right"},
+            [`z${z}r${r}p${p - 1}`]: {type: "flames", direction: "left"},
+            [`z${z}r${r - 1}p${p}`]: {type: "flames", direction: "up"},
+            [`z${z}r${r + 1}p${p}`]: {type: "flames", direction: "down"}
+        };
+        const touched = {left: false, right: false, up: false, down: false};
+        if (this.props.hostname[`z${z}r${r}p${p + 1}`] !== undefined) {
+            touched.right = true;
+        } if (this.props.hostname[`z${z}r${r}p${p  - 1}`] !== undefined) {
+            touched.left = true;
+        } if (this.props.hostname[`z${z}r${r - 1}p${p}`] !== undefined) {
+            touched.up = true;
+        } if (this.props.hostname[`z${z}r${r + 1}p${p}`] !== undefined) {
+            touched.down = true;
+        }
+        if (this.props.hostname[`z${z}r${r}p${p + 2}`] === undefined ||
+            (!touched.right && this.props.hostname[`z${z}r${r}p${p + 2}`] !== undefined)) {
+            entities[`z${z}r${r}p${p + 2}`] = {type: "flamesEnd", direction: "right"};
+        } if (this.props.hostname[`z${z}r${r}p${p - 2}`] === undefined ||
+        (!touched.left && this.props.hostname[`z${z}r${r}p${p - 2}`] !== undefined)) {
+            entities[`z${z}r${r}p${p - 2}`] = {type: "flamesEnd", direction: "left"};
+        } if (this.props.hostname[`z${z}r${r - 2}p${p}`] === undefined ||
+        (!touched.up && this.props.hostname[`z${z}r${r - 2}p${p}`] !== undefined)) {
+            entities[`z${z}r${r - 2}p${p}`] = {type: "flamesEnd", direction: "up"};
+        } if (this.props.hostname[`z${z}r${r + 2}p${p}`] === undefined ||
+        (!touched.down && this.props.hostname[`z${z}r${r + 2}p${p}`] !== undefined)) {
+            entities[`z${z}r${r + 2}p${p}`] = {type: "flamesEnd", direction: "down"};
+        }
+        this.props.bombExplode({entities, pos: this.props.hostname});
+    }
+
     renderBomb() {
         return (
             <Lottie
                 options={{
-                    animationData,
+                    animationData: bomb,
                     loop: false,
                     autoplay: true,
                     rendererSettings: {
@@ -119,20 +158,26 @@ class Seat extends Component {
                 isPaused={false}
                 eventListeners={[{
                     eventName: "complete",
-                    callback: () => {
-                        console.log("Destroying from component");
-                        this.props.destroy(this.props.hostname);
-                    }
+                    callback: () => this.bombExplode()
                 }]}
             />
         );
     }
 
     render() {
-        // console.log("Render Seat", this.props.hostname);
         const isArray = Array.isArray(this.props.user);
         const user = Array.isArray(this.props.user) ? this.props.user.filter(u => u.type === "player")[0] : this.props.user;
-        if (user === undefined) {
+        const extraStyle =  {};
+        if (user !== undefined && user.direction !== undefined) {
+            if (user.direction === "right") {
+                extraStyle.transform = "rotateZ(180deg)";
+            } else if (user.direction === "down") {
+                extraStyle.transform = "rotateZ(-90deg)";
+            } else if (user.direction === "up") {
+                extraStyle.transform = "rotateZ(90deg)";
+            }
+        }
+        if (user === undefined || user.type === "explosion") {
             return (
                 <div className={"seat"}>
                     <p style={{fontSize: "0.6em"}}>{this.props.hostname}</p>
@@ -142,6 +187,52 @@ class Seat extends Component {
             return (
                 <div className={"seat bomb"}>
                     {this.renderBomb()}
+                </div>
+            );
+        } else if (user.type === "flames") {
+            return (
+                <div className={"seat flames"} style={extraStyle}>
+                    <Lottie
+                        options={{
+                            animationData: flames,
+                            loop: false,
+                            autoplay: true,
+                            rendererSettings: {
+                                preserveAspectRatio: "xMidYMid slice"
+                            }
+                        }}
+                        width={"130%"}
+                        height={"130%"}
+                        isStopped={false}
+                        isPaused={false}
+                        eventListeners={[{
+                            eventName: "complete",
+                            callback: () => this.props.destroy(this.props.hostname)
+                        }]}
+                    />
+                </div>
+            );
+        } else if (user.type === "flamesEnd") {
+            return (
+                <div className={"seat flames"} style={extraStyle}>
+                    <Lottie
+                        options={{
+                            animationData: flamesEnd,
+                            loop: false,
+                            autoplay: true,
+                            rendererSettings: {
+                                preserveAspectRatio: "xMidYMid slice"
+                            }
+                        }}
+                        width={"130%"}
+                        height={"130%"}
+                        isStopped={false}
+                        isPaused={false}
+                        eventListeners={[{
+                            eventName: "complete",
+                            callback: () => this.props.destroy(this.props.hostname)
+                        }]}
+                    />
                 </div>
             );
         } else {
@@ -199,6 +290,8 @@ Seat.propTypes = {
     switchStatus: PropTypes.number.isRequired,
     currentUser: PropTypes.object.isRequired,
     mode: PropTypes.string.isRequired,
+    bombExplode: PropTypes.func.isRequired,
+    allUsers: PropTypes.object.isRequired,
     destroy: PropTypes.func.isRequired
 };
 

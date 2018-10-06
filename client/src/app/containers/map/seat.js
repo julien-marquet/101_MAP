@@ -3,7 +3,10 @@ import {connect} from "react-redux";
 import Seat from "../../components/map/Seat";
 import {ACTIVE_USER_SWAP} from "../../actions/users";
 import {MODE_PASSIVE_UNSET} from "../../actions/globalState";
-import {GAME_ENTITY_DELETE} from "../../actions/bomberman";
+import {
+    GAME_BOMB_EXPLODE,
+    GAME_ENTITY_DELETE
+} from "../../actions/bomberman";
 
 const mapStateToProps = ({users, globalState, switchButton}) => {
     return {
@@ -19,6 +22,7 @@ const mapDispatchToProps = dispatch => {
     return {
         storeActiveUsers: payload => dispatch({type: ACTIVE_USER_SWAP, payload}),
         quitPassiveMode: () => dispatch({type: MODE_PASSIVE_UNSET}),
+        bombExplode: payload => dispatch({type: GAME_BOMB_EXPLODE, payload}),
         destroy: payload => dispatch({type: GAME_ENTITY_DELETE, payload})
     };
 };

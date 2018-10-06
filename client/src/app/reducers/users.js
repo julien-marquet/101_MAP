@@ -12,7 +12,8 @@ import {
     GAME_PLAYER_MOVE,
     GAME_PLAYER_FIRE,
     GAME_ENTITY_DELETE,
-    GAME_ENTITIES_DELETE
+    GAME_ENTITIES_DELETE,
+    GAME_ENTITIES_CREATE
 } from "../actions/bomberman";
 
 const initialState = {
@@ -97,6 +98,7 @@ const users = (state = initialState, {type, payload}) => {
             ...state,
             currentUser: payload
         };
+    // SAME
     case GAME_PLAYER_MOVE:
         return {
             ...state,
@@ -114,13 +116,12 @@ const users = (state = initialState, {type, payload}) => {
                 // [payload]: [state.array[payload], {type: "bomb"}]
             }
         };
-    case GAME_ENTITY_DELETE:
-        console.log("Destroying from reducer: ", payload);
+    case GAME_ENTITIES_CREATE:
         return {
             ...state,
             array: {
                 ...state.array,
-                [payload]: undefined
+                ...payload
             }
         };
     case GAME_ENTITIES_DELETE:
@@ -129,6 +130,15 @@ const users = (state = initialState, {type, payload}) => {
             array: {
                 ...state.array,
                 ...payload
+            }
+        };
+    // SAME
+    case GAME_ENTITY_DELETE:
+        return {
+            ...state,
+            array: {
+                ...state.array,
+                [payload]: undefined
             }
         };
     default:

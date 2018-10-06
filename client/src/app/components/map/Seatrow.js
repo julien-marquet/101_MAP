@@ -40,6 +40,7 @@ class Seatrow extends Component {
                             key={`seat${seatIndex + 1}`}
                             hostname={`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`}
                             user={this.props.users.array[`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`]}
+                            allUsers={this.props.users.array}
                             // user={this.props.zone === "z2" &&  ( this.props.users.array[`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`] === undefined || (this.props.users.array[`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`] !== undefined && this.props.users.array[`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`].user.login !== "legrivel")) ? undefined : this.props.users.array[`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`]}
                         />
                     );
