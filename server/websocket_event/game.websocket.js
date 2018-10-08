@@ -59,10 +59,10 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
             setTimeout(() => {
                 // io.broadcast.to("game").emit("game.bomb.explode", payload.pos);
                 const deleted  = Game.bombExplode(payload.pos);
-                if (Object.keys(deleted).length > 0) {
-                    io.sockets.to("game").emit("game.entities.delete", deleted);
-                }
-            }, 1400);
+                // if (Object.keys(deleted).length > 0) {
+                //     io.sockets.to("game").emit("game.entities.delete", deleted);
+                // }
+            }, 1000);
             socket.broadcast.to("game").emit("game.player.fire", {[payload.pos]: newPos});
         }
     });

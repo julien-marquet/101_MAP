@@ -38,6 +38,7 @@ function* sendFire(socketClient, {payload}) {
 
 function* bombExplode({payload}) {
     // TODO Some test with races
+    console.log("Payload: ", payload);
     yield put({type: GAME_ENTITY_DELETE, payload: payload.pos});
     yield put({type: GAME_ENTITIES_CREATE, payload: payload.entities});
 }

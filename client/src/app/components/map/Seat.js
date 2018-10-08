@@ -109,36 +109,34 @@ class Seat extends Component {
         const r = parseInt(this.props.hostname.split("r")[1].split("p")[0], 10);
         const p = parseInt(this.props.hostname.split("p")[1], 10);
         const entities = {
-            [this.props.hostname]: {type: "explosion"},
+            // [this.props.hostname]: {type: "explosion"},
             [`z${z}r${r}p${p + 1}`]: {type: "flames", direction: "right"},
             [`z${z}r${r}p${p - 1}`]: {type: "flames", direction: "left"},
             [`z${z}r${r - 1}p${p}`]: {type: "flames", direction: "up"},
             [`z${z}r${r + 1}p${p}`]: {type: "flames", direction: "down"}
         };
         const touched = {left: false, right: false, up: false, down: false};
-        if (this.props.hostname[`z${z}r${r}p${p + 1}`] !== undefined) {
+        if (this.props.allUsers[`z${z}r${r}p${p + 1}`] !== undefined) {
             touched.right = true;
-        } if (this.props.hostname[`z${z}r${r}p${p  - 1}`] !== undefined) {
+        } if (this.props.allUsers[`z${z}r${r}p${p  - 1}`] !== undefined) {
             touched.left = true;
-        } if (this.props.hostname[`z${z}r${r - 1}p${p}`] !== undefined) {
+        } if (this.props.allUsers[`z${z}r${r - 1}p${p}`] !== undefined) {
             touched.up = true;
-        } if (this.props.hostname[`z${z}r${r + 1}p${p}`] !== undefined) {
+        } if (this.props.allUsers[`z${z}r${r + 1}p${p}`] !== undefined) {
             touched.down = true;
         }
-        if (this.props.hostname[`z${z}r${r}p${p + 2}`] === undefined ||
-            (!touched.right && this.props.hostname[`z${z}r${r}p${p + 2}`] !== undefined)) {
+        if (!touched.right && globalConfig.mapPositions[`z${z}`][r - 1][p + 1] !== undefined) {
             entities[`z${z}r${r}p${p + 2}`] = {type: "flamesEnd", direction: "right"};
-        } if (this.props.hostname[`z${z}r${r}p${p - 2}`] === undefined ||
-        (!touched.left && this.props.hostname[`z${z}r${r}p${p - 2}`] !== undefined)) {
+        } if (!touched.left && globalConfig.mapPositions[`z${z}`][r - 1][p - 3] !== undefined) {
             entities[`z${z}r${r}p${p - 2}`] = {type: "flamesEnd", direction: "left"};
-        } if (this.props.hostname[`z${z}r${r - 2}p${p}`] === undefined ||
-        (!touched.up && this.props.hostname[`z${z}r${r - 2}p${p}`] !== undefined)) {
+        } if (!touched.up && globalConfig.mapPositions[`z${z}`][r - 3][p - 1] !== undefined) {
             entities[`z${z}r${r - 2}p${p}`] = {type: "flamesEnd", direction: "up"};
-        } if (this.props.hostname[`z${z}r${r + 2}p${p}`] === undefined ||
-        (!touched.down && this.props.hostname[`z${z}r${r + 2}p${p}`] !== undefined)) {
+        } if (!touched.down && globalConfig.mapPositions[`z${z}`][r + 1][p - 1] !== undefined) {
             entities[`z${z}r${r + 2}p${p}`] = {type: "flamesEnd", direction: "down"};
         }
         this.props.bombExplode({entities, pos: this.props.hostname});
+        Object.keys(entities).map(key => entities[key] = undefined);
+        setTimeout(() => this.props.destroy(entities), 1000);
     }
 
     renderBomb() {
@@ -172,9 +170,9 @@ class Seat extends Component {
             if (user.direction === "right") {
                 extraStyle.transform = "rotateZ(180deg)";
             } else if (user.direction === "down") {
-                extraStyle.transform = "rotateZ(-90deg)";
-            } else if (user.direction === "up") {
                 extraStyle.transform = "rotateZ(90deg)";
+            } else if (user.direction === "up") {
+                extraStyle.transform = "rotateZ(-90deg)";
             }
         }
         if (user === undefined || user.type === "explosion") {
@@ -201,14 +199,10 @@ class Seat extends Component {
                                 preserveAspectRatio: "xMidYMid slice"
                             }
                         }}
-                        width={"130%"}
-                        height={"130%"}
+                        width={"138%"}
+                        height={"138%"}
                         isStopped={false}
                         isPaused={false}
-                        eventListeners={[{
-                            eventName: "complete",
-                            callback: () => this.props.destroy(this.props.hostname)
-                        }]}
                     />
                 </div>
             );
@@ -224,14 +218,10 @@ class Seat extends Component {
                                 preserveAspectRatio: "xMidYMid slice"
                             }
                         }}
-                        width={"130%"}
-                        height={"130%"}
+                        width={"138%"}
+                        height={"138%"}
                         isStopped={false}
                         isPaused={false}
-                        eventListeners={[{
-                            eventName: "complete",
-                            callback: () => this.props.destroy(this.props.hostname)
-                        }]}
                     />
                 </div>
             );
