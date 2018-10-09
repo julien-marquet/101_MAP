@@ -112,6 +112,10 @@
         border-radius: $radius;
     }
 
+    .teleporter {
+        background-color: red !important;
+    }
+
     .bomb {
         svg *:not(path) {
             fill: transparent;

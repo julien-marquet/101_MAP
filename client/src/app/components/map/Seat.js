@@ -205,7 +205,7 @@ class Seat extends Component {
         }
         if (user === undefined || user.type === "explosion") {
             return (
-                <div className={"seat"}>
+                <div className={this.props.isTp ? "seat teleporter" : "seat"}>
                     <p style={{fontSize: "0.6em"}}>{this.props.hostname}</p>
                 </div>
             );
@@ -310,7 +310,8 @@ Seat.propTypes = {
     mode: PropTypes.string.isRequired,
     bombExplode: PropTypes.func.isRequired,
     allUsers: PropTypes.object.isRequired,
-    destroy: PropTypes.func.isRequired
+    destroy: PropTypes.func.isRequired,
+    isTp: PropTypes.bool.isRequired
 };
 
 export default Seat;

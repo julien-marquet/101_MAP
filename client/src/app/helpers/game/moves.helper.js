@@ -27,16 +27,18 @@ function handleGameMoves(keyCode, position, move, fire, destroy, usersPositions)
             keyCode = 38;
         }
     }
-    config.mapPositions["z1"][7].push("r8p6");
-    config.mapPositions["z1"][10].push("r11p6");
-    config.mapPositions["z1"][13].push("r14p6");
-    config.mapPositions["z1"][2].push("r3p5");
-    config.mapPositions["z2"][5].push("r6p6");
-    config.mapPositions["z2"][2].push("r3p6");
-    config.mapPositions["z3"][4].push("r5p4");
-    config.mapPositions["z3"][3].push("r4p4");
-    config.mapPositions["z4"][5].push("r6p6");
-    config.mapPositions["z4"][2].push("r3p6");
+    if (config.mapPositions["z1"][7][5] === undefined) {
+        config.mapPositions["z1"][7].push("r8p6");
+        config.mapPositions["z1"][10].push("r11p6");
+        config.mapPositions["z1"][13].push("r14p6");
+        config.mapPositions["z1"][2].push("r3p5");
+        config.mapPositions["z2"][5].push("r6p6");
+        config.mapPositions["z2"][2].push("r3p6");
+        config.mapPositions["z3"][4].push("r5p4");
+        config.mapPositions["z3"][3].push("r4p4");
+        config.mapPositions["z4"][5].push("r6p6");
+        config.mapPositions["z4"][2].push("r3p6");
+    }
     const isArray = Array.isArray(usersPositions[position]);
     if (keyCode === 37) {
         const inExplosion = usersPositions[`z${z}r${r + 1}p${p}`] !== undefined &&
@@ -47,6 +49,12 @@ function handleGameMoves(keyCode, position, move, fire, destroy, usersPositions)
             inExplosion) {
             if (inExplosion) {
                 destroy(position);
+            }
+            if (config.teleporters[`z${z}r${r + 1}p${p}`] !== undefined) {
+                return move({direction: "left", newPos: config.teleporters[`z${z}r${r + 1}p${p}`], oldPos: position, content: {
+                    [config.teleporters[`z${z}r${r + 1}p${p}`]]: isArray ? usersPositions[position].filter(u => u.type === "player")[0] : usersPositions[position],
+                    [position]: isArray ? usersPositions[position].filter(u => u.type !== "player")[0] : null
+                }});
             }
             move({direction: "left", newPos: `z${z}r${r + 1}p${p}`, oldPos: position, content: {
                 [`z${z}r${r + 1}p${p}`]: isArray ? usersPositions[position].filter(u => u.type === "player")[0] : usersPositions[position],
@@ -64,6 +72,12 @@ function handleGameMoves(keyCode, position, move, fire, destroy, usersPositions)
             if (inExplosion) {
                 destroy(position);
             }
+            if (config.teleporters[`z${z}r${r + 2}p${p + 1}`] !== undefined) {
+                return move({direction: "up", newPos: config.teleporters[`z${z}r${r + 2}p${p + 1}`], oldPos: position, content: {
+                    [config.teleporters[`z${z}r${r + 2}p${p + 1}`]]: isArray ? usersPositions[position].filter(u => u.type === "player")[0] : usersPositions[position],
+                    [position]: isArray ? usersPositions[position].filter(u => u.type !== "player")[0] : null
+                }});
+            }
             move({direction: "up", newPos: `z${z}r${r + 2}p${p + 1}`, oldPos: position, content: {
                 [`z${z}r${r + 2}p${p + 1}`]: isArray ? usersPositions[position].filter(u => u.type === "player")[0] : usersPositions[position],
                 [position]: isArray ? usersPositions[position].filter(u => u.type !== "player")[0] : null
@@ -78,6 +92,12 @@ function handleGameMoves(keyCode, position, move, fire, destroy, usersPositions)
             inExplosion) {
             if (inExplosion) {
                 destroy(position);
+            }
+            if (config.teleporters[`z${z}r${r + 1}p${p + 2}`] !== undefined) {
+                return move({direction: "right", newPos: config.teleporters[`z${z}r${r + 1}p${p + 2}`], oldPos: position, content: {
+                    [config.teleporters[`z${z}r${r + 1}p${p + 2}`]]: isArray ? usersPositions[position].filter(u => u.type === "player")[0] : usersPositions[position],
+                    [position]: isArray ? usersPositions[position].filter(u => u.type !== "player")[0] : null
+                }});
             }
             move({direction: "right", newPos: `z${z}r${r + 1}p${p + 2}`, oldPos: position, content: {
                 [`z${z}r${r + 1}p${p + 2}`]: isArray ? usersPositions[position].filter(u => u.type === "player")[0] : usersPositions[position],
@@ -94,6 +114,12 @@ function handleGameMoves(keyCode, position, move, fire, destroy, usersPositions)
             inExplosion) {
             if (inExplosion) {
                 destroy(position);
+            }
+            if (config.teleporters[`z${z}r${r}p${p + 1}`] !== undefined) {
+                return move({direction: "down", newPos: config.teleporters[`z${z}r${r}p${p + 1}`], oldPos: position, content: {
+                    [config.teleporters[`z${z}r${r}p${p + 1}`]]: isArray ? usersPositions[position].filter(u => u.type === "player")[0] : usersPositions[position],
+                    [position]: isArray ? usersPositions[position].filter(u => u.type !== "player")[0] : null
+                }});
             }
             move({direction: "down", newPos: `z${z}r${r}p${p + 1}`, oldPos: position, content: {
                 [`z${z}r${r}p${p + 1}`]: isArray ? usersPositions[position].filter(u => u.type === "player")[0] : usersPositions[position],

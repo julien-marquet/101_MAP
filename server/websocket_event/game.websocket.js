@@ -79,7 +79,6 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
                 delete newPos.owner;
             }
             socket.broadcast.to("game").emit("game.player.fire", {[payload.pos]: newPos});
-            console.log(`Bomb here: ${payload.pos}`, globalStorage.gameMap[payload.pos]);
             setTimeout(() => {
                 const result = Game.bombExplode(payload.pos);
                 if (result !== null) {

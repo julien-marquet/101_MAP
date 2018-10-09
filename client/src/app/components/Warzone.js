@@ -83,6 +83,7 @@ class Warzone extends Component {
                         seats={config.mapPositions[key]}
                         zone={key}
                         users={this.props.users}
+                        mode={this.props.mode}
                     />
                 </div>
             );

@@ -3,6 +3,19 @@ const config = require("../config/globalConfig");
 class Game {
     constructor(globalStorage) {
         this.storage = globalStorage;
+
+        this.tp = {
+            "z1r8p6": "z4r6p6",
+            "z1r11p6": "z1r3p5",
+            "z1r14p6": "z2r6p6",
+            "z1r3p5": "z1r11p6",
+            "z2r6p6": "z1r14p6",
+            "z2r3p6": "z3r5p4",
+            "z3r5p4": "z2r3p6",
+            "z3r4p4": "z4r3p6",
+            "z4r6p6": "z1r8p6",
+            "z4r3p6": "z3r4p4"
+        };
     }
 
     createMap() {
@@ -73,7 +86,7 @@ class Game {
     }
 
     setPos(userToken, oldPos, newPos) {
-        if (this.checkExplosion(newPos)) {
+        if (this.checkExplosion(newPos) && !this.checkTp(newPos)) {
             this.deleteEntity(oldPos);
             return null;
         }
@@ -141,9 +154,16 @@ class Game {
         return deleted;
     }
 
+    checkTp(pos) {
+        return Object.keys(this.tp).some(key => key === pos);
+    }
+
     move({userToken, newPos, direction, oldPos}) {
         if (this.storage.players[oldPos] !== userToken) {
             // ERROR
+        }
+        if (this.checkTp(newPos)) {
+            return this.setPos(userToken, oldPos, this.tp[newPos]);
         }
         const z = parseInt(oldPos.split("z")[1].split("r")[0], 10);
         const r = parseInt(oldPos.split("r")[1].split("p")[0], 10) - 1;
