@@ -117,22 +117,50 @@ class Seat extends Component {
         };
         const touched = {left: false, right: false, up: false, down: false};
         if (this.props.allUsers[`z${z}r${r}p${p + 1}`] !== undefined) {
-            touched.right = true;
+            if (!this.props.allUsers[`z${z}r${r}p${p + 1}`].type.includes("flames")) {
+                touched.right = true;
+            }
         } if (this.props.allUsers[`z${z}r${r}p${p  - 1}`] !== undefined) {
-            touched.left = true;
+            if (!this.props.allUsers[`z${z}r${r}p${p - 1}`].type.includes("flames")) {
+                touched.left = true;
+            }
         } if (this.props.allUsers[`z${z}r${r - 1}p${p}`] !== undefined) {
-            touched.up = true;
+            if (!this.props.allUsers[`z${z}r${r - 1}p${p}`].type.includes("flames")) {
+                touched.up = true;
+            }
         } if (this.props.allUsers[`z${z}r${r + 1}p${p}`] !== undefined) {
-            touched.down = true;
+            if (!this.props.allUsers[`z${z}r${r + 1}p${p}`].type.includes("flames")) {
+                touched.down = true;
+            }
         }
-        if (!touched.right && globalConfig.mapPositions[`z${z}`][r - 1][p + 1] !== undefined) {
-            entities[`z${z}r${r}p${p + 2}`] = {type: "flamesEnd", direction: "right"};
-        } if (!touched.left && globalConfig.mapPositions[`z${z}`][r - 1][p - 3] !== undefined) {
-            entities[`z${z}r${r}p${p - 2}`] = {type: "flamesEnd", direction: "left"};
-        } if (!touched.up && globalConfig.mapPositions[`z${z}`][r - 3][p - 1] !== undefined) {
-            entities[`z${z}r${r - 2}p${p}`] = {type: "flamesEnd", direction: "up"};
-        } if (!touched.down && globalConfig.mapPositions[`z${z}`][r + 1][p - 1] !== undefined) {
-            entities[`z${z}r${r + 2}p${p}`] = {type: "flamesEnd", direction: "down"};
+        if (!touched.right &&
+            globalConfig.mapPositions[`z${z}`][r - 1] !== undefined &&
+            globalConfig.mapPositions[`z${z}`][r - 1][p + 1] !== undefined) {
+            if (this.props.allUsers[`z${z}r${r}p${p + 2}`] === undefined ||
+                !this.props.allUsers[`z${z}r${r}p${p + 2}`].type.includes("flames")) {
+                entities[`z${z}r${r}p${p + 2}`] = {type: "flamesEnd", direction: "right"};
+            }
+        } if (!touched.left &&
+            globalConfig.mapPositions[`z${z}`][r - 1] !== undefined &&
+            globalConfig.mapPositions[`z${z}`][r - 1][p - 3] !== undefined) {
+            if (this.props.allUsers[`z${z}r${r}p${p - 2}`] === undefined ||
+                !this.props.allUsers[`z${z}r${r}p${p - 2}`].type.includes("flames")) {
+                entities[`z${z}r${r}p${p - 2}`] = {type: "flamesEnd", direction: "left"};
+            }
+        } if (!touched.up &&
+            globalConfig.mapPositions[`z${z}`][r - 3] !== undefined &&
+            globalConfig.mapPositions[`z${z}`][r - 3][p - 1] !== undefined) {
+            if (this.props.allUsers[`z${z}r${r - 2}p${p}`] === undefined ||
+                !this.props.allUsers[`z${z}r${r - 2}p${p}`].type.includes("flames")) {
+                entities[`z${z}r${r - 2}p${p}`] = {type: "flamesEnd", direction: "up"};
+            }
+        } if (!touched.down &&
+            globalConfig.mapPositions[`z${z}`][r + 1] !== undefined &&
+            globalConfig.mapPositions[`z${z}`][r + 1][p - 1] !== undefined) {
+            if (this.props.allUsers[`z${z}r${r + 2}p${p}`] === undefined ||
+                !this.props.allUsers[`z${z}r${r + 2}p${p}`].type.includes("flames")) {
+                entities[`z${z}r${r + 2}p${p}`] = {type: "flamesEnd", direction: "down"};
+            }
         }
         this.props.bombExplode({entities, pos: this.props.hostname});
         Object.keys(entities).map(key => entities[key] = undefined);
@@ -170,9 +198,9 @@ class Seat extends Component {
             if (user.direction === "right") {
                 extraStyle.transform = "rotateZ(180deg)";
             } else if (user.direction === "down") {
-                extraStyle.transform = "rotateZ(90deg)";
-            } else if (user.direction === "up") {
                 extraStyle.transform = "rotateZ(-90deg)";
+            } else if (user.direction === "up") {
+                extraStyle.transform = "rotateZ(90deg)";
             }
         }
         if (user === undefined || user.type === "explosion") {

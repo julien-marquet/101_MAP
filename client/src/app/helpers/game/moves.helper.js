@@ -1,6 +1,6 @@
 import config from "../../../config/globalConfig";
 
-function handleGameMoves(keyCode, position, move, fire, usersPositions) {
+function handleGameMoves(keyCode, position, move, fire, destroy, usersPositions) {
     const z = parseInt(position.split("z")[1].split("r")[0], 10);
     const r = parseInt(position.split("r")[1].split("p")[0], 10) - 1;
     const p = parseInt(position.split("p")[1], 10) - 1;
@@ -29,34 +29,62 @@ function handleGameMoves(keyCode, position, move, fire, usersPositions) {
     }
     const isArray = Array.isArray(usersPositions[position]);
     if (keyCode === 37) {
-        if (config.mapPositions[`z${z}`][r][p - 1] !== undefined &&
-            usersPositions[`z${z}r${r + 1}p${p}`] === undefined) {
+        const inExplosion = usersPositions[`z${z}r${r + 1}p${p}`] !== undefined &&
+        (usersPositions[`z${z}r${r + 1}p${p}`].type === "explosion" ||
+        usersPositions[`z${z}r${r + 1}p${p}`].type.includes("flames"));
+        if ((config.mapPositions[`z${z}`][r][p - 1] !== undefined &&
+            usersPositions[`z${z}r${r + 1}p${p}`] === undefined) ||
+            inExplosion) {
+            if (inExplosion) {
+                destroy(position);
+            }
             move({direction: "left", newPos: `z${z}r${r + 1}p${p}`, oldPos: position, content: {
                 [`z${z}r${r + 1}p${p}`]: isArray ? usersPositions[position].filter(u => u.type === "player")[0] : usersPositions[position],
                 [position]: isArray ? usersPositions[position].filter(u => u.type !== "player")[0] : null
             }});
         }
     } else if (keyCode === 38) {
-        if (config.mapPositions[`z${z}`][r + 1] !== undefined &&
+        const inExplosion = usersPositions[`z${z}r${r + 2}p${p + 1}`] !== undefined &&
+        (usersPositions[`z${z}r${r + 2}p${p + 1}`].type === "explosion" ||
+        usersPositions[`z${z}r${r + 2}p${p + 1}`].type.includes("flames"));
+        if ((config.mapPositions[`z${z}`][r + 1] !== undefined &&
             config.mapPositions[`z${z}`][r + 1][p] !== undefined &&
-            usersPositions[`z${z}r${r + 2}p${p + 1}`] === undefined) {
+            usersPositions[`z${z}r${r + 2}p${p + 1}`] === undefined) ||
+            inExplosion) {
+            if (inExplosion) {
+                destroy(position);
+            }
             move({direction: "up", newPos: `z${z}r${r + 2}p${p + 1}`, oldPos: position, content: {
                 [`z${z}r${r + 2}p${p + 1}`]: isArray ? usersPositions[position].filter(u => u.type === "player")[0] : usersPositions[position],
                 [position]: isArray ? usersPositions[position].filter(u => u.type !== "player")[0] : null
             }});
         }
     } else if (keyCode === 39) {
-        if (config.mapPositions[`z${z}`][r][p + 1] !== undefined &&
-        usersPositions[`z${z}r${r + 1}p${p + 2}`] === undefined) {
+        const inExplosion = usersPositions[`z${z}r${r + 1}p${p + 2}`] !== undefined &&
+        (usersPositions[`z${z}r${r + 1}p${p + 2}`].type === "explosion" ||
+        usersPositions[`z${z}r${r + 1}p${p + 2}`].type.includes("flames"));
+        if ((config.mapPositions[`z${z}`][r][p + 1] !== undefined &&
+            usersPositions[`z${z}r${r + 1}p${p + 2}`] === undefined) ||
+            inExplosion) {
+            if (inExplosion) {
+                destroy(position);
+            }
             move({direction: "right", newPos: `z${z}r${r + 1}p${p + 2}`, oldPos: position, content: {
                 [`z${z}r${r + 1}p${p + 2}`]: isArray ? usersPositions[position].filter(u => u.type === "player")[0] : usersPositions[position],
                 [position]: isArray ? usersPositions[position].filter(u => u.type !== "player")[0] : null
             }});
         }
     } else if (keyCode === 40) {
-        if (config.mapPositions[`z${z}`][r - 1] !== undefined &&
+        const inExplosion = usersPositions[`z${z}r${r}p${p + 1}`] !== undefined &&
+        (usersPositions[`z${z}r${r}p${p + 1}`].type === "explosion" ||
+        usersPositions[`z${z}r${r}p${p + 1}`].type.includes("flames"));
+        if ((config.mapPositions[`z${z}`][r - 1] !== undefined &&
             config.mapPositions[`z${z}`][r - 1][p] !== undefined &&
-            usersPositions[`z${z}r${r}p${p + 1}`] === undefined) {
+            usersPositions[`z${z}r${r}p${p + 1}`] === undefined) ||
+            inExplosion) {
+            if (inExplosion) {
+                destroy(position);
+            }
             move({direction: "down", newPos: `z${z}r${r}p${p + 1}`, oldPos: position, content: {
                 [`z${z}r${r}p${p + 1}`]: isArray ? usersPositions[position].filter(u => u.type === "player")[0] : usersPositions[position],
                 [position]: isArray ? usersPositions[position].filter(u => u.type !== "player")[0] : null

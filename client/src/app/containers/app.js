@@ -12,7 +12,8 @@ import {USER_CLEAR_ACTIVE} from "../actions/users";
 import {ACTIVE_THEME_SWAP} from "../actions/globalState";
 import {
     GAME_PLAYER_CURRENT_MOVE,
-    GAME_PLAYER_CURRENT_FIRE
+    GAME_PLAYER_CURRENT_FIRE,
+    GAME_ENTITY_DELETE
 } from "../actions/bomberman";
 
 const mapStateToProps = ({globalState, switchButton, game, users}) => {
@@ -39,7 +40,8 @@ const mapDispatchToProps = dispatch => {
         clearActiveUser: () => dispatch({type: USER_CLEAR_ACTIVE}),
         storeActiveTheme: payload => dispatch({type: ACTIVE_THEME_SWAP, payload}),
         movePlayer: payload => dispatch({type: GAME_PLAYER_CURRENT_MOVE, payload}),
-        fire: payload => dispatch({type: GAME_PLAYER_CURRENT_FIRE, payload})
+        fire: payload => dispatch({type: GAME_PLAYER_CURRENT_FIRE, payload}),
+        destroy: payload => dispatch({type: GAME_ENTITY_DELETE, payload})
     };
 };
 

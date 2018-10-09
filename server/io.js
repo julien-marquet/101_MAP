@@ -51,12 +51,18 @@ const websocketHandler = (server, globalStorage) => {
                 type:"General", 
                 description:"Socket Connection Lost"
             });
-            console.log(globalStorage.players);
             Object.keys(globalStorage.players).some(hostname => {
                 if (globalStorage.players[hostname] === socket.userToken) {
-                    console.log(hostname);
                     delete globalStorage.players[hostname];
-                    delete globalStorage.gameMap[hostname];
+                    if (Array.isArray(globalStorage.gameMap[hostname])) {
+                        globalStorage.gameMap[hostname].some(e => {
+                            if (e.type !== "player") {
+                                globalStorage.gameMap[hostname] = e;
+                                return true;
+                            }
+                            return false;
+                        });
+                    }
                     socket.broadcast.to("game").emit("game.player.move", {[hostname]: null});
                 }
                 return globalStorage.players[hostname] !== socket.userToken;

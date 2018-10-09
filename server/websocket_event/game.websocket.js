@@ -1,5 +1,6 @@
 const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, User, Game) => {
     socket.on("game.launch", ({userToken}) => {
+        console.log("Player joined the game");
         if (Object.keys(globalStorage.players).filter(key=> globalStorage.players[key]).length > 0) {
             // ERROR
             // return ;
@@ -8,6 +9,7 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
         socket.leave("default");
         if (globalStorage.gameMap === null) {
             Game.createMap();
+            console.log("Created map...");
         }
         User.getCurrentUser(userToken)
             .then(user => {
@@ -23,11 +25,15 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
                     type: "player",
                     ...globalStorage.connected_users_array[user.hostname]
                 };
+                console.log("Emitting users");
                 socket.emit("whoami", user);
                 io.sockets.emit("connectedUsers", JSON.stringify({array: globalStorage.gameMap}));
                 // socket.broadcast.to("game").emit("game.player.move", {oldPos: user.hostname, newPos: user.hostname});
             })
-            .catch(() => socket.emit("error", "Couldn't get player infos"));
+            .catch(error => {
+                console.error("An error occured", error);
+                socket.emit("error", "Couldn't get player infos");
+            });
     });
 
     socket.on("game.player.move", payload => {
@@ -43,27 +49,30 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
     });
 
     socket.on("game.player.fire", payload => {
-        /// Validator for params
+        // Validator for params
+        // Check if pos is a real pos
         const result = Game.fire(payload);
         if (result !== null) {
             result.isRollback = true;
             socket.emit("game.entity.remove", result);
         } else {
             const newPos = globalStorage.gameMap[payload.pos];
-            newPos.some((e, key) => {
-                if (e.type === "bomb") {
-                    delete newPos[key].owner;
-                }
-                return e.type === "bomb";
-            });
-            setTimeout(() => {
-                // io.broadcast.to("game").emit("game.bomb.explode", payload.pos);
-                const deleted  = Game.bombExplode(payload.pos);
-                // if (Object.keys(deleted).length > 0) {
-                //     io.sockets.to("game").emit("game.entities.delete", deleted);
-                // }
-            }, 1000);
+            if (Array.isArray(newPos)) {
+                newPos.some((e, key) => {
+                    if (e.type === "bomb") {
+                        delete newPos[key].owner;
+                    }
+                    return e.type === "bomb";
+                });
+            } else {
+                delete newPos.owner;
+            }
             socket.broadcast.to("game").emit("game.player.fire", {[payload.pos]: newPos});
+            console.log(`Bomb here: ${payload.pos}`, globalStorage.gameMap[payload.pos]);
+            setTimeout(() => {
+                Game.bombExplode(payload.pos);
+                setTimeout(() => Game.deleteEntity(payload.pos), 2000);
+            }, 1000);
         }
     });
 };

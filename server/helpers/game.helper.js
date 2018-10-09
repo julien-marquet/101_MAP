@@ -15,7 +15,75 @@ class Game {
         });
     }
 
+    checkExplosion(pos) {
+        const z = parseInt(pos.split("z")[1].split("r")[0], 10);
+        const r = parseInt(pos.split("r")[1].split("p")[0], 10);
+        const p = parseInt(pos.split("p")[1], 10);
+        console.log(" ");
+        console.log(" ");
+        console.log(" ");
+        console.log("Map position: ", config.mapPositions[`z${z}`][r - 1][p]);
+        console.log("This.storage: ", this.storage.gameMap[`z${z}r${r}p${p + 1}`]);
+        console.log("Bomb here: ", `z${z}r${r}p${p + 1}`);
+        if (config.mapPositions[`z${z}`][r - 1][p - 1] !== undefined &&
+            this.storage.gameMap[pos] !== undefined &&
+            this.storage.gameMap[pos].type === "bomb" &&
+            this.storage.gameMap[pos].status === "exploded") {
+            return true;
+        } else if (config.mapPositions[`z${z}`][r - 1][p - 2] !== undefined &&
+                this.storage.gameMap[`z${z}r${r}p${p - 1}`] !== undefined &&
+                this.storage.gameMap[`z${z}r${r}p${p - 1}`].type === "bomb" &&
+                this.storage.gameMap[`z${z}r${r}p${p - 1}`].status === "exploded") {
+            return true;
+        } else if (config.mapPositions[`z${z}`][r - 1][p - 3] !== undefined &&
+                this.storage.gameMap[`z${z}r${r}p${p - 2}`] !== undefined &&
+                this.storage.gameMap[`z${z}r${r}p${p - 2}`].type === "bomb" &&
+                this.storage.gameMap[`z${z}r${r}p${p - 2}`].status === "exploded") {
+            return true;
+        } else if (config.mapPositions[`z${z}`][r - 2] !== undefined &&
+                config.mapPositions[`z${z}`][r - 2][p - 1] !== undefined &&
+                this.storage.gameMap[`z${z}r${r - 1}p${p}`] !== undefined &&
+                this.storage.gameMap[`z${z}r${r - 1}p${p}`].type === "bomb" &&
+                this.storage.gameMap[`z${z}r${r - 1}p${p}`].status === "exploded") {
+            return true;
+        } else if (config.mapPositions[`z${z}`][r - 3] !== undefined &&
+                config.mapPositions[`z${z}`][r - 3][p - 1] !== undefined &&
+                this.storage.gameMap[`z${z}r${r - 2}p${p}`] !== undefined &&
+                this.storage.gameMap[`z${z}r${r - 2}p${p}`].type === "bomb" &&
+                this.storage.gameMap[`z${z}r${r - 2}p${p}`].status === "exploded") {
+            return true;
+        } else if (config.mapPositions[`z${z}`][r - 1][p] !== undefined &&
+                this.storage.gameMap[`z${z}r${r}p${p + 1}`] !== undefined &&
+                this.storage.gameMap[`z${z}r${r}p${p + 1}`].type === "bomb" &&
+                this.storage.gameMap[`z${z}r${r}p${p + 1}`].status === "exploded") {
+            console.log("Entering here...");
+            return true;
+        } else if (config.mapPositions[`z${z}`][r - 1][p + 1] !== undefined &&
+                this.storage.gameMap[`z${z}r${r}p${p + 2}`] !== undefined &&
+                this.storage.gameMap[`z${z}r${r}p${p + 2}`].type === "bomb" &&
+                this.storage.gameMap[`z${z}r${r}p${p + 2}`].status === "exploded") {
+            return true;
+        } else if (config.mapPositions[`z${z}`][r] !== undefined &&
+                config.mapPositions[`z${z}`][r][p - 1] !== undefined &&
+                this.storage.gameMap[`z${z}r${r + 1}p${p}`] !== undefined &&
+                this.storage.gameMap[`z${z}r${r + 1}p${p}`].type === "bomb" &&
+                this.storage.gameMap[`z${z}r${r + 1}p${p}`].status === "exploded") {
+            return true;
+        } else if (config.mapPositions[`z${z}`][r + 1] &&
+                config.mapPositions[`z${z}`][r + 1][p - 1] !== undefined &&
+                this.storage.gameMap[`z${z}r${r + 2}p${p}`] !== undefined &&
+                this.storage.gameMap[`z${z}r${r + 2}p${p}`].type === "bomb" &&
+                this.storage.gameMap[`z${z}r${r + 2}p${p}`].status === "exploded") {
+            return true;
+        }
+        return false;
+    }
+
     setPos(userToken, oldPos, newPos) {
+        if (this.checkExplosion(newPos)) {
+            this.deleteEntity(oldPos);
+            return null;
+        }
         this.storage.players[newPos] = this.storage.players[oldPos];
         delete this.storage.players[oldPos];
         if (Array.isArray(this.storage.gameMap[oldPos])) {
@@ -29,12 +97,29 @@ class Game {
     }
 
     deleteEntity(pos) {
+        if (pos === "z1r10p4") {
+            console.log("Deleted bomb !");
+        }
         delete this.storage.gameMap[pos];
+        if (this.storage.players[pos] !== undefined) {
+            delete this.storage.players[pos];
+        }
         return pos;
     }
 
     bombExplode(pos) {
-        this.deleteEntity(pos);
+        if (Array.isArray(this.storage.gameMap[pos])) {
+            this.storage.gameMap[pos].some((e, key) => {
+                const type = e.type;
+                if (type === "bomb") {
+                    this.storage.gameMap[pos][key].status = "exploded";
+                }
+                return type === "bomb";
+            });
+        } else {
+            this.storage.gameMap[pos].status = "exploded";
+        }
+        console.log(`Bomb exploding:`, this.storage.gameMap["z1r10p4"]);
         const z = parseInt(pos.split("z")[1].split("r")[0], 10);
         const r = parseInt(pos.split("r")[1].split("p")[0], 10);
         const p = parseInt(pos.split("p")[1], 10);
@@ -61,6 +146,7 @@ class Game {
         } if (this.storage.gameMap[`z${z}r${r + 2}p${p}`] !== undefined && exploded.down) {
             deleted[this.deleteEntity(`z${z}r${r + 2}p${p}`)] = null;
         }
+        console.log("Deleted: ", deleted);
         return deleted;
     }
 
