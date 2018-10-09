@@ -19,12 +19,6 @@ class Game {
         const z = parseInt(pos.split("z")[1].split("r")[0], 10);
         const r = parseInt(pos.split("r")[1].split("p")[0], 10);
         const p = parseInt(pos.split("p")[1], 10);
-        console.log(" ");
-        console.log(" ");
-        console.log(" ");
-        console.log("Map position: ", config.mapPositions[`z${z}`][r - 1][p]);
-        console.log("This.storage: ", this.storage.gameMap[`z${z}r${r}p${p + 1}`]);
-        console.log("Bomb here: ", `z${z}r${r}p${p + 1}`);
         if (config.mapPositions[`z${z}`][r - 1][p - 1] !== undefined &&
             this.storage.gameMap[pos] !== undefined &&
             this.storage.gameMap[pos].type === "bomb" &&
@@ -56,7 +50,6 @@ class Game {
                 this.storage.gameMap[`z${z}r${r}p${p + 1}`] !== undefined &&
                 this.storage.gameMap[`z${z}r${r}p${p + 1}`].type === "bomb" &&
                 this.storage.gameMap[`z${z}r${r}p${p + 1}`].status === "exploded") {
-            console.log("Entering here...");
             return true;
         } else if (config.mapPositions[`z${z}`][r - 1][p + 1] !== undefined &&
                 this.storage.gameMap[`z${z}r${r}p${p + 2}`] !== undefined &&
@@ -97,9 +90,6 @@ class Game {
     }
 
     deleteEntity(pos) {
-        if (pos === "z1r10p4") {
-            console.log("Deleted bomb !");
-        }
         delete this.storage.gameMap[pos];
         if (this.storage.players[pos] !== undefined) {
             delete this.storage.players[pos];
@@ -117,9 +107,11 @@ class Game {
                 return type === "bomb";
             });
         } else {
+            if (this.storage.gameMap[pos] === undefined) {
+                return null;
+            }
             this.storage.gameMap[pos].status = "exploded";
         }
-        console.log(`Bomb exploding:`, this.storage.gameMap["z1r10p4"]);
         const z = parseInt(pos.split("z")[1].split("r")[0], 10);
         const r = parseInt(pos.split("r")[1].split("p")[0], 10);
         const p = parseInt(pos.split("p")[1], 10);
@@ -146,7 +138,6 @@ class Game {
         } if (this.storage.gameMap[`z${z}r${r + 2}p${p}`] !== undefined && exploded.down) {
             deleted[this.deleteEntity(`z${z}r${r + 2}p${p}`)] = null;
         }
-        console.log("Deleted: ", deleted);
         return deleted;
     }
 

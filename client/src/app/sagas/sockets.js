@@ -96,6 +96,7 @@ function setupListeners(socketClient, dispatch) {
     });
     socketClient.emit("users.get.all");
     socketClient.on("game.player.move", payload => {
+        console.log("Payload: ", payload);
         Object.keys(payload).map(key => {
             if (payload[key] === null) {
                 delete payload[key];
@@ -106,6 +107,7 @@ function setupListeners(socketClient, dispatch) {
             return ;
         }
         if (payload.isRollback) {
+            console.log("Payload", payload);
             dispatch({type: GAME_PLAYER_CURRENT_MOVE, payload});
         } else {
             if (payload.newPos !== null) {

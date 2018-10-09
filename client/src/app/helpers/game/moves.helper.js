@@ -27,6 +27,16 @@ function handleGameMoves(keyCode, position, move, fire, destroy, usersPositions)
             keyCode = 38;
         }
     }
+    config.mapPositions["z1"][7].push("r8p6");
+    config.mapPositions["z1"][10].push("r11p6");
+    config.mapPositions["z1"][13].push("r14p6");
+    config.mapPositions["z1"][2].push("r3p5");
+    config.mapPositions["z2"][5].push("r6p6");
+    config.mapPositions["z2"][2].push("r3p6");
+    config.mapPositions["z3"][4].push("r5p4");
+    config.mapPositions["z3"][3].push("r4p4");
+    config.mapPositions["z4"][5].push("r6p6");
+    config.mapPositions["z4"][2].push("r3p6");
     const isArray = Array.isArray(usersPositions[position]);
     if (keyCode === 37) {
         const inExplosion = usersPositions[`z${z}r${r + 1}p${p}`] !== undefined &&

@@ -40,8 +40,19 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
         // Validator for params
         const result = Game.move(payload);
         if (result !== null) {
-            result.isRollback = true;
-            socket.emit("game.player.move", result);
+            payload.isRollback = true;
+            payload.newPos = payload.oldPos;
+            socket.emit("game.player.move", {
+                isRollback: true,
+                newPos: payload.oldPos,
+                content: {
+                    [payload.newPos]: null,
+                    [payload.oldPos]: {
+                        ...globalStorage.gameMap[payload.oldPos],
+                        userToken: undefined
+                    }
+                }
+            });
         } else {
             payload.content[payload.oldPos] = globalStorage.gameMap[payload.oldPos] || null;
             socket.broadcast.to("game").emit("game.player.move", payload.content);
@@ -70,8 +81,10 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
             socket.broadcast.to("game").emit("game.player.fire", {[payload.pos]: newPos});
             console.log(`Bomb here: ${payload.pos}`, globalStorage.gameMap[payload.pos]);
             setTimeout(() => {
-                Game.bombExplode(payload.pos);
-                setTimeout(() => Game.deleteEntity(payload.pos), 2000);
+                const result = Game.bombExplode(payload.pos);
+                if (result !== null) {
+                    setTimeout(() => Game.deleteEntity(payload.pos), 2000);
+                }
             }, 1000);
         }
     });

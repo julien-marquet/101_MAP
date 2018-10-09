@@ -17,14 +17,12 @@ function launchGame(socketClient) {
 }
 
 function* sendMove(socketClient, {payload}) {
-    let toDelete = null;
     Object.keys(payload.content).map(key => {
         if (payload.content[key] === null) {
-            toDelete = key;
-            delete payload.content[key];
+            payload.content[key] = undefined;
         }
     });
-    yield put({type: GAME_ENTITY_DELETE, payload: toDelete});
+    // yield put({type: GAME_ENTITY_DELETE, payload: toDelete});
     yield put({type: GAME_PLAYER_MOVE, payload: payload.content});
     if (!payload.isRollback) {
         socketClient.emit("game.player.move", {...payload, userToken: retrieveCookie("userToken")});
