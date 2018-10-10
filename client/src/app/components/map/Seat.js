@@ -190,19 +190,62 @@ class Seat extends Component {
         );
     }
 
+    getExtraStyle(user) {
+        const style = {};
+        if (user !== undefined && user.direction !== undefined) {
+            const z = parseInt(this.props.hostname.split("z")[1].split("r")[0], 10);
+            const r = parseInt(this.props.hostname.split("r")[1].split("p")[0], 10);
+            if (z === 1) {
+                if ((r >= 6 && r <= 14)) {
+                    if (user.direction === "right") {
+                        style.transform = "rotateZ(180deg)";
+                    } else if (user.direction === "down") {
+                        style.transform = "rotateZ(-90deg)";
+                    } else if (user.direction === "up") {
+                        style.transform = "rotateZ(90deg)";
+                    }
+                } else {
+                    if (user.direction === "left") {
+                        style.transform = "rotateZ(180deg)";
+                    } else if (user.direction === "down") {
+                        style.transform = "rotateZ(90deg)";
+                    } else if (user.direction === "up") {
+                        style.transform = "rotateZ(-90deg)";
+                    }
+                }
+            } else if (z === 2) {
+                if (user.direction === "right") {
+                    style.transform = "rotateZ(180deg)";
+                } else if (user.direction === "down") {
+                    style.transform = "rotateZ(90deg)";
+                } else if (user.direction === "up") {
+                    style.transform = "rotateZ(-90deg)";
+                }
+            } else if (z === 3) {
+                if (user.direction === "right") {
+                    style.transform = "rotateZ(-90deg)";
+                } else if (user.direction === "up") {
+                    style.transform = "rotateZ(180deg)";
+                } else if (user.direction === "left") {
+                    style.transform = "rotateZ(90deg)";
+                }
+            } else if (z === 4) {
+                if (user.direction === "down") {
+                    style.transform = "rotateZ(90deg)";
+                } else if (user.direction === "up") {
+                    style.transform = "rotateZ(-90deg)";
+                } else if (user.direction === "left") {
+                    style.transform = "rotateZ(180deg)";
+                }
+            }
+        }
+        return style;
+    }
+
     render() {
         const isArray = Array.isArray(this.props.user);
         const user = Array.isArray(this.props.user) ? this.props.user.filter(u => u.type === "player")[0] : this.props.user;
-        const extraStyle =  {};
-        if (user !== undefined && user.direction !== undefined) {
-            if (user.direction === "right") {
-                extraStyle.transform = "rotateZ(180deg)";
-            } else if (user.direction === "down") {
-                extraStyle.transform = "rotateZ(-90deg)";
-            } else if (user.direction === "up") {
-                extraStyle.transform = "rotateZ(90deg)";
-            }
-        }
+        const extraStyle =  this.getExtraStyle(user);
         if (user === undefined || user.type === "explosion") {
             return (
                 <div className={this.props.isTp ? "seat teleporter" : "seat"}>
