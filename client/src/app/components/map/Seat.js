@@ -262,6 +262,14 @@ class Seat extends Component {
                 className += " newbie";
             }
             if (this.props.currentUser.id !== undefined &&
+                user.user === undefined) {
+                return (
+                    <div className={this.props.isTp ? "seat teleporter" : "seat"}>
+                        <p style={{fontSize: "0.7em", color: "red"}}>{"REPORT THIS"}</p>
+                    </div>
+                );
+            }
+            if (this.props.currentUser.id !== undefined &&
                 this.props.currentUser.id !== user.user.id &&
                 user.type === "wall") {
                 className += " grayscale";

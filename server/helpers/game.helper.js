@@ -86,7 +86,7 @@ class Game {
     }
 
     setPos(userToken, oldPos, newPos) {
-        if (this.checkExplosion(newPos) && !this.checkTp(newPos)) {
+        if (this.checkExplosion(newPos)) {
             this.deleteEntity(oldPos);
             return null;
         }
@@ -94,11 +94,12 @@ class Game {
         delete this.storage.players[oldPos];
         if (Array.isArray(this.storage.gameMap[oldPos])) {
             this.storage.gameMap[newPos] = this.storage.gameMap[oldPos].filter(e => e.type === "player")[0];
-            this.storage.gameMap[oldPos] = this.storage.gameMap[oldPos] = this.storage.gameMap[oldPos].filter(e => e.type !== "player")[0];
+            this.storage.gameMap[oldPos] = this.storage.gameMap[oldPos].filter(e => e.type !== "player")[0];
         } else {
             this.storage.gameMap[newPos] = this.storage.gameMap[oldPos];
             this.deleteEntity(oldPos);
         }
+        console.log(`Newpos, oldPos: ${oldPos} newPos: ${newPos}`, this.storage.players);
         return null;
     }
 
@@ -163,7 +164,7 @@ class Game {
             // ERROR
         }
         if (this.checkTp(newPos)) {
-            return this.setPos(userToken, oldPos, this.tp[newPos]);
+            return this.setPos(userToken, oldPos, newPos);
         }
         const z = parseInt(oldPos.split("z")[1].split("r")[0], 10);
         const r = parseInt(oldPos.split("r")[1].split("p")[0], 10) - 1;

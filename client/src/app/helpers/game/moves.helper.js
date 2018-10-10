@@ -21,10 +21,18 @@ function handleGameMoves(keyCode, position, move, fire, destroy, usersPositions)
             keyCode = 39;
         }
     } else if (z === 1) {
-        if (keyCode === 38) {
-            keyCode = 40;
-        } else if (keyCode === 40) {
-            keyCode = 38;
+        if (r + 1 <= 5 && r + 1 >= 1) {
+            if (keyCode === 37) {
+                keyCode = 39;
+            } else if (keyCode === 39) {
+                keyCode = 37;
+            }
+        } else {
+            if (keyCode === 38) {
+                keyCode = 40;
+            } else if (keyCode === 40) {
+                keyCode = 38;
+            }
         }
     }
     if (config.mapPositions["z1"][7][5] === undefined) {
