@@ -3,6 +3,7 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
         console.log("Player joined the game");
         if (Object.keys(globalStorage.players).filter(key=> globalStorage.players[key]).length > 0) {
             // ERROR
+            console.error("game.websocket.js line 6 ERROOOOOORR");
             // return ;
         }
         socket.join("game");
@@ -20,14 +21,21 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
                     }
                     return bool;
                 });
-                globalStorage.players[user.hostname] = userToken;
-                globalStorage.gameMap[user.hostname] = {
-                    type: "player",
-                    ...globalStorage.connected_users_array[user.hostname]
-                };
-                console.log("Emitting users");
-                socket.emit("whoami", user);
-                io.sockets.emit("connectedUsers", JSON.stringify({array: globalStorage.gameMap}));
+                (function joinGame() {
+                    if (globalStorage.gameMap[user.hostname] === undefined ||
+                        globalStorage.gameMap[user.hostname].user.id === user.id) {
+                        globalStorage.players[user.hostname] = userToken;
+                        globalStorage.gameMap[user.hostname] = {
+                            type: "player",
+                            ...globalStorage.connected_users_array[user.hostname]
+                        };
+                        console.log("Emitting users");
+                        socket.emit("whoami", user);
+                        io.sockets.emit("connectedUsers", JSON.stringify({array: globalStorage.gameMap}));
+                    } else {
+                        setTimeout(joinGame, 500);
+                    }
+                })();
                 // socket.broadcast.to("game").emit("game.player.move", {oldPos: user.hostname, newPos: user.hostname});
             })
             .catch(error => {
@@ -40,13 +48,11 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
         // Validator for params
         const result = Game.move(payload);
         if (result !== null) {
-            payload.isRollback = true;
-            payload.newPos = payload.oldPos;
             socket.emit("game.player.move", {
                 isRollback: true,
                 newPos: payload.oldPos,
                 content: {
-                    [payload.newPos]: null,
+                    [payload.newPos]: globalStorage.gameMap[payload.newPos] || null,
                     [payload.oldPos]: {
                         ...globalStorage.gameMap[payload.oldPos],
                         userToken: undefined

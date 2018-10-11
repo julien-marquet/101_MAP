@@ -85,7 +85,7 @@ class Game {
         return false;
     }
 
-    setPos(userToken, oldPos, newPos) {
+    setPos(oldPos, newPos) {
         if (this.checkExplosion(newPos)) {
             this.deleteEntity(oldPos);
             return null;
@@ -100,6 +100,9 @@ class Game {
             this.deleteEntity(oldPos);
         }
         console.log(`Newpos, oldPos: ${oldPos} newPos: ${newPos}`, this.storage.players);
+        console.log("Gamemap", this.storage.gameMap);
+        console.log(" ");
+        console.log(" ");
         return null;
     }
 
@@ -160,41 +163,36 @@ class Game {
     }
 
     move({userToken, newPos, direction, oldPos}) {
-        if (this.storage.players[oldPos] !== userToken) {
-            // ERROR
+        if (this.storage.players[oldPos] !== userToken ||
+            this.storage.gameMap[newPos] !== undefined) {
+            return {};
         }
         if (this.checkTp(newPos)) {
-            return this.setPos(userToken, oldPos, newPos);
+            return this.setPos(oldPos, newPos);
         }
         const z = parseInt(oldPos.split("z")[1].split("r")[0], 10);
         const r = parseInt(oldPos.split("r")[1].split("p")[0], 10) - 1;
         const p = parseInt(oldPos.split("p")[1], 10) - 1;
         if (direction === "left") {
-            if (config.mapPositions[`z${z}`][r][p - 1] !== undefined &&
-                this.storage.gameMap[newPos] === undefined) {
-                return this.setPos(userToken, oldPos, newPos);
+            if (config.mapPositions[`z${z}`][r][p - 1] !== undefined) {
+                return this.setPos(oldPos, newPos);
             }
         } else if (direction === "up") {
             if (config.mapPositions[`z${z}`][r + 1] !== undefined &&
                 config.mapPositions[`z${z}`][r + 1][p] !== undefined) {
-                return this.setPos(userToken, oldPos, newPos);
+                return this.setPos(oldPos, newPos);
             }
         } else if (direction === "right") {
             if (config.mapPositions[`z${z}`][r][p + 1] !== undefined) {
-                return this.setPos(userToken, oldPos, newPos);
+                return this.setPos(oldPos, newPos);
             }
         } else if (direction === "down") {
             if (config.mapPositions[`z${z}`][r - 1] !== undefined &&
                 config.mapPositions[`z${z}`][r - 1][p] !== undefined) {
-                return this.setPos(userToken, oldPos, newPos);
+                return this.setPos(oldPos, newPos);
             }
         }
-        return {
-            content: {
-                [oldPos]: this.storage.gameMap[oldPos],
-                [newPos]: this.storage.gameMap[newPos]
-            }
-        };
+        return {};
     }
 
     fire({userToken, pos}) {
