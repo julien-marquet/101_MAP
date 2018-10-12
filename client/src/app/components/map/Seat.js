@@ -56,7 +56,6 @@ class Seat extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.mode !== "game") {
-            // console.log("NextProps", nextProps);
             if (nextProps.searchedUser.length < globalConfig.minimalSearchInput && this.state.isSearched) {
                 this.setState({isSearched: false});
             }
@@ -75,6 +74,11 @@ class Seat extends Component {
                 this.setState({isActive: true});
             } else {
                 this.setState({isActive: false});
+            }
+        } else {
+            const user = Array.isArray(nextProps.user) ? nextProps.user.filter(u => u !== undefined && u.type === "player")[0] : nextProps.user;
+            if (user !== undefined && Object.keys(user).length === 0) {
+                this.props.playerDead();
             }
         }
     }
@@ -244,9 +248,10 @@ class Seat extends Component {
 
     render() {
         const isArray = Array.isArray(this.props.user);
-        const user = Array.isArray(this.props.user) ? this.props.user.filter(u => u.type === "player")[0] : this.props.user;
+        const user = Array.isArray(this.props.user) ? this.props.user.filter(u => u !== undefined && u.type === "player")[0] : this.props.user;
         const extraStyle =  this.getExtraStyle(user);
-        if (user === undefined || user.type === "explosion") {
+        if (user === undefined || Object.keys(user).length === 0 ||
+            user.type === "explosion" || (user.type === "player" && user.user === undefined)) {
             return (
                 <div className={this.props.isTp ? "seat teleporter" : "seat"}>
                     <p style={{fontSize: "0.6em"}}>{this.props.hostname}</p>
@@ -305,14 +310,6 @@ class Seat extends Component {
                 className += " newbie";
             }
             if (this.props.currentUser.id !== undefined &&
-                user.user === undefined) {
-                return (
-                    <div className={this.props.isTp ? "seat teleporter" : "seat"}>
-                        <p style={{fontSize: "0.7em", color: "red"}}>{"REPORT THIS"}</p>
-                    </div>
-                );
-            }
-            if (this.props.currentUser.id !== undefined &&
                 this.props.currentUser.id !== user.user.id &&
                 user.type === "wall") {
                 className += " grayscale";
@@ -362,7 +359,8 @@ Seat.propTypes = {
     bombExplode: PropTypes.func.isRequired,
     allUsers: PropTypes.object.isRequired,
     destroy: PropTypes.func.isRequired,
-    isTp: PropTypes.bool.isRequired
+    isTp: PropTypes.bool.isRequired,
+    playerDead: PropTypes.func.isRequired
 };
 
 export default Seat;

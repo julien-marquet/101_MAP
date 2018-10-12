@@ -8,3 +8,4 @@ export const GAME_PLAYER_CURRENT_FIRE = "game.player.current.fire";
 export const GAME_ENTITIES_DELETE = "game.entities.delete";
 export const GAME_BOMB_EXPLODE = "game.bomb.explode";
 export const GAME_ENTITIES_CREATE = "game.entities.create";
+export const GAME_PLAYER_DEAD = "game.player.dead";

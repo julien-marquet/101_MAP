@@ -51,7 +51,8 @@ function handleGameMoves(keyCode, position, move, fire, destroy, usersPositions)
     if (keyCode === 37) {
         const inExplosion = usersPositions[`z${z}r${r + 1}p${p}`] !== undefined &&
         (usersPositions[`z${z}r${r + 1}p${p}`].type === "explosion" ||
-        usersPositions[`z${z}r${r + 1}p${p}`].type.includes("flames"));
+        (usersPositions[`z${z}r${r + 1}p${p}`].type !== undefined && 
+        usersPositions[`z${z}r${r + 1}p${p}`].type.includes("flames")));
         if ((config.mapPositions[`z${z}`][r][p - 1] !== undefined &&
             usersPositions[`z${z}r${r + 1}p${p}`] === undefined) ||
             inExplosion) {
@@ -72,7 +73,8 @@ function handleGameMoves(keyCode, position, move, fire, destroy, usersPositions)
     } else if (keyCode === 38) {
         const inExplosion = usersPositions[`z${z}r${r + 2}p${p + 1}`] !== undefined &&
         (usersPositions[`z${z}r${r + 2}p${p + 1}`].type === "explosion" ||
-        usersPositions[`z${z}r${r + 2}p${p + 1}`].type.includes("flames"));
+        (usersPositions[`z${z}r${r + 2}p${p + 1}`].type !== undefined && 
+        usersPositions[`z${z}r${r + 2}p${p + 1}`].type.includes("flames")));
         if ((config.mapPositions[`z${z}`][r + 1] !== undefined &&
             config.mapPositions[`z${z}`][r + 1][p] !== undefined &&
             usersPositions[`z${z}r${r + 2}p${p + 1}`] === undefined) ||
@@ -94,7 +96,8 @@ function handleGameMoves(keyCode, position, move, fire, destroy, usersPositions)
     } else if (keyCode === 39) {
         const inExplosion = usersPositions[`z${z}r${r + 1}p${p + 2}`] !== undefined &&
         (usersPositions[`z${z}r${r + 1}p${p + 2}`].type === "explosion" ||
-        usersPositions[`z${z}r${r + 1}p${p + 2}`].type.includes("flames"));
+        (usersPositions[`z${z}r${r + 1}p${p + 2}`].type !== undefined && 
+        usersPositions[`z${z}r${r + 1}p${p + 2}`].type.includes("flames")));
         if ((config.mapPositions[`z${z}`][r][p + 1] !== undefined &&
             usersPositions[`z${z}r${r + 1}p${p + 2}`] === undefined) ||
             inExplosion) {
@@ -115,7 +118,8 @@ function handleGameMoves(keyCode, position, move, fire, destroy, usersPositions)
     } else if (keyCode === 40) {
         const inExplosion = usersPositions[`z${z}r${r}p${p + 1}`] !== undefined &&
         (usersPositions[`z${z}r${r}p${p + 1}`].type === "explosion" ||
-        usersPositions[`z${z}r${r}p${p + 1}`].type.includes("flames"));
+        (usersPositions[`z${z}r${r}p${p + 1}`].type !== undefined && 
+        usersPositions[`z${z}r${r}p${p + 1}`].type.includes("flames")));
         if ((config.mapPositions[`z${z}`][r - 1] !== undefined &&
             config.mapPositions[`z${z}`][r - 1][p] !== undefined &&
             usersPositions[`z${z}r${r}p${p + 1}`] === undefined) ||

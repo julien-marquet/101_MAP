@@ -88,9 +88,12 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
             setTimeout(() => {
                 const result = Game.bombExplode(payload.pos);
                 if (result !== null) {
-                    setTimeout(() => Game.deleteEntity(payload.pos), 2000);
+                    if (Object.keys(result).length > 0) {
+                        socket.broadcast.to("game").emit("game.entities.delete", result);
+                    }
+                    setTimeout(() => Game.deleteEntity(payload.pos), 1280);
                 }
-            }, 1000);
+            }, 1650);
         }
     });
 };

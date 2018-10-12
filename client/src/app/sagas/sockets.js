@@ -11,7 +11,8 @@ import {
     GAME_PLAYER_MOVE,
     GAME_ENTITY_DELETE,
     GAME_PLAYER_FIRE,
-    GAME_ENTITIES_DELETE
+    GAME_ENTITIES_DELETE,
+    GAME_PLAYER_DEAD
 } from "../actions/bomberman";
 import {TOAST_SHOW} from "../actions/toasts";
 import {CONNECT_APP} from "../actions/globalState";
@@ -96,7 +97,7 @@ function setupListeners(socketClient, dispatch) {
     });
     socketClient.emit("users.get.all");
     socketClient.on("game.player.move", payload => {
-        console.log("Payload: ", payload);
+        console.log("Payload GAME PLAYER MOVE: ", payload);
         Object.keys(payload).map(key => {
             if (payload[key] === null) {
                 delete payload[key];
@@ -120,9 +121,7 @@ function setupListeners(socketClient, dispatch) {
     socketClient.on("game.player.fire", payload => dispatch({type: GAME_PLAYER_FIRE, payload}));
     socketClient.on("game.entities.delete", payload => {
         Object.keys(payload).map(key => {
-            if (payload[key] === null) {
-                payload[key] = undefined;
-            }
+            payload[key] = undefined;
         });
         dispatch({type: GAME_ENTITIES_DELETE, payload});
     });
