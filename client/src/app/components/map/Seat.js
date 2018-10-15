@@ -30,13 +30,17 @@ class Seat extends Component {
             return true;
         }
         if (this.props.mode === "game") {
-            if (this.state.hideUser !== nextState.hideUser) {
+            if (this.state.hideUser !== nextState.hideUser ||
+                this.props.user !== nextProps.user ||
+                (this.props.user !== undefined && nextProps.user !== undefined && this.props.user.user !== nextProps.user.user) ||
+                (this.props.user !== undefined && nextProps.user !== undefined &&
+                this.props.user.user !== undefined && nextProps.user.user !== undefined &&
+                this.props.user.user.id !== nextProps.user.user.id)) {
                 return true;
-            }
-            if (Array.isArray(this.props.user) && !Array.isArray(nextProps.user)) {
+            } if (Array.isArray(this.props.user) && !Array.isArray(nextProps.user)) {
                 return false;
             }
-            return true;
+            return false;
         }
         if ((this.props.user === undefined && nextProps.user !== undefined) ||
             (nextProps.user === undefined && this.props.user !== undefined)) {
@@ -83,6 +87,9 @@ class Seat extends Component {
                 this.setState({isActive: false});
             }
         } else {
+            if (this.props.mode !== "game") {
+                this.setState({hidden: false});
+            }
             const user = Array.isArray(nextProps.user) ? nextProps.user.filter(u => u !== undefined && u.type === "player")[0] : nextProps.user;
             if (user !== undefined && Object.keys(user).length === 0) {
                 this.props.playerDead();
@@ -318,7 +325,7 @@ class Seat extends Component {
             if (this.state.isSearched || this.state.isActive) {
                 className += " highlighted";
             }
-            if (user.pool) {
+            if (!this.state.hideUser && user.pool) {
                 className += " newbie";
             }
             if (!this.state.hideUser &&

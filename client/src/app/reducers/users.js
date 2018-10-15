@@ -100,8 +100,7 @@ const users = (state = initialState, {type, payload}) => {
         };
     // SAME
     case GAME_PLAYER_MOVE:
-    console.log(GAME_PLAYER_MOVE, payload);
-    return {
+        return {
             ...state,
             array: {
                 ...state.array,
@@ -109,8 +108,7 @@ const users = (state = initialState, {type, payload}) => {
             }
         };
     case GAME_PLAYER_FIRE:
-    console.log(GAME_PLAYER_FIRE, payload);
-    return {
+        return {
             ...state,
             array: {
                 ...state.array,
@@ -119,8 +117,6 @@ const users = (state = initialState, {type, payload}) => {
             }
         };
     case GAME_ENTITIES_CREATE:
-    console.log(GAME_ENTITIES_CREATE, payload);
-
         return {
             ...state,
             array: {
@@ -129,7 +125,6 @@ const users = (state = initialState, {type, payload}) => {
             }
         };
     case GAME_ENTITIES_DELETE:
-        console.log(GAME_ENTITIES_DELETE, payload);
         return {
             ...state,
             array: {
