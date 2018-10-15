@@ -123,6 +123,17 @@ function setupListeners(socketClient, dispatch) {
         });
         dispatch({type: GAME_ENTITIES_DELETE, payload});
     });
+    socketClient.on("game.error", err => {
+        dispatch({
+            type: TOAST_SHOW,
+            payload: {
+                type: "error",
+                timeout: 3000,
+                message: `Error : ${err}`,
+                action: null
+            }
+        });
+    });
 }
 
 function* flow(socketClient, dispatch) {

@@ -1,11 +1,11 @@
 const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, User, Game) => {
     socket.on("game.launch", ({userToken}) => {
-        console.log("Player joined the game");
-        if (Object.keys(globalStorage.players).filter(key=> globalStorage.players[key]).length > 0) {
-            // ERROR
-            console.error("game.websocket.js line 6 ERROOOOOORR");
-            // return ;
+        if (Object.keys(globalStorage.players).filter(hostname => globalStorage.players[hostname] === userToken).length > 0 ||
+            Object.keys(globalStorage.connected_users_array).length === 0) {
+            socket.emit("game.error", "An error occured");
+            return ;
         }
+        console.log("Player joined the game");
         socket.join("game");
         socket.leave("default");
         if (globalStorage.gameMap === null) {
@@ -36,11 +36,10 @@ const gameSocket = (io, socket, globalStorage, i_queue, i_OAuth2_authenticator, 
                         setTimeout(joinGame, 500);
                     }
                 })();
-                // socket.broadcast.to("game").emit("game.player.move", {oldPos: user.hostname, newPos: user.hostname});
             })
             .catch(error => {
                 console.error("An error occured", error);
-                socket.emit("error", "Couldn't get player infos");
+                socket.emit("game.error", "Couldn't get player infos");
             });
     });
 
