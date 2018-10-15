@@ -140,19 +140,23 @@ class Seat extends Component {
         };
         const touched = {left: false, right: false, up: false, down: false};
         if (this.props.allUsers[`z${z}r${r}p${p + 1}`] !== undefined) {
-            if (!this.props.allUsers[`z${z}r${r}p${p + 1}`].type.includes("flames")) {
+            if (Array.isArray(this.props.allUsers[`z${z}r${r}p${p + 1}`]) ||
+                !this.props.allUsers[`z${z}r${r}p${p + 1}`].type.includes("flames")) {
                 touched.right = true;
             }
         } if (this.props.allUsers[`z${z}r${r}p${p  - 1}`] !== undefined) {
-            if (!this.props.allUsers[`z${z}r${r}p${p - 1}`].type.includes("flames")) {
+            if (Array.isArray(this.props.allUsers[`z${z}r${r}p${p - 1}`]) ||
+            !this.props.allUsers[`z${z}r${r}p${p - 1}`].type.includes("flames")) {
                 touched.left = true;
             }
         } if (this.props.allUsers[`z${z}r${r - 1}p${p}`] !== undefined) {
-            if (!this.props.allUsers[`z${z}r${r - 1}p${p}`].type.includes("flames")) {
+            if (Array.isArray(this.props.allUsers[`z${z}r${r - 1}p${p}`]) ||
+            !this.props.allUsers[`z${z}r${r - 1}p${p}`].type.includes("flames")) {
                 touched.up = true;
             }
         } if (this.props.allUsers[`z${z}r${r + 1}p${p}`] !== undefined) {
-            if (!this.props.allUsers[`z${z}r${r + 1}p${p}`].type.includes("flames")) {
+            if (Array.isArray(this.props.allUsers[`z${z}r${r + 1}p${p}`]) ||
+            !this.props.allUsers[`z${z}r${r + 1}p${p}`].type.includes("flames")) {
                 touched.down = true;
             }
         }
@@ -160,6 +164,7 @@ class Seat extends Component {
             globalConfig.mapPositions[`z${z}`][r - 1] !== undefined &&
             globalConfig.mapPositions[`z${z}`][r - 1][p + 1] !== undefined) {
             if (this.props.allUsers[`z${z}r${r}p${p + 2}`] === undefined ||
+                Array.isArray(this.props.allUsers[`z${z}r${r}p${p + 2}`]) ||
                 !this.props.allUsers[`z${z}r${r}p${p + 2}`].type.includes("flames")) {
                 entities[`z${z}r${r}p${p + 2}`] = {type: "flamesEnd", direction: "right"};
             }
@@ -167,6 +172,7 @@ class Seat extends Component {
             globalConfig.mapPositions[`z${z}`][r - 1] !== undefined &&
             globalConfig.mapPositions[`z${z}`][r - 1][p - 3] !== undefined) {
             if (this.props.allUsers[`z${z}r${r}p${p - 2}`] === undefined ||
+                Array.isArray(this.props.allUsers[`z${z}r${r}p${p - 2}`]) ||
                 !this.props.allUsers[`z${z}r${r}p${p - 2}`].type.includes("flames")) {
                 entities[`z${z}r${r}p${p - 2}`] = {type: "flamesEnd", direction: "left"};
             }
@@ -174,6 +180,7 @@ class Seat extends Component {
             globalConfig.mapPositions[`z${z}`][r - 3] !== undefined &&
             globalConfig.mapPositions[`z${z}`][r - 3][p - 1] !== undefined) {
             if (this.props.allUsers[`z${z}r${r - 2}p${p}`] === undefined ||
+                Array.isArray(this.props.allUsers[`z${z}r${r - 2}p${p}`]) ||
                 !this.props.allUsers[`z${z}r${r - 2}p${p}`].type.includes("flames")) {
                 entities[`z${z}r${r - 2}p${p}`] = {type: "flamesEnd", direction: "up"};
             }
@@ -181,6 +188,7 @@ class Seat extends Component {
             globalConfig.mapPositions[`z${z}`][r + 1] !== undefined &&
             globalConfig.mapPositions[`z${z}`][r + 1][p - 1] !== undefined) {
             if (this.props.allUsers[`z${z}r${r + 2}p${p}`] === undefined ||
+                Array.isArray(this.props.allUsers[`z${z}r${r + 2}p${p}`]) ||
                 !this.props.allUsers[`z${z}r${r + 2}p${p}`].type.includes("flames")) {
                 entities[`z${z}r${r + 2}p${p}`] = {type: "flamesEnd", direction: "down"};
             }
