@@ -17,7 +17,8 @@ class Seat extends Component {
             isSearched: false,
             isActive: false,
             hidden: true,
-            imgSrc: 0
+            imgSrc: 0,
+            hideUser: false
         };
         this.changeImgSrc = this.changeImgSrc.bind(this);
         this.getImgSrc = this.getImgSrc.bind(this);
@@ -29,6 +30,12 @@ class Seat extends Component {
             return true;
         }
         if (this.props.mode === "game") {
+            if (this.state.hideUser !== nextState.hideUser) {
+                return true;
+            }
+            if (Array.isArray(this.props.user) && !Array.isArray(nextProps.user)) {
+                return false;
+            }
             return true;
         }
         if ((this.props.user === undefined && nextProps.user !== undefined) ||
@@ -79,6 +86,11 @@ class Seat extends Component {
             const user = Array.isArray(nextProps.user) ? nextProps.user.filter(u => u !== undefined && u.type === "player")[0] : nextProps.user;
             if (user !== undefined && Object.keys(user).length === 0) {
                 this.props.playerDead();
+            } if (Array.isArray(this.props.user) && !Array.isArray(nextProps.user)) {
+                this.setState({hideUser: true});
+            } if (this.state.hideUser &&
+                nextProps.user === undefined) {
+                this.setState({hideUser: false});
             }
         }
     }
@@ -250,20 +262,20 @@ class Seat extends Component {
         const isArray = Array.isArray(this.props.user);
         const user = Array.isArray(this.props.user) ? this.props.user.filter(u => u !== undefined && u.type === "player")[0] : this.props.user;
         const extraStyle =  this.getExtraStyle(user);
-        if (user === undefined || Object.keys(user).length === 0 ||
-            user.type === "explosion" || (user.type === "player" && user.user === undefined)) {
+        if (!this.state.hideUser && (user === undefined || Object.keys(user).length === 0 ||
+            user.type === "explosion" || (user.type === "player" && user.user === undefined))) {
             return (
                 <div className={this.props.isTp ? "seat teleporter" : "seat"}>
                     <p style={{fontSize: "0.6em"}}>{this.props.hostname}</p>
                 </div>
             );
-        } else if (user.type ===  "bomb") {
+        } else if (!this.state.hideUser && user.type ===  "bomb") {
             return (
                 <div className={"seat bomb"}>
                     {this.renderBomb()}
                 </div>
             );
-        } else if (user.type === "flames") {
+        } else if (!this.state.hideUser && user.type === "flames") {
             return (
                 <div className={"seat flames"} style={extraStyle}>
                     <Lottie
@@ -282,7 +294,7 @@ class Seat extends Component {
                     />
                 </div>
             );
-        } else if (user.type === "flamesEnd") {
+        } else if (!this.state.hideUser && user.type === "flamesEnd") {
             return (
                 <div className={"seat flames"} style={extraStyle}>
                     <Lottie
@@ -309,36 +321,48 @@ class Seat extends Component {
             if (user.pool) {
                 className += " newbie";
             }
-            if (this.props.currentUser.id !== undefined &&
+            if (!this.state.hideUser &&
+                this.props.currentUser.id !== undefined &&
                 this.props.currentUser.id !== user.user.id &&
                 user.type === "wall") {
                 className += " grayscale";
             }
+            let wrapperClassname = "seat";
+            if (this.state.hideUser) {
+                wrapperClassname += " bomb";
+            } else {
+                wrapperClassname += " taken";
+                if (isArray) {
+                    wrapperClassname += " bomb";
+                }
+            }
             return (
-                <div className={isArray ? "seat taken bomb" : "seat taken"}>
-                    <div
-                        className={className}
-                        onClick={() => {
-                            if (this.props.mode === "passive") {
-                                this.props.quitPassiveMode();
-                                localStorage.removeItem("mode");
-                            }
-                            this.props.storeActiveUsers({
-                                ...user,
-                                hostname: this.props.hostname
-                            });
-                        }}
-                    >
-                        {!this.state.hidden &&  <div />}
-                        <img
-                            onError={this.changeImgSrc}
-                            onLoad={() => this.setState({hidden: false})}
-                            src={this.getImgSrc(user)}
-                            className={`userImg ${this.state.hidden ? "hiddenImg" : ""}`}
-                            style={this.getSwitchStatusStyle(user)}
-                        />
-                    </div>
-                    {isArray && this.renderBomb()}
+                <div className={wrapperClassname}>
+                    {!this.state.hideUser &&
+                        <div
+                            className={className}
+                            onClick={() => {
+                                if (this.props.mode === "passive") {
+                                    this.props.quitPassiveMode();
+                                    localStorage.removeItem("mode");
+                                }
+                                this.props.storeActiveUsers({
+                                    ...user,
+                                    hostname: this.props.hostname
+                                });
+                            }}
+                        >
+                            {!this.state.hidden &&  <div />}
+                            <img
+                                onError={this.changeImgSrc}
+                                onLoad={() => this.setState({hidden: false})}
+                                src={this.getImgSrc(user)}
+                                className={`userImg ${this.state.hidden ? "hiddenImg" : ""}`}
+                                style={this.getSwitchStatusStyle(user)}
+                            />
+                        </div>
+                    }
+                    {(isArray || this.state.hideUser) && this.renderBomb()}
                 </div>                
             );
         }

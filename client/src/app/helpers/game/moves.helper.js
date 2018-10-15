@@ -138,7 +138,7 @@ function handleGameMoves(keyCode, position, move, fire, destroy, usersPositions)
                 [position]: isArray ? usersPositions[position].filter(u => u.type !== "player")[0] : null
             }});
         }
-    } else if (keyCode === 32) {
+    } else if (keyCode === 32 && !Array.isArray(usersPositions[position])) {
         fire({[position]: [usersPositions[position], {type: "bomb"}]});
     }
 }
