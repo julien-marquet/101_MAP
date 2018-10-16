@@ -135,7 +135,6 @@ class Game {
         if (this.storage.gameMap[`z${z}r${r}p${p - 1}`] !== undefined &&
         this.storage.gameMap[`z${z}r${r}p${p - 1}`].type !== "bomb") {
             const ent = this.deleteEntity(`z${z}r${r}p${p - 1}`);
-            console.log("Left");
             exploded.left = true;
             deleted[ent.pos] = ent.entity;
         } if (this.storage.gameMap[`z${z}r${r}p${p - 2}`] !== undefined &&
@@ -145,7 +144,6 @@ class Game {
         } if (this.storage.gameMap[`z${z}r${r}p${p + 1}`] !== undefined &&
         this.storage.gameMap[`z${z}r${r}p${p + 1}`].type !== "bomb") {
             const ent = this.deleteEntity(`z${z}r${r}p${p + 1}`);
-            console.log("Right");
             exploded.right = true;
             deleted[ent.pos] = ent.entity;
         } if (this.storage.gameMap[`z${z}r${r}p${p + 2}`] !== undefined &&
@@ -155,7 +153,6 @@ class Game {
         } if (this.storage.gameMap[`z${z}r${r - 1}p${p}`] !== undefined &&
         this.storage.gameMap[`z${z}r${r - 1}p${p}`].type !== "bomb") {
             const ent = this.deleteEntity(`z${z}r${r - 1}p${p}`);
-            console.log("Up");
             exploded.up = true;
             deleted[ent.pos] = ent.entity;
         } if (this.storage.gameMap[`z${z}r${r - 2}p${p}`] !== undefined &&
@@ -164,7 +161,6 @@ class Game {
             deleted[ent.pos] = ent.entity;
         } if (this.storage.gameMap[`z${z}r${r + 1}p${p}`] !== undefined &&
         this.storage.gameMap[`z${z}r${r + 1}p${p}`].type !== "bomb") {
-            console.log("Down");
             exploded.down = true;
             const ent = this.deleteEntity(`z${z}r${r + 1}p${p}`);
             deleted[ent.pos] = ent.entity;

@@ -141,22 +141,26 @@ class Seat extends Component {
         const touched = {left: false, right: false, up: false, down: false};
         if (this.props.allUsers[`z${z}r${r}p${p + 1}`] !== undefined) {
             if (Array.isArray(this.props.allUsers[`z${z}r${r}p${p + 1}`]) ||
-                !this.props.allUsers[`z${z}r${r}p${p + 1}`].type.includes("flames")) {
+                (this.props.allUsers[`z${z}r${r}p${p + 1}`].type !== undefined &&
+                !this.props.allUsers[`z${z}r${r}p${p + 1}`].type.includes("flames"))) {
                 touched.right = true;
             }
         } if (this.props.allUsers[`z${z}r${r}p${p  - 1}`] !== undefined) {
             if (Array.isArray(this.props.allUsers[`z${z}r${r}p${p - 1}`]) ||
-            !this.props.allUsers[`z${z}r${r}p${p - 1}`].type.includes("flames")) {
+            (this.props.allUsers[`z${z}r${r}p${p - 1}`].type !== undefined &&
+            !this.props.allUsers[`z${z}r${r}p${p - 1}`].type.includes("flames"))) {
                 touched.left = true;
             }
         } if (this.props.allUsers[`z${z}r${r - 1}p${p}`] !== undefined) {
             if (Array.isArray(this.props.allUsers[`z${z}r${r - 1}p${p}`]) ||
-            !this.props.allUsers[`z${z}r${r - 1}p${p}`].type.includes("flames")) {
+            (this.props.allUsers[`z${z}r${r - 1}p${p}`].type !== undefined &&
+            !this.props.allUsers[`z${z}r${r - 1}p${p}`].type.includes("flames"))) {
                 touched.up = true;
             }
         } if (this.props.allUsers[`z${z}r${r + 1}p${p}`] !== undefined) {
             if (Array.isArray(this.props.allUsers[`z${z}r${r + 1}p${p}`]) ||
-            !this.props.allUsers[`z${z}r${r + 1}p${p}`].type.includes("flames")) {
+            (this.props.allUsers[`z${z}r${r + 1}p${p}`].type !== undefined &&
+            !this.props.allUsers[`z${z}r${r + 1}p${p}`].type.includes("flames"))) {
                 touched.down = true;
             }
         }
