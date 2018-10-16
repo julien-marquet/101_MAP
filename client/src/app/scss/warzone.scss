@@ -103,11 +103,33 @@
     
     .seat {
         @include fix_animation();
+        display: flex;
+        align-items: center;
         margin: $seatSidesMargin;
         width: $seatSize;
         position: relative;
         height: $seatSize;
         border-radius: $radius;
+    }
+
+    .teleporter {
+        background-color: red !important;
+    }
+
+    .bomb {
+        svg *:not(path) {
+            fill: transparent;
+        }
+        svg {
+            margin-top: 10%;
+        }
+    }
+
+    .flames {
+        div {
+            overflow: visible !important;
+        }
+        justify-content: center;
     }
 
     @keyframes pulse {
@@ -690,6 +712,11 @@
 
 .hiddenImg {
     display: none;
+}
+
+.grayscale {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
 }
 
 @import 'themes/dark.scss';

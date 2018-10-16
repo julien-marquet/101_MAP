@@ -13,7 +13,15 @@ class SearchBar extends Component {
         this.handleSelection = this.handleSelection.bind(this);
     }
 
+    shouldComponentUpdate(nextProps) {
+        return this.props.searchedUser !== nextProps.searchedUser;
+    }
+
     handleChange(event, value) {
+        if (value.toLowerCase() === "bomberman") {
+            this.props.updateSearch("");
+            return this.props.launchBomber();
+        }
         this.props.updateSearch(value);
         const perfectMatch = this.results.find(elem => elem.user.login === event.target.value);
         if (perfectMatch !== undefined)
@@ -26,9 +34,12 @@ class SearchBar extends Component {
     }
 
     getMatchingUsers() {
-        this.results = [];         
+        this.results = [];
         Object.entries(this.props.users).forEach(value => {
-            if (value[1].user.login.includes(this.props.searchedUser.toLowerCase()))
+            // TODO Make value[1] never undefined
+            if (value[1] !== undefined &&
+                value[1].user !== undefined &&
+                value[1].user.login.includes(this.props.searchedUser.toLowerCase()))
                 this.results.push({
                     ...value[1],
                     hostname: value[0]
@@ -39,7 +50,7 @@ class SearchBar extends Component {
 
     render() {
         return (
-            <div className={this.props.mode === "passive" ? "searchBar searchBarHided" : "searchBar"}>
+            <div className={this.props.mode === "passive" || this.props.mode === "game" ? "searchBar searchBarHided" : "searchBar"}>
                 <Autocomplete
                     wrapperProps={{
                         className: "wrapperSearch",
@@ -76,7 +87,9 @@ class SearchBar extends Component {
 SearchBar.propTypes = {
     storeActiveUsers: PropTypes.func.isRequired,
     updateSearch: PropTypes.func.isRequired,
-    searchedUser: PropTypes.string
+    launchBomber: PropTypes.func.isRequired,
+    searchedUser: PropTypes.string,
+    mode: PropTypes.string.isRequired
 };
 
 export default SearchBar;

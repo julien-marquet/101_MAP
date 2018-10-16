@@ -4,12 +4,20 @@ import {
     USER_GET_METADATA,
     USER_GET_METADATA_SUCCEEDED,
     USER_GET_METADATA_FAILED,
-    USER_CLEAR_ACTIVE
+    USER_CLEAR_ACTIVE,
+    USER_WHOAMI
 } from "../actions/users";
 import {SEARCH_UPDATE_CONTENT} from "../actions/search";
+import {
+    GAME_PLAYER_MOVE,
+    GAME_PLAYER_FIRE,
+    GAME_ENTITY_DELETE,
+    GAME_ENTITIES_DELETE,
+    GAME_ENTITIES_CREATE
+} from "../actions/bomberman";
 
 const initialState = {
-    array: [],
+    array: {},
     last_request: null,
     nb_connected_users: 0,
     inPoolNbr: 0,
@@ -27,7 +35,8 @@ const initialState = {
         success: null,
         content: null
     },
-    searchedUser: ""
+    searchedUser: "",
+    currentUser: {}
 };
 
 const users = (state = initialState, {type, payload}) => {
@@ -83,6 +92,54 @@ const users = (state = initialState, {type, payload}) => {
         return {
             ...state,
             activeUser: {...initialState.activeUser}
+        };
+    case USER_WHOAMI:
+        return {
+            ...state,
+            currentUser: payload
+        };
+    // SAME
+    case GAME_PLAYER_MOVE:
+        return {
+            ...state,
+            array: {
+                ...state.array,
+                ...payload
+            }
+        };
+    case GAME_PLAYER_FIRE:
+        return {
+            ...state,
+            array: {
+                ...state.array,
+                ...payload
+                // [payload]: [state.array[payload], {type: "bomb"}]
+            }
+        };
+    case GAME_ENTITIES_CREATE:
+        return {
+            ...state,
+            array: {
+                ...state.array,
+                ...payload
+            }
+        };
+    case GAME_ENTITIES_DELETE:
+        return {
+            ...state,
+            array: {
+                ...state.array,
+                ...payload
+            }
+        };
+    // SAME
+    case GAME_ENTITY_DELETE:
+        return {
+            ...state,
+            array: {
+                ...state.array,
+                [payload]: undefined
+            }
         };
     default:
         return state;

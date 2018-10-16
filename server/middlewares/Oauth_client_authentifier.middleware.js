@@ -38,6 +38,7 @@ const Oauth_authentifier = (i_Oauth2_authenticator, globalStorage) => {
             });
         }
         else {
+            socket.userToken = socket.handshake.query.token;
             socket.typeAuth = "token";
             next();
         }

@@ -6,10 +6,9 @@ import HostInfo from "../containers/map/hostinfo";
 import SearchBar from "../containers/map/searchBar";
 import SideBar from "../containers/sidebar/sideBar";
 import Switch from "../containers/switch";
-import config from "../../config/globalConfig";
 import "../scss/warzone.css";
 
-class Warzone extends Component {
+class WarzoneBomber extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,6 +31,15 @@ class Warzone extends Component {
         if (this.props.switchButton.position !== nextProps.switchButton.position) {
             this.switchButton.canMove = true;
         }
+    }
+
+    componentWillMount() {
+        this.zones = {
+            z1: [["r1p1", "r1p2", "r1p3", "r1p4", "r1p5"], ["r2p1", "r2p2", "r2p3", "r2p4", "r2p5"], ["r3p1", "r3p2", "r3p3", "r3p4"], ["r4p1", "r4p2", "r4p3", "r4p4", "r4p5"], ["r5p1", "r5p2", "r5p3", "r5p4", "r5p5"], ["r6p1", "r6p2", "r6p3", "r6p4", "r6p5", "r6p6"], ["r7p1", "r7p2", "r7p3", "r7p4", "r7p5", "r7p6"], ["r8p1", "r8p2", "r8p3", "r8p4", "r8p5"], ["r9p1", "r9p2", "r9p3", "r9p4", "r9p5", "r9p6"], ["r10p1", "r10p2", "r10p3", "r10p4", "r10p5", "r10p6"], ["r11p1", "r11p2", "r11p3", "r11p4", "r11p5"], ["r12p1", "r12p2", "r12p3", "r12p4", "r12p5", "r12p6"], ["r13p1", "r13p2", "r13p3", "r13p4", "r13p5", "r13p6"], ["r14p1", "r14p2", "r14p3", "r14p4", "r14p5"]],      
+            z2: [["r1p1", "r1p2", "r1p3", "r1p4", "r1p5", "r1p6"], ["r2p1", "r2p2", "r2p3", "r2p4", "r2p5", "r2p6"], ["r3p1", "r3p2", "r3p3", "r3p4", "r3p5"], ["r4p1", "r4p2", "r4p3", "r4p4", "r4p5", "r4p6"], ["r5p1", "r5p2", "r5p3", "r5p4", "r5p5", "r5p6"], ["r6p1", "r6p2", "r6p3", "r6p4", "r6p5"], ["r7p1", "r7p2", "r7p3", "r7p4", "r7p5", "r7p6"]],
+            z3: [["r1p1", "r1p2", "r1p3", "r1p4"], ["r2p1", "r2p2", "r2p3", "r2p4"], ["r3p1", "r3p2", "r3p3", "r3p4"], ["r4p1", "r4p2", "r4p3"], ["r5p1", "r5p2", "r5p3"], ["r6p1", "r6p2", "r6p3", "r6p4"], ["r7p1", "r7p2", "r7p3", "r7p4"], ["r8p1", "r8p2", "r8p3", "r8p4"], ["r9p1", "r9p2", "r9p3", "r9p4"], ["r10p1", "r10p2", "r10p3", "r10p4"]],
+            z4: [["r1p1", "r1p2", "r1p3", "r1p4", "r1p5", "r1p6"], ["r2p1", "r2p2", "r2p3", "r2p4", "r2p5", "r2p6"], ["r3p1", "r3p2", "r3p3", "r3p4", "r3p5"], ["r4p1", "r4p2", "r4p3", "r4p4", "r4p5", "r4p6"], ["r5p1", "r5p2", "r5p3", "r5p4", "r5p5", "r5p6"], ["r6p1", "r6p2", "r6p3", "r6p4", "r6p5"], ["r7p1", "r7p2", "r7p3", "r7p4", "r7p5", "r7p6"], ["r8p1", "r8p2", "r8p3", "r8p4", "r8p5", "r8p6"]]
+        };
     }
 
     componentDidMount() {
@@ -73,17 +81,16 @@ class Warzone extends Component {
   
     renderZones() {
         const zones = [[], []];
-        Object.keys(config.mapPositions).map(key => {
+        Object.keys(this.zones).map(key => {
             zones[key === "z1" ? 0 : 1].push(
                 <div
                     className={`zone ${key}`}
                     key={key}
                 >
                     <SeatRow
-                        seats={config.mapPositions[key]}
+                        seats={this.zones[key]}
                         zone={key}
                         users={this.props.users}
-                        mode={this.props.mode}
                     />
                 </div>
             );
@@ -116,7 +123,7 @@ class Warzone extends Component {
     }
 
     dragging({target, clientY}, release = false) {
-        if ((this.switchButton.isDragged && release) || target.className.includes("switchButton")) {
+        if ((this.switchButton.isDragged && release) || (typeof target.className === "string" && target.className.includes("switchButton"))) {
             this.switchButton.startPosition = clientY;
             this.switchButton.isDragged = !this.switchButton.isDragged;
             this.switchButton.dragPosition = this.props.switchButton.position;
@@ -174,7 +181,7 @@ class Warzone extends Component {
     }
 }
 
-Warzone.propTypes = {
+WarzoneBomber.propTypes = {
     switchButton: PropTypes.object.isRequired,
     moveSwitch: PropTypes.func.isRequired,
     storeActiveUsers: PropTypes.func.isRequired,
@@ -182,4 +189,4 @@ Warzone.propTypes = {
     clearActiveUser: PropTypes.func.isRequired
 };
 
-export default Warzone;
+export default WarzoneBomber;

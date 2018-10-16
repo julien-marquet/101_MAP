@@ -5,6 +5,7 @@ import {
     MODE_PASSIVE_SET,
     MODE_PASSIVE_UNSET
 } from "../actions/globalState";
+import {MODE_SET_GAME} from "../actions/bomberman";
 import globalConfig from "../../config/globalConfig";
 
 const initialState = {
@@ -45,6 +46,11 @@ const globalState = (state = initialState, {type, payload}) => {
         return {
             ...state,
             mode: "default"
+        };
+    case MODE_SET_GAME:
+        return {
+            ...state,
+            mode: "game"
         };
     default:
         return state;

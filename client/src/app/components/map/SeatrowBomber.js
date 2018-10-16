@@ -2,13 +2,11 @@ import React, {Component, Fragment} from "react";
 import PropTypes from "prop-types";
 
 import Seat from "../../containers/map/seat";
-import config from "../../../config/globalConfig";
 
-class Seatrow extends Component {
+class SeatrowBomber extends Component {
     constructor(props) {
         super(props);
 
-        this.seats = [];
         this.seatRowStyle = {};
         this.rowWrapperStyle = {};
     }
@@ -18,16 +16,10 @@ class Seatrow extends Component {
             this.seatRowStyle.flexDirection = "column";
             this.rowWrapperStyle.flexDirection = "row-reverse";
         }
-        this.seats = [...this.props.seats];
-        Object.keys(config.teleporters).map(tp => {
-            if (tp.includes(this.props.zone)) {
-                this.seats[parseInt(tp.split("r")[1].split("p")[0], 10) - 1].push({isTp: true, pos: tp.substr(2)});
-            }
-        });
     }
 
     renderFromTo(from, to = null) {
-        return this.seats.map((seatsRow, rowIndex) => {
+        return this.props.seats.map((seatsRow, rowIndex) => {
             if (rowIndex >= from && (to === null || rowIndex < to)) {
                 return this.renderSeat(seatsRow, rowIndex);
             }
@@ -48,9 +40,6 @@ class Seatrow extends Component {
                             key={`seat${seatIndex + 1}`}
                             hostname={`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`}
                             user={this.props.users.array[`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`]}
-                            allUsers={this.props.users.array}
-                            isTp={seat.isTp !== undefined}
-                            // user={this.props.zone === "z2" &&  ( this.props.users.array[`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`] === undefined || (this.props.users.array[`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`] !== undefined && this.props.users.array[`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`].user.login !== "legrivel")) ? undefined : this.props.users.array[`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`]}
                         />
                     );
                 })}
@@ -67,7 +56,11 @@ class Seatrow extends Component {
                 </Fragment>
             );
         }
-        return this.seats.map((seatsRow, rowIndex) => this.renderSeat(seatsRow, rowIndex));
+        return this.props.seats.map((seatsRow, rowIndex) => {
+            return (
+                this.renderSeat(seatsRow, rowIndex)
+            );
+        });
     }
 
     render() {
@@ -82,10 +75,10 @@ class Seatrow extends Component {
     }
 }
 
-Seatrow.proptypes = {
+SeatrowBomber.proptypes = {
     seats: PropTypes.array.isRequired,
     zone: PropTypes.string.isRequired,
     users: PropTypes.object.isRequired
 };
 
-export default Seatrow;
+export default SeatrowBomber;
