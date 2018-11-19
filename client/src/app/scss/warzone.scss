@@ -279,10 +279,11 @@
         justify-content: center;
         flex-direction: column;
         .coalitionScore {
+            width: 60%;
             margin: 1px;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: space-between;
             font-size: get_size(4, $coefficient);
             img {
                 filter: invert(100%);
