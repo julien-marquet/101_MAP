@@ -27,7 +27,8 @@ const initialState = {
         success: null,
         content: null
     },
-    searchedUser: ""
+    searchedUser: "",
+    coalitions: []
 };
 
 const users = (state = initialState, {type, payload}) => {

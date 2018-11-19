@@ -8,14 +8,21 @@ const logger = require("./custom_modules/logger"),
     server = require("http").Server(app),
     Storage = require("storage"),
     globalStorage = new Storage(),
-    io = require("./io")(server, globalStorage),
+    Queue = require("./custom_classes/Queue"),
+    queue = new Queue(globalStorage),
+    Oauth = require("./custom_classes/OAuth2_authenticator"),
+    oauth = new Oauth(globalStorage, queue),
+    io = require("./io")(server, globalStorage, queue, oauth),
     bodyParser = require("body-parser"),
     cors = require("cors"),
     morgan = require("morgan"),
     tokenHelper = require("./helpers/tokenCache.helper"),
     stdinHelper = require("./helpers/stdin.helper");
+const CoalitionsController = require("./controllers/Coalitions.controller");
 const {clientPath, serverPort} = require("./config/globalConfig");
 
+const coalitionsController = new CoalitionsController(globalStorage, queue, oauth);
+coalitionsController.updateScores();
 app.use(cors());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({extended: true}));

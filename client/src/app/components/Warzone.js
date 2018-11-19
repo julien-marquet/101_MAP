@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import PropTypes from "prop-types";
 
+import Coalition from "./Coalition";
 import SeatRow from "./map/Seatrow";
 import HostInfo from "../containers/map/hostinfo";
 import SearchBar from "../containers/map/searchBar";
@@ -83,17 +84,55 @@ class Warzone extends Component {
         const zones = [[], []];
         Object.keys(this.zones).map(key => {
             zones[key === "z1" ? 0 : 1].push(
-                <div
-                    className={`zone ${key}`}
-                    key={key}
-                >
-                    <SeatRow
-                        seats={this.zones[key]}
-                        zone={key}
-                        users={this.props.users}
-                    />
-                </div>
+                
             );
+            if (key === "z1") {
+                zones[0].push(
+                    <div
+                        className={`zone ${key}`}
+                        key={key}
+                    >
+                        <SeatRow
+                            seats={this.zones[key]}
+                            zone={key}
+                            users={this.props.users}
+                        />
+                    </div>
+                );
+            } else if (key === "z3") {
+                const coalitions = [...this.props.coalitions];
+                coalitions.sort((a, b) => a.score < b.score);
+                zones[1].push(
+                    <div className={"scoresWrapper"} key={key}>
+                        <div className={"coalitionsScores"}>
+                            {coalitions.map((coa, key) => <Coalition {...coa} key={`score${key}`} />)}
+                        </div>
+                        <div
+                            className={`zone ${key}`}
+                            key={key}
+                        >
+                            <SeatRow
+                                seats={this.zones[key]}
+                                zone={key}
+                                users={this.props.users}
+                            />
+                        </div>
+                    </div>
+                );
+            } else {
+                zones[1].push(
+                    <div
+                        className={`zone ${key}`}
+                        key={key}
+                    >
+                        <SeatRow
+                            seats={this.zones[key]}
+                            zone={key}
+                            users={this.props.users}
+                        />
+                    </div>
+                );
+            }
             return null;
         });
         return (
@@ -186,7 +225,8 @@ Warzone.propTypes = {
     moveSwitch: PropTypes.func.isRequired,
     storeActiveUsers: PropTypes.func.isRequired,
     users: PropTypes.object.isRequired,
-    clearActiveUser: PropTypes.func.isRequired
+    clearActiveUser: PropTypes.func.isRequired,
+    coalitions: PropTypes.array.isRequired
 };
 
 export default Warzone;

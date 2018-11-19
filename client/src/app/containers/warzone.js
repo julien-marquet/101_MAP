@@ -5,13 +5,14 @@ import {TOAST_SHOW} from "../actions/toasts";
 import {ACTIVE_USER_SWAP, USER_CLEAR_ACTIVE} from "../actions/users";
 import {SWITCH_MOVE} from "../actions/switch";
 
-const mapStateToProps = ({users, globalState, switchButton}) => {
+const mapStateToProps = ({users, globalState, switchButton, coalitions}) => {
     return {
         users,
         mode: globalState.mode,
         switchButton: {
             position: switchButton.position
-        }
+        },
+        coalitions: coalitions.coalitions
     };
 };
 

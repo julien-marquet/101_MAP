@@ -4,10 +4,12 @@
 @mixin applyStyle($seatSize, $seatSidesMargin, $seatRowMargin, $zoneMargin, $portrait) {
 
     $coefficient: get_coefficient($portrait);
+    $scoresSize: get_size(30, $coefficient);
     $seatSize: get_size($seatSize, $coefficient); 
     $seatSidesMargin:get_size($seatSidesMargin, $coefficient); 
     $seatRowMargin:get_size($seatRowMargin, $coefficient); 
     $zoneMargin:get_size($zoneMargin, $coefficient);
+    $coaScore: get_size(4, $coefficient);
     $zoom: 1.5;
     $radius: get_size(0.3, $coefficient);
     $hallSize: $seatSize + ($seatSidesMargin * 2);
@@ -258,10 +260,53 @@
         flex-wrap: wrap;
         flex-direction: row;
     }
-    
+
     .zoneContainer:nth-child(1) {
         justify-content: space-between;
         display: flex;
+    }
+
+    .zoneContainer:nth-child(2) {
+        display: flex;
+    }
+
+    .coalitionsScores {
+        width: $scoresSize;
+        height: $scoresSize;
+        margin-top: -$scoresSize;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .coalitionScore {
+            margin: 1px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: get_size(4, $coefficient);
+            img {
+                filter: invert(100%);
+                height: $coaScore;
+                width: $coaScore;
+            }
+            .logoBackground {
+                border-radius: 100%;
+                height: $coaScore;
+                width: $coaScore;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 8%;
+                margin: 1% 7% 1% 7%;
+            }
+        }
+    }
+
+    .scoresWrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: flex-end;
     }
 
     .blockSearchHost {

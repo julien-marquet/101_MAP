@@ -116,7 +116,8 @@ class Users {
                         nb_connected_users: self.globalStorage.nb_connected_users,
                         last_request: self.globalStorage.connected_users_last_request, 
                         array: self.globalStorage.connected_users_array,
-                        inPoolNbr: self.globalStorage.inPoolNbr
+                        inPoolNbr: self.globalStorage.inPoolNbr,
+                        coalitions: self.globalStorage.coalitions || []
                     });     
                 }
             }());
