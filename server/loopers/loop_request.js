@@ -2,11 +2,9 @@ const logger = require("../custom_modules/logger");
 const {connectedUsers_loopRate} = require("../config/globalConfig");
 
 const loop_request = (io, globalStorage,i_Oauth2_authenticator, i_users_api, coalitionsController) => {
-    console.log("Request looping");
     setInterval(()=> {
         coalitionsController.updateScores()
             .then(() => {
-                console.log("Updated");
                 if (globalStorage.connectedUsers > 0) {
                     logger.add_log({
                         type:"General", 
