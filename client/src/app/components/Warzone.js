@@ -101,7 +101,7 @@ class Warzone extends Component {
                 );
             } else if (key === "z3") {
                 const coalitions = [...this.props.coalitions];
-                coalitions.sort((a, b) => a.score < b.score);
+                coalitions.sort((a, b) => b.score - a.score);
                 zones[1].push(
                     <div className={"scoresWrapper"} key={key}>
                         <div className={"coalitionsScores"}>
