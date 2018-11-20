@@ -12,14 +12,23 @@ class Users {
 
     getUserInfos(userId, userToken) {
         if (this.globalStorage.usersInfos[userId] === undefined) {
-            return this.i_queue.push_tail(
+            return Promise.all([this.i_queue.push_tail(
                 "getUserInfos", {
                     url: `${apiEndpoint}v2/users/${userId}`, 
                     headers: {"authorization": `Bearer ${userToken}`}
                 }
-            )
+            ), this.i_queue.push_tail(
+                "getUserCoalition", {
+                    url: `${apiEndpoint}v2/users/${userId}/coalitions`, 
+                    headers: {"authorization": `Bearer ${userToken}`}
+                }
+            )])
                 .then(response => {
-                    response.last_request = Date.now();
+                    response = {
+                        ...response[0],
+                        last_request: Date.now(),
+                        coalition: {...response[1][0]}
+                    };
                     this.globalStorage.usersInfos[response.id] = response;
                     return ({response});
                 })

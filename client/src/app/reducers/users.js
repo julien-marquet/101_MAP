@@ -1,6 +1,6 @@
 import {
     USERS_GETTED,
-    ACTIVE_USER_SWAP,
+    USER_ACTIVE_SWAP,
     USER_GET_METADATA,
     USER_GET_METADATA_SUCCEEDED,
     USER_GET_METADATA_FAILED,
@@ -38,7 +38,7 @@ const users = (state = initialState, {type, payload}) => {
             ...state,
             ...payload
         };
-    case ACTIVE_USER_SWAP:
+    case USER_ACTIVE_SWAP:
         return {
             ...state,
             searchedUser: initialState.searchedUser,
@@ -83,7 +83,8 @@ const users = (state = initialState, {type, payload}) => {
     case USER_CLEAR_ACTIVE:
         return {
             ...state,
-            activeUser: {...initialState.activeUser}
+            activeUser: {...initialState.activeUser},
+            user_metadata: {...initialState.user_metadata}
         };
     default:
         return state;
