@@ -270,7 +270,7 @@
     }
 
     .coalitionsScores {
-        $coaScore: get_size(3.2, $coefficient);
+        $coaScore: get_size(3.7, $coefficient);
         width: $scoresSize;
         height: $scoresSize / 1.1;
         margin-top: -($scoresSize / 1.1);
@@ -298,7 +298,7 @@
                 justify-content: center;
                 align-items: center;
                 padding: 8%;
-                margin: 1% 7% 1% 7%;
+                // margin: 1% 7% 1% 7%;
             }
         }
     }

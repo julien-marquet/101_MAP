@@ -1,11 +1,11 @@
 const	Users_api = require("./api/Users.api"),
     logger = require("./custom_modules/logger");
 
-const websocketHandler = (server, globalStorage, i_queue, i_Oauth2_authenticator) => {
+const websocketHandler = (server, globalStorage, i_queue, i_Oauth2_authenticator, coalitionsController) => {
     const	io = require("socket.io")(server);
     const i_users_api = new Users_api(globalStorage, i_Oauth2_authenticator, i_queue);
 
-    require("./loopers/loop_request")(io, globalStorage, i_Oauth2_authenticator, i_users_api);
+    require("./loopers/loop_request")(io, globalStorage, i_Oauth2_authenticator, i_users_api, coalitionsController);
 
     globalStorage.connectedUsers = 0;
 

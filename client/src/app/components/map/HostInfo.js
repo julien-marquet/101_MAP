@@ -82,7 +82,7 @@ class HostInfo extends Component {
         if (this.props.activeUser.user.login === "hugrebou") {
             return (
                 <div className={"tags hugrebou"}>
-                    <p>{"Seigneur Sith"}</p>
+                    <p>{"New hope"}</p>
                 </div>
             );
         }

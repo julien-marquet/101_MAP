@@ -1,7 +1,7 @@
 const logger = require("../custom_modules/logger");
 const CoalitionsApi = require("../api/Coalitions.api");
 
-class CoalitionsController {
+class CoalitionsController {
     constructor(globalStorage, queue, oauth) {
         this.globalStorage = globalStorage;
         this.coalitions = new CoalitionsApi(queue, oauth);

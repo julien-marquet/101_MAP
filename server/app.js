@@ -3,6 +3,7 @@ const express = require("express"),
     databaseConfig = require("./config/databaseConfig"),
     mongoose = require("mongoose");
 require("./models/index")();
+const CoalitionsController = require("./controllers/Coalitions.controller");
 const logger = require("./custom_modules/logger"),
     app = express(),
     server = require("http").Server(app),
@@ -12,16 +13,15 @@ const logger = require("./custom_modules/logger"),
     queue = new Queue(globalStorage),
     Oauth = require("./custom_classes/OAuth2_authenticator"),
     oauth = new Oauth(globalStorage, queue),
-    io = require("./io")(server, globalStorage, queue, oauth),
+    coalitionsController = new CoalitionsController(globalStorage, queue, oauth),
+    io = require("./io")(server, globalStorage, queue, oauth, coalitionsController),
     bodyParser = require("body-parser"),
     cors = require("cors"),
     morgan = require("morgan"),
     tokenHelper = require("./helpers/tokenCache.helper"),
     stdinHelper = require("./helpers/stdin.helper");
-const CoalitionsController = require("./controllers/Coalitions.controller");
 const {clientPath, serverPort} = require("./config/globalConfig");
 
-const coalitionsController = new CoalitionsController(globalStorage, queue, oauth);
 coalitionsController.updateScores();
 app.use(cors());
 app.use(morgan("dev"));

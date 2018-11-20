@@ -23,7 +23,6 @@ const usersSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator) => 
                 type:"General", 
                 description:"Emit connectedUsers from Cache"
             });
-            // console.log(globalStorage || []);
             socket.emit("connectedUsers", JSON.stringify({
                 last_request: globalStorage.connected_users_last_request, 
                 nb_connected_users: globalStorage.nb_connected_users,
