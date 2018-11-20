@@ -9,7 +9,6 @@
     $seatSidesMargin:get_size($seatSidesMargin, $coefficient); 
     $seatRowMargin:get_size($seatRowMargin, $coefficient); 
     $zoneMargin:get_size($zoneMargin, $coefficient);
-    $coaScore: get_size(4, $coefficient);
     $zoom: 1.5;
     $radius: get_size(0.3, $coefficient);
     $hallSize: $seatSize + ($seatSidesMargin * 2);
@@ -271,20 +270,21 @@
     }
 
     .coalitionsScores {
+        $coaScore: get_size(3.2, $coefficient);
         width: $scoresSize;
-        height: $scoresSize;
-        margin-top: -$scoresSize;
+        height: $scoresSize / 1.1;
+        margin-top: -($scoresSize / 1.1);
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-evenly;
         flex-direction: column;
         .coalitionScore {
-            width: 60%;
-            margin: 1px;
+            width: 75%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: get_size(4, $coefficient);
+            font-size: get_size(3.6, $coefficient);
+            font-weight: bold;
             img {
                 filter: invert(100%);
                 height: $coaScore;
