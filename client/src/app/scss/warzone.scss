@@ -270,7 +270,7 @@
     }
 
     .coalitionsScores {
-        $coaScore: get_size(3.7, $coefficient);
+        $coaScore: get_size(6, $coefficient);
         width: $scoresSize;
         height: $scoresSize / 1.1;
         margin-top: -($scoresSize / 1.1);
@@ -287,8 +287,7 @@
             font-weight: bold;
             img {
                 filter: invert(100%);
-                height: $coaScore;
-                width: $coaScore;
+                height: 65%;
             }
             .logoBackground {
                 border-radius: 100%;
@@ -297,7 +296,13 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                padding: 8%;
+                div {
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
             }
         }
     }
