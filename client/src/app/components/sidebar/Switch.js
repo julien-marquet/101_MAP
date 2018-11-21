@@ -1,17 +1,8 @@
 import React, {Component} from "react";
-import PropTypes from "prop-types";
 
 class Switch extends Component {
     constructor(props) {
         super(props);
-
-        this.disconnect = this.disconnect.bind(this);
-    }
-
-    disconnect() {
-        if (this.props.active) {
-            this.props.disconnectApp();
-        }
     }
 
     render() {
@@ -27,9 +18,6 @@ class Switch extends Component {
     }
 }
 
-Switch.proptypes = {
-    disconnectApp: PropTypes.func.isRequired
-};
-
+Switch.proptypes = {};
 
 export default Switch;
