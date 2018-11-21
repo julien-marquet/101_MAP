@@ -1,7 +1,5 @@
 const fs = require("fs");
 const	Users_api = require("./api/Users.api"),
-    Oauth2_authenticator = require("./custom_classes/OAuth2_authenticator"),
-    Queue = require("./custom_classes/Queue"),
     logger = require("./custom_modules/logger");
 
 const socketFiles = [];
@@ -17,13 +15,11 @@ const socketFiles = [];
     });
 })();
 
-const websocketHandler = (server, globalStorage) => {
+const websocketHandler = (server, globalStorage, i_queue, i_Oauth2_authenticator, coalitionsController) => {
     const	io = require("socket.io")(server);
-    const   i_queue = new Queue(globalStorage),
-        i_Oauth2_authenticator = new Oauth2_authenticator(globalStorage, i_queue),
-        i_users_api = new Users_api(globalStorage, i_Oauth2_authenticator, i_queue);
+    const i_users_api = new Users_api(globalStorage, i_Oauth2_authenticator, i_queue);
 
-    require("./loopers/loop_request")(io, globalStorage, i_Oauth2_authenticator, i_users_api);
+    require("./loopers/loop_request")(io, globalStorage, i_Oauth2_authenticator, i_users_api, coalitionsController);
 
     globalStorage.connectedUsers = 0;
 

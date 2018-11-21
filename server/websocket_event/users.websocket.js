@@ -25,7 +25,8 @@ const usersSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator, i_u
                 last_request: globalStorage.connected_users_last_request, 
                 nb_connected_users: globalStorage.nb_connected_users,
                 array: globalStorage.connected_users_array,
-                inPoolNbr: globalStorage.inPoolNbr
+                inPoolNbr: globalStorage.inPoolNbr,
+                coalitions: globalStorage.coalitions || []
             }));
         }
     });

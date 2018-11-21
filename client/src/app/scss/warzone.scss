@@ -4,6 +4,7 @@
 @mixin applyStyle($seatSize, $seatSidesMargin, $seatRowMargin, $zoneMargin, $portrait) {
 
     $coefficient: get_coefficient($portrait);
+    $scoresSize: get_size(30, $coefficient);
     $seatSize: get_size($seatSize, $coefficient); 
     $seatSidesMargin:get_size($seatSidesMargin, $coefficient); 
     $seatRowMargin:get_size($seatRowMargin, $coefficient); 
@@ -258,10 +259,59 @@
         flex-wrap: wrap;
         flex-direction: row;
     }
-    
+
     .zoneContainer:nth-child(1) {
         justify-content: space-between;
         display: flex;
+    }
+
+    .zoneContainer:nth-child(2) {
+        display: flex;
+    }
+
+    .coalitionsScores {
+        $coaScore: get_size(6, $coefficient);
+        width: $scoresSize;
+        height: $scoresSize / 1.1;
+        margin-top: -($scoresSize / 1.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: column;
+        .coalitionScore {
+            width: 75%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: get_size(3.6, $coefficient);
+            font-weight: bold;
+            img {
+                filter: invert(100%);
+                height: 65%;
+            }
+            .logoBackground {
+                border-radius: 100%;
+                height: $coaScore;
+                width: $coaScore;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                div {
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+
+    .scoresWrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: flex-end;
     }
 
     .blockSearchHost {
@@ -305,6 +355,16 @@
             transform: translateY(-($seatSize * 1.5));
         }
     }
+    .absoluteWrapper {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        left: 0;
+    }
     .hostInfoWrapper {
         @include fix_animation();
         margin: $zoneMargin;
@@ -318,6 +378,20 @@
         overflow: hidden;
         position: relative;
         transition: transform 0.5s ease-in-out;
+        .bannerWrapper {
+            height: 100%;
+            width: 20%;
+            position: absolute;
+            top: 0;
+            right: 10%;
+            .banner {
+                width: 100%;
+                max-height: 100%;
+            }
+            .bannerLogo {
+                filter: invert(100%);
+            }
+        }
         .closeHostInfo {
             position: absolute;
             top: get_size(0.5, $coefficient);

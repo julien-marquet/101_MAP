@@ -82,7 +82,7 @@ class HostInfo extends Component {
         if (this.props.activeUser.user.login === "hugrebou") {
             return (
                 <div className={"tags hugrebou"}>
-                    <p>{"Seigneur Sith"}</p>
+                    <p>{"New hope"}</p>
                 </div>
             );
         }
@@ -179,6 +179,29 @@ class HostInfo extends Component {
                                     </div>
                                     {this.renderTags()}
                                 </React.Fragment>
+                            }
+                            {this.props.user_metadata.content !== null &&
+                                <div className={"bannerWrapper"}>
+                                    <div className={"absoluteWrapper"}>
+                                        <svg style={{fill: this.props.user_metadata.content.coalition.color}} className={"banner"} xmlns="http://www.w3.org/2000/svg" version="1.1" id="banner" x="0px" y="0px" viewBox="0 0 68 104">
+                                            <g id="banner-content">
+                                                <g id="UI-Intranet-banner-content" transform="translate(-96.000000, -60.000000)">
+                                                    <g id="banner-content-g-1" transform="translate(96.000000, 60.000000)">
+                                                        <polygon id="banner-content-polygon-1" points="0,0 0,80.5 34.3,104 68,80.5 68,0"></polygon>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <div className={"absoluteWrapper"}>
+                                        <img
+                                            style={{maxHeight: this.props.user_metadata.content.coalition.slug === "ranger" ? "50%" : "60%"}}
+                                            className={"bannerLogo"}
+                                            src={this.props.user_metadata.content.coalition.image_url}
+                                            alt={"Coalition"}
+                                        />
+                                    </div>
+                                </div>
                             }
                         </div>
                         {userIsActive && <Loader key="hostInfoLoader" name={"HostInfo"} in={this.props.user_metadata.success === null}/>}

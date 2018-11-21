@@ -4,13 +4,19 @@ import {
     USER_GET_METADATA_SUCCEEDED,
     USER_GET_METADATA_FAILED
 } from "../actions/users";
+import {COALITIONS_GETTED} from "../actions/coalitions";
 import {TOAST_SHOW} from "../actions/toasts";
 import {CONNECT_APP} from "../actions/globalState";
 import {storeCookie} from "../helpers/cookies.helper";
 
 function setupListeners(socketClient, dispatch) {
     socketClient.on("connectedUsers", data => {
-        dispatch({type: USERS_GETTED, payload: JSON.parse(data)});
+        data = JSON.parse(data);
+        dispatch({type: USERS_GETTED, payload: {
+            ...data,
+            coalitions: undefined
+        }});
+        dispatch({type: COALITIONS_GETTED, payload: {...data.coalitions}});
     });
     
     socketClient.on("authSuccess", data => {

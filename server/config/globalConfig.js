@@ -6,5 +6,6 @@ module.exports = {
     requestsBySecond: 2, // In queue
     connectedUsers_cacheExpiration: 10, // minutes
     redirect_uri: "http://localhost:3000/",
-    streamLogToConsole: true
+    streamLogToConsole: true,
+    blocId: 8
 };
