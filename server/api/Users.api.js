@@ -27,7 +27,7 @@ class Users {
                     response = {
                         ...response[0],
                         last_request: Date.now(),
-                        coalition: {...response[1][0]}
+                        coalition: response[1].length === 0 || response[1][0].slug.includes("piscine") ? null : {...response[1][0]}
                     };
                     this.globalStorage.usersInfos[response.id] = response;
                     return ({response});

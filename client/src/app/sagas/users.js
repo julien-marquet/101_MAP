@@ -3,6 +3,7 @@ import {
     takeLatest,
     put
 } from "redux-saga/effects";
+import {delay} from "redux-saga";
 
 import {
     USER_GET_METADATA,
@@ -17,6 +18,7 @@ function getUserMetadata(socketClient, {payload}) {
 
 function* swapActiveUser({payload}) {
     yield put({type: USER_CLEAR_ACTIVE});
+    yield delay(1);
     yield put({type: USER_ACTIVE_SWAP, payload});
 }
 
