@@ -74,11 +74,11 @@ function setupListeners(socketClient, dispatch) {
     });
 
     socketClient.on("user.getted.infos", response => {
-        if (response !== null) {
+        if (response !== null && response.refresh_token) {
             storeCookie("userToken", response.refresh_token);
             socketClient.socket.query.token = response.refresh_token;
-            dispatch({type: USER_GET_METADATA_SUCCEEDED, payload: response.response});
         }
+        dispatch({type: USER_GET_METADATA_SUCCEEDED, payload: response.response});
     });
     socketClient.on("token.refreshed", token => {
         storeCookie("userToken", token);
