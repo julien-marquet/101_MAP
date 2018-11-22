@@ -180,7 +180,7 @@ class HostInfo extends Component {
                                     {this.renderTags()}
                                 </React.Fragment>
                             }
-                            {this.props.user_metadata.content !== null && this.props.user_metadata.content.coalition !== null &&
+                            {this.props.user_metadata.content !== null && this.props.user_metadata.content.coalition !== null && this.props.user_metadata.content.coalition !== undefined &&
                                 <div className={"bannerWrapper"}>
                                     <div className={"absoluteWrapper"}>
                                         <svg style={{fill: this.props.user_metadata.content.coalition.color}} className={"banner"} xmlns="http://www.w3.org/2000/svg" version="1.1" id="banner" x="0px" y="0px" viewBox="0 0 68 104">
