@@ -9,11 +9,12 @@ const usersSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator, i_u
                     type:"General", 
                     description:"Emit connectedUsers from Request"
                 });
-            }).catch(err => {
-                socket.emit("connectedUsers", JSON.stringify({"error": true, "message": err}));
+            }).catch(error => {
+                socket.emit("connectedUsers", JSON.stringify({"error": true, "message": "Couldn't get users"}));
                 logger.add_log({
-                    type:"Error", 
-                    description:"couldn't Retrieve connectedUsers from Request"
+                    type: "Error",
+                    description: "Couldn't retrieve connectedUsers from request",
+                    additionnal_infos: {error}
                 });		
             });
         } else {

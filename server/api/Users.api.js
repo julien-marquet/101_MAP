@@ -11,18 +11,19 @@ class Users {
     }
 
     getUserInfos(userId, userToken) {
+        const sendRequests = token => Promise.all([this.i_queue.push_tail(
+            "getUserInfos", {
+                url: `${apiEndpoint}v2/users/${userId}`,
+                headers: {"authorization": `Bearer ${token}`}
+            }
+        ), this.i_queue.push_tail(
+            "getUserCoalition", {
+                url: `${apiEndpoint}v2/users/${userId}/coalitions`,
+                headers: {"authorization": `Bearer ${token}`}
+            }
+        )]);
         if (this.globalStorage.usersInfos[userId] === undefined) {
-            return Promise.all([this.i_queue.push_tail(
-                "getUserInfos", {
-                    url: `${apiEndpoint}v2/users/${userId}`, 
-                    headers: {"authorization": `Bearer ${userToken}`}
-                }
-            ), this.i_queue.push_tail(
-                "getUserCoalition", {
-                    url: `${apiEndpoint}v2/users/${userId}/coalitions`, 
-                    headers: {"authorization": `Bearer ${userToken}`}
-                }
-            )])
+            return sendRequests(userToken)
                 .then(response => {
                     response = {
                         ...response[0],
@@ -35,19 +36,18 @@ class Users {
                 .catch(err => {
                     if (err && err.infos && err.infos.status === 401) {
                         return this.Oauth2_authenticator.refreshToken(userToken)
-                            .then((refreshed) => {
+                            .then(refreshed => {
                                 if (refreshed) {
-                                    return this.i_queue.push_tail(
-                                        "getUserInfos", {
-                                            url: `${apiEndpoint}v2/users/${userId}`, 
-                                            headers: {"authorization": `Bearer ${refreshed}`
-                                            }
-                                        }
-                                    ).then(response => {
-                                        response.last_request = Date.now();
-                                        this.globalStorage.usersInfos[response.id] = response;
-                                        return ({response, refresh_token: refreshed});
-                                    });
+                                    return sendRequests(refreshed)
+                                        .then(response => {
+                                            response = {
+                                                ...response[0],
+                                                last_request: Date.now(),
+                                                coalition: response[1].length === 0 || response[1][0].slug.includes("piscine") ? null : {...response[1][0]}
+                                            };
+                                            this.globalStorage.usersInfos[response.id] = response;
+                                            return ({response, refresh_token: refreshed});
+                                        });
                                 } else {
                                     logger.add_log({
                                         type: "Error",

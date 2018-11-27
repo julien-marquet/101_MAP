@@ -12,11 +12,23 @@ import {storeCookie} from "../helpers/cookies.helper";
 function setupListeners(socketClient, dispatch) {
     socketClient.on("connectedUsers", data => {
         data = JSON.parse(data);
-        dispatch({type: USERS_GETTED, payload: {
-            ...data,
-            coalitions: undefined
-        }});
-        dispatch({type: COALITIONS_GETTED, payload: {...data.coalitions}});
+        if (data.error === undefined) {
+            dispatch({type: USERS_GETTED, payload: {
+                ...data,
+                coalitions: undefined
+            }});
+            dispatch({type: COALITIONS_GETTED, payload: {...data.coalitions}});
+        } else {
+            dispatch({
+                type: TOAST_SHOW,
+                payload: {
+                    type: "error",
+                    timeout: 3000,
+                    message: data.message,
+                    action: null
+                }
+            });
+        }
     });
     
     socketClient.on("authSuccess", data => {
