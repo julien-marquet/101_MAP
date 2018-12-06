@@ -66,6 +66,12 @@ class Users {
                                 throw ("Couldn't refresh token");
                             });
                     }
+                    logger.add_log({
+                        type: "Error",
+                        description: "Unknown error occured (maybe api down)",
+                        additionnal_infos: {Error: err}
+                    });
+                    throw ("Unknown error occured");
                 });
         }
         else {
