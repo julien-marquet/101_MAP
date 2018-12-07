@@ -13,10 +13,7 @@ function setupListeners(socketClient, dispatch) {
     socketClient.on("connectedUsers", data => {
         data = JSON.parse(data);
         if (data.error === undefined) {
-            dispatch({type: USERS_GETTED, payload: {
-                ...data,
-                coalitions: undefined
-            }});
+            dispatch({type: USERS_GETTED, payload: {...data, coalitions: undefined}});
             dispatch({type: COALITIONS_GETTED, payload: {...data.coalitions}});
         } else {
             dispatch({

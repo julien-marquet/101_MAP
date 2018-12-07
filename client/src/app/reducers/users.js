@@ -27,8 +27,7 @@ const initialState = {
         success: null,
         content: null
     },
-    searchedUser: "",
-    coalitions: []
+    searchedUser: ""
 };
 
 const users = (state = initialState, {type, payload}) => {
@@ -72,7 +71,7 @@ const users = (state = initialState, {type, payload}) => {
             ...state,
             user_metadata: {
                 success: false,
-                content: payload
+                content: initialState.user_metadata.content
             }
         };
     case SEARCH_UPDATE_CONTENT:
