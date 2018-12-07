@@ -58,7 +58,7 @@ const usersSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator, i_u
                             Error: error
                         }
                     });          
-                    socket.emit("error.fetch", error);
+                    socket.emit("error.fetch", "An error occured during fetch");
                 });
         }
     });
