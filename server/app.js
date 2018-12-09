@@ -1,7 +1,8 @@
 require("dotenv").config();
 const express = require("express"), 
     databaseConfig = require("./config/databaseConfig"),
-    mongoose = require("mongoose");
+    mongoose = require("mongoose"),
+	{Client} = require("pg");
 require("./models/index")();
 const CoalitionsController = require("./controllers/Coalitions.controller");
 const logger = require("./custom_modules/logger"),
@@ -41,7 +42,18 @@ mongoose.connect(databaseConfig.db).then(() => {}, (err) => {
         }
     });
 });
+globalStorage.set({psqlStatus: null});
 const db = mongoose.connection;
+const psqlClient = new Client();
+const promise = psqlClient.connect()
+	.then(() => globalStorage.set({psqlStatus: true}))
+	.catch(() => {
+		logger.add_log({
+			type: "warning",
+			description: "Couldn't connect to PSQL database"
+		});
+		globalStorage.set({psqlStatus: false})
+	});
 db.on("error", (err) => {
     logger.add_log({
         type: "Error", 
@@ -56,14 +68,23 @@ db.once("open", () => {
         type: "General", 
         description: "Succesfully Connected to database"
     });
-    server.listen(serverPort, () => {
-        logger.add_log({type: "General", 
-            description: "Succesfully launched server", 
-            additionnal_infos: {
-                Port: serverPort
-            }
-        });
-    });
+	promise
+		.then(() => {
+			server.listen(serverPort, () => {
+	       		logger.add_log({
+					type: "General", 
+	   	         	description: "Succesfully launched server", 
+	   	         	additionnal_infos: {
+	   	            	Port: serverPort
+	            	}
+	        	});
+			});
+		})
+		.catch(error => logger.add_log({
+			type: "error",
+			description: "Server couldn't be launched",
+			additionnal_infos: {error}
+		}));
 });
 
 process.on("SIGINT", () => tokenHelper.saveTokens(globalStorage));
