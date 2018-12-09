@@ -5,6 +5,7 @@ const express = require("express"),
 	{Client} = require("pg");
 require("./models/index")();
 const CoalitionsController = require("./controllers/Coalitions.controller");
+const UsersController = require("./controllers/Users.controller");
 const logger = require("./custom_modules/logger"),
     app = express(),
     server = require("http").Server(app),
@@ -13,8 +14,10 @@ const logger = require("./custom_modules/logger"),
     queue = new (require("./custom_classes/Queue"))(globalStorage),
     Oauth = require("./custom_classes/OAuth2_authenticator"),
     oauth = new Oauth(globalStorage, queue),
-    coalitionsController = new CoalitionsController(globalStorage, queue, oauth),
-    io = require("./io")(server, globalStorage, queue, oauth, coalitionsController),
+	psqlClient = new Client(),
+    coalitionsController = new CoalitionsController(globalStorage, queue, oauth, psqlClient),
+    usersController = new UsersController(globalStorage, queue, oauth, psqlClient),
+    io = require("./io")(server, globalStorage, queue, oauth, coalitionsController, usersController),
     bodyParser = require("body-parser"),
     cors = require("cors"),
     morgan = require("morgan"),
@@ -44,7 +47,6 @@ mongoose.connect(databaseConfig.db).then(() => {}, (err) => {
 });
 globalStorage.set({psqlStatus: null});
 const db = mongoose.connection;
-const psqlClient = new Client();
 const promise = psqlClient.connect()
 	.then(() => globalStorage.set({psqlStatus: true}))
 	.catch(() => {
