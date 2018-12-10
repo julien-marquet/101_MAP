@@ -21,7 +21,7 @@ function setupListeners(socketClient, dispatch) {
                 payload: {
                     type: "error",
                     timeout: 3000,
-                    message: data.message,
+                    message: "Couldn't get users from api",
                     action: null
                 }
             });
