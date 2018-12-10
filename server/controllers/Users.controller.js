@@ -17,7 +17,7 @@ class UsersController {
 					this.globalStorage.connected_users_array[host || hostname] = {
 						id,
 						begin_at,
-						login: user.login || login
+						login: user !== undefined ? user.login : login
 					};
 				});
 				this.globalStorage.connected_users_last_request = Date.now();
