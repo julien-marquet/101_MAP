@@ -116,28 +116,11 @@ class Users {
                         }).catch(err => reject(err));
                     }).catch(err => reject(err));
                 } else {
-                    self.globalStorage.connected_users_array = {};
-                    usersArray.map(({host, begin_at, user, id}) => {
-                        self.globalStorage.connected_users_array[host] = {
-                            id,
-                            user,
-                            begin_at
-                        };
-                    });
-                    self.globalStorage.connected_users_last_request = Date.now();
-                    self.globalStorage.nb_connected_users = nb_connected_users;
-                    self.globalStorage.inPoolNbr = 0;
-                    resolve({
-                        nb_connected_users: self.globalStorage.nb_connected_users,
-                        last_request: self.globalStorage.connected_users_last_request, 
-                        array: self.globalStorage.connected_users_array,
-                        inPoolNbr: self.globalStorage.inPoolNbr,
-                        coalitions: self.globalStorage.coalitions || []
-                    });     
-                }
+					resolve(usersArray);
+				}
             }());
         });
-    }             
+    }
 }
 
 module.exports = Users;

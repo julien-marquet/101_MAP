@@ -4,18 +4,33 @@ const UsersModel = require("../models/Users.model");
 class UsersController {
     constructor(globalStorage, queue, oauth, psql) {
         this.globalStorage = globalStorage;
-        this.users = new UsersApi(queue, oauth);
+        this.users = new UsersApi(queue, oauth, queue);
 		this.usersModel = new UsersModel(psql);
     }
 
 	getConnectedUsers() {
-		console.log("Getting connectedUsers", this.globalStorage.get("psqlStatus"));
-		if (this.globalStorage.get("psqlStatus")) {
-			return this.usersModel.getConnectedUsers()
-				.then(this.users.getConnectedUsers(9));
-		} else {
-			return this.users.getConnectedUsers(9);
-		}
+		const promise = this.globalStorage.psqlStatus ? this.usersModel.getConnectedUsers() : this.users.getConnectedUsers(9);
+		return promise
+			.then(users => {
+				this.globalStorage.connected_users_array = {};
+				users.map(({host, begin_at, user, id, login, hostname}) => {
+					this.globalStorage.connected_users_array[host || hostname] = {
+						id,
+						begin_at,
+						user: user.login || login
+					};
+				});
+				this.globalStorage.connected_users_last_request = Date.now();
+				this.globalStorage.nb_connected_users = users.length;
+				this.globalStorage.inPoolNbr = 0;
+				return {
+					nb_connected_users: this.globalStorage.nb_connected_users,
+					last_request: this.globalStorage.connected_users_last_request,
+					array: this.globalStorage.connected_users_array,
+					inPoolNbr: this.globalStorage.inPoolNbr,
+					coalitions: this.globalStorage.coalitions || []
+				};
+			});
 	}
 }
 
