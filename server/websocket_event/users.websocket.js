@@ -31,7 +31,7 @@ const usersSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator, i_u
             }));
         }
     });
-    socket.on("user.get.infos", ({userId, userToken}) => {
+    socket.on("user.get.infos", ({login, userToken}) => {
         if (!userToken ||userToken === undefined) {
             logger.add_log({
                 type:"Error", 
@@ -42,7 +42,7 @@ const usersSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator, i_u
             });                
             socket.emit("error.fetch", "No token provided");
         } else {
-            i_users_api.getUserInfos(userId, userToken)
+            i_users_api.getUserInfos(login, userToken)
                 .then(response => {
                     logger.add_log({
                         type:"General", 

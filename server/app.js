@@ -45,17 +45,14 @@ mongoose.connect(databaseConfig.db).then(() => {}, (err) => {
         }
     });
 });
-globalStorage.set({psqlStatus: null});
+globalStorage.set({psqlStatus: false});
 const db = mongoose.connection;
 const promise = psqlClient.connect()
 	.then(() => globalStorage.psqlStatus = true)
-	.catch(() => {
-		logger.add_log({
+	.catch(() => logger.add_log({
 			type: "warning",
 			description: "Couldn't connect to PSQL database"
-		});
-		globalStorage.psqlStatus = false;
-	});
+		}));
 db.on("error", (err) => {
     logger.add_log({
         type: "Error", 

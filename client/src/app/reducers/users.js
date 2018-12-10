@@ -17,11 +17,7 @@ const initialState = {
         hostname: null,
         begin_at: null,
         id: 0,
-        user: {
-            id: 0,
-            login: null,
-            url: null,
-        }
+		login: null
     },
     user_metadata: {
         success: null,
@@ -54,7 +50,7 @@ const users = (state = initialState, {type, payload}) => {
             }
         };
     case USER_GET_METADATA_SUCCEEDED:
-        if (state.activeUser.user.id === payload.id) {
+        if (state.activeUser.login === payload.login) {
             return {
                 ...state,
                 user_metadata: {
