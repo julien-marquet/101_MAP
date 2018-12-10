@@ -15,7 +15,7 @@ class SearchBar extends Component {
 
     handleChange(event, value) {
         this.props.updateSearch(value);
-        const perfectMatch = this.results.find(elem => elem.user === event.target.value);
+        const perfectMatch = this.results.find(elem => elem.login === event.target.value);
         if (perfectMatch !== undefined)
             this.props.storeActiveUsers(perfectMatch);
     }
@@ -56,12 +56,12 @@ class SearchBar extends Component {
                         }
                     }} 
                     open={this.props.searchedUser.length >= globalConfig.minimalSearchInput}
-                    getItemValue={(item) => item.user}
+                    getItemValue={(item) => item.login}
                     items={this.getMatchingUsers()}
                     renderInput={(props) => <input placeholder={"Search"} {...props} />}
                     renderItem={(item, isHighlighted) =>
                         <div key={`item${item.id}`} className={isHighlighted ? "searchOption selected" : "searchOption"}>
-                            {item.user}
+                            {item.login}
                         </div>
                     }
                     value={this.props.searchedUser}
