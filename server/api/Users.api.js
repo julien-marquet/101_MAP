@@ -10,19 +10,19 @@ class Users {
         this.Oauth2_authenticator = Oauth2_authenticator;
     }
 
-    getUserInfos(userId, userToken) {
+    getUserInfos(login, userToken) {
         const sendRequests = token => Promise.all([this.i_queue.push_tail(
             "getUserInfos", {
-                url: `${apiEndpoint}v2/users/${userId}`,
+                url: `${apiEndpoint}v2/users/${login}`,
                 headers: {"authorization": `Bearer ${token}`}
             }
         ), this.i_queue.push_tail(
             "getUserCoalition", {
-                url: `${apiEndpoint}v2/users/${userId}/coalitions`,
+                url: `${apiEndpoint}v2/users/${login}/coalitions`,
                 headers: {"authorization": `Bearer ${token}`}
             }
         )]);
-        if (this.globalStorage.usersInfos[userId] === undefined) {
+        if (this.globalStorage.usersInfos[login] === undefined) {
             return sendRequests(userToken)
                 .then(response => {
                     response = {
@@ -75,12 +75,12 @@ class Users {
                 });
         }
         else {
-            if ((Date.now() - this.globalStorage.usersInfos[userId].last_request) / 1000 > connectedUsers_cacheExpiration * 60) {
-                delete(this.globalStorage.usersInfos[userId]);
-                return (this.getUserInfos(userId, userToken));
+            if ((Date.now() - this.globalStorage.usersInfos[login].last_request) / 1000 > connectedUsers_cacheExpiration * 60) {
+                delete(this.globalStorage.usersInfos[login]);
+                return (this.getUserInfos(login, userToken));
             }
             else {
-                return new Promise(resolve => resolve({response: this.globalStorage.usersInfos[userId]}));
+                return new Promise(resolve => resolve({response: this.globalStorage.usersInfos[login]}));
             }
         }
     }
@@ -116,28 +116,11 @@ class Users {
                         }).catch(err => reject(err));
                     }).catch(err => reject(err));
                 } else {
-                    self.globalStorage.connected_users_array = {};
-                    usersArray.map(({host, begin_at, user, id}) => {
-                        self.globalStorage.connected_users_array[host] = {
-                            id,
-                            user,
-                            begin_at
-                        };
-                    });
-                    self.globalStorage.connected_users_last_request = Date.now();
-                    self.globalStorage.nb_connected_users = nb_connected_users;
-                    self.globalStorage.inPoolNbr = 0;
-                    resolve({
-                        nb_connected_users: self.globalStorage.nb_connected_users,
-                        last_request: self.globalStorage.connected_users_last_request, 
-                        array: self.globalStorage.connected_users_array,
-                        inPoolNbr: self.globalStorage.inPoolNbr,
-                        coalitions: self.globalStorage.coalitions || []
-                    });     
-                }
+					resolve(usersArray);
+				}
             }());
         });
-    }             
+    }
 }
 
 module.exports = Users;

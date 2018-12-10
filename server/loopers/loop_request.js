@@ -1,7 +1,7 @@
 const logger = require("../custom_modules/logger");
 const {connectedUsers_loopRate} = require("../config/globalConfig");
 
-const loop_request = (io, globalStorage,i_Oauth2_authenticator, i_users_api, coalitionsController) => {
+const loop_request = (io, globalStorage,i_Oauth2_authenticator, i_users_api, coalitionsController, usersController) => {
     setInterval(()=> {
         coalitionsController.updateScores()
             .then(() => {
@@ -10,21 +10,24 @@ const loop_request = (io, globalStorage,i_Oauth2_authenticator, i_users_api, coa
                         type:"General", 
                         description:"Starting periodic request connectedUsers"
                     });            
-                    i_users_api.getConnectedUsers(9).then(result => {
-                        io.sockets.emit("connectedUsers", JSON.stringify(result));
-                        logger.add_log({
-                            type:"General", 
-                            description:"Periodic request connectedUsers Succeeded"
-                        });                                
-                    }).catch(err => {
-                        io.sockets.emit("connectedUsers", JSON.stringify({"error": true, "message": err}));
-                        logger.add_log({
-                            type:"Error", 
-                            description:"Periodic request connectedUsers Failed", 
-                            additional_infos: {
-                                Error: err
-                            }});      
-                    });
+                    usersController.getConnectedUsers()
+						.then(result => {
+                        	io.sockets.emit("connectedUsers", JSON.stringify(result));
+                        	logger.add_log({
+                            	type:"General", 
+                            	description:"Periodic request connectedUsers Succeeded"
+                        	});                                
+                    	})
+						.catch(err => {
+                        	io.sockets.emit("connectedUsers", JSON.stringify({"error": true, "message": err}));
+                        	logger.add_log({
+                            	type:"Error", 
+                            	description:"Periodic request connectedUsers Failed", 
+                            	additional_infos: {
+                                	Error: err
+                            	}
+							});      
+                    	});
                 }
             });
     }, connectedUsers_loopRate * 1000);

@@ -1,9 +1,11 @@
 require("dotenv").config();
 const express = require("express"), 
     databaseConfig = require("./config/databaseConfig"),
-    mongoose = require("mongoose");
+    mongoose = require("mongoose"),
+	{Client} = require("pg");
 require("./models/index")();
 const CoalitionsController = require("./controllers/Coalitions.controller");
+const UsersController = require("./controllers/Users.controller");
 const logger = require("./custom_modules/logger"),
     app = express(),
     server = require("http").Server(app),
@@ -12,8 +14,10 @@ const logger = require("./custom_modules/logger"),
     queue = new (require("./custom_classes/Queue"))(globalStorage),
     Oauth = require("./custom_classes/OAuth2_authenticator"),
     oauth = new Oauth(globalStorage, queue),
-    coalitionsController = new CoalitionsController(globalStorage, queue, oauth),
-    io = require("./io")(server, globalStorage, queue, oauth, coalitionsController),
+	psqlClient = new Client(),
+    coalitionsController = new CoalitionsController(globalStorage, queue, oauth, psqlClient),
+    usersController = new UsersController(globalStorage, queue, oauth, psqlClient),
+    io = require("./io")(server, globalStorage, queue, oauth, coalitionsController, usersController),
     bodyParser = require("body-parser"),
     cors = require("cors"),
     morgan = require("morgan"),
@@ -41,7 +45,20 @@ mongoose.connect(databaseConfig.db).then(() => {}, (err) => {
         }
     });
 });
+globalStorage.set({psqlStatus: false});
 const db = mongoose.connection;
+const promise = psqlClient.connect()
+	.then(() => {
+		globalStorage.psqlStatus = true;
+		logger.add_log({
+			type: "General",
+			description: "Connected to PSQL database"
+		});
+	})
+	.catch(() => logger.add_log({
+			type: "warning",
+			description: "Couldn't connect to PSQL database"
+		}));
 db.on("error", (err) => {
     logger.add_log({
         type: "Error", 
@@ -56,14 +73,23 @@ db.once("open", () => {
         type: "General", 
         description: "Succesfully Connected to database"
     });
-    server.listen(serverPort, () => {
-        logger.add_log({type: "General", 
-            description: "Succesfully launched server", 
-            additionnal_infos: {
-                Port: serverPort
-            }
-        });
-    });
+	promise
+		.then(() => {
+			server.listen(serverPort, () => {
+	       		logger.add_log({
+					type: "General", 
+	   	         	description: "Succesfully launched server", 
+	   	         	additionnal_infos: {
+	   	            	Port: serverPort
+	            	}
+	        	});
+			});
+		})
+		.catch(error => logger.add_log({
+			type: "error",
+			description: "Server couldn't be launched",
+			additionnal_infos: {error}
+		}));
 });
 
 process.on("SIGINT", () => tokenHelper.saveTokens(globalStorage));

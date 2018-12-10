@@ -15,11 +15,11 @@ const socketFiles = [];
     });
 })();
 
-const websocketHandler = (server, globalStorage, i_queue, i_Oauth2_authenticator, coalitionsController) => {
+const websocketHandler = (server, globalStorage, i_queue, i_Oauth2_authenticator, coalitionsController, usersController) => {
     const	io = require("socket.io")(server);
     const i_users_api = new Users_api(globalStorage, i_Oauth2_authenticator, i_queue);
 
-    require("./loopers/loop_request")(io, globalStorage, i_Oauth2_authenticator, i_users_api, coalitionsController);
+    require("./loopers/loop_request")(io, globalStorage, i_Oauth2_authenticator, i_users_api, coalitionsController, usersController);
 
     globalStorage.connectedUsers = 0;
 

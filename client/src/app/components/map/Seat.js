@@ -25,7 +25,7 @@ class Seat extends Component {
             return true;
         }
         if (this.props.user !== undefined && nextProps.user !== undefined &&
-            (this.props.user.user.login !== nextProps.user.user.login ||
+            (this.props.user.login !== nextProps.user.login ||
             this.state.isSearched !== nextState.isSearched)) {
             return true;
         }
@@ -44,8 +44,8 @@ class Seat extends Component {
         }
         else if (nextProps.user !== undefined &&
             nextProps.searchedUser.length >= globalConfig.minimalSearchInput &&
-            ((nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && !this.state.isSearched) ||
-            (!nextProps.user.user.login.includes(nextProps.searchedUser.toLowerCase()) && this.state.isSearched))) {
+            ((nextProps.user.login.includes(nextProps.searchedUser.toLowerCase()) && !this.state.isSearched) ||
+            (!nextProps.user.login.includes(nextProps.searchedUser.toLowerCase()) && this.state.isSearched))) {
             this.setState({isSearched: !this.state.isSearched});
         }
         if (nextProps.activeUser.id === 0 && this.state.isActive) {
@@ -64,9 +64,9 @@ class Seat extends Component {
         if (this.props.user === undefined || this.state.imgSrc > 1)
             return placeholder;
         else if (this.state.imgSrc === 0)
-            return (`https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.JPG`);
+            return (`https://cdn.intra.42.fr/users/small_${this.props.user.login}.JPG`);
         else
-            return (`https://cdn.intra.42.fr/users/small_${this.props.user.user.login}.jpg`);
+            return (`https://cdn.intra.42.fr/users/small_${this.props.user.login}.jpg`);
     }
     changeImgSrc() {
         this.setState({
@@ -132,8 +132,10 @@ Seat.propTypes = {
     storeActiveUsers: PropTypes.func.isRequired,
     hostname: PropTypes.string,
     user: PropTypes.shape({
-        login: PropTypes.string
-    }),
+		id: PropTypes.number,
+		begin_at: PropTypes.string,
+		login: PropTypes.string
+	}),
     searchedUser: PropTypes.string,
     switchStatus: PropTypes.number.isRequired
 };

@@ -13,7 +13,7 @@ import {
 } from "../actions/users";
 
 function getUserMetadata(socketClient, {payload}) {
-    socketClient.emit("user.get.infos", {userId: payload, userToken: socketClient.socket.query.token});
+    socketClient.emit("user.get.infos", {login: payload, userToken: socketClient.socket.query.token});
 }
 
 function* swapActiveUser({payload}) {
