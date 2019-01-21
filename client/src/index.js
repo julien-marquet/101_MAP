@@ -10,7 +10,7 @@ import {
 
 import "./index.css";
 import App from "./app/containers/app";
-import {unregister} from "./registerServiceWorker";
+import register from "./registerServiceWorker";
 import reducers from "./app/reducers/index";
 import sagas from "./app/sagas/index";
 import SocketClient from "./app/sockets/index";
@@ -19,7 +19,7 @@ const socketClient = new SocketClient();
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(reducers, compose(applyMiddleware(sagaMiddleware)));
 sagaMiddleware.run(sagas, socketClient, store.dispatch);
-unregister();
+register();
 
 render(
     (<Provider store={store} className={"wrapper"} >
