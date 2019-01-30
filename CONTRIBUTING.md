@@ -19,7 +19,7 @@ Include details about your configuration and environment:
 
 * **Which browser were you using ?**
 * **Which browser version were you using ?**
-* **Are you using extensions related with 42 ?**
+* **Are you using extensions related to 42 ?**
 
 ### Suggesting Enhancements
 
