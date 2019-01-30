@@ -64,3 +64,6 @@ client/src/app/scss/font-awesome/scss/*.css
 database
 
 *package-lock.json
+*.serve.crt
+*.serve.key
+prod*
