@@ -23,8 +23,6 @@ Include details about your configuration and environment:
 
 ### Suggesting Enhancements
 
-#### Before Submitting An Enhancement Suggestion
-
 #### How Do I Submit A (Good) Enhancement Suggestion?
 
 Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com/features/issues/).
@@ -36,8 +34,6 @@ Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com
 * **Explain why this enhancement would be useful**
 
 ### Code Contribution
-
-### Pull Requests
 
 The process described here has several goals:
 
