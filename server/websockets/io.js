@@ -1,6 +1,6 @@
 const fs = require("fs");
-const	Users_api = require("./api/Users.api"),
-    logger = require("./custom_modules/logger");
+const	Users_api = require("../api/Users.api"),
+    logger = require("../helpers/logger.helper");
 
 const socketFiles = [];
 (function readDir(dir = __dirname) {
@@ -19,11 +19,11 @@ const websocketHandler = (server, globalStorage, i_queue, i_Oauth2_authenticator
     const	io = require("socket.io")(server);
     const i_users_api = new Users_api(globalStorage, i_Oauth2_authenticator, i_queue);
 
-    require("./loopers/loop_request")(io, globalStorage, i_Oauth2_authenticator, i_users_api, coalitionsController, usersController);
+    require("../loopers/loop_request")(io, globalStorage, i_Oauth2_authenticator, i_users_api, coalitionsController, usersController);
 
     globalStorage.connectedUsers = 0;
 
-    io.use(require("./middlewares/Oauth_client_authentifier.middleware")(i_Oauth2_authenticator, globalStorage));
+    io.use(require("../middlewares/Oauth_client_authentifier.middleware")(i_Oauth2_authenticator, globalStorage));
 	
     io.on("connection", socket => {
         logger.add_log({

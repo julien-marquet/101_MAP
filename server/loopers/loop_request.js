@@ -1,4 +1,4 @@
-const logger = require("../custom_modules/logger");
+const logger = require("../helpers/logger.helper");
 const {connectedUsers_loopRate} = require("../config/globalConfig");
 
 const loop_request = (io, globalStorage,i_Oauth2_authenticator, i_users_api, coalitionsController, usersController) => {

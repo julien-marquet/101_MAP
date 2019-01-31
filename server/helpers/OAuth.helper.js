@@ -1,6 +1,6 @@
 const   {apiEndpoint, redirect_uri} = require("../config/globalConfig"),
-    logger = require("../custom_modules/logger"),
-    SocketCache = require("../custom_classes/SocketCache");
+    logger = require("./logger.helper"),
+    SocketCache = require("./SocketCache.helper");
 
 class Oauth2_authenticator {
     constructor(globalStorage, i_queue) {

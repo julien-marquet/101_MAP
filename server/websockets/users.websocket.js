@@ -1,4 +1,4 @@
-const logger = require("../custom_modules/logger");
+const logger = require("../helpers/logger.helper");
 
 const usersSocket = (socket, globalStorage, i_queue, i_OAuth2_authenticator, i_users_api) => {
     socket.on("users.get.all", () => {
