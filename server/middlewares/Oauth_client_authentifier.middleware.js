@@ -1,4 +1,8 @@
-const tokenCache = require("../tmpTokens");
+const fs = require("fs");
+let tokenCache = {};
+if (fs.existsSync("../tmpTokens")) {
+    tokenCache = require("../tmpTokens");
+}
 
 function is_valid_token(i_Oauth2_authenticator, token) {
     if (token && token !== "undefined") {
