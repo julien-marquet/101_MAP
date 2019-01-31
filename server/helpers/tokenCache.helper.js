@@ -4,7 +4,7 @@ const logger = require("./logger.helper");
 module.exports = {
     saveTokens: globalStorage => {
         try {
-            const fd = fs.openSync("./tmpTokens.js", "w");
+            const fd = fs.openSync(`${__dirname}/../tmpTokens.js`, "w");
             fs.writeSync(fd, "module.exports = {");
             Object.keys(globalStorage.socketCache).map(token => fs.writeSync(fd, `"${token}":{refresh_token:"${globalStorage.socketCache[token].refresh_token}",userId:${globalStorage.socketCache[token].userId}},`));
             fs.writeSync(fd, "}");
