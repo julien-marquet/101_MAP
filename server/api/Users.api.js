@@ -1,4 +1,4 @@
-const users_func = require("./Users.func"),
+const users_func = require("../helpers/api/Users.helper"),
     logger = require("../helpers/logger.helper"),
     {apiEndpoint, connectedUsers_cacheExpiration} = require("../config/globalConfig");
 
