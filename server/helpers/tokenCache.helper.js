@@ -1,5 +1,5 @@
 const fs = require("fs");
-const logger = require("../custom_modules/logger");
+const logger = require("./logger.helper");
 
 module.exports = {
     saveTokens: globalStorage => {

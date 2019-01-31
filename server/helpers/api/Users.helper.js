@@ -1,5 +1,5 @@
-const   {apiEndpoint} = require("../config/globalConfig"),
-    logger = require("../custom_modules/logger");
+const   {apiEndpoint} = require("../../config/globalConfig"),
+    logger = require("../logger.helper");
 
 const users_func = {
     selectValid :(array) => {

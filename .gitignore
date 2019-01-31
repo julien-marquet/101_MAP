@@ -67,3 +67,4 @@ database
 *.serve.crt
 *.serve.key
 prod*
+*tmpTokens.js

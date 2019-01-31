@@ -1,5 +1,5 @@
-const users_func = require("./Users.func"),
-    logger = require("../custom_modules/logger"),
+const users_func = require("../helpers/api/Users.helper"),
+    logger = require("../helpers/logger.helper"),
     {apiEndpoint, connectedUsers_cacheExpiration} = require("../config/globalConfig");
 
 class Users {

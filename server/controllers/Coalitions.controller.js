@@ -1,4 +1,4 @@
-const logger = require("../custom_modules/logger");
+const logger = require("../helpers/logger.helper");
 const CoalitionsApi = require("../api/Coalitions.api");
 
 class CoalitionsController {
