@@ -1,7 +1,7 @@
 const fs = require("fs");
 let tokenCache = {};
-if (fs.existsSync("../tmpTokens")) {
-    tokenCache = require("../tmpTokens");
+if (fs.existsSync(`${__dirname}/../tmpTokens.js`)) {
+    tokenCache = require(`${__dirname}/../tmpTokens`);
 }
 
 function is_valid_token(i_Oauth2_authenticator, token) {
