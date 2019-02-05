@@ -24,6 +24,11 @@ class Oauth2_authenticator {
             })
                 .then((refreshToken) => {
                     if (refreshToken && !refreshToken.error) {
+                        logger.add_log({
+                            type: "General",
+                            description: "Refreshing token...",
+                            additionnal_infos: {token: refreshToken}
+                        });
                         this.i_socketCache.addToken(refreshToken, this.globalStorage.socketCache[token].userId);
                         return resolve(refreshToken.access_token);
                     } else {
@@ -66,6 +71,11 @@ class Oauth2_authenticator {
                             Authorization: `Bearer ${token.access_token}`,
                         },
                     }).then((tokenInfo) => {
+                        logger.add_log({
+                            type: "General",
+                            description: "Refreshing token...",
+                            additionnal_infos: {token}
+                        });
                         this.i_socketCache.addToken(token, tokenInfo.resource_owner_id);
                         resolve({
                             ...token,
