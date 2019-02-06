@@ -21,7 +21,11 @@ const Oauth_authentifier = (i_Oauth2_authenticator, globalStorage) => {
         const token = is_valid_token(i_Oauth2_authenticator, socket.handshake.query.token);
         if (token === false) {
             if (tokenCache[socket.handshake.query.token] !== undefined || globalStorage.socketCache[socket.handshake.query.token] !== undefined) {
-                return i_Oauth2_authenticator.refreshToken(socket.handshake.query.token)
+                if (tokenCache[socket.handshake.query.token] !== undefined) {
+                    globalStorage.socketCache[socket.handshake.query.token] = tokenCache[socket.handshake.query.token];
+                    delete tokenCache[socket.handshake.query.token];
+                }
+                return i_Oauth2_authenticator.refreshToken(tokenCache[socket.handshake.query.token] || socket.handshake.query.token)
                     .then(refreshedToken => {
                         socket.emit("token.refreshed", refreshedToken);
                         next();
