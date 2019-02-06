@@ -1,6 +1,7 @@
 import io from "socket.io-client";
 
 import config from "../../config/globalConfig";
+import {storeCookie} from "../helpers/cookies.helper";
 
 class SocketClient {
     constructor() {
@@ -9,6 +10,10 @@ class SocketClient {
 
     connect(code, token) {
         this.socket = io.connect(config.serverEndpoint, {query: {code, token}});
+        this.socket.on("token.refreshed", token => {
+            storeCookie("userToken", token);
+            this.socket.query.token = token;
+        });
         return new Promise((resolve, reject) => {
             this.socket.on("connect", () => resolve());
             this.socket.on("connect_error", error => reject(error));
