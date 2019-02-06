@@ -11,7 +11,6 @@ class Oauth2_authenticator {
     refreshToken(token) {
         return new Promise((resolve, reject) => {
             if (!this.globalStorage.socketCache[token]) {
-                console.log("Returning null", this.globalStorage.socketCache, token);
                 return resolve(null);
             }
             this.i_queue.push_head("refreshToken", {

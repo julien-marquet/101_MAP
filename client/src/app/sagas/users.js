@@ -13,7 +13,6 @@ import {
 } from "../actions/users";
 
 function getUserMetadata(socketClient, {payload}) {
-    console.log("Getting token with: ", socketClient.socket.query.token);
     socketClient.emit("user.get.infos", {login: payload, userToken: socketClient.socket.query.token});
 }
 

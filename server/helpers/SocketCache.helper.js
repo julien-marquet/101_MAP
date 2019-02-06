@@ -12,7 +12,6 @@ class SocketCache {
                 delete this.globalStorage.socketCache[key];
             }
         });
-        console.log("Adding token...", token, userId);
         this.globalStorage.socketCache[token.access_token] = {
             userId,
             refresh_token: token.refresh_token,
