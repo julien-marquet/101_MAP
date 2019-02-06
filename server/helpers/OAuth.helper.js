@@ -11,6 +11,7 @@ class Oauth2_authenticator {
     refreshToken(token) {
         return new Promise((resolve, reject) => {
             if (!this.globalStorage.socketCache[token]) {
+                console.log("Returning null", this.globalStorage.socketCache, token);
                 return resolve(null);
             }
             this.i_queue.push_head("refreshToken", {
@@ -47,75 +48,40 @@ class Oauth2_authenticator {
                 });
         });
     }
+
     getUserToken(code) {
-        return new Promise((resolve, reject) => {
-            if (!code) {
-                reject("no code provided");
-            }
-            this.i_queue.push_head("getUserToken", {
-                url: `${apiEndpoint}oauth/token`,
-                body: {
-                    client_id: process.env.CLIENT_ID,
-                    client_secret: process.env.CLIENT_SECRET,
-                    code: code,
-                    redirect_uri: redirect_uri,
-                    grant_type: "authorization_code"
-                },
-                method: "POST"
-            }).then((token) => {
-                if (token && !token.error) {
-                    this.i_queue.push_head("tokenInfo", {
-                        method: "GET",
-                        url: `${apiEndpoint}oauth/token/info`,
-                        headers: {
-                            Authorization: `Bearer ${token.access_token}`,
-                        },
-                    }).then((tokenInfo) => {
-                        logger.add_log({
-                            type: "General",
-                            description: "Refreshing token...",
-                            additionnal_infos: {token}
-                        });
-                        this.i_socketCache.addToken(token, tokenInfo.resource_owner_id);
-                        resolve({
-                            ...token,
-                            userId: tokenInfo.resource_owner_id
-                        });
-                    }, (error) => {
-                        logger.add_log({
-                            type: "Warning",
-                            description: "Couldn't get user access token", 
-                            additionnal_infos: {
-                                Error: error
-                            }
-                        });
-                        reject(error);
-                    });
-                } else {
-                    logger.add_log({
-                        type: "Warning",
-                        description: "Couldn't get user access token", 
-                        additionnal_infos: {
-                            Error: token.error || "empty result"
-                        }
-                    });
-                    reject(token.error);
-                }
-            }, (err) => {
-                logger.add_log({
-                    type: "Warning",
-                    description: "Couldn't get user access token", 
-                    additionnal_infos: {
-                        Error: err
-                    }
-                });
-                reject(err);
-            });
-        });
+        if (code === undefined || code === null) {
+            return Promise.reject("No code provided");
+        }
+        return this.i_queue.push_head("getUserToken", {
+            url: `${apiEndpoint}oauth/token`,
+            body: {
+                code,
+                redirect_uri,
+                grant_type: "authorization_code",
+                client_id: process.env.CLIENT_ID,
+                client_secret: process.env.CLIENT_SECRET
+            },
+            method: "POST"
+        })
+            .then(token => this.i_queue.push_head("tokenInfo", {
+                method: "GET",
+                url: `${apiEndpoint}oauth/token/info`,
+                headers: {Authorization: `Bearer ${token.access_token}`}
+            })
+                .then(tokenInfo => {
+                    this.i_socketCache.addToken(token, tokenInfo.resource_owner_id);
+                    return {
+                        ...token,
+                        userId: tokenInfo.resource_owner_id
+                    };
+                }));
     }
+
     testTokenValidity(token) {
         return this.i_socketCache.searchToken(token);
     }
+
     getToken() {
         return new Promise ((resolve, reject) => {
             if (!this.globalStorage.access_token || this.globalStorage.access_token.modified_at + this.globalStorage.access_token.expires_in <= Math.floor(Date.now() / 1000)) {

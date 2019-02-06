@@ -27,7 +27,7 @@ class App extends Component {
         this.keyDown = this.keyDown.bind(this);
     }
     
-    componentDidMount() {
+    componentWillMount() {
         this.checkConnection();
     }
 
