@@ -8,6 +8,7 @@ import {SWITCH_MOVE} from "../actions/switch";
 const mapStateToProps = ({users, globalState, switchButton, coalitions}) => {
     return {
         users,
+        user_metadata: users.user_metadata,
         mode: globalState.mode,
         switchButton: {
             position: switchButton.position

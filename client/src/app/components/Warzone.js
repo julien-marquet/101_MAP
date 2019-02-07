@@ -55,6 +55,9 @@ class Warzone extends Component {
     }
 
     componentDidUpdate(oldProps) {
+        if (this.props.mode === "passive" && oldProps.user_metadata.success !== this.props.user_metadata.success && this.props.user_metadata.success !== null) {
+            this.timeout = setTimeout(this.selectRandomUsers, 3000);
+        }
         if ((oldProps.users.array.length === 0 && this.props.users.array.length !== 0 && this.props.mode === "passive") ||
             (oldProps.mode !== this.props.mode && this.props.mode === "passive")) {
             if (this.timeout !== null) {
@@ -76,7 +79,6 @@ class Warzone extends Component {
             } else if (arrayLength === 0 && this.props.users.activeUser.id !== 0) {
                 this.props.clearActiveUser();
             }
-            this.timeout = setTimeout(this.selectRandomUsers, 7000);
         }
     }
   
@@ -226,7 +228,8 @@ Warzone.propTypes = {
     storeActiveUsers: PropTypes.func.isRequired,
     users: PropTypes.object.isRequired,
     clearActiveUser: PropTypes.func.isRequired,
-    coalitions: PropTypes.array.isRequired
+    coalitions: PropTypes.array.isRequired,
+    user_metadata: PropTypes.object.isRequired
 };
 
 export default Warzone;
