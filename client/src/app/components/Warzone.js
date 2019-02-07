@@ -56,7 +56,7 @@ class Warzone extends Component {
 
     componentDidUpdate(oldProps) {
         if (this.props.mode === "passive" && oldProps.user_metadata.success !== this.props.user_metadata.success && this.props.user_metadata.success !== null) {
-            this.timeout = setTimeout(this.selectRandomUsers, 3000);
+            this.timeout = setTimeout(this.selectRandomUsers, 5000);
         }
         if ((oldProps.users.array.length === 0 && this.props.users.array.length !== 0 && this.props.mode === "passive") ||
             (oldProps.mode !== this.props.mode && this.props.mode === "passive")) {
