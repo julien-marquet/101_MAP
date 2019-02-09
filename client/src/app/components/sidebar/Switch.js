@@ -1,23 +1,43 @@
 import React, {Component} from "react";
+import PropTypes from "prop-types";
 
 class Switch extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
+        if (this.props.isLink) {
+            return (
+                <a
+                    alt={"Github"}
+                    className={`${this.props.className} btn tile main-tile`}
+                    href={this.props.href}
+                >
+                    <span><i className={this.props.icon}></i></span>
+                </a>
+            );
+        }
         return (
-            <a
-                alt={"Github"}
-                className={"disconnectSwitch btn tile main-tile"}
-                href={"https://github.com/julien-marquet/101_MAP"}
+            <div
+                className={`${this.props.className} btn tile main-tile`}
+                onClick={() => this.props.clickEvent()}
             >
-                <span><i className={"fab fa-github"}></i></span>
-            </a>
+                <span><i className={this.props.icon}></i></span>
+            </div>
         );
     }
 }
 
-Switch.proptypes = {};
+Switch.proptypes = {
+    icon: PropTypes.string,
+    clickEvent: PropTypes.func,
+    isLink: PropTypes.bool,
+    className: PropTypes.string,
+    href: PropTypes.href,
+    alt: PropTypes.string
+};
+
+Switch.defaultProps = {
+    isLink: false,
+    className: ""
+};
 
 export default Switch;
+
