@@ -75,6 +75,7 @@ db.once("open", () => {
     });
 	promise
 		.then(() => {
+            globalStorage.userInfos = {};
 			server.listen(serverPort, () => {
 	       		logger.add_log({
 					type: "General", 
