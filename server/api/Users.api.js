@@ -11,18 +11,18 @@ class Users {
     }
 
     getUserInfos(login, userToken) {
-        const sendRequests = token => Promise.all([this.i_queue.push_tail(
-            "getUserInfos", {
-                url: `${apiEndpoint}v2/users/${login}`,
-                headers: {"authorization": `Bearer ${token}`}
-            }
-        ), this.i_queue.push_tail(
-            "getUserCoalition", {
-                url: `${apiEndpoint}v2/users/${login}/coalitions`,
-                headers: {"authorization": `Bearer ${token}`}
-            }
-        )]);
         if (this.globalStorage.usersInfos[login] === undefined) {
+            const sendRequests = token => Promise.all([this.i_queue.push_tail(
+                "getUserInfos", {
+                    url: `${apiEndpoint}v2/users/${login}`,
+                    headers: {"authorization": `Bearer ${token}`}
+                }
+            ), this.i_queue.push_tail(
+                "getUserCoalition", {
+                    url: `${apiEndpoint}v2/users/${login}/coalitions`,
+                    headers: {"authorization": `Bearer ${token}`}
+                }
+            )]);
             return sendRequests(userToken)
                 .then(response => {
                     response = {
@@ -30,7 +30,7 @@ class Users {
                         last_request: Date.now(),
                         coalition: response[1].length === 0 || response[1][0].slug.includes("piscine") ? null : {...response[1][0]}
                     };
-                    this.globalStorage.usersInfos[response.id] = response;
+                    this.globalStorage.usersInfos[login] = response;
                     return ({response});
                 })
                 .catch(err => {
@@ -45,7 +45,7 @@ class Users {
                                                 last_request: Date.now(),
                                                 coalition: response[1].length === 0 || response[1][0].slug.includes("piscine") ? null : {...response[1][0]}
                                             };
-                                            this.globalStorage.usersInfos[response.id] = response;
+                                            this.globalStorage.usersInfos[login] = response;
                                             return ({response, refresh_token: refreshed});
                                         });
                                 } else {
