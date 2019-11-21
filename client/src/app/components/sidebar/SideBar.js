@@ -50,7 +50,7 @@ class SideBar extends Component {
     }
 }
 
-SideBar.PropTypes = {
+SideBar.propTypes = {
     setPassiveMode: PropTypes.func.isRequired,
     showToast: PropTypes.func.isRequired
 };

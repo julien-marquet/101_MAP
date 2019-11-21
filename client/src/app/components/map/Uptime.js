@@ -63,7 +63,7 @@ class UpTime extends Component {
     }
 }
 
-UpTime.proptypes = {
+UpTime.propTypes = {
     begin_at: PropTypes.string.isRequired
 };
 

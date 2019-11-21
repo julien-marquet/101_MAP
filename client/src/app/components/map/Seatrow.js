@@ -40,7 +40,7 @@ class Seatrow extends Component {
                         <Seat
                             key={`seat${seatIndex + 1}`}
                             hostname={`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`}
-                            user={this.props.users.array[`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}`]}
+                            user={this.props.users.array[`${this.props.zone}r${rowIndex + 1}p${seatIndex + 1}.le-101.fr`]}
                         />
                     );
                 })}
@@ -76,7 +76,7 @@ class Seatrow extends Component {
     }
 }
 
-Seatrow.proptypes = {
+Seatrow.propTypes = {
     seats: PropTypes.array.isRequired,
     zone: PropTypes.string.isRequired,
     users: PropTypes.object.isRequired

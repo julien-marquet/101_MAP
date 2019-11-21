@@ -70,7 +70,7 @@ class ThemeSwitch extends Component {
     }
 }
 
-ThemeSwitch.proptypes = {
+ThemeSwitch.propTypes = {
     storeActiveTheme: PropTypes.func.isRequired,
     themes:  PropTypes.shape({
         array: PropTypes.array.isRequired,
