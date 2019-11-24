@@ -230,7 +230,7 @@ class HostInfo extends Component {
     }
 }
 
-HostInfo.proptypes = {
+HostInfo.propTypes = {
     activeUser: {
         hostname: PropTypes.string,
         begin_at: PropTypes.string,

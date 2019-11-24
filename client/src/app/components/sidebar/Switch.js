@@ -25,12 +25,12 @@ class Switch extends Component {
     }
 }
 
-Switch.proptypes = {
+Switch.propTypes = {
     icon: PropTypes.string,
     clickEvent: PropTypes.func,
     isLink: PropTypes.bool,
     className: PropTypes.string,
-    href: PropTypes.href,
+    href: PropTypes.string,
     alt: PropTypes.string
 };
 
