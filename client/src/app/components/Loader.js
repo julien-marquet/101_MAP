@@ -24,7 +24,7 @@ class Loader extends Component {
     }
 }
 
-Loader.proptypes = {
+Loader.propTypes = {
     in: PropTypes.bool.isRequired,
     name: PropTypes.string
 };
