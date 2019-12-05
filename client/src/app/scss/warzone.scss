@@ -130,7 +130,10 @@
         animation-direction: alternate;
     }
 
-    
+	.hidden {
+		opacity: 0.2;
+	}
+
     .userImg {
         height: 100%;
         min-height: 0;
