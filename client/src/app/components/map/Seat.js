@@ -1,10 +1,10 @@
-import React, {Component} from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 
 import globalConfig from "../../../config/globalConfig";
 import placeholder from "../../../img/placeholder_profil.svg";
 
-class Seat extends Component {
+class Seat extends PureComponent {
     constructor(props) {
         super(props);
 
@@ -17,25 +17,6 @@ class Seat extends Component {
         this.changeImgSrc = this.changeImgSrc.bind(this);
         this.getImgSrc = this.getImgSrc.bind(this);
         this.showImg = this.showImg.bind(this);
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if ((this.props.user === undefined && nextProps.user !== undefined) ||
-            (nextProps.user === undefined && this.props.user !== undefined)) {
-            return true;
-        }
-        if (this.props.user !== undefined && nextProps.user !== undefined &&
-            (this.props.user.login !== nextProps.user.login ||
-            this.state.isSearched !== nextState.isSearched)) {
-            return true;
-        }
-        if (nextState.imgSrc !== this.state.imgSrc || nextState.isSearched !== this.state.isSearched || nextState.isActive !== this.state.isActive || nextState.hidden !== this.state.hidden) {
-            return true;
-        }
-        if (this.props.switchStatus !== nextProps.switchStatus) {
-            return true;
-        }
-        return false;
     }
 
     componentWillReceiveProps(nextProps) {
@@ -92,7 +73,10 @@ class Seat extends Component {
         }
         else {
             let className = "seatHover";
-            if (this.state.isSearched || this.state.isActive) {
+            if (!this.state.isSearched && this.props.searchedUser.length >= globalConfig.minimalSearchInput) {
+                className += " hidden";
+            }
+            if (this.state.isActive) {
                 className += " highlighted";
             }
             if (this.props.user.pool) {
@@ -132,10 +116,10 @@ Seat.propTypes = {
     storeActiveUsers: PropTypes.func.isRequired,
     hostname: PropTypes.string,
     user: PropTypes.shape({
-		id: PropTypes.number,
-		begin_at: PropTypes.string,
-		login: PropTypes.string
-	}),
+        id: PropTypes.number,
+        begin_at: PropTypes.string,
+        login: PropTypes.string
+    }),
     searchedUser: PropTypes.string,
     switchStatus: PropTypes.number.isRequired
 };
