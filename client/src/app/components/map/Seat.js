@@ -1,10 +1,10 @@
-import React, {Component} from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 
 import globalConfig from "../../../config/globalConfig";
 import placeholder from "../../../img/placeholder_profil.svg";
 
-class Seat extends Component {
+class Seat extends PureComponent {
     constructor(props) {
         super(props);
 
@@ -19,33 +19,14 @@ class Seat extends Component {
         this.showImg = this.showImg.bind(this);
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if ((this.props.user === undefined && nextProps.user !== undefined) ||
-            (nextProps.user === undefined && this.props.user !== undefined)) {
-            return true;
-        }
-        if (this.props.user !== undefined && nextProps.user !== undefined &&
-            (this.props.user.login !== nextProps.user.login ||
-            this.state.isSearched !== nextState.isSearched)) {
-            return true;
-        }
-        if (nextState.imgSrc !== this.state.imgSrc || nextState.isSearched !== this.state.isSearched || nextState.isActive !== this.state.isActive || nextState.hidden !== this.state.hidden) {
-            return true;
-        }
-        if (this.props.switchStatus !== nextProps.switchStatus) {
-            return true;
-        }
-        return false;
-    }
-
     componentWillReceiveProps(nextProps) {
         if (nextProps.searchedUser.length < globalConfig.minimalSearchInput && this.state.isSearched) {
             this.setState({isSearched: false});
         }
         else if (nextProps.user !== undefined &&
             nextProps.searchedUser.length >= globalConfig.minimalSearchInput &&
-            ((nextProps.user.login.includes(nextProps.searchedUser.toLowerCase()) && this.state.isSearched) ||
-            (!nextProps.user.login.includes(nextProps.searchedUser.toLowerCase()) && !this.state.isSearched))) {
+            ((nextProps.user.login.includes(nextProps.searchedUser.toLowerCase()) && !this.state.isSearched) ||
+            (!nextProps.user.login.includes(nextProps.searchedUser.toLowerCase()) && this.state.isSearched))) {
             this.setState({isSearched: !this.state.isSearched});
         }
         if (nextProps.activeUser.id === 0 && this.state.isActive) {
@@ -92,12 +73,12 @@ class Seat extends Component {
         }
         else {
             let className = "seatHover";
-            if (this.state.isSearched) {
+            if (!this.state.isSearched && this.props.searchedUser.length >= globalConfig.minimalSearchInput) {
                 className += " hidden";
             }
-			if (this.state.isActive) {
-				className += " highlighted";
-			}
+            if (this.state.isActive) {
+                className += " highlighted";
+            }
             if (this.props.user.pool) {
                 className += " newbie";
             }
@@ -135,10 +116,10 @@ Seat.propTypes = {
     storeActiveUsers: PropTypes.func.isRequired,
     hostname: PropTypes.string,
     user: PropTypes.shape({
-		id: PropTypes.number,
-		begin_at: PropTypes.string,
-		login: PropTypes.string
-	}),
+        id: PropTypes.number,
+        begin_at: PropTypes.string,
+        login: PropTypes.string
+    }),
     searchedUser: PropTypes.string,
     switchStatus: PropTypes.number.isRequired
 };
